@@ -4,7 +4,9 @@
 
     namespace TgBotLib\Objects;
 
-    class User
+    use TgBotLib\Interfaces\ObjectTypeInterface;
+
+    class User implements ObjectTypeInterface
     {
         /**
          * @var int
