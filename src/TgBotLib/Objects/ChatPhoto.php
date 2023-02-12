@@ -2,7 +2,9 @@
 
     namespace TgBotLib\Objects;
 
-    class ChatPhoto
+    use TgBotLib\Interfaces\ObjectTypeInterface;
+
+    class ChatPhoto implements ObjectTypeInterface
     {
         /**
          * @var string
