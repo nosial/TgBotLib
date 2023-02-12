@@ -6,7 +6,7 @@
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
-    class PollAnswer implements \TgBotLib\Interfaces\ObjectTypeInterface
+    class PollAnswer implements ObjectTypeInterface
     {
         /**
          * @var string
