@@ -5,6 +5,7 @@
     namespace TgBotLib\Objects\ChatMember;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
     class ChatMemberRestricted implements ObjectTypeInterface
@@ -336,6 +337,38 @@
             $object->can_pin_messages = @$data['can_pin_messages'] ?? false;
             $object->can_manage_topics = @$data['can_manage_topics'] ?? false;
             $object->until_date = @$data['until_date'] ?? 0;
+
+            return $object;
+        }
+
+        /**
+         * Constructs object from ChatMember
+         *
+         * @param ChatMember $chatMember
+         * @return static
+         */
+        public static function fromChatMember(ChatMember $chatMember): self
+        {
+            $object = new static();
+
+            $object->status = $chatMember->getStatus();
+            $object->user = $chatMember->getUser();
+            $object->is_member = $chatMember->isIsMember();
+            $object->can_send_messages = $chatMember->isCanSendMessages();
+            $object->can_send_audios = $chatMember->isCanSendAudios();
+            $object->can_send_documents = $chatMember->isCanSendDocuments();
+            $object->can_send_photos = $chatMember->isCanSendPhotos();
+            $object->can_send_videos = $chatMember->isCanSendVideos();
+            $object->can_send_video_notes = $chatMember->isCanSendVideoNotes();
+            $object->can_send_voice_notes = $chatMember->isCanSendVoiceNotes();
+            $object->can_send_polls = $chatMember->isCanSendPolls();
+            $object->can_send_other_messages = $chatMember->isCanSendOtherMessages();
+            $object->can_add_web_page_previews = $chatMember->isCanAddWebPagePreviews();
+            $object->can_change_info = $chatMember->isCanChangeInfo();
+            $object->can_invite_users = $chatMember->isCanInviteUsers();
+            $object->can_pin_messages = $chatMember->isCanPinMessages();
+            $object->can_manage_topics = $chatMember->isCanManageTopics();
+            $object->until_date = $chatMember->getUntilDate();
 
             return $object;
         }
