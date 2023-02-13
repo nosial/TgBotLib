@@ -50,6 +50,11 @@
         private $forward_from_chat;
 
         /**
+         * @var int|null
+         */
+        private $forward_from_message_id;
+
+        /**
          * @var string|null
          */
         private $forward_signature;
@@ -68,6 +73,11 @@
          * @var bool
          */
         private $is_topic_message;
+
+        /**
+         * @var bool
+         */
+        private $is_automatic_forward;
 
         /**
          * @var Message|null
@@ -355,6 +365,8 @@
         private $reply_markup;
 
         /**
+         * Unique message identifier inside this chat
+         *
          * @return int|null
          */
         public function getMessageId(): ?int
@@ -363,6 +375,8 @@
         }
 
         /**
+         * Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
+         *
          * @return int|null
          */
         public function getMessageThreadId(): ?int
@@ -371,6 +385,9 @@
         }
 
         /**
+         * Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field
+         * contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+         *
          * @return User|null
          */
         public function getFrom(): ?User
@@ -379,6 +396,11 @@
         }
 
         /**
+         * Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts,
+         * the supergroup itself for messages from anonymous group administrators, the linked channel for messages
+         * automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake
+         * sender user in non-channel chats, if the message was sent on behalf of a chat.
+         *
          * @return Chat|null
          */
         public function getSenderChat(): ?Chat
@@ -387,6 +409,8 @@
         }
 
         /**
+         * Date the message was sent in Unix time
+         *
          * @return int
          */
         public function getDate(): int
@@ -395,6 +419,8 @@
         }
 
         /**
+         * Conversation the message belongs to
+         *
          * @return Chat|null
          */
         public function getChat(): ?Chat
@@ -403,6 +429,8 @@
         }
 
         /**
+         * Optional. For forwarded messages, sender of the original message
+         *
          * @return User|null
          */
         public function getForwardFrom(): ?User
@@ -411,6 +439,9 @@
         }
 
         /**
+         * Optional. For messages forwarded from channels or from anonymous administrators,
+         * information about the original sender chat
+         *
          * @return Chat|null
          */
         public function getForwardFromChat(): ?Chat
@@ -419,6 +450,19 @@
         }
 
         /**
+         * Optional. For messages forwarded from channels, identifier of the original message in the channel
+         *
+         * @return int|null
+         */
+        public function getForwardFromMessageId(): ?int
+        {
+            return $this->forward_from_message_id;
+        }
+
+        /**
+         * Optional. For forwarded messages that were originally sent in channels or by an anonymous chat
+         * administrator, signature of the message sender if present
+         *
          * @return string|null
          */
         public function getForwardSignature(): ?string
@@ -427,6 +471,9 @@
         }
 
         /**
+         * Optional. Sender's name for messages forwarded from users who disallow adding a link
+         * to their account in forwarded messages
+         *
          * @return string|null
          */
         public function getForwardSenderName(): ?string
@@ -435,6 +482,8 @@
         }
 
         /**
+         * Optional. For forwarded messages, date the original message was sent in Unix time
+         *
          * @return int|null
          */
         public function getForwardDate(): ?int
@@ -443,6 +492,8 @@
         }
 
         /**
+         * Optional. True, if the message is sent to a forum topic
+         *
          * @return bool
          */
         public function isIsTopicMessage(): bool
@@ -451,6 +502,20 @@
         }
 
         /**
+         * Optional. True, if the message is a channel post that was automatically forwarded
+         * to the connected discussion group
+         *
+         * @return bool
+         */
+        public function isAutomaticForward(): bool
+        {
+            return $this->is_automatic_forward;
+        }
+
+        /**
+         * Optional. For replies, the original message. Note that the Message object in this field will not contain
+         * further reply_to_message fields even if it itself is a reply.
+         *
          * @return Message|null
          */
         public function getReplyToMessage(): ?Message
@@ -459,6 +524,8 @@
         }
 
         /**
+         * Optional. Bot through which the message was sent
+         *
          * @return User|null
          */
         public function getViaBot(): ?User
@@ -467,6 +534,8 @@
         }
 
         /**
+         * Optional. Date the message was last edited in Unix time
+         *
          * @return int|null
          */
         public function getEditDate(): ?int
@@ -475,6 +544,8 @@
         }
 
         /**
+         * Optional. True, if the message can't be forwarded
+         *
          * @return bool
          */
         public function isHasProtectedContent(): bool
@@ -483,6 +554,8 @@
         }
 
         /**
+         * Optional. The unique identifier of a media message group this message belongs to
+         *
          * @return string|null
          */
         public function getMediaGroupId(): ?string
@@ -491,6 +564,9 @@
         }
 
         /**
+         * Optional. Signature of the post author for messages in channels,
+         * or the custom title of an anonymous group administrator
+         *
          * @return string|null
          */
         public function getAuthorSignature(): ?string
@@ -499,6 +575,8 @@
         }
 
         /**
+         * Optional. For text messages, the actual UTF-8 text of the message
+         *
          * @return string|null
          */
         public function getText(): ?string
@@ -507,6 +585,9 @@
         }
 
         /**
+         * Optional. For text messages, special entities like usernames, URLs, bot commands, etc.
+         * that appear in the text
+         *
          * @return MessageEntity[]|null
          */
         public function getEntities(): ?array
@@ -515,6 +596,9 @@
         }
 
         /**
+         * Optional. Message is an animation, information about the animation. For backward compatibility,
+         * when this field is set, the document field will also be set
+         *
          * @return Animation|null
          */
         public function getAnimation(): ?Animation
@@ -523,6 +607,8 @@
         }
 
         /**
+         * Optional. Message is an audio file, information about the file
+         *
          * @return Audio|null
          */
         public function getAudio(): ?Audio
@@ -531,6 +617,8 @@
         }
 
         /**
+         * Optional. Message is a general file, information about the file
+         *
          * @return Document|null
          */
         public function getDocument(): ?Document
@@ -539,6 +627,8 @@
         }
 
         /**
+         * Optional. Message is a photo, available sizes of the photo
+         *
          * @return PhotoSize[]|null
          */
         public function getPhoto(): ?array
@@ -547,6 +637,8 @@
         }
 
         /**
+         * Optional. Message is a sticker, information about the sticker
+         *
          * @return Sticker|null
          */
         public function getSticker(): ?Sticker
@@ -555,6 +647,8 @@
         }
 
         /**
+         * Optional. Message is a video, information about the video
+         *
          * @return Video|null
          */
         public function getVideo(): ?Video
@@ -563,6 +657,29 @@
         }
 
         /**
+         * Optional. Message is a video note, information about the video message
+         *
+         * @see https://telegram.org/blog/video-messages-and-telescope
+         * @return VideoNote|null
+         */
+        public function getVideoNote(): ?VideoNote
+        {
+            return $this->video_note;
+        }
+
+        /**
+         * Optional. Message is a voice message, information about the file
+         *
+         * @return Voice|null
+         */
+        public function getVoice(): ?Voice
+        {
+            return $this->voice;
+        }
+
+        /**
+         * Optional. Caption for the animation, audio, document, photo, video or voice
+         *
          * @return string|null
          */
         public function getCaption(): ?string
@@ -571,6 +688,9 @@
         }
 
         /**
+         * Optional. For messages with a caption, special entities like usernames, URLs,
+         * bot commands, etc. that appear in the caption
+         *
          * @return MessageEntity[]|null
          */
         public function getCaptionEntities(): ?array
@@ -579,6 +699,8 @@
         }
 
         /**
+         * Optional. True, if the message media is covered by a spoiler animation
+         *
          * @return bool
          */
         public function isHasMediaSpoiler(): bool
@@ -587,6 +709,8 @@
         }
 
         /**
+         * Optional. Message is a shared contact, information about the contact
+         *
          * @return Contact|null
          */
         public function getContact(): ?Contact
@@ -595,6 +719,8 @@
         }
 
         /**
+         * Optional. Message is a dice with random value
+         *
          * @return Dice|null
          */
         public function getDice(): ?Dice
@@ -603,6 +729,9 @@
         }
 
         /**
+         * Optional. Message is a game, information about the game.
+         *
+         * @see https://core.telegram.org/bots/api#games
          * @return Game|null
          */
         public function getGame(): ?Game
@@ -611,6 +740,8 @@
         }
 
         /**
+         * Optional. Message is a native poll, information about the poll
+         *
          * @return Poll|null
          */
         public function getPoll(): ?Poll
@@ -619,6 +750,9 @@
         }
 
         /**
+         * Optional. Message is a venue, information about the venue. For backward compatibility,
+         * when this field is set, the location field will also be set
+         *
          * @return Venue|null
          */
         public function getVenue(): ?Venue
@@ -627,6 +761,8 @@
         }
 
         /**
+         * Optional. Message is a shared location, information about the location
+         *
          * @return Location|null
          */
         public function getLocation(): ?Location
@@ -635,6 +771,9 @@
         }
 
         /**
+         * Optional. New members that were added to the group or supergroup and information about them
+         * (the bot itself may be one of these members)
+         *
          * @return User[]|null
          */
         public function getNewChatMembers(): ?array
@@ -643,6 +782,8 @@
         }
 
         /**
+         * Optional. A member was removed from the group, information about them (this member may be the bot itself)
+         *
          * @return User|null
          */
         public function getLeftChatMember(): ?User
@@ -651,6 +792,8 @@
         }
 
         /**
+         * Optional. A chat title was changed to this value
+         *
          * @return string|null
          */
         public function getNewChatTitle(): ?string
@@ -659,6 +802,8 @@
         }
 
         /**
+         * Optional. A chat photo was change to this value
+         *
          * @return PhotoSize[]|null
          */
         public function getNewChatPhoto(): ?array
@@ -667,6 +812,8 @@
         }
 
         /**
+         * Optional. Service message: the chat photo was deleted
+         *
          * @return bool
          */
         public function isDeleteChatPhoto(): bool
@@ -675,6 +822,8 @@
         }
 
         /**
+         * Optional. Service message: the group has been created
+         *
          * @return bool
          */
         public function isGroupChatCreated(): bool
@@ -683,6 +832,10 @@
         }
 
         /**
+         * Optional. Service message: the supergroup has been created. This field can't be received in a message coming
+         * through updates, because bot can't be a member of a supergroup when it is created. It can only be found in
+         * reply_to_message if someone replies to a very first message in a directly created supergroup.
+         *
          * @return bool
          */
         public function isSupergroupChatCreated(): bool
@@ -691,6 +844,10 @@
         }
 
         /**
+         * Optional. Service message: the channel has been created. This field can't be received in a message coming
+         * through updates, because bot can't be a member of a channel when it is created. It can only be found in
+         * reply_to_message if someone replies to a very first message in a channel.
+         *
          * @return bool
          */
         public function isChannelChatCreated(): bool
@@ -699,6 +856,8 @@
         }
 
         /**
+         * Optional. Service message: auto-delete timer settings changed in the chat
+         *
          * @return MessageAutoDeleteTimerChanged|null
          */
         public function getMessageAutoDeleteTimerChanged(): ?MessageAutoDeleteTimerChanged
@@ -707,6 +866,11 @@
         }
 
         /**
+         * Optional. The group has been migrated to a supergroup with the specified identifier. This number may
+         * have more than 32 significant bits and some programming languages may have difficulty/silent defects in
+         * interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision
+         * float type are safe for storing this identifier.
+         *
          * @return int|null
          */
         public function getMigrateToChatId(): ?int
@@ -715,6 +879,11 @@
         }
 
         /**
+         * Optional. The supergroup has been migrated from a group with the specified identifier. This number may have
+         * more than 32 significant bits and some programming languages may have difficulty/silent defects in
+         * interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float
+         * type are safe for storing this identifier.
+         *
          * @return int|null
          */
         public function getMigrateFromChatId(): ?int
@@ -723,6 +892,9 @@
         }
 
         /**
+         * Optional. Specified message was pinned. Note that the Message object in this field will not contain further
+         * reply_to_message fields even if it is itself a reply.
+         *
          * @return Message|null
          */
         public function getPinnedMessage(): ?Message
@@ -731,6 +903,9 @@
         }
 
         /**
+         * Optional. Message is an invoice for a payment, information about the invoice.
+         *
+         * @see https://core.telegram.org/bots/api#payments
          * @return Invoice|null
          */
         public function getInvoice(): ?Invoice
@@ -739,6 +914,9 @@
         }
 
         /**
+         * Optional. Message is a service message about a successful payment, information about the payment.
+         *
+         * @see https://core.telegram.org/bots/api#payments
          * @return SuccessfulPayment|null
          */
         public function getSuccessfulPayment(): ?SuccessfulPayment
@@ -747,6 +925,8 @@
         }
 
         /**
+         * Optional. Service message: a user was shared with the bot
+         *
          * @return UserShared|null
          */
         public function getUserShared(): ?UserShared
@@ -755,6 +935,8 @@
         }
 
         /**
+         * Optional. Service message: a chat was shared with the bot
+         *
          * @return ChatShared|null
          */
         public function getChatShared(): ?ChatShared
@@ -763,6 +945,9 @@
         }
 
         /**
+         * Optional. The domain name of the website on which the user has logged in.
+         *
+         * @see https://core.telegram.org/widgets/login
          * @return string|null
          */
         public function getConnectedWebsite(): ?string
@@ -771,6 +956,8 @@
         }
 
         /**
+         * Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+         *
          * @return WriteAccessAllowed|null
          */
         public function getWriteAccessAllowed(): ?WriteAccessAllowed
@@ -779,6 +966,8 @@
         }
 
         /**
+         * Optional. Telegram Passport data
+         *
          * @return PassportData|null
          */
         public function getPassportData(): ?PassportData
@@ -787,6 +976,9 @@
         }
 
         /**
+         * Optional. Service message. A user in the chat triggered another user's proximity alert while sharing
+         * Live Location.
+         *
          * @return ProximityAlertTriggered|null
          */
         public function getProximityAlertTriggered(): ?ProximityAlertTriggered
@@ -795,6 +987,8 @@
         }
 
         /**
+         * Optional. Service message: forum topic created
+         *
          * @return ForumTopicCreated|null
          */
         public function getForumTopicCreated(): ?ForumTopicCreated
@@ -803,6 +997,8 @@
         }
 
         /**
+         * Optional. Service message: forum topic edited
+         *
          * @return ForumTopicEdited|null
          */
         public function getForumTopicEdited(): ?ForumTopicEdited
@@ -811,6 +1007,8 @@
         }
 
         /**
+         * Optional. Service message: forum topic closed
+         *
          * @return ForumTopicClosed|null
          */
         public function getForumTopicClosed(): ?ForumTopicClosed
@@ -819,6 +1017,8 @@
         }
 
         /**
+         * Optional. Service message: forum topic reopened
+         *
          * @return ForumTopicReopened|null
          */
         public function getForumTopicReopened(): ?ForumTopicReopened
@@ -827,6 +1027,8 @@
         }
 
         /**
+         * Optional. Service message: the 'General' forum topic hidden
+         *
          * @return GeneralForumTopicHidden|null
          */
         public function getGeneralForumTopicHidden(): ?GeneralForumTopicHidden
@@ -835,6 +1037,8 @@
         }
 
         /**
+         * Optional. Service message: the 'General' forum topic unhidden
+         *
          * @return GeneralForumTopicUnhidden|null
          */
         public function getGeneralForumTopicUnhidden(): ?GeneralForumTopicUnhidden
@@ -843,6 +1047,8 @@
         }
 
         /**
+         * Optional. Service message: video chat scheduled
+         *
          * @return VideoChatScheduled|null
          */
         public function getVideoChatScheduled(): ?VideoChatScheduled
@@ -851,6 +1057,8 @@
         }
 
         /**
+         * Optional. Service message: video chat started
+         *
          * @return VideoChatStarted|null
          */
         public function getVideoChatStarted(): ?VideoChatStarted
@@ -859,6 +1067,8 @@
         }
 
         /**
+         * Optional. Service message: video chat ended
+         *
          * @return VideoChatEnded|null
          */
         public function getVideoChatEnded(): ?VideoChatEnded
@@ -867,6 +1077,8 @@
         }
 
         /**
+         * Optional. Service message: new participants invited to a video chat
+         *
          * @return VideoChatParticipantsInvited|null
          */
         public function getVideoChatParticipantsInvited(): ?VideoChatParticipantsInvited
@@ -875,6 +1087,8 @@
         }
 
         /**
+         * Optional. Service message: data sent by a Web App
+         *
          * @return WebAppData|null
          */
         public function getWebAppData(): ?WebAppData
@@ -883,6 +1097,8 @@
         }
 
         /**
+         * Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
+         *
          * @return InlineKeyboardMarkup|null
          */
         public function getReplyMarkup(): ?InlineKeyboardMarkup
@@ -954,10 +1170,12 @@
                 'chat' => ($this->chat instanceof Chat) ? $this->chat->toArray() : null,
                 'forward_from' => ($this->forward_from instanceof User) ? $this->forward_from->toArray() : null,
                 'forward_from_chat' => ($this->forward_from_chat instanceof Chat) ? $this->forward_from_chat->toArray() : null,
+                'forward_from_message_id' => $this->forward_from_message_id,
                 'forward_signature' => $this->forward_signature,
                 'forward_sender_name' => $this->forward_sender_name,
                 'forward_date' => $this->forward_date,
                 'is_topic_message' => $this->is_topic_message,
+                'is_automatic_forward' => $this->is_automatic_forward,
                 'reply_to_message' => ($this->reply_to_message instanceof Message) ? $this->reply_to_message->toArray() : null,
                 'via_bot' => ($this->via_bot instanceof User) ? $this->via_bot->toArray() : null,
                 'edit_date' => $this->edit_date,
@@ -1017,6 +1235,12 @@
             ];
         }
 
+        /**
+         * Constructs the object from an array representation
+         *
+         * @param array $data
+         * @return ObjectTypeInterface
+         */
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
@@ -1029,10 +1253,12 @@
             $object->chat = (@$data['chat'] !== null) ? Chat::fromArray($data['chat']) : null;
             $object->forward_from = (@$data['forward_from'] !== null) ? User::fromArray($data['forward_from']) : null;
             $object->forward_from_chat = (@$data['forward_from_chat'] !== null) ? Chat::fromArray($data['forward_from_chat']) : null;
+            $object->forward_from_message_id = @$data['forward_from_message_id'] ?? null;
             $object->forward_signature = @$data['forward_signature'] ?? null;
             $object->forward_sender_name = @$data['forward_sender_name'] ?? null;
             $object->forward_date = @$data['forward_date'] ?? null;
             $object->is_topic_message = @$data['is_topic_message'] ?? null;
+            $object->is_automatic_forward = @$data['is_automatic_forward'] ?? null;
             $object->reply_to_message = (@$data['reply_to_message'] !== null) ? self::fromArray($data['reply_to_message']) : null;
             $object->via_bot = (@$data['via_bot'] !== null) ? User::fromArray($data['via_bot']) : null;
             $object->edit_date = @$data['edit_date'] ?? null;
