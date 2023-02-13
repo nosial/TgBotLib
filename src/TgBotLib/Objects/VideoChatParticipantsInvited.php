@@ -8,7 +8,6 @@
 
     class VideoChatParticipantsInvited implements ObjectTypeInterface
     {
-
         /**
          * @var User[]
          */
