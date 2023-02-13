@@ -5,6 +5,7 @@
     namespace TgBotLib\Objects\ChatMember;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
     class ChatMemberMember implements ObjectTypeInterface
@@ -64,6 +65,22 @@
 
             $object->status = $data['status'];
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
+
+            return $object;
+        }
+
+        /**
+         * Constructs object from ChatMember object
+         *
+         * @param ChatMember $chatMember
+         * @return static
+         */
+        public static function fromChatMember(ChatMember $chatMember): self
+        {
+            $object = new self();
+
+            $object->status = $chatMember->getStatus();
+            $object->user = $chatMember->getUser();
 
             return $object;
         }
