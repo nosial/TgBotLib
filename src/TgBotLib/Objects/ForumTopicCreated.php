@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -74,9 +76,10 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->name = @$data['name'];
-            $object->icon_color = @$data['icon_color'];
-            $object->icon_custom_emoji_id = @$data['icon_custom_emoji_id'] ?? null;
+
+            $object->name = $data['name'] ?? null;
+            $object->icon_color = $data['icon_color'] ?? null;
+            $object->icon_custom_emoji_id = $data['icon_custom_emoji_id'] ?? null;
 
             return $object;
         }

@@ -111,11 +111,11 @@
         {
             $object = new self();
 
-            $object->phone_number = @$data['phone_number'];
-            $object->first_name = @$data['first_name'];
-            $object->last_name = @$data['last_name'] ?? null;
-            $object->user_id = @$data['user_id'] ?? null;
-            $object->vcard = @$data['vcard'] ?? null;
+            $object->phone_number = $data['phone_number'] ?? null;
+            $object->first_name = $data['first_name'] ?? null;
+            $object->last_name = $data['last_name'] ?? null;
+            $object->user_id = $data['user_id'] ?? null;
+            $object->vcard = $data['vcard'] ?? null;
 
             return $object;
         }

@@ -127,12 +127,12 @@
         {
             $object = new self();
 
-            $object->longitude = $data['longitude'];
-            $object->latitude = $data['latitude'];
-            $object->horizontal_accuracy = $data['horizontal_accuracy'];
-            $object->live_period = $data['live_period'];
-            $object->heading = $data['heading'];
-            $object->proximity_alert_radius = $data['proximity_alert_radius'];
+            $object->longitude = $data['longitude'] ?? null;
+            $object->latitude = $data['latitude'] ?? null;
+            $object->horizontal_accuracy = $data['horizontal_accuracy'] ?? null;
+            $object->live_period = $data['live_period'] ?? null;
+            $object->heading = $data['heading'] ?? null;
+            $object->proximity_alert_radius = $data['proximity_alert_radius'] ?? null;
 
             return $object;
         }

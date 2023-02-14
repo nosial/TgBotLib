@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -95,10 +97,10 @@
         {
             $object = new ChatPhoto();
 
-            $object->small_file_id = $data['small_file_id'];
-            $object->small_file_unique_id = $data['small_file_unique_id'];
-            $object->big_file_id = $data['big_file_id'];
-            $object->big_file_unique_id = $data['big_file_unique_id'];
+            $object->small_file_id = $data['small_file_id'] ?? null;
+            $object->small_file_unique_id = $data['small_file_unique_id'] ?? null;
+            $object->big_file_id = $data['big_file_id'] ?? null;
+            $object->big_file_unique_id = $data['big_file_unique_id'] ?? null;
 
             return $object;
         }

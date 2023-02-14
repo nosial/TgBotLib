@@ -129,7 +129,7 @@
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,
                 'shipping_option_id' => $this->shipping_option_id,
-                'order_info' => ($this->order_info instanceof OrderInfo) ? $this->order_info->toArray() : null,
+                'order_info' => ($this->order_info instanceof ObjectTypeInterface) ? $this->order_info->toArray() : null,
                 'telegram_payment_charge_id' => $this->telegram_payment_charge_id,
                 'provider_payment_charge_id' => $this->provider_payment_charge_id,
             ];
@@ -145,13 +145,13 @@
         {
             $object = new self();
 
-            $object->currency = $data['currency'];
-            $object->total_amount = $data['total_amount'];
-            $object->invoice_payload = $data['invoice_payload'];
+            $object->currency = $data['currency'] ?? null;
+            $object->total_amount = $data['total_amount'] ?? null;
+            $object->invoice_payload = $data['invoice_payload'] ?? null;
             $object->shipping_option_id = $data['shipping_option_id'] ?? null;
             $object->order_info = isset($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
-            $object->telegram_payment_charge_id = $data['telegram_payment_charge_id'];
-            $object->provider_payment_charge_id = $data['provider_payment_charge_id'];
+            $object->telegram_payment_charge_id = $data['telegram_payment_charge_id'] ?? null;
+            $object->provider_payment_charge_id = $data['provider_payment_charge_id'] ?? null;
 
             return $object;
         }

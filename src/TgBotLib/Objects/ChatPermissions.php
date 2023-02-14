@@ -83,7 +83,7 @@
          *
          * @return bool
          */
-        public function isCanSendMessages(): bool
+        public function canSendMessages(): bool
         {
             return $this->can_send_messages;
         }
@@ -93,7 +93,7 @@
          *
          * @return bool
          */
-        public function isCanSendAudios(): bool
+        public function canSendAudios(): bool
         {
             return $this->can_send_audios;
         }
@@ -103,7 +103,7 @@
          *
          * @return bool
          */
-        public function isCanSendDocuments(): bool
+        public function canSendDocuments(): bool
         {
             return $this->can_send_documents;
         }
@@ -113,7 +113,7 @@
          *
          * @return bool
          */
-        public function isCanSendPhotos(): bool
+        public function canSendPhotos(): bool
         {
             return $this->can_send_photos;
         }
@@ -123,7 +123,7 @@
          *
          * @return bool
          */
-        public function isCanSendVideos(): bool
+        public function canSendVideos(): bool
         {
             return $this->can_send_videos;
         }
@@ -133,7 +133,7 @@
          *
          * @return bool
          */
-        public function isCanSendVideosNotes(): bool
+        public function canSendVideosNotes(): bool
         {
             return $this->can_send_videos_notes;
         }
@@ -143,7 +143,7 @@
          *
          * @return bool
          */
-        public function isCanSendVoiceNotes(): bool
+        public function canSendVoiceNotes(): bool
         {
             return $this->can_send_voice_notes;
         }
@@ -153,7 +153,7 @@
          *
          * @return bool
          */
-        public function isCanSendPolls(): bool
+        public function canSendPolls(): bool
         {
             return $this->can_send_polls;
         }
@@ -163,7 +163,7 @@
          *
          * @return bool
          */
-        public function isCanSendOtherMessages(): bool
+        public function canSendOtherMessages(): bool
         {
             return $this->can_send_other_messages;
         }
@@ -173,7 +173,7 @@
          *
          * @return bool
          */
-        public function isCanAddWebPagePreviews(): bool
+        public function canAddWebPagePreviews(): bool
         {
             return $this->can_add_web_page_previews;
         }
@@ -184,7 +184,7 @@
          *
          * @return bool
          */
-        public function isCanChangeInfo(): bool
+        public function canChangeInfo(): bool
         {
             return $this->can_change_info;
         }
@@ -194,7 +194,7 @@
          *
          * @return bool
          */
-        public function isCanInviteUsers(): bool
+        public function canInviteUsers(): bool
         {
             return $this->can_invite_users;
         }
@@ -204,7 +204,7 @@
          *
          * @return bool
          */
-        public function isCanPinMessages(): bool
+        public function canPinMessages(): bool
         {
             return $this->can_pin_messages;
         }
@@ -215,7 +215,7 @@
          *
          * @return bool
          */
-        public function isCanManageTopics(): bool
+        public function canManageTopics(): bool
         {
             return $this->can_manage_topics;
         }
@@ -250,25 +250,26 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
 
-            $object->can_send_messages = @$data['can_send_messages'] ?? false;
-            $object->can_send_audios = @$data['can_send_audios'] ?? false;
-            $object->can_send_documents = @$data['can_send_documents'] ?? false;
-            $object->can_send_photos = @$data['can_send_photos'] ?? false;
-            $object->can_send_videos = @$data['can_send_videos'] ?? false;
-            $object->can_send_videos_notes = @$data['can_send_videos_notes'] ?? false;
-            $object->can_send_voice_notes = @$data['can_send_voice_notes'] ?? false;
-            $object->can_send_polls = @$data['can_send_polls'] ?? false;
-            $object->can_send_other_messages = @$data['can_send_other_messages'] ?? false;
-            $object->can_add_web_page_previews = @$data['can_add_web_page_previews'] ?? false;
-            $object->can_change_info = @$data['can_change_info'] ?? false;
-            $object->can_invite_users = @$data['can_invite_users'] ?? false;
-            $object->can_pin_messages = @$data['can_pin_messages'] ?? false;
-            $object->can_manage_topics = @$data['can_manage_topics'] ?? false;
+            $object->can_send_messages = $data['can_send_messages'] ?? false;
+            $object->can_send_audios = $data['can_send_audios'] ?? false;
+            $object->can_send_documents = $data['can_send_documents'] ?? false;
+            $object->can_send_photos = $data['can_send_photos'] ?? false;
+            $object->can_send_videos = $data['can_send_videos'] ?? false;
+            $object->can_send_videos_notes = $data['can_send_videos_notes'] ?? false;
+            $object->can_send_voice_notes = $data['can_send_voice_notes'] ?? false;
+            $object->can_send_polls = $data['can_send_polls'] ?? false;
+            $object->can_send_other_messages = $data['can_send_other_messages'] ?? false;
+            $object->can_add_web_page_previews = $data['can_add_web_page_previews'] ?? false;
+            $object->can_change_info = $data['can_change_info'] ?? false;
+            $object->can_invite_users = $data['can_invite_users'] ?? false;
+            $object->can_pin_messages = $data['can_pin_messages'] ?? false;
+            $object->can_manage_topics = $data['can_manage_topics'] ?? false;
 
             return $object;
         }

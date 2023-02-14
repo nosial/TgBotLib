@@ -80,7 +80,7 @@
          *
          * @return bool
          */
-        public function isIsBot(): bool
+        public function isBot(): bool
         {
             return $this->is_bot;
         }
@@ -131,7 +131,7 @@
          *
          * @return bool
          */
-        public function isIsPremium(): bool
+        public function isPremium(): bool
         {
             return $this->is_premium;
         }
@@ -152,7 +152,7 @@
          * @see https://core.telegram.org/bots/api#getme
          * @return bool
          */
-        public function isCanJoinGroups(): bool
+        public function canJoinGroups(): bool
         {
             return $this->can_join_groups;
         }
@@ -164,7 +164,7 @@
          * @see https://core.telegram.org/bots#privacy-mode
          * @return bool
          */
-        public function isCanReadAllGroupMessages(): bool
+        public function canReadAllGroupMessages(): bool
         {
             return $this->can_read_all_group_messages;
         }
@@ -174,7 +174,7 @@
          *
          * @return bool
          */
-        public function isSupportsInlineQueries(): bool
+        public function supportsInlineQueries(): bool
         {
             return $this->supports_inline_queries;
         }
@@ -211,17 +211,17 @@
         {
             $object = new self();
 
-            $object->id = @$data['id'];
-            $object->is_bot = @$data['is_bot'];
-            $object->first_name = @$data['first_name'];
-            $object->last_name = @$data['last_name'] ?? null;
-            $object->username = @$data['username'] ?? null;
-            $object->language_code = @$data['language_code'] ?? null;
-            $object->is_premium = @$data['is_premium'] ?? false;
-            $object->added_to_attachment_menu = @$data['added_to_attachment_menu'] ?? false;
-            $object->can_join_groups = @$data['can_join_groups'] ?? false;
-            $object->can_read_all_group_messages = @$data['can_read_all_group_messages'] ?? false;
-            $object->supports_inline_queries = @$data['supports_inline_queries'] ?? false;
+            $object->id = $data['id'] ?? null;
+            $object->is_bot = $data['is_bot'] ?? false;
+            $object->first_name = $data['first_name'] ?? null;
+            $object->last_name = $data['last_name'] ?? null;
+            $object->username = $data['username'] ?? null;
+            $object->language_code = $data['language_code'] ?? null;
+            $object->is_premium = $data['is_premium'] ?? false;
+            $object->added_to_attachment_menu = $data['added_to_attachment_menu'] ?? false;
+            $object->can_join_groups = $data['can_join_groups'] ?? false;
+            $object->can_read_all_group_messages = $data['can_read_all_group_messages'] ?? false;
+            $object->supports_inline_queries = $data['supports_inline_queries'] ?? false;
 
             return $object;
         }

@@ -128,13 +128,13 @@
         public function toArray(): array
         {
             return [
-                'type' => $this->type ?? null,
-                'offset' => $this->offset ?? null,
-                'length' => $this->length ?? null,
-                'url' => $this->url ?? null,
-                'user' => ($this->user instanceof User) ? $this->user->toArray() : null,
-                'language' => $this->language ?? null,
-                'custom_emoji_id' => $this->custom_emoji_id ?? null,
+                'type' => $this->type,
+                'offset' => $this->offset,
+                'length' => $this->length,
+                'url' => $this->url,
+                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : null,
+                'language' => $this->language,
+                'custom_emoji_id' => $this->custom_emoji_id
             ];
         }
 

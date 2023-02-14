@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\BotCommandScope;
 
+    use TgBotLib\Abstracts\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
@@ -62,8 +63,8 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
-            $object->chat_id = $data['chat_id'];
+            $object->type = $data['type'] ?? BotCommandScopeType::Chat;
+            $object->chat_id = $data['chat_id'] ?? null;
 
             return $object;
         }

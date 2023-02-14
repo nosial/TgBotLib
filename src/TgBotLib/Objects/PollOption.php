@@ -61,8 +61,8 @@
         {
             $object = new self();
 
-            $object->text = $data['text'];
-            $object->voter_count = $data['voter_count'];
+            $object->text = $data['text'] ?? null;
+            $object->voter_count = $data['voter_count'] ?? null;
 
             return $object;
         }

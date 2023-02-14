@@ -157,7 +157,7 @@
                 'width' => $this->width,
                 'height' => $this->height,
                 'duration' => $this->duration,
-                'thumb' => ($this->thumb instanceof PhotoSize) ? $this->thumb->toArray() : null,
+                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : null,
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null,

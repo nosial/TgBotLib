@@ -128,7 +128,7 @@
 
             $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : new Chat();
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : new User();
-            $object->date = $data['date'];
+            $object->date = $data['date'] ?? 0;
             $object->old_chat_member = isset($data['old_chat_member']) ? ChatMember::fromArray($data['old_chat_member']) : new ChatMember();
             $object->new_chat_member = isset($data['new_chat_member']) ? ChatMember::fromArray($data['new_chat_member']) : new ChatMember();
             $object->invite_link = isset($data['invite_link']) ? ChatInviteLink::fromArray($data['invite_link']) : null;

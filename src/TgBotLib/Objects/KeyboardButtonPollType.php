@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -44,7 +46,9 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->type = @$data['type'] ?? null;
+
+            $object->type = $data['type'] ?? null;
+
             return $object;
         }
     }

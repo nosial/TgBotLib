@@ -212,7 +212,7 @@
          *
          * @return bool
          */
-        public function isHasSpoiler(): bool
+        public function hasSpoiler(): bool
         {
             return $this->has_spoiler;
         }
@@ -235,23 +235,15 @@
          */
         public function toArray(): array
         {
-            $caption_entities = null;
-            if($this->caption_entities !== null)
-            {
-                $caption_entities = [];
-                foreach($this->caption_entities as $entity)
-                {
-                    $caption_entities[] = $entity->toArray();
-                }
-            }
-
             return [
                 'type' => $this->type,
                 'media' => $this->media,
                 'thumb' => $this->thumb,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function($entity) {
+                    return $entity->toArray();
+                }, $this->caption_entities) : null,
                 'width' => $this->width,
                 'height' => $this->height,
                 'duration' => $this->duration,
@@ -271,31 +263,24 @@
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
-            $caption_entities = null;
-            if($data['caption_entities'] !== null)
-            {
-                $caption_entities = [];
-                foreach($data['caption_entities'] as $entity)
-                {
-                    $caption_entities[] = MessageEntity::fromArray($entity);
-                }
-            }
-
             $object = new self();
-            $object->type = $data['type'];
-            $object->media = $data['media'];
-            $object->thumb = @$data['thumb'] ?? null;
-            $object->caption = @$data['caption'] ?? null;
-            $object->parse_mode = @$data['parse_mode'] ?? null;
-            $object->caption_entities = $caption_entities;
-            $object->width = @$data['width'] ?? null;
-            $object->height = @$data['height'] ?? null;
-            $object->duration = @$data['duration'] ?? null;
-            $object->performer = @$data['performer'] ?? null;
-            $object->title = @$data['title'] ?? null;
-            $object->supports_streaming = @$data['supports_streaming'] ?? false;
-            $object->has_spoiler = @$data['has_spoiler'] ?? false;
-            $object->disable_content_type_detection = @$data['disable_content_type_detection'] ?? false;
+            $object->type = $data['type'] ?? null;
+            $object->media = $data['media'] ?? null;
+            $object->thumb = $data['thumb'] ?? null;
+            $object->caption = $data['caption'] ?? null;
+            $object->parse_mode = $data['parse_mode'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) && is_array($data['caption_entities']) ? array_map(function($entity)
+            {
+                return MessageEntity::fromArray($entity);
+            }, $data['caption_entities']) : null;
+            $object->width = $data['width'] ?? null;
+            $object->height = $data['height'] ?? null;
+            $object->duration = $data['duration'] ?? null;
+            $object->performer = $data['performer'] ?? null;
+            $object->title = $data['title'] ?? null;
+            $object->supports_streaming = $data['supports_streaming'] ?? false;
+            $object->has_spoiler = $data['has_spoiler'] ?? false;
+            $object->disable_content_type_detection = $data['disable_content_type_detection'] ?? false;
 
             return $object;
         }

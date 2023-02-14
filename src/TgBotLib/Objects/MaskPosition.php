@@ -96,10 +96,10 @@
         {
             $object = new self();
 
-            $object->point = $data['point'];
-            $object->x_shift = $data['x_shift'];
-            $object->y_shift = $data['y_shift'];
-            $object->scale = $data['scale'];
+            $object->point = $data['point'] ?? null;
+            $object->x_shift = $data['x_shift'] ?? null;
+            $object->y_shift = $data['y_shift'] ?? null;
+            $object->scale = $data['scale'] ?? null;
 
             return $object;
         }

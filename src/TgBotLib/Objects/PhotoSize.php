@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -104,15 +106,16 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
 
-            $object->file_id = $data['file_id'];
-            $object->file_unique_id = $data['file_unique_id'];
-            $object->width = $data['width'];
-            $object->height = $data['height'];
+            $object->file_id = $data['file_id'] ?? null;
+            $object->file_unique_id = $data['file_unique_id'] ?? null;
+            $object->width = $data['width'] ?? null;
+            $object->height = $data['height'] ?? null;
             $object->file_size = $data['file_size'] ?? null;
 
             return $object;

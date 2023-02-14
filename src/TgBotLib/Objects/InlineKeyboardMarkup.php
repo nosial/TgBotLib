@@ -27,13 +27,22 @@
         /**
          * Returns an array representation of the object
          *
-         * @return InlineKeyboardButton[][][]
+         * @return array[][]
          */
         public function toArray(): array
         {
-            return [
-                'inline_keyboard' => $this->inline_keyboard,
-            ];
+            $data = [];
+
+            if ($this->inline_keyboard !== null)
+            {
+                /** @var InlineKeyboardButton $item */
+                foreach ($this->inline_keyboard as $item)
+                {
+                    $data[][] = $item->toArray();
+                }
+            }
+
+            return $data;
         }
 
         /**
@@ -45,7 +54,14 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->inline_keyboard = @$data['inline_keyboard'] ?? null;
+
+            $object->inline_keyboard = [];
+
+            foreach($data as $item)
+            {
+                $object->inline_keyboard[] = InlineKeyboardButton::fromArray($item);
+            }
+
             return $object;
         }
 

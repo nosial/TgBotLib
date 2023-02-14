@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -74,8 +76,8 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->traveler = User::fromArray($data['traveler']);
-            $object->watcher = User::fromArray($data['watcher']);
+            $object->traveler = isset($data['traveler']) && is_array($data['traveler']) ? User::fromArray($data['traveler']) : $data['traveler'];
+            $object->watcher = isset($data['watcher']) && is_array($data['watcher']) ? User::fromArray($data['watcher']) : $data['watcher'];
             $object->distance = $data['distance'];
 
             return $object;

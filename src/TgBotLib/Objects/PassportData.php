@@ -46,9 +46,13 @@
         public function toArray(): array
         {
             return [
-                'data' => array_map(function (EncryptedPassportElement $element)
+                'data' => array_map(function ($element)
                 {
-                    return $element->toArray();
+                    if($element instanceof ObjectTypeInterface)
+                    {
+                        return $element->toArray();
+                    }
+                    return $element;
                 }, $this->data),
                 'credentials' => $this->credentials->toArray(),
             ];

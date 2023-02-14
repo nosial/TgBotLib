@@ -110,12 +110,12 @@
         public function toArray(): array
         {
             return [
-                'chat' => ($this->chat instanceof Chat) ? $this->chat->toArray() : $this->chat,
-                'from' => ($this->from instanceof User) ? $this->from->toArray() : $this->from,
+                'chat' => ($this->chat instanceof ObjectTypeInterface) ? $this->chat->toArray() : $this->chat,
+                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : $this->from,
                 'user_chat_id' => $this->user_chat_id,
                 'date' => $this->date,
                 'bio' => $this->bio,
-                'invite_link' => ($this->invite_link instanceof ChatInviteLink) ? $this->invite_link->toArray() : $this->invite_link,
+                'invite_link' => ($this->invite_link instanceof ObjectTypeInterface) ? $this->invite_link->toArray() : $this->invite_link,
             ];
         }
 

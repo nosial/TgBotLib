@@ -109,31 +109,17 @@
          */
         public function toArray(): array
         {
-            $text_entities = null;
-            if ($this->text_entities)
-            {
-                foreach ($this->text_entities as $text_entity)
-                {
-                    $text_entities[] = $text_entity->toArray();
-                }
-            }
-
-            $photo = null;
-            if ($this->photo)
-            {
-                foreach ($this->photo as $photo_item)
-                {
-                    $photo[] = $photo_item->toArray();
-                }
-            }
-
             return [
                 'title' => $this->title,
                 'description' => $this->description,
-                'photo' => $photo,
+                'photo' => isset($this->photo) ? array_map(function ($photo) {
+                    return $photo->toArray();
+                }, $this->photo) : null,
                 'text' => $this->text,
-                'text_entities' => $text_entities,
-                'animation' => ($this->animation instanceof Animation) ? $this->animation->toArray() : null,
+                'text_entities' => isset($this->text_entities) ? array_map(function ($text_entity) {
+                    return $text_entity->toArray();
+                }, $this->text_entities) : null,
+                'animation' => ($this->animation instanceof ObjectTypeInterface) ? $this->animation->toArray() : null,
             ];
         }
 
@@ -147,28 +133,15 @@
         {
             $object = new self();
 
-            $photo = null;
-            if ($data['photo'])
-            {
-                foreach ($data['photo'] as $photo_item)
-                {
-                    $photo[] = PhotoSize::fromArray($photo_item);
-                }
-            }
-            $text_entities = null;
-            if ($data['text_entities'])
-            {
-                foreach ($data['text_entities'] as $text_entity)
-                {
-                    $text_entities[] = MessageEntity::fromArray($text_entity);
-                }
-            }
-
-            $object->description = $data['description'];
-            $object->title = $data['title'];
-            $object->photo = $photo;
+            $object->description = $data['description'] ?? null;
+            $object->title = $data['title'] ?? null;
+            $object->photo = isset($data['photo']) && is_array($data['photo']) ? array_map(function ($photo) {
+                return PhotoSize::fromArray($photo);
+            }, $data['photo']) : null;
             $object->text = $data['text'] ?? null;
-            $object->text_entities = $text_entities;
+            $object->text_entities = isset($data['text_entities']) && is_array($data['text_entities']) ? array_map(function ($text_entity) {
+                return MessageEntity::fromArray($text_entity);
+            }, $data['text_entities']) : null;
             $object->animation = ($data['animation']) ? Animation::fromArray($data['animation']) : null;
 
             return $object;

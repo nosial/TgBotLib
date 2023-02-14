@@ -42,6 +42,7 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
+
             $object->message_auto_delete_time = $data['message_auto_delete_time'];
 
             return $object;

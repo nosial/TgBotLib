@@ -81,9 +81,9 @@
         {
             $object = new self();
 
-            $object->request_id = $data['request_id'];
-            $object->user_is_bot = $data['user_is_bot'];
-            $object->user_is_premium = $data['user_is_premium'];
+            $object->request_id = $data['request_id'] ?? null;
+            $object->user_is_bot = $data['user_is_bot'] ?? false;
+            $object->user_is_premium = $data['user_is_premium'] ?? false;
 
             return $object;
         }

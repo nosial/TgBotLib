@@ -79,9 +79,9 @@
         {
             $object = new self();
 
-            $object->data = @$data['data'];
-            $object->hash = @$data['hash'];
-            $object->secret = @$data['secret'];
+            $object->data = $data['data'] ?? null;
+            $object->hash = $data['hash'] ?? null;
+            $object->secret = $data['secret'] ?? null;
 
             return $object;
         }

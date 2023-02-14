@@ -81,8 +81,8 @@
             return [
                 'file_id' => $this->file_id,
                 'file_unique_id' => $this->file_unique_id,
-                'file_size' => $this->file_size ?? null,
-                'file_path' => $this->file_path ?? null,
+                'file_size' => $this->file_size,
+                'file_path' => $this->file_path
             ];
         }
 
@@ -95,10 +95,10 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->file_id = @$data['file_id'];
-            $object->file_unique_id = @$data['file_unique_id'];
-            $object->file_size = @$data['file_size'] ?? null;
-            $object->file_path = @$data['file_path'] ?? null;
+            $object->file_id = $data['file_id'] ?? null;
+            $object->file_unique_id = $data['file_unique_id'] ?? null;
+            $object->file_size = $data['file_size'] ?? null;
+            $object->file_path = $data['file_path'] ?? null;
             return $object;
         }
     }

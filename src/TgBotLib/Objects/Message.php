@@ -496,7 +496,7 @@
          *
          * @return bool
          */
-        public function isIsTopicMessage(): bool
+        public function isTopicMessage(): bool
         {
             return $this->is_topic_message;
         }
@@ -548,7 +548,7 @@
          *
          * @return bool
          */
-        public function isHasProtectedContent(): bool
+        public function hasProtectedContent(): bool
         {
             return $this->has_protected_content;
         }
@@ -703,7 +703,7 @@
          *
          * @return bool
          */
-        public function isHasMediaSpoiler(): bool
+        public function hasMediaSpoiler(): bool
         {
             return $this->has_media_spoiler;
         }
@@ -1113,125 +1113,107 @@
          */
         public function toArray(): array
         {
-            $entities = null;
-            if($this->entities !== null)
-            {
-                $entities = [];
-                foreach($this->entities as $entity)
-                {
-                    $entities[] = $entity->toArray();
-                }
-            }
-
-            $photo = null;
-            if($this->photo !== null)
-            {
-                $photo = [];
-                foreach($this->photo as $photo_size)
-                {
-                    $photo[] = $photo_size->toArray();
-                }
-            }
-
-            $caption_entities = null;
-            if($this->caption_entities !== null)
-            {
-                $caption_entities = [];
-                foreach($this->caption_entities as $caption_entity)
-                {
-                    $caption_entities[] = $caption_entity->toArray();
-                }
-            }
-
-            $new_chat_members = [];
-            if($this->new_chat_members !== null)
-            {
-                foreach($this->new_chat_members as $new_chat_member)
-                {
-                    $new_chat_members[] = $new_chat_member->toArray();
-                }
-            }
-
-            $new_chat_photo = [];
-            if($this->new_chat_photo !== null)
-            {
-                foreach($this->new_chat_photo as $new_chat_photo_size)
-                {
-                    $new_chat_photo[] = $new_chat_photo_size->toArray();
-                }
-            }
-
             return [
                 'message_id' => $this->message_id,
                 'message_thread_id' => $this->message_thread_id,
-                'from' => ($this->from instanceof User) ? $this->from->toArray() : null,
-                'sender_chat' => ($this->sender_chat instanceof Chat) ? $this->sender_chat->toArray() : null,
+                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
+                'sender_chat' => ($this->sender_chat instanceof ObjectTypeInterface) ? $this->sender_chat->toArray() : null,
                 'date' => $this->date,
-                'chat' => ($this->chat instanceof Chat) ? $this->chat->toArray() : null,
-                'forward_from' => ($this->forward_from instanceof User) ? $this->forward_from->toArray() : null,
-                'forward_from_chat' => ($this->forward_from_chat instanceof Chat) ? $this->forward_from_chat->toArray() : null,
+                'chat' => ($this->chat instanceof ObjectTypeInterface) ? $this->chat->toArray() : null,
+                'forward_from' => ($this->forward_from instanceof ObjectTypeInterface) ? $this->forward_from->toArray() : null,
+                'forward_from_chat' => ($this->forward_from_chat instanceof ObjectTypeInterface) ? $this->forward_from_chat->toArray() : null,
                 'forward_from_message_id' => $this->forward_from_message_id,
                 'forward_signature' => $this->forward_signature,
                 'forward_sender_name' => $this->forward_sender_name,
                 'forward_date' => $this->forward_date,
                 'is_topic_message' => $this->is_topic_message,
                 'is_automatic_forward' => $this->is_automatic_forward,
-                'reply_to_message' => ($this->reply_to_message instanceof Message) ? $this->reply_to_message->toArray() : null,
-                'via_bot' => ($this->via_bot instanceof User) ? $this->via_bot->toArray() : null,
+                'reply_to_message' => ($this->reply_to_message instanceof ObjectTypeInterface) ? $this->reply_to_message->toArray() : null,
+                'via_bot' => ($this->via_bot instanceof ObjectTypeInterface) ? $this->via_bot->toArray() : null,
                 'edit_date' => $this->edit_date,
                 'has_protected_content' => $this->has_protected_content,
                 'media_group_id' => $this->media_group_id,
                 'author_signature' => $this->author_signature,
                 'text' => $this->text,
-                'entities' => $entities,
-                'animation' => ($this->animation instanceof Animation) ? $this->animation->toArray() : null,
-                'audio' => ($this->audio instanceof Audio) ? $this->audio->toArray() : null,
-                'document' => ($this->document instanceof Document) ? $this->document->toArray() : null,
-                'photo' => $photo,
-                'sticker' => ($this->sticker instanceof Sticker) ? $this->sticker->toArray() : null,
-                'video' => ($this->video instanceof Video) ? $this->video->toArray() : null,
-                'video_note' => ($this->video_note instanceof VideoNote) ? $this->video_note->toArray() : null,
-                'voice' => ($this->voice instanceof Voice) ? $this->voice->toArray() : null,
+                'entities' => is_array($this->entities) ? array_map(function ($entity) {
+                    if ($entity instanceof ObjectTypeInterface)
+                    {
+                        return $entity->toArray();
+                    }
+                    return $entity;
+                }, $this->entities) : null,
+                'animation' => ($this->animation instanceof ObjectTypeInterface) ? $this->animation->toArray() : null,
+                'audio' => ($this->audio instanceof ObjectTypeInterface) ? $this->audio->toArray() : null,
+                'document' => ($this->document instanceof ObjectTypeInterface) ? $this->document->toArray() : null,
+                'photo' => is_array($this->photo) ? array_map(function ($photo) {
+                    if ($photo instanceof ObjectTypeInterface)
+                    {
+                        return $photo->toArray();
+                    }
+                    return $photo;
+                }, $this->photo) : null,
+                'sticker' => ($this->sticker instanceof ObjectTypeInterface) ? $this->sticker->toArray() : null,
+                'video' => ($this->video instanceof ObjectTypeInterface) ? $this->video->toArray() : null,
+                'video_note' => ($this->video_note instanceof ObjectTypeInterface) ? $this->video_note->toArray() : null,
+                'voice' => ($this->voice instanceof ObjectTypeInterface) ? $this->voice->toArray() : null,
                 'caption' => $this->caption,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($caption_entity) {
+                    if ($caption_entity instanceof ObjectTypeInterface)
+                    {
+                        return $caption_entity->toArray();
+                    }
+                    return $caption_entity;
+                }, $this->caption_entities) : null,
                 'has_media_spoiler' => $this->has_media_spoiler,
-                'contact' => ($this->contact instanceof Contact) ? $this->contact->toArray() : null,
-                'dice' => ($this->dice instanceof Dice) ? $this->dice->toArray() : null,
-                'game' => ($this->game instanceof Game) ? $this->game->toArray() : null,
-                'poll' => ($this->poll instanceof Poll) ? $this->poll->toArray() : null,
-                'venue' => ($this->venue instanceof Venue) ? $this->venue->toArray() : null,
-                'location' => ($this->location instanceof Location) ? $this->location->toArray() : null,
-                'new_chat_members' => $new_chat_members,
-                'left_chat_member' => ($this->left_chat_member instanceof User) ? $this->left_chat_member->toArray() : null,
+                'contact' => ($this->contact instanceof ObjectTypeInterface) ? $this->contact->toArray() : null,
+                'dice' => ($this->dice instanceof ObjectTypeInterface) ? $this->dice->toArray() : null,
+                'game' => ($this->game instanceof ObjectTypeInterface) ? $this->game->toArray() : null,
+                'poll' => ($this->poll instanceof ObjectTypeInterface) ? $this->poll->toArray() : null,
+                'venue' => ($this->venue instanceof ObjectTypeInterface) ? $this->venue->toArray() : null,
+                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : null,
+                'new_chat_members' => is_array($this->new_chat_members) ? array_map(function ($new_chat_member) {
+                    if ($new_chat_member instanceof ObjectTypeInterface)
+                    {
+                        return $new_chat_member->toArray();
+                    }
+                    return $new_chat_member;
+                }, $this->new_chat_members) : null,
+                'left_chat_member' => ($this->left_chat_member instanceof ObjectTypeInterface) ? $this->left_chat_member->toArray() : null,
                 'new_chat_title' => $this->new_chat_title,
-                'new_chat_photo' => $new_chat_photo,
+                'new_chat_photo' => is_array($this->new_chat_photo) ? array_map(function ($new_chat_photo) {
+                    if ($new_chat_photo instanceof ObjectTypeInterface)
+                    {
+                        return $new_chat_photo->toArray();
+                    }
+                    return $new_chat_photo;
+                }, $this->new_chat_photo) : null,
                 'delete_chat_photo' => $this->delete_chat_photo,
                 'group_chat_created' => $this->group_chat_created,
                 'supergroup_chat_created' => $this->supergroup_chat_created,
                 'channel_chat_created' => $this->channel_chat_created,
-                'message_auto_delete_timer_changed' => ($this->message_auto_delete_timer_changed instanceof MessageAutoDeleteTimerChanged) ? $this->message_auto_delete_timer_changed->toArray() : null,
+                'message_auto_delete_timer_changed' => ($this->message_auto_delete_timer_changed instanceof ObjectTypeInterface) ? $this->message_auto_delete_timer_changed->toArray() : null,
                 'migrate_to_chat_id' => $this->migrate_to_chat_id,
-                'pinned_message' => ($this->pinned_message instanceof Message) ? $this->pinned_message->toArray() : null,
-                'invoice' => ($this->invoice instanceof Invoice) ? $this->invoice->toArray() : null,
-                'successful_payment' => ($this->successful_payment instanceof SuccessfulPayment) ? $this->successful_payment->toArray() : null,
-                'user_shared' => ($this->user_shared instanceof UserShared) ? $this->user_shared->toArray() : null,
-                'chat_shared' => ($this->chat_shared instanceof ChatShared) ? $this->chat_shared->toArray() : null,
+                'pinned_message' => ($this->pinned_message instanceof ObjectTypeInterface) ? $this->pinned_message->toArray() : null,
+                'invoice' => ($this->invoice instanceof ObjectTypeInterface) ? $this->invoice->toArray() : null,
+                'successful_payment' => ($this->successful_payment instanceof ObjectTypeInterface) ? $this->successful_payment->toArray() : null,
+                'user_shared' => ($this->user_shared instanceof ObjectTypeInterface) ? $this->user_shared->toArray() : null,
+                'chat_shared' => ($this->chat_shared instanceof ObjectTypeInterface) ? $this->chat_shared->toArray() : null,
                 'connected_website' => $this->connected_website,
-                'write_access_allowed' => ($this->write_access_allowed instanceof WriteAccessAllowed) ? $this->write_access_allowed->toArray() : null,
-                'passport_data' => ($this->passport_data instanceof PassportData) ? $this->passport_data->toArray() : null,
-                'proximity_alert_triggered' => ($this->proximity_alert_triggered instanceof ProximityAlertTriggered) ? $this->proximity_alert_triggered->toArray() : null,
-                'forum_topic_created' => ($this->forum_topic_created instanceof ForumTopicCreated) ? $this->forum_topic_created->toArray() : null,
-                'forum_topic_edited' => ($this->forum_topic_edited instanceof ForumTopicEdited) ? $this->forum_topic_edited->toArray() : null,
-                'forum_topic_closed' => ($this->forum_topic_closed instanceof ForumTopicClosed) ? $this->forum_topic_closed->toArray() : null,
-                'forum_topic_reopened' => ($this->forum_topic_reopened instanceof ForumTopicReopened) ? $this->forum_topic_reopened->toArray() : null,
-                'general_forum_topic_hidden' => ($this->general_forum_topic_hidden instanceof GeneralForumTopicHidden) ? $this->general_forum_topic_hidden->toArray() : null,
-                'general_forum_topic_unhidden' => ($this->general_forum_topic_unhidden instanceof GeneralForumTopicUnhidden) ? $this->general_forum_topic_unhidden->toArray() : null,
-                'video_chat_scheduled' => ($this->video_chat_scheduled instanceof VideoChatScheduled) ? $this->video_chat_scheduled->toArray() : null,
-                'video_chat_started' => ($this->video_chat_started instanceof VideoChatStarted) ? $this->video_chat_started->toArray() : null,
-                'video_chat_ended' => ($this->video_chat_ended instanceof VideoChatEnded) ? $this->video_chat_ended->toArray() : null,
-                'video_chat_participants_invited' => ($this->video_chat_participants_invited instanceof VideoChatParticipantsInvited) ? $this->video_chat_participants_invited->toArray() : null,
-                'web_app_data' => ($this->web_app_data instanceof WebAppData) ? $this->web_app_data->toArray() : null,
-                'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
+                'write_access_allowed' => ($this->write_access_allowed instanceof ObjectTypeInterface) ? $this->write_access_allowed->toArray() : null,
+                'passport_data' => ($this->passport_data instanceof ObjectTypeInterface) ? $this->passport_data->toArray() : null,
+                'proximity_alert_triggered' => ($this->proximity_alert_triggered instanceof ObjectTypeInterface) ? $this->proximity_alert_triggered->toArray() : null,
+                'forum_topic_created' => ($this->forum_topic_created instanceof ObjectTypeInterface) ? $this->forum_topic_created->toArray() : null,
+                'forum_topic_edited' => ($this->forum_topic_edited instanceof ObjectTypeInterface) ? $this->forum_topic_edited->toArray() : null,
+                'forum_topic_closed' => ($this->forum_topic_closed instanceof ObjectTypeInterface) ? $this->forum_topic_closed->toArray() : null,
+                'forum_topic_reopened' => ($this->forum_topic_reopened instanceof ObjectTypeInterface) ? $this->forum_topic_reopened->toArray() : null,
+                'general_forum_topic_hidden' => ($this->general_forum_topic_hidden instanceof ObjectTypeInterface) ? $this->general_forum_topic_hidden->toArray() : null,
+                'general_forum_topic_unhidden' => ($this->general_forum_topic_unhidden instanceof ObjectTypeInterface) ? $this->general_forum_topic_unhidden->toArray() : null,
+                'video_chat_scheduled' => ($this->video_chat_scheduled instanceof ObjectTypeInterface) ? $this->video_chat_scheduled->toArray() : null,
+                'video_chat_started' => ($this->video_chat_started instanceof ObjectTypeInterface) ? $this->video_chat_started->toArray() : null,
+                'video_chat_ended' => ($this->video_chat_ended instanceof ObjectTypeInterface) ? $this->video_chat_ended->toArray() : null,
+                'video_chat_participants_invited' => ($this->video_chat_participants_invited instanceof ObjectTypeInterface) ? $this->video_chat_participants_invited->toArray() : null,
+                'web_app_data' => ($this->web_app_data instanceof ObjectTypeInterface) ? $this->web_app_data->toArray() : null,
+                'reply_markup' => ($this->reply_markup instanceof ObjectTypeInterface) ? $this->reply_markup->toArray() : null,
             ];
         }
 
@@ -1245,120 +1227,88 @@
         {
             $object = new self();
 
-            $object->message_id = @$data['message_id'] ?? null;
-            $object->message_thread_id = @$data['message_thread_id'] ?? null;
-            $object->from = (@$data['from'] !== null) ? User::fromArray($data['from']) : null;
-            $object->sender_chat = (@$data['sender_chat'] !== null) ? Chat::fromArray($data['sender_chat']) : null;
-            $object->date = @$data['date'] ?? null;
-            $object->chat = (@$data['chat'] !== null) ? Chat::fromArray($data['chat']) : null;
-            $object->forward_from = (@$data['forward_from'] !== null) ? User::fromArray($data['forward_from']) : null;
-            $object->forward_from_chat = (@$data['forward_from_chat'] !== null) ? Chat::fromArray($data['forward_from_chat']) : null;
-            $object->forward_from_message_id = @$data['forward_from_message_id'] ?? null;
-            $object->forward_signature = @$data['forward_signature'] ?? null;
-            $object->forward_sender_name = @$data['forward_sender_name'] ?? null;
-            $object->forward_date = @$data['forward_date'] ?? null;
-            $object->is_topic_message = @$data['is_topic_message'] ?? null;
-            $object->is_automatic_forward = @$data['is_automatic_forward'] ?? null;
-            $object->reply_to_message = (@$data['reply_to_message'] !== null) ? self::fromArray($data['reply_to_message']) : null;
-            $object->via_bot = (@$data['via_bot'] !== null) ? User::fromArray($data['via_bot']) : null;
-            $object->edit_date = @$data['edit_date'] ?? null;
-            $object->has_protected_content = @$data['has_protected_content'] ?? null;
-            $object->media_group_id = @$data['media_group_id'] ?? null;
-            $object->author_signature = @$data['author_signature'] ?? null;
-            $object->text = @$data['text'] ?? null;
-
-            if (isset($data['entities']) && is_array($data['entities'])) {
-                $object->entities = [];
-                foreach ($data['entities'] as $item) {
-                    $object->entities[] = MessageEntity::fromArray($item);
-                }
-            }
-
-            $object->animation = (@$data['animation'] !== null) ? Animation::fromArray($data['animation']) : null;
-            $object->audio = (@$data['audio'] !== null) ? Audio::fromArray($data['audio']) : null;
-            $object->document = (@$data['document'] !== null) ? Document::fromArray($data['document']) : null;
-
-            if (isset($data['photo']) && is_array($data['photo']))
+            $object->message_id = $data['message_id'] ?? null;
+            $object->message_thread_id = $data['message_thread_id'] ?? null;
+            $object->from = ($data['from'] !== null) ? User::fromArray($data['from']) : null;
+            $object->sender_chat = ($data['sender_chat'] !== null) ? Chat::fromArray($data['sender_chat']) : null;
+            $object->date = $data['date'] ?? null;
+            $object->chat = ($data['chat'] !== null) ? Chat::fromArray($data['chat']) : null;
+            $object->forward_from = ($data['forward_from'] !== null) ? User::fromArray($data['forward_from']) : null;
+            $object->forward_from_chat = ($data['forward_from_chat'] !== null) ? Chat::fromArray($data['forward_from_chat']) : null;
+            $object->forward_from_message_id = $data['forward_from_message_id'] ?? null;
+            $object->forward_signature = $data['forward_signature'] ?? null;
+            $object->forward_sender_name = $data['forward_sender_name'] ?? null;
+            $object->forward_date = $data['forward_date'] ?? null;
+            $object->is_topic_message = $data['is_topic_message'] ?? null;
+            $object->is_automatic_forward = $data['is_automatic_forward'] ?? null;
+            $object->reply_to_message = ($data['reply_to_message'] !== null) ? self::fromArray($data['reply_to_message']) : null;
+            $object->via_bot = ($data['via_bot'] !== null) ? User::fromArray($data['via_bot']) : null;
+            $object->edit_date = $data['edit_date'] ?? null;
+            $object->has_protected_content = $data['has_protected_content'] ?? null;
+            $object->media_group_id = $data['media_group_id'] ?? null;
+            $object->author_signature = $data['author_signature'] ?? null;
+            $object->text = $data['text'] ?? null;
+            $object->entities = isset($data['entities']) && is_array($data['entities']) ? array_map(function ($item) {
+                return MessageEntity::fromArray($item);
+            }, $data['entities']) : null;
+            $object->animation = ($data['animation'] !== null) ? Animation::fromArray($data['animation']) : null;
+            $object->audio = ($data['audio'] !== null) ? Audio::fromArray($data['audio']) : null;
+            $object->document = ($data['document'] !== null) ? Document::fromArray($data['document']) : null;
+            $object->photo = isset($data['photo']) && is_array($data['photo']) ? array_map(function ($item)
             {
-                $object->photo = [];
-                foreach ($data['photo'] as $item)
-                {
-                    $object->photo[] = PhotoSize::fromArray($item);
-                }
-            }
-
-            $object->sticker = (@$data['sticker'] !== null) ? Sticker::fromArray($data['sticker']) : null;
-            $object->video = (@$data['video'] !== null) ? Video::fromArray($data['video']) : null;
-            $object->video_note = (@$data['video_note'] !== null) ? VideoNote::fromArray($data['video_note']) : null;
-            $object->voice = (@$data['voice'] !== null) ? Voice::fromArray($data['voice']) : null;
-            $object->caption = @$data['caption'] ?? null;
-
-            if (isset($data['caption_entities']) && is_array($data['caption_entities']))
-            {
-                $object->caption_entities = [];
-                foreach ($data['caption_entities'] as $item)
-                {
-                    $object->caption_entities[] = MessageEntity::fromArray($item);
-                }
-            }
-
-            $object->has_media_spoiler = @$data['has_media_spoiler'] ?? null;
-            $object->contact = (@$data['contact'] !== null) ? Contact::fromArray($data['contact']) : null;
-            $object->dice = (@$data['dice'] !== null) ? Dice::fromArray($data['dice']) : null;
-            $object->game = (@$data['game'] !== null) ? Game::fromArray($data['game']) : null;
-            $object->poll = (@$data['poll'] !== null) ? Poll::fromArray($data['poll']) : null;
-            $object->venue = (@$data['venue'] !== null) ? Venue::fromArray($data['venue']) : null;
-            $object->location = (@$data['location'] !== null) ? Location::fromArray($data['location']) : null;
-
-            if (isset($data['new_chat_members']) && is_array($data['new_chat_members']))
-            {
-                $object->new_chat_members = [];
-                foreach ($data['new_chat_members'] as $item)
-                {
-                    $object->new_chat_members[] = User::fromArray($item);
-                }
-            }
-
-            $object->left_chat_member = (@$data['left_chat_member'] !== null) ? User::fromArray($data['left_chat_member']) : null;
-            $object->new_chat_title = @$data['new_chat_title'] ?? null;
-
-            if (isset($data['new_chat_photo']) && is_array($data['new_chat_photo']))
-            {
-                $object->new_chat_photo = [];
-                foreach ($data['new_chat_photo'] as $item)
-                {
-                    $object->new_chat_photo[] = PhotoSize::fromArray($item);
-                }
-            }
-
-            $object->delete_chat_photo = @$data['delete_chat_photo'] ?? null;
-            $object->group_chat_created = @$data['group_chat_created'] ?? null;
-            $object->supergroup_chat_created = @$data['supergroup_chat_created'] ?? null;
-            $object->channel_chat_created = @$data['channel_chat_created'] ?? null;
-            $object->message_auto_delete_timer_changed = (@$data['message_auto_delete_timer_changed'] !== null) ? MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']) : null;
-            $object->migrate_to_chat_id = @$data['migrate_to_chat_id'] ?? null;
-            $object->migrate_from_chat_id = @$data['migrate_from_chat_id'] ?? null;
-            $object->pinned_message = (@$data['pinned_message'] !== null) ? self::fromArray($data['pinned_message']) : null;
-            $object->invoice = (@$data['invoice'] !== null) ? Invoice::fromArray($data['invoice']) : null;
-            $object->successful_payment = (@$data['successful_payment'] !== null) ? SuccessfulPayment::fromArray($data['successful_payment']) : null;
-            $object->user_shared = (@$data['user_shared'] !== null) ? UserShared::fromArray($data['user_shared']) : null;
-            $object->chat_shared = (@$data['chat_shared'] !== null) ? ChatShared::fromArray($data['chat_shared']) : null;
-            $object->connected_website = @$data['connected_website'] ?? null;
-            $object->write_access_allowed = (@$data['write_access_allowed'] !== null) ? WriteAccessAllowed::fromArray($data['write_access_allowed']) : null;
-            $object->passport_data = (@$data['passport_data'] !== null) ? PassportData::fromArray($data['passport_data']) : null;
-            $object->proximity_alert_triggered = (@$data['proximity_alert_triggered'] !== null) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
-            $object->forum_topic_created = (@$data['forum_topic_created'] !== null) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
-            $object->forum_topic_edited = (@$data['forum_topic_edited'] !== null) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
-            $object->forum_topic_closed = (@$data['forum_topic_closed'] !== null) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
-            $object->forum_topic_reopened = (@$data['forum_topic_reopened'] !== null) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
-            $object->general_forum_topic_hidden = (@$data['general_forum_topic_hidden'] !== null) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;
-            $object->general_forum_topic_unhidden = (@$data['general_forum_topic_unhidden'] !== null) ? GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']) : null;
-            $object->video_chat_scheduled = (@$data['video_chat_scheduled'] !== null) ? VideoChatScheduled::fromArray($data['video_chat_scheduled']) : null;
-            $object->video_chat_started = (@$data['video_chat_started'] !== null) ? VideoChatStarted::fromArray($data['video_chat_started']) : null;
-            $object->video_chat_ended = (@$data['video_chat_ended'] !== null) ? VideoChatEnded::fromArray($data['video_chat_ended']) : null;
-            $object->video_chat_participants_invited = (@$data['video_chat_participants_invited'] !== null) ? VideoChatParticipantsInvited::fromArray($data['video_chat_participants_invited']) : null;
-            $object->web_app_data = (@$data['web_app_data'] !== null) ? WebAppData::fromArray($data['web_app_data']) : null;
-            $object->reply_markup = (@$data['reply_markup'] !== null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
+                return PhotoSize::fromArray($item);
+            }, $data['photo']) : null;
+            $object->sticker = ($data['sticker'] !== null) ? Sticker::fromArray($data['sticker']) : null;
+            $object->video = ($data['video'] !== null) ? Video::fromArray($data['video']) : null;
+            $object->video_note = ($data['video_note'] !== null) ? VideoNote::fromArray($data['video_note']) : null;
+            $object->voice = ($data['voice'] !== null) ? Voice::fromArray($data['voice']) : null;
+            $object->caption = $data['caption'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) && is_array($data['caption_entities']) ? array_map(function ($item) {
+                return MessageEntity::fromArray($item);
+            }, $data['caption_entities']) : null;
+            $object->has_media_spoiler = $data['has_media_spoiler'] ?? null;
+            $object->contact = ($data['contact'] !== null) ? Contact::fromArray($data['contact']) : null;
+            $object->dice = ($data['dice'] !== null) ? Dice::fromArray($data['dice']) : null;
+            $object->game = ($data['game'] !== null) ? Game::fromArray($data['game']) : null;
+            $object->poll = ($data['poll'] !== null) ? Poll::fromArray($data['poll']) : null;
+            $object->venue = ($data['venue'] !== null) ? Venue::fromArray($data['venue']) : null;
+            $object->location = ($data['location'] !== null) ? Location::fromArray($data['location']) : null;
+            $object->new_chat_members = isset($data['new_chat_members']) && is_array($data['new_chat_members']) ? array_map(function ($item) {
+                return User::fromArray($item);
+            }, $data['new_chat_members']) : null;
+            $object->left_chat_member = ($data['left_chat_member'] !== null) ? User::fromArray($data['left_chat_member']) : null;
+            $object->new_chat_title = $data['new_chat_title'] ?? null;
+            $object->new_chat_photo = isset($data['new_chat_photo']) && is_array($data['new_chat_photo']) ? array_map(function ($item) {
+                return PhotoSize::fromArray($item);
+            }, $data['new_chat_photo']) : null;
+            $object->delete_chat_photo = $data['delete_chat_photo'] ?? null;
+            $object->group_chat_created = $data['group_chat_created'] ?? null;
+            $object->supergroup_chat_created = $data['supergroup_chat_created'] ?? null;
+            $object->channel_chat_created = $data['channel_chat_created'] ?? null;
+            $object->message_auto_delete_timer_changed = ($data['message_auto_delete_timer_changed'] !== null) ? MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']) : null;
+            $object->migrate_to_chat_id = $data['migrate_to_chat_id'] ?? null;
+            $object->migrate_from_chat_id = $data['migrate_from_chat_id'] ?? null;
+            $object->pinned_message = ($data['pinned_message'] !== null) ? self::fromArray($data['pinned_message']) : null;
+            $object->invoice = ($data['invoice'] !== null) ? Invoice::fromArray($data['invoice']) : null;
+            $object->successful_payment = ($data['successful_payment'] !== null) ? SuccessfulPayment::fromArray($data['successful_payment']) : null;
+            $object->user_shared = ($data['user_shared'] !== null) ? UserShared::fromArray($data['user_shared']) : null;
+            $object->chat_shared = ($data['chat_shared'] !== null) ? ChatShared::fromArray($data['chat_shared']) : null;
+            $object->connected_website = $data['connected_website'] ?? null;
+            $object->write_access_allowed = ($data['write_access_allowed'] !== null) ? WriteAccessAllowed::fromArray($data['write_access_allowed']) : null;
+            $object->passport_data = ($data['passport_data'] !== null) ? PassportData::fromArray($data['passport_data']) : null;
+            $object->proximity_alert_triggered = ($data['proximity_alert_triggered'] !== null) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
+            $object->forum_topic_created = ($data['forum_topic_created'] !== null) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
+            $object->forum_topic_edited = ($data['forum_topic_edited'] !== null) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
+            $object->forum_topic_closed = ($data['forum_topic_closed'] !== null) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
+            $object->forum_topic_reopened = ($data['forum_topic_reopened'] !== null) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
+            $object->general_forum_topic_hidden = ($data['general_forum_topic_hidden'] !== null) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;
+            $object->general_forum_topic_unhidden = ($data['general_forum_topic_unhidden'] !== null) ? GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']) : null;
+            $object->video_chat_scheduled = ($data['video_chat_scheduled'] !== null) ? VideoChatScheduled::fromArray($data['video_chat_scheduled']) : null;
+            $object->video_chat_started = ($data['video_chat_started'] !== null) ? VideoChatStarted::fromArray($data['video_chat_started']) : null;
+            $object->video_chat_ended = ($data['video_chat_ended'] !== null) ? VideoChatEnded::fromArray($data['video_chat_ended']) : null;
+            $object->video_chat_participants_invited = ($data['video_chat_participants_invited'] !== null) ? VideoChatParticipantsInvited::fromArray($data['video_chat_participants_invited']) : null;
+            $object->web_app_data = ($data['web_app_data'] !== null) ? WebAppData::fromArray($data['web_app_data']) : null;
+            $object->reply_markup = ($data['reply_markup'] !== null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
 
             return $object;
         }

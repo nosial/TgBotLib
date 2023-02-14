@@ -111,11 +111,11 @@
         {
             $object = new self();
 
-            $object->file_id = @$data['file_id'];
-            $object->file_unique_id = @$data['file_unique_id'];
-            $object->duration = @$data['duration'];
-            $object->mime_type = @$data['mime_type'] ?? null;
-            $object->file_size = @$data['file_size'] ?? null;
+            $object->file_id = $data['file_id'];
+            $object->file_unique_id = $data['file_unique_id'];
+            $object->duration = $data['duration'];
+            $object->mime_type = $data['mime_type'] ?? null;
+            $object->file_size = $data['file_size'] ?? null;
 
             return $object;
         }

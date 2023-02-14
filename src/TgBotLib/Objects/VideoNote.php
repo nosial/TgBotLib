@@ -109,7 +109,7 @@
                 'file_unique_id' => $this->file_unique_id,
                 'length' => $this->length,
                 'duration' => $this->duration,
-                'thumb' => ($this->thumb instanceof PhotoSize) ? $this->thumb->toArray() : null,
+                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : $this->thumb,
                 'file_size' => $this->file_size,
             ];
         }
@@ -124,12 +124,12 @@
         {
             $object = new self();
 
-            $object->file_id = @$data['file_id'];
-            $object->file_unique_id = @$data['file_unique_id'];
-            $object->length = @$data['length'];
-            $object->duration = @$data['duration'];
+            $object->file_id = $data['file_id'];
+            $object->file_unique_id = $data['file_unique_id'];
+            $object->length = $data['length'];
+            $object->duration = $data['duration'];
             $object->thumb = (isset($data['thumb'])) ? PhotoSize::fromArray($data['thumb']) : null;
-            $object->file_size = @$data['file_size'];
+            $object->file_size = $data['file_size'];
 
             return $object;
         }

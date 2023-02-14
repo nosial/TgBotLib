@@ -65,8 +65,8 @@
         {
             $object = new self();
 
-            $object->request_id = @$data['request_id'];
-            $object->chat_id = @$data['chat_id'];
+            $object->request_id = $data['request_id'] ?? null;
+            $object->chat_id = $data['chat_id'] ?? null;
 
             return $object;
         }

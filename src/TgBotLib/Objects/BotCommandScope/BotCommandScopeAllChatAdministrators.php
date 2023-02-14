@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\BotCommandScope;
 
+    use TgBotLib\Abstracts\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
@@ -20,7 +21,7 @@
         private $chat_id;
 
         /**
-         * Scope type, must be chat_administrators
+         * Scope type, must be all_chat_administrators
          *
          * @return string
          */
@@ -61,8 +62,10 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->type = $data['type'];
-            $object->chat_id = $data['chat_id'];
+
+            $object->type = $data['type'] ?? BotCommandScopeType::AllChatAdministrators;
+            $object->chat_id = $data['chat_id'] ?? null;
+
             return $object;
         }
 
@@ -75,8 +78,10 @@
         public static function fromBotCommandScope(BotCommandScope $botCommandScope): self
         {
             $object = new self();
+
             $object->type = $botCommandScope->getType();
             $object->chat_id = $botCommandScope->getChatId();
+
             return $object;
         }
     }

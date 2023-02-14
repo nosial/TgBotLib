@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\ChatMember;
 
+    use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
@@ -115,7 +116,7 @@
          *
          * @return bool
          */
-        public function isCanBeEdited(): bool
+        public function canBeEdited(): bool
         {
             return $this->can_be_edited;
         }
@@ -125,7 +126,7 @@
          *
          * @return bool
          */
-        public function isIsAnonymous(): bool
+        public function isAnonymous(): bool
         {
             return $this->is_anonymous;
         }
@@ -137,7 +138,7 @@
          *
          * @return bool
          */
-        public function isCanManageChat(): bool
+        public function canManageChat(): bool
         {
             return $this->can_manage_chat;
         }
@@ -147,7 +148,7 @@
          *
          * @return bool
          */
-        public function isCanDeleteMessages(): bool
+        public function canDeleteMessages(): bool
         {
             return $this->can_delete_messages;
         }
@@ -157,7 +158,7 @@
          *
          * @return bool
          */
-        public function isCanManageVideoChats(): bool
+        public function canManageVideoChats(): bool
         {
             return $this->can_manage_video_chats;
         }
@@ -167,7 +168,7 @@
          *
          * @return bool
          */
-        public function isCanRestrictMembers(): bool
+        public function canRestrictMembers(): bool
         {
             return $this->can_restrict_members;
         }
@@ -179,7 +180,7 @@
          *
          * @return bool
          */
-        public function isCanPromoteMembers(): bool
+        public function canPromoteMembers(): bool
         {
             return $this->can_promote_members;
         }
@@ -189,7 +190,7 @@
          *
          * @return bool
          */
-        public function isCanChangeInfo(): bool
+        public function canChangeInfo(): bool
         {
             return $this->can_change_info;
         }
@@ -199,7 +200,7 @@
          *
          * @return bool
          */
-        public function isCanInviteUsers(): bool
+        public function canInviteUsers(): bool
         {
             return $this->can_invite_users;
         }
@@ -209,7 +210,7 @@
          *
          * @return bool
          */
-        public function isCanPostMessages(): bool
+        public function canPostMessages(): bool
         {
             return $this->can_post_messages;
         }
@@ -219,7 +220,7 @@
          *
          * @return bool
          */
-        public function isCanEditMessages(): bool
+        public function canEditMessages(): bool
         {
             return $this->can_edit_messages;
         }
@@ -229,7 +230,7 @@
          *
          * @return bool
          */
-        public function isCanPinMessages(): bool
+        public function canPinMessages(): bool
         {
             return $this->can_pin_messages;
         }
@@ -239,7 +240,7 @@
          *
          * @return bool
          */
-        public function isCanManageTopics(): bool
+        public function canManageTopics(): bool
         {
             return $this->can_manage_topics;
         }
@@ -291,22 +292,22 @@
         {
             $object = new self();
 
-            $object->status = $data['status'];
+            $object->status = $data['status'] ?? ChatMemberStatus::Administrator;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
-            $object->can_be_edited = @$data['can_be_edited'] ?? false;
-            $object->is_anonymous = @$data['is_anonymous'] ?? false;
-            $object->can_manage_chat = @$data['can_manage_chat'] ?? false;
-            $object->can_delete_messages = @$data['can_delete_messages'] ?? false;
-            $object->can_manage_video_chats = @$data['can_manage_video_chats'] ?? false;
-            $object->can_restrict_members = @$data['can_restrict_members'] ?? false;
-            $object->can_promote_members = @$data['can_promote_members'] ?? false;
-            $object->can_change_info = @$data['can_change_info'] ?? false;
-            $object->can_invite_users = @$data['can_invite_users'] ?? false;
-            $object->can_post_messages = @$data['can_post_messages'] ?? false;
-            $object->can_edit_messages = @$data['can_edit_messages'] ?? false;
-            $object->can_pin_messages = @$data['can_pin_messages'] ?? false;
-            $object->can_manage_topics = @$data['can_manage_topics'] ?? false;
-            $object->custom_title = @$data['custom_title'] ?? null;
+            $object->can_be_edited = $data['can_be_edited'] ?? false;
+            $object->is_anonymous = $data['is_anonymous'] ?? false;
+            $object->can_manage_chat = $data['can_manage_chat'] ?? false;
+            $object->can_delete_messages = $data['can_delete_messages'] ?? false;
+            $object->can_manage_video_chats = $data['can_manage_video_chats'] ?? false;
+            $object->can_restrict_members = $data['can_restrict_members'] ?? false;
+            $object->can_promote_members = $data['can_promote_members'] ?? false;
+            $object->can_change_info = $data['can_change_info'] ?? false;
+            $object->can_invite_users = $data['can_invite_users'] ?? false;
+            $object->can_post_messages = $data['can_post_messages'] ?? false;
+            $object->can_edit_messages = $data['can_edit_messages'] ?? false;
+            $object->can_pin_messages = $data['can_pin_messages'] ?? false;
+            $object->can_manage_topics = $data['can_manage_topics'] ?? false;
+            $object->custom_title = $data['custom_title'] ?? null;
 
             return $object;
         }
@@ -323,19 +324,19 @@
 
             $object->status = $chatMember->getStatus();
             $object->user = $chatMember->getUser();
-            $object->can_be_edited = $chatMember->isCanBeEdited();
-            $object->is_anonymous = $chatMember->isIsAnonymous();
-            $object->can_manage_chat = $chatMember->isCanManageChat();
-            $object->can_delete_messages = $chatMember->isCanDeleteMessages();
-            $object->can_manage_video_chats = $chatMember->isCanManageVideoChats();
-            $object->can_restrict_members = $chatMember->isCanRestrictMembers();
-            $object->can_promote_members = $chatMember->isCanPromoteMembers();
-            $object->can_change_info = $chatMember->isCanChangeInfo();
-            $object->can_invite_users = $chatMember->isCanInviteUsers();
-            $object->can_post_messages = $chatMember->isCanPostMessages();
-            $object->can_edit_messages = $chatMember->isCanEditMessages();
-            $object->can_pin_messages = $chatMember->isCanPinMessages();
-            $object->can_manage_topics = $chatMember->isCanManageTopics();
+            $object->can_be_edited = $chatMember->canBeEdited();
+            $object->is_anonymous = $chatMember->isAnonymous();
+            $object->can_manage_chat = $chatMember->canManageChat();
+            $object->can_delete_messages = $chatMember->canDeleteMessages();
+            $object->can_manage_video_chats = $chatMember->canManageVideoChats();
+            $object->can_restrict_members = $chatMember->canRestrictMembers();
+            $object->can_promote_members = $chatMember->canPromoteMembers();
+            $object->can_change_info = $chatMember->canChangeInfo();
+            $object->can_invite_users = $chatMember->canInviteUsers();
+            $object->can_post_messages = $chatMember->canPostMessages();
+            $object->can_edit_messages = $chatMember->canEditMessages();
+            $object->can_pin_messages = $chatMember->canPinMessages();
+            $object->can_manage_topics = $chatMember->canManageTopics();
             $object->custom_title = $chatMember->getCustomTitle();
 
             return $object;

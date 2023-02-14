@@ -218,7 +218,7 @@
          * @see https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups
          * @return bool
          */
-        public function isIsForum(): bool
+        public function isForum(): bool
         {
             return $this->is_forum;
         }
@@ -391,7 +391,7 @@
          * @see https://core.telegram.org/bots/api#getchat
          * @return bool
          */
-        public function isHasAggressiveAntiSpamEnabled(): bool
+        public function hasAggressiveAntiSpamEnabled(): bool
         {
             return $this->has_aggressive_anti_spam_enabled;
         }
@@ -403,7 +403,7 @@
          * @see https://core.telegram.org/bots/api#getchat
          * @return bool
          */
-        public function isHasHiddenMembers(): bool
+        public function hasHiddenMembers(): bool
         {
             return $this->has_hidden_members;
         }
@@ -414,7 +414,7 @@
          * @see https://core.telegram.org/bots/api#getchat
          * @return bool
          */
-        public function isHasProtectedContent(): bool
+        public function hasProtectedContent(): bool
         {
             return $this->has_protected_content;
         }
@@ -479,7 +479,7 @@
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
                 'is_forum' => $this->is_forum,
-                'photo' => ($this->photo instanceof ChatPhoto) ? $this->photo->toArray() : null,
+                'photo' => ($this->photo instanceof ObjectTypeInterface) ? $this->photo->toArray() : null,
                 'active_usernames' => $this->active_usernames,
                 'emoji_status_custom_emoji_id' => $this->emoji_status_custom_emoji_id,
                 'bio' => $this->bio,
@@ -489,8 +489,8 @@
                 'join_by_request' => $this->join_by_request,
                 'description' => $this->description,
                 'invite_link' => $this->invite_link,
-                'pinned_message' => ($this->pinned_message instanceof Message) ? $this->pinned_message->toArray() : null,
-                'permissions' => ($this->permissions instanceof ChatPermissions) ? $this->permissions->toArray() : null,
+                'pinned_message' => ($this->pinned_message instanceof ObjectTypeInterface) ? $this->pinned_message->toArray() : null,
+                'permissions' => ($this->permissions instanceof ObjectTypeInterface) ? $this->permissions->toArray() : null,
                 'slow_mode_delay' => $this->slow_mode_delay,
                 'message_auto_delete_time' => $this->message_auto_delete_time,
                 'has_aggressive_anti_spam_enabled' => $this->has_aggressive_anti_spam_enabled,
@@ -499,7 +499,7 @@
                 'sticker_set_name' => $this->sticker_set_name,
                 'can_set_sticker_set' => $this->can_set_sticker_set,
                 'linked_chat_id' => $this->linked_chat_id,
-                'location' => ($this->location instanceof ChatLocation) ? $this->location->toArray() : null,
+                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : null,
             ];
         }
 
@@ -513,33 +513,33 @@
         {
             $object = new self();
 
-            $object->id = @$data['id'];
-            $object->type = @$data['type'];
-            $object->title = @$data['title'] ?? null;
-            $object->username = @$data['username'] ?? null;
-            $object->first_name = @$data['first_name'] ?? null;
-            $object->last_name = @$data['last_name'] ?? null;
-            $object->is_forum = @$data['is_forum'] ?? null;
+            $object->id = $data['id'] ?? null;
+            $object->type = $data['type'] ?? null;
+            $object->title = $data['title'] ?? null;
+            $object->username = $data['username'] ?? null;
+            $object->first_name = $data['first_name'] ?? null;
+            $object->last_name = $data['last_name'] ?? null;
+            $object->is_forum = $data['is_forum'] ?? null;
             $object->photo = isset($data['photo']) ? ChatPhoto::fromArray($data['photo']) : null;
-            $object->active_usernames = @$data['active_usernames'] ?? null;
-            $object->emoji_status_custom_emoji_id = @$data['emoji_status_custom_emoji_id'] ?? null;
-            $object->bio = @$data['bio'] ?? null;
-            $object->has_private_forwards = @$data['has_private_forwards'] ?? null;
-            $object->has_restricted_voice_and_video_messages = @$data['has_restricted_voice_and_video_messages'] ?? null;
-            $object->join_to_send_messages = @$data['join_to_send_messages'] ?? null;
-            $object->join_by_request = @$data['join_by_request'] ?? null;
-            $object->description = @$data['description'] ?? null;
-            $object->invite_link = @$data['invite_link'] ?? null;
+            $object->active_usernames = $data['active_usernames'] ?? null;
+            $object->emoji_status_custom_emoji_id = $data['emoji_status_custom_emoji_id'] ?? null;
+            $object->bio = $data['bio'] ?? null;
+            $object->has_private_forwards = $data['has_private_forwards'] ?? null;
+            $object->has_restricted_voice_and_video_messages = $data['has_restricted_voice_and_video_messages'] ?? null;
+            $object->join_to_send_messages = $data['join_to_send_messages'] ?? null;
+            $object->join_by_request = $data['join_by_request'] ?? null;
+            $object->description = $data['description'] ?? null;
+            $object->invite_link = $data['invite_link'] ?? null;
             $object->pinned_message = isset($data['pinned_message']) ? Message::fromArray($data['pinned_message']) : null;
             $object->permissions = isset($data['permissions']) ? ChatPermissions::fromArray($data['permissions']) : null;
-            $object->slow_mode_delay = @$data['slow_mode_delay'] ?? null;
-            $object->message_auto_delete_time = @$data['message_auto_delete_time'] ?? null;
-            $object->has_aggressive_anti_spam_enabled = @$data['has_aggressive_anti_spam_enabled'] ?? null;
-            $object->has_hidden_members = @$data['has_hidden_members'] ?? null;
-            $object->has_protected_content = @$data['has_protected_content'] ?? null;
-            $object->sticker_set_name = @$data['sticker_set_name'] ?? null;
-            $object->can_set_sticker_set = @$data['can_set_sticker_set'] ?? null;
-            $object->linked_chat_id = @$data['linked_chat_id'] ?? null;
+            $object->slow_mode_delay = $data['slow_mode_delay'] ?? null;
+            $object->message_auto_delete_time = $data['message_auto_delete_time'] ?? null;
+            $object->has_aggressive_anti_spam_enabled = $data['has_aggressive_anti_spam_enabled'] ?? null;
+            $object->has_hidden_members = $data['has_hidden_members'] ?? null;
+            $object->has_protected_content = $data['has_protected_content'] ?? null;
+            $object->sticker_set_name = $data['sticker_set_name'] ?? null;
+            $object->can_set_sticker_set = $data['can_set_sticker_set'] ?? null;
+            $object->linked_chat_id = $data['linked_chat_id'] ?? null;
             $object->location = isset($data['location']) ? ChatLocation::fromArray($data['location']) : null;
 
             return $object;

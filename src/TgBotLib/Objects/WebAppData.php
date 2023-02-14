@@ -60,8 +60,8 @@
         {
             $object = new self();
 
-            $object->data = @$data['data'] ?: '';
-            $object->button_text = @$data['button_text'] ?: '';
+            $object->data = $data['data'] ?: '';
+            $object->button_text = $data['button_text'] ?: '';
 
             return $object;
         }

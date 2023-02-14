@@ -46,7 +46,7 @@
         public function toArray(): array
         {
             return [
-                'location' => ($this->location instanceof Location) ? $this->location->toArray() : $this->location,
+                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
                 'address' => $this->address,
             ];
         }
@@ -62,7 +62,7 @@
             $object = new self();
 
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
-            $object->address = isset($data['address']) ? $data['address'] : null;
+            $object->address = $data['address'] ?? null;
 
             return $object;
         }

@@ -99,7 +99,7 @@
          *
          * @return bool
          */
-        public function isHasSpoiler(): bool
+        public function hasSpoiler(): bool
         {
             return $this->has_spoiler;
         }
@@ -111,22 +111,18 @@
          */
         public function toArray(): array
         {
-            $caption_entities = null;
-            if ($this->caption_entities)
-            {
-                $caption_entities = [];
-                foreach ($this->caption_entities as $caption_entity)
-                {
-                    $caption_entities[] = $caption_entity->toArray();
-                }
-            }
-
             return [
                 'type' => $this->type,
                 'media' => $this->media,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
+                    if($item instanceof ObjectTypeInterface)
+                    {
+                        return $item->toArray();
+                    }
+                    return $item;
+                }, $this->caption_entities) : null,
                 'has_spoiler' => $this->has_spoiler,
             ];
         }
@@ -141,20 +137,15 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
-            $object->media = $data['media'];
-            $object->caption = $data['caption'];
-            $object->parse_mode = $data['parse_mode'];
-            $object->has_spoiler = $data['has_spoiler'];
-
-            if (isset($data['caption_entities']))
+            $object->type = $data['type'] ?? null;
+            $object->media = $data['media'] ?? null;
+            $object->caption = $data['caption'] ?? null;
+            $object->parse_mode = $data['parse_mode'] ?? null;
+            $object->has_spoiler = $data['has_spoiler'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
             {
-                $object->caption_entities = [];
-                foreach ($data['caption_entities'] as $caption_entity)
-                {
-                    $object->caption_entities[] = MessageEntity::fromArray($caption_entity);
-                }
-            }
+                return MessageEntity::fromArray($item);
+            }, $data['caption_entities']) : null;
 
             return $object;
         }
@@ -173,16 +164,8 @@
             $object->media = $inputMedia->getMedia();
             $object->caption = $inputMedia->getCaption();
             $object->parse_mode = $inputMedia->getParseMode();
-            $object->has_spoiler = $inputMedia->isHasSpoiler();
-
-            if ($inputMedia->getCaptionEntities())
-            {
-                $object->caption_entities = [];
-                foreach ($inputMedia->getCaptionEntities() as $caption_entity)
-                {
-                    $object->caption_entities[] = MessageEntity::fromArray($caption_entity);
-                }
-            }
+            $object->has_spoiler = $inputMedia->hasSpoiler();
+            $object->caption_entities = $inputMedia->getCaptionEntities();
 
             return $object;
         }

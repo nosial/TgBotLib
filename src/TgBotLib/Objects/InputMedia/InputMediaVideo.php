@@ -169,7 +169,7 @@
          *
          * @return bool
          */
-        public function isSupportsStreaming(): bool
+        public function supportsStreaming(): bool
         {
             return $this->supports_streaming;
         }
@@ -179,7 +179,7 @@
          *
          * @return bool
          */
-        public function isHasSpoiler(): bool
+        public function hasSpoiler(): bool
         {
             return $this->has_spoiler;
         }
@@ -191,23 +191,19 @@
          */
         public function toArray(): array
         {
-            $caption_entities = null;
-            if($this->getCaptionEntities() !== null)
-            {
-                $caption_entities = [];
-                foreach ($this->getCaptionEntities() as $caption_entity)
-                {
-                    $caption_entities[] = $caption_entity->toArray();
-                }
-            }
-
             return [
                 'type' => $this->type,
                 'media' => $this->media,
                 'thumb' => $this->thumb,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
+                    if($item instanceof ObjectTypeInterface)
+                    {
+                        return $item->toArray();
+                    }
+                    return $item;
+                }, $this->caption_entities) : null,
                 'width' => $this->width,
                 'height' => $this->height,
                 'duration' => $this->duration,
@@ -221,32 +217,26 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
-            $caption_entities = null;
-            if($data['caption_entities'] !== null)
-            {
-                $caption_entities = [];
-                foreach ($data['caption_entities'] as $caption_entity)
-                {
-                    $caption_entities[] = MessageEntity::fromArray($caption_entity);
-                }
-            }
-
             $object = new InputMediaVideo();
 
-            $object->type = $data['type'];
-            $object->media = $data['media'];
-            $object->thumb = @$data['thumb'] ?? null;
-            $object->caption = @$data['caption'] ?? null;
-            $object->parse_mode = @$data['parse_mode'] ?? null;
-            $object->caption_entities = $caption_entities;
-            $object->width = @$data['width'] ?? null;
-            $object->height = @$data['height'] ?? null;
-            $object->duration = @$data['duration'] ?? null;
-            $object->supports_streaming = @$data['supports_streaming'] ?? false;
-            $object->has_spoiler = @$data['has_spoiler'] ?? false;
+            $object->type = $data['type'] ?? null;
+            $object->media = $data['media'] ?? null;
+            $object->thumb = $data['thumb'] ?? null;
+            $object->caption = $data['caption'] ?? null;
+            $object->parse_mode = $data['parse_mode'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
+            {
+                return MessageEntity::fromArray($item);
+            }, $data['caption_entities']) : null;
+            $object->width = $data['width'] ?? null;
+            $object->height = $data['height'] ?? null;
+            $object->duration = $data['duration'] ?? null;
+            $object->supports_streaming = $data['supports_streaming'] ?? false;
+            $object->has_spoiler = $data['has_spoiler'] ?? false;
 
             return $object;
         }
@@ -256,6 +246,7 @@
          *
          * @param InputMedia $inputMedia
          * @return InputMediaVideo
+         * @noinspection DuplicatedCode
          */
         public static function fromInputMedia(InputMedia $inputMedia): InputMediaVideo
         {
@@ -271,7 +262,7 @@
             $object->height = $inputMedia->getHeight();
             $object->duration = $inputMedia->getDuration();
             $object->supports_streaming = $inputMedia->isSupportsStreaming();
-            $object->has_spoiler = $inputMedia->isHasSpoiler();
+            $object->has_spoiler = $inputMedia->hasSpoiler();
 
             return $object;
         }

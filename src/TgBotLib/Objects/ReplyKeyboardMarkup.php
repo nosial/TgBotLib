@@ -1,5 +1,7 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -133,12 +135,12 @@
         {
             $object = new self();
 
-            $object->keyboard = $data['keyboard'];
-            $object->is_persistent = $data['is_persistent'];
-            $object->resize_keyboard = $data['resize_keyboard'];
-            $object->one_time_keyboard = $data['one_time_keyboard'];
-            $object->input_field_placeholder = $data['input_field_placeholder'];
-            $object->selective = $data['selective'];
+            $object->keyboard = $data['keyboard'] ?? null;
+            $object->is_persistent = $data['is_persistent'] ?? null;
+            $object->resize_keyboard = $data['resize_keyboard'] ?? null;
+            $object->one_time_keyboard = $data['one_time_keyboard'] ?? null;
+            $object->input_field_placeholder = $data['input_field_placeholder'] ?? null;
+            $object->selective = $data['selective'] ?? null;
 
             return $object;
         }

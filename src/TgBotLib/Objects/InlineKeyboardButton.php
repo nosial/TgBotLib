@@ -173,11 +173,11 @@
                 'text' => $this->text ?? null,
                 'url' => $this->url ?? null,
                 'callback_data' => $this->callback_data ?? null,
-                'web_app' => ($this->web_app instanceof WebAppInfo) ? $this->web_app->toArray() : null,
-                'login_url' => ($this->login_url instanceof LoginUrl) ? $this->login_url->toArray() : null,
+                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null,
+                'login_url' => ($this->login_url instanceof ObjectTypeInterface) ? $this->login_url->toArray() : null,
                 'switch_inline_query' => $this->switch_inline_query ?? null,
                 'switch_inline_query_current_chat' => $this->switch_inline_query_current_chat ?? null,
-                'callback_game' => ($this->callback_game instanceof CallbackGame) ? $this->callback_game->toArray() : null,
+                'callback_game' => ($this->callback_game instanceof ObjectTypeInterface) ? $this->callback_game->toArray() : null,
                 'pay' => $this->pay ?? null
             ];
         }
@@ -195,11 +195,11 @@
             $object->text = $data['text'] ?? null;
             $object->url = $data['url'] ?? null;
             $object->callback_data = $data['callback_data'] ?? null;
-            $object->web_app = ($data['web_app'] ?? null) ? WebAppInfo::fromArray($data['web_app']) : null;
-            $object->login_url = ($data['login_url'] ?? null) ? LoginUrl::fromArray($data['login_url']) : null;
+            $object->web_app = isset($data['web_app']) && is_array($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
+            $object->login_url = isset($data['login_url']) && is_array($data['login_url']) ? LoginUrl::fromArray($data['login_url']) : null;
             $object->switch_inline_query = $data['switch_inline_query'] ?? null;
             $object->switch_inline_query_current_chat = $data['switch_inline_query_current_chat'] ?? null;
-            $object->callback_game = ($data['callback_game'] ?? null) ? CallbackGame::fromArray($data['callback_game']) : null;
+            $object->callback_game = isset($data['callback_game']) && is_array($data['callback_game']) ? CallbackGame::fromArray($data['callback_game']) : null;
             $object->pay = $data['pay'] ?? null;
 
             return $object;

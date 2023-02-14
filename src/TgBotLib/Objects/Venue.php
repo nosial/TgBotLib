@@ -121,7 +121,7 @@
         public function toArray(): array
         {
             return [
-                'location' => ($this->location instanceof Location) ? $this->location->toArray() : $this->location,
+                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
                 'title' => $this->title,
                 'address' => $this->address,
                 'foursquare_id' => $this->foursquare_id,
@@ -142,12 +142,12 @@
             $object = new self();
 
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
-            $object->title = @$data['title'];
-            $object->address = @$data['address'];
-            $object->foursquare_id = @$data['foursquare_id'] ?? null;
-            $object->foursquare_type = @$data['foursquare_type'] ?? null;
-            $object->google_place_id = @$data['google_place_id'] ?? null;
-            $object->google_place_type = @$data['google_place_type'] ?? null;
+            $object->title = $data['title'];
+            $object->address = $data['address'];
+            $object->foursquare_id = $data['foursquare_id'] ?? null;
+            $object->foursquare_type = $data['foursquare_type'] ?? null;
+            $object->google_place_id = $data['google_place_id'] ?? null;
+            $object->google_place_type = $data['google_place_type'] ?? null;
 
             return $object;
         }

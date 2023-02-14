@@ -46,7 +46,7 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
+            $object->type = $data['type'] ?? null;
 
             return $object;
         }

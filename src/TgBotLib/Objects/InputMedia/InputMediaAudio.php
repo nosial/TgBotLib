@@ -160,23 +160,19 @@
          */
         public function toArray(): array
         {
-            $caption_entities = null;
-            if ($this->caption_entities)
-            {
-                $caption_entities = [];
-                foreach ($this->caption_entities as $caption_entity)
-                {
-                    $caption_entities[] = $caption_entity->toArray();
-                }
-            }
-
             return [
                 'type' => $this->type,
                 'media' => $this->media,
                 'thumb' => $this->thumb,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
+                    if($item instanceof ObjectTypeInterface)
+                    {
+                        return $item->toArray();
+                    }
+                    return $item;
+                }, $this->caption_entities) : null,
                 'duration' => $this->duration,
                 'performer' => $this->performer,
                 'title' => $this->title
@@ -188,29 +184,24 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
-            $caption_entities = null;
-            if ($data['caption_entities'])
-            {
-                $caption_entities = [];
-                foreach ($data['caption_entities'] as $caption_entity)
-                {
-                    $caption_entities[] = MessageEntity::fromArray($caption_entity);
-                }
-            }
 
             $object = new InputMediaAudio();
-            $object->type = $data['type'];
-            $object->media = $data['media'];
-            $object->thumb = $data['thumb'];
-            $object->caption = $data['caption'];
-            $object->parse_mode = $data['parse_mode'];
-            $object->caption_entities = $caption_entities;
-            $object->duration = $data['duration'];
-            $object->performer = $data['performer'];
-            $object->title = $data['title'];
+            $object->type = $data['type'] ?? null;
+            $object->media = $data['media'] ?? null;
+            $object->thumb = $data['thumb'] ?? null;
+            $object->caption = $data['caption'] ?? null;
+            $object->parse_mode = $data['parse_mode'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
+            {
+                return MessageEntity::fromArray($item);
+            }, $data['caption_entities']) : null;
+            $object->duration = $data['duration'] ?? null;
+            $object->performer = $data['performer'] ?? null;
+            $object->title = $data['title'] ?? null;
 
             return $object;
         }

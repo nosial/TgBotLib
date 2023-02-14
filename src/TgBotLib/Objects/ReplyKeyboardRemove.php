@@ -66,8 +66,8 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->remove_keyboard = @$data['remove_keyboard'] ?? false;
-            $object->selective = @$data['selective'] ?? false;
+            $object->remove_keyboard = $data['remove_keyboard'] ?? false;
+            $object->selective = $data['selective'] ?? false;
             return $object;
         }
     }

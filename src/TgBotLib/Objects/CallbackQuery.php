@@ -127,8 +127,8 @@
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof User) ? $this->from->toArray() : null,
-                'message' => ($this->message instanceof Message) ? $this->message->toArray() : null,
+                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
+                'message' => ($this->message instanceof ObjectTypeInterface) ? $this->message->toArray() : null,
                 'inline_message_id' => $this->inline_message_id,
                 'chat_instance' => $this->chat_instance,
                 'data' => $this->data,
@@ -146,11 +146,11 @@
         {
             $object = new self();
 
-            $object->id = $data['id'];
+            $object->id = $data['id'] ?? null;
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->message = isset($data['message']) ? Message::fromArray($data['message']) : null;
             $object->inline_message_id = $data['inline_message_id'] ?? null;
-            $object->chat_instance = $data['chat_instance'];
+            $object->chat_instance = $data['chat_instance'] ?? null;
             $object->data = $data['data'] ?? null;
             $object->game_short_name = $data['game_short_name'] ?? null;
 

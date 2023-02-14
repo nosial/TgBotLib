@@ -65,7 +65,7 @@
          *
          * @return bool
          */
-        public function isChatIsChannel(): bool
+        public function chatIsChannel(): bool
         {
             return $this->chat_is_channel;
         }
@@ -76,7 +76,7 @@
          *
          * @return bool
          */
-        public function isChatIsForum(): bool
+        public function chatIsForum(): bool
         {
             return $this->chat_is_forum;
         }
@@ -87,7 +87,7 @@
          *
          * @return bool
          */
-        public function isChatHasUsername(): bool
+        public function chatHasUsername(): bool
         {
             return $this->chat_has_username;
         }
@@ -97,7 +97,7 @@
          *
          * @return bool
          */
-        public function isChatIsCreated(): bool
+        public function chatIsCreated(): bool
         {
             return $this->chat_is_created;
         }
@@ -132,7 +132,7 @@
          *
          * @return bool
          */
-        public function isBotIsMember(): bool
+        public function botIsMember(): bool
         {
             return $this->bot_is_member;
         }
@@ -150,8 +150,8 @@
                 'chat_is_forum' => $this->chat_is_forum,
                 'chat_has_username' => $this->chat_has_username,
                 'chat_is_created' => $this->chat_is_created,
-                'user_administrator_rights' => ($this->user_administrator_rights instanceof ChatAdministratorRights) ? $this->user_administrator_rights->toArray() : null,
-                'bot_administrator_rights' => ($this->bot_administrator_rights instanceof ChatAdministratorRights) ? $this->bot_administrator_rights->toArray() : null,
+                'user_administrator_rights' => ($this->user_administrator_rights instanceof ObjectTypeInterface) ? $this->user_administrator_rights->toArray() : null,
+                'bot_administrator_rights' => ($this->bot_administrator_rights instanceof ObjectTypeInterface) ? $this->bot_administrator_rights->toArray() : null,
                 'bot_is_member' => $this->bot_is_member,
             ];
         }
@@ -166,14 +166,14 @@
         {
             $object = new self();
 
-            $object->request_id = $data['request_id'];
-            $object->chat_is_channel = $data['chat_is_channel'];
-            $object->chat_is_forum = $data['chat_is_forum'];
-            $object->chat_has_username = $data['chat_has_username'];
-            $object->chat_is_created = $data['chat_is_created'];
+            $object->request_id = $data['request_id'] ?? null;
+            $object->chat_is_channel = $data['chat_is_channel'] ?? false;
+            $object->chat_is_forum = $data['chat_is_forum'] ?? false;
+            $object->chat_has_username = $data['chat_has_username'] ?? false;
+            $object->chat_is_created = $data['chat_is_created'] ?? false;
             $object->user_administrator_rights = ($data['user_administrator_rights'] !== null) ? ChatAdministratorRights::fromArray($data['user_administrator_rights']) : null;
             $object->bot_administrator_rights = ($data['bot_administrator_rights'] !== null) ? ChatAdministratorRights::fromArray($data['bot_administrator_rights']) : null;
-            $object->bot_is_member = $data['bot_is_member'];
+            $object->bot_is_member = $data['bot_is_member'] ?? false;
 
             return $object;
         }

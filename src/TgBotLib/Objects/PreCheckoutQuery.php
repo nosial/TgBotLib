@@ -125,12 +125,12 @@
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof User) ? $this->from->toArray() : null,
+                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
                 'currency' => $this->currency,
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,
                 'shipping_option_id' => $this->shipping_option_id,
-                'order_info' => ($this->order_info instanceof OrderInfo) ? $this->order_info->toArray() : null
+                'order_info' => ($this->order_info instanceof ObjectTypeInterface) ? $this->order_info->toArray() : null
             ];
         }
 
@@ -143,13 +143,13 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->id = $data['id'];
-            $object->from = User::fromArray($data['from']);
-            $object->currency = $data['currency'];
-            $object->total_amount = $data['total_amount'];
-            $object->invoice_payload = $data['invoice_payload'];
+            $object->id = $data['id'] ?? null;
+            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : null;
+            $object->currency = $data['currency'] ?? null;
+            $object->total_amount = $data['total_amount'] ?? null;
+            $object->invoice_payload = $data['invoice_payload'] ?? null;
             $object->shipping_option_id = $data['shipping_option_id'] ?? null;
-            $object->order_info = OrderInfo::fromArray($data['order_info']) ?? null;
+            $object->order_info = isset($data['order_info']) && is_array($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
             return $object;
         }
     }

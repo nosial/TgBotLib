@@ -65,8 +65,8 @@
         {
             $object = new self();
 
-            $object->label = $data['label'];
-            $object->amount = $data['amount'];
+            $object->label = $data['label'] ?? null;
+            $object->amount = $data['amount'] ?? null;
 
             return $object;
         }

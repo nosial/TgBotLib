@@ -132,23 +132,19 @@
          */
         public function toArray(): array
         {
-            $caption_entities = null;
-            if ($this->caption_entities)
-            {
-                $caption_entities = [];
-                foreach ($this->caption_entities as $caption_entity)
-                {
-                    $caption_entities[] = $caption_entity->toArray();
-                }
-            }
-
             return [
                 'type' => $this->type,
                 'media' => $this->media,
                 'thumb' => $this->thumb,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => $caption_entities,
+                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
+                    if($item instanceof ObjectTypeInterface)
+                    {
+                        return $item->toArray();
+                    }
+                    return $item;
+                }, $this->caption_entities) : null,
                 'disable_content_type_detection' => $this->disable_content_type_detection,
             ];
         }
@@ -158,27 +154,21 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
-            $caption_entities = null;
-            if (isset($data['caption_entities']))
-            {
-                $caption_entities = [];
-                foreach ($data['caption_entities'] as $caption_entity)
-                {
-                    $caption_entities[] = MessageEntity::fromArray($caption_entity);
-                }
-            }
-
             $object = new InputMediaDocument();
-            $object->type = $data['type'];
-            $object->media = $data['media'];
+            $object->type = $data['type'] ?? null;
+            $object->media = $data['media'] ?? null;
             $object->thumb = $data['thumb'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = $caption_entities;
-            $object->disable_content_type_detection = $data['disable_content_type_detection'];
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
+            {
+                return MessageEntity::fromArray($item);
+            }, $data['caption_entities']) : null;
+            $object->disable_content_type_detection = $data['disable_content_type_detection'] ?? false;
 
             return $object;
         }
@@ -192,6 +182,7 @@
         public static function fromInputMedia(InputMedia $inputMedia): InputMediaDocument
         {
             $object = new InputMediaDocument();
+
             $object->type = $inputMedia->getType();
             $object->media = $inputMedia->getMedia();
             $object->thumb = $inputMedia->getThumb();

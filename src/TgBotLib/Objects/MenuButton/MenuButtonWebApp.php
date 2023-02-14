@@ -1,6 +1,8 @@
-<?php /** @noinspection PhpMissingFieldTypeInspection */
+<?php
 
-namespace TgBotLib\Objects\MenuButton;
+    /** @noinspection PhpMissingFieldTypeInspection */
+
+    namespace TgBotLib\Objects\MenuButton;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\MenuButton;
@@ -65,7 +67,7 @@ namespace TgBotLib\Objects\MenuButton;
             return [
                 'type' => $this->type,
                 'text' => $this->text,
-                'web_app' => ($this->web_app instanceof WebAppInfo) ? $this->web_app->toArray() : null
+                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null
             ];
         }
 
@@ -79,8 +81,8 @@ namespace TgBotLib\Objects\MenuButton;
         {
             $object = new self();
 
-            $object->type = $data['type'];
-            $object->text = $data['text'];
+            $object->type = $data['type'] ?? null;
+            $object->text = $data['text'] ?? null;
             $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
 
             return $object;

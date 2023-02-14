@@ -113,11 +113,11 @@
         {
             $object = new self();
 
-            $object->title = $data['title'];
-            $object->description = $data['description'];
-            $object->start_parameter = $data['start_parameter'];
-            $object->currency = $data['currency'];
-            $object->total_amount = $data['total_amount'];
+            $object->title = $data['title'] ?? null;
+            $object->description = $data['description'] ?? null;
+            $object->start_parameter = $data['start_parameter'] ?? null;
+            $object->currency = $data['currency'] ?? null;
+            $object->total_amount = $data['total_amount'] ?? null;
 
             return $object;
         }

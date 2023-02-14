@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\ChatMember;
 
+    use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
@@ -78,9 +79,10 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->status = $data['status'];
+
+            $object->status = $data['status'] ?? ChatMemberStatus::Kicked;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
-            $object->until_date = $data['until_date'];
+            $object->until_date = $data['until_date'] ?? null;
 
             return $object;
         }
@@ -94,6 +96,7 @@
         public static function fromChatMember(ChatMember $chatMember): ChatMemberBanned
         {
             $object = new self();
+
             $object->status = $chatMember->getStatus();
             $object->user = $chatMember->getUser();
             $object->until_date = $chatMember->getUntilDate();

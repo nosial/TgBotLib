@@ -62,7 +62,7 @@
         {
             return [
                 'poll_id' => $this->poll_id,
-                'user' => $this->user->toArray(),
+                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : null,
                 'option_ids' => $this->option_ids,
             ];
         }
@@ -77,8 +77,8 @@
         {
             $object = new self();
 
-            $object->poll_id = $data['poll_id'];
-            $object->user = User::fromArray($data['user']);
+            $object->poll_id = $data['poll_id'] ?? null;
+            $object->user = isset($data['user']) && is_array($data['user']) ? User::fromArray($data['user']) : null;
             $object->option_ids = $data['option_ids'];
 
             return $object;

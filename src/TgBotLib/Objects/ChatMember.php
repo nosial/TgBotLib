@@ -183,7 +183,7 @@
          *
          * @return bool
          */
-        public function isIsMember(): bool
+        public function isMember(): bool
         {
             return $this->is_member;
         }
@@ -193,7 +193,7 @@
          *
          * @return bool
          */
-        public function isIsAnonymous(): bool
+        public function isAnonymous(): bool
         {
             return $this->is_anonymous;
         }
@@ -203,7 +203,7 @@
          *
          * @return bool
          */
-        public function isCanSendMessages(): bool
+        public function canSendMessages(): bool
         {
             return $this->can_send_messages;
         }
@@ -213,7 +213,7 @@
          *
          * @return bool
          */
-        public function isCanSendAudios(): bool
+        public function canSendAudios(): bool
         {
             return $this->can_send_audios;
         }
@@ -223,7 +223,7 @@
          *
          * @return bool
          */
-        public function isCanSendDocuments(): bool
+        public function canSendDocuments(): bool
         {
             return $this->can_send_documents;
         }
@@ -233,7 +233,7 @@
          *
          * @return bool
          */
-        public function isCanSendPhotos(): bool
+        public function canSendPhotos(): bool
         {
             return $this->can_send_photos;
         }
@@ -243,7 +243,7 @@
          *
          * @return bool
          */
-        public function isCanSendVideos(): bool
+        public function canSendVideos(): bool
         {
             return $this->can_send_videos;
         }
@@ -253,7 +253,7 @@
          *
          * @return bool
          */
-        public function isCanSendVideoNotes(): bool
+        public function canSendVideoNotes(): bool
         {
             return $this->can_send_video_notes;
         }
@@ -263,7 +263,7 @@
          *
          * @return bool
          */
-        public function isCanSendVoiceNotes(): bool
+        public function canSendVoiceNotes(): bool
         {
             return $this->can_send_voice_notes;
         }
@@ -273,7 +273,7 @@
          *
          * @return bool
          */
-        public function isCanSendPolls(): bool
+        public function canSendPolls(): bool
         {
             return $this->can_send_polls;
         }
@@ -283,7 +283,7 @@
          *
          * @return bool
          */
-        public function isCanSendOtherMessages(): bool
+        public function canSendOtherMessages(): bool
         {
             return $this->can_send_other_messages;
         }
@@ -293,7 +293,7 @@
          *
          * @return bool
          */
-        public function isCanAddWebPagePreviews(): bool
+        public function canAddWebPagePreviews(): bool
         {
             return $this->can_add_web_page_previews;
         }
@@ -303,7 +303,7 @@
          *
          * @return bool
          */
-        public function isCanChangeInfo(): bool
+        public function canChangeInfo(): bool
         {
             return $this->can_change_info;
         }
@@ -315,7 +315,7 @@
          *
          * @return bool
          */
-        public function isCanManageChat(): bool
+        public function canManageChat(): bool
         {
             return $this->can_manage_chat;
         }
@@ -325,7 +325,7 @@
          *
          * @return bool
          */
-        public function isCanDeleteMessages(): bool
+        public function canDeleteMessages(): bool
         {
             return $this->can_delete_messages;
         }
@@ -335,7 +335,7 @@
          *
          * @return bool
          */
-        public function isCanManageVideoChats(): bool
+        public function canManageVideoChats(): bool
         {
             return $this->can_manage_video_chats;
         }
@@ -345,7 +345,7 @@
          *
          * @return bool
          */
-        public function isCanRestrictMembers(): bool
+        public function canRestrictMembers(): bool
         {
             return $this->can_restrict_members;
         }
@@ -357,7 +357,7 @@
          *
          * @return bool
          */
-        public function isCanPromoteMembers(): bool
+        public function canPromoteMembers(): bool
         {
             return $this->can_promote_members;
         }
@@ -367,7 +367,7 @@
          *
          * @return bool
          */
-        public function isCanInviteUsers(): bool
+        public function canInviteUsers(): bool
         {
             return $this->can_invite_users;
         }
@@ -377,7 +377,7 @@
          *
          * @return bool
          */
-        public function isCanPostMessages(): bool
+        public function canPostMessages(): bool
         {
             return $this->can_post_messages;
         }
@@ -387,7 +387,7 @@
          *
          * @return bool
          */
-        public function isCanEditMessages(): bool
+        public function canEditMessages(): bool
         {
             return $this->can_edit_messages;
         }
@@ -397,7 +397,7 @@
          *
          * @return bool
          */
-        public function isCanPinMessages(): bool
+        public function canPinMessages(): bool
         {
             return $this->can_pin_messages;
         }
@@ -407,7 +407,7 @@
          *
          * @return bool
          */
-        public function isCanManageTopics(): bool
+        public function canManageTopics(): bool
         {
             return $this->can_manage_topics;
         }
@@ -417,7 +417,7 @@
          *
          * @return bool
          */
-        public function isCanBeEdited(): bool
+        public function canBeEdited(): bool
         {
             return $this->can_be_edited;
         }
@@ -441,7 +441,7 @@
         {
             return [
                 'status' => $this->status,
-                'user' => ($this->user instanceof User) ? $this->user->toArray() : $this->user,
+                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : $this->user,
                 'custom_title' => $this->custom_title,
                 'is_member' => $this->is_member,
                 'is_anonymous' => $this->is_anonymous,
@@ -476,39 +476,40 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new static();
 
-            $object->status = @$data['status'];
+            $object->status = $data['status'] ?? null;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
-            $object->custom_title = @$data['custom_title'] ?? null;
-            $object->is_member = @$data['is_member'] ?? false;
-            $object->is_anonymous = @$data['is_anonymous'] ?? false;
-            $object->can_send_messages = @$data['can_send_messages'] ?? false;
-            $object->can_send_audios = @$data['can_send_audios'] ?? false;
-            $object->can_send_documents = @$data['can_send_documents'] ?? false;
-            $object->can_send_photos = @$data['can_send_photos'] ?? false;
-            $object->can_send_videos = @$data['can_send_videos'] ?? false;
-            $object->can_send_video_notes = @$data['can_send_video_notes'] ?? false;
-            $object->can_send_voice_notes = @$data['can_send_voice_notes'] ?? false;
-            $object->can_send_polls = @$data['can_send_polls'] ?? false;
-            $object->can_send_other_messages = @$data['can_send_other_messages'] ?? false;
-            $object->can_add_web_page_previews = @$data['can_add_web_page_previews'] ?? false;
-            $object->can_change_info = @$data['can_change_info'] ?? false;
-            $object->can_manage_chat = @$data['can_manage_chat'] ?? false;
-            $object->can_delete_messages = @$data['can_delete_messages'] ?? false;
-            $object->can_manage_video_chats = @$data['can_manage_video_chats'] ?? false;
-            $object->can_restrict_members = @$data['can_restrict_members'] ?? false;
-            $object->can_promote_members = @$data['can_promote_members'] ?? false;
-            $object->can_invite_users = @$data['can_invite_users'] ?? false;
-            $object->can_post_messages = @$data['can_post_messages'] ?? false;
-            $object->can_edit_messages = @$data['can_edit_messages'] ?? false;
-            $object->can_pin_messages = @$data['can_pin_messages'] ?? false;
-            $object->can_manage_topics = @$data['can_manage_topics'] ?? false;
-            $object->can_be_edited = @$data['can_be_edited'] ?? false;
-            $object->until_date = @$data['until_date'] ?? null;
+            $object->custom_title = $data['custom_title'] ?? null;
+            $object->is_member = $data['is_member'] ?? false;
+            $object->is_anonymous = $data['is_anonymous'] ?? false;
+            $object->can_send_messages = $data['can_send_messages'] ?? false;
+            $object->can_send_audios = $data['can_send_audios'] ?? false;
+            $object->can_send_documents = $data['can_send_documents'] ?? false;
+            $object->can_send_photos = $data['can_send_photos'] ?? false;
+            $object->can_send_videos = $data['can_send_videos'] ?? false;
+            $object->can_send_video_notes = $data['can_send_video_notes'] ?? false;
+            $object->can_send_voice_notes = $data['can_send_voice_notes'] ?? false;
+            $object->can_send_polls = $data['can_send_polls'] ?? false;
+            $object->can_send_other_messages = $data['can_send_other_messages'] ?? false;
+            $object->can_add_web_page_previews = $data['can_add_web_page_previews'] ?? false;
+            $object->can_change_info = $data['can_change_info'] ?? false;
+            $object->can_manage_chat = $data['can_manage_chat'] ?? false;
+            $object->can_delete_messages = $data['can_delete_messages'] ?? false;
+            $object->can_manage_video_chats = $data['can_manage_video_chats'] ?? false;
+            $object->can_restrict_members = $data['can_restrict_members'] ?? false;
+            $object->can_promote_members = $data['can_promote_members'] ?? false;
+            $object->can_invite_users = $data['can_invite_users'] ?? false;
+            $object->can_post_messages = $data['can_post_messages'] ?? false;
+            $object->can_edit_messages = $data['can_edit_messages'] ?? false;
+            $object->can_pin_messages = $data['can_pin_messages'] ?? false;
+            $object->can_manage_topics = $data['can_manage_topics'] ?? false;
+            $object->can_be_edited = $data['can_be_edited'] ?? false;
+            $object->until_date = $data['until_date'] ?? null;
 
             return $object;
         }

@@ -93,10 +93,10 @@
         {
             $object = new self();
 
-            $object->id = $data['id'];
-            $object->from = User::fromArray($data['from']);
-            $object->invoice_payload = $data['invoice_payload'];
-            $object->shipping_address = ShippingAddress::fromArray($data['shipping_address']);
+            $object->id = $data['id'] ?? null;
+            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : $data['from'];
+            $object->invoice_payload = $data['invoice_payload'] ?? null;
+            $object->shipping_address = isset($data['shipping_address']) && is_array($data['shipping_address']) ? ShippingAddress::fromArray($data['shipping_address']) : $data['shipping_address'];
 
             return $object;
         }

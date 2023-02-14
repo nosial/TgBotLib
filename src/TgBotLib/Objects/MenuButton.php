@@ -64,7 +64,7 @@
             return [
                 'type' => $this->type,
                 'text' => $this->text,
-                'web_app' => ($this->web_app instanceof WebAppInfo) ? $this->web_app->toArray() : null
+                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null
             ];
         }
 
@@ -78,7 +78,7 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
+            $object->type = $data['type'] ?? null;
             $object->text = $data['text'] ?? null;
             $object->web_app = ($data['web_app'] ?? null) ? WebAppInfo::fromArray($data['web_app']) : null;
 

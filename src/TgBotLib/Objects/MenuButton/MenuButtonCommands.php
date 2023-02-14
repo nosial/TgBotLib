@@ -46,7 +46,7 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
+            $object->type = $data['type'] ?? null;
 
             return $object;
         }
@@ -60,7 +60,9 @@
         public static function fromMenuButton(MenuButton $menuButton): MenuButtonCommands
         {
             $object = new self();
+
             $object->type = $menuButton->getType();
+
             return $object;
         }
     }

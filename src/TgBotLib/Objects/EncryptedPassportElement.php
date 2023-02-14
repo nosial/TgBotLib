@@ -192,27 +192,47 @@
                 'data' => $this->data,
                 'phone_number' => $this->phone_number,
                 'email' => $this->email,
-                'files' => array_map(function (PassportFile $file)
+                'files' => is_array($this->files) ? array_map(function ($file)
                 {
-                    return $file->toArray();
-                }, $this->files),
-                'front_side' => array_map(function (PassportFile $file)
+                    if($file instanceof PassportFile)
+                    {
+                        return $file->toArray();
+                    }
+                    return $file;
+                }, $this->files) : null,
+                'front_side' => is_array($this->front_side) ? array_map(function ($file)
                 {
-                    return $file->toArray();
-                }, $this->front_side),
-                'reverse_side' => array_map(function (PassportFile $file)
+                    if($file instanceof PassportFile)
+                    {
+                        return $file->toArray();
+                    }
+                    return $file;
+                }, $this->front_side) : null,
+                'reverse_side' => is_array($this->reverse_side) ? array_map(function ($file)
                 {
-                    return $file->toArray();
-                }, $this->reverse_side),
-                'selfie' => array_map(function (PassportFile $file)
+                    if($file instanceof PassportFile)
+                    {
+                        return $file->toArray();
+                    }
+                    return $file;
+                }, $this->reverse_side) : null,
+                'selfie' => is_array($this->selfie) ? array_map(function ($file)
                 {
-                    return $file->toArray();
-                }, $this->selfie),
-                'translation' => array_map(function (PassportFile $file)
+                    if($file instanceof PassportFile)
+                    {
+                        return $file->toArray();
+                    }
+                    return $file;
+                }, $this->selfie) : null,
+                'translation' => is_array($this->translation) ? array_map(function ($file)
                 {
-                    return $file->toArray();
-                }, $this->translation),
-                'hash' => $this->hash,
+                    if($file instanceof PassportFile)
+                    {
+                        return $file->toArray();
+                    }
+                    return $file;
+                }, $this->translation) : null,
+                'hash' => $this->hash
             ];
         }
 
@@ -230,26 +250,26 @@
             $object->data = $data['data'] ?? null;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->email = $data['email'] ?? null;
-            $object->files = array_map(function (array $file)
+            $object->files = isset($data['files']) ? array_map(function (array $file)
             {
                 return PassportFile::fromArray($file);
-            }, $data['files'] ?? []);
-            $object->front_side = array_map(function (array $file)
+            }, $data['files'] ?? []) : null;
+            $object->front_side = isset($data['front_side']) ? array_map(function (array $file)
             {
                 return PassportFile::fromArray($file);
-            }, $data['front_side'] ?? []);
-            $object->reverse_side = array_map(function (array $file)
+            }, $data['front_side'] ?? []) : null;
+            $object->reverse_side = isset($data['reverse_side']) ? array_map(function (array $file)
             {
                 return PassportFile::fromArray($file);
-            }, $data['reverse_side'] ?? []);
-            $object->selfie = array_map(function (array $file)
+            }, $data['reverse_side'] ?? []) : null;
+            $object->selfie = isset($data['selfie']) ? array_map(function (array $file)
             {
                 return PassportFile::fromArray($file);
-            }, $data['selfie'] ?? []);
-            $object->translation = array_map(function (array $file)
+            }, $data['selfie'] ?? []) : null;
+            $object->translation = isset($data['translation']) ? array_map(function (array $file)
             {
                 return PassportFile::fromArray($file);
-            }, $data['translation'] ?? []);
+            }, $data['translation'] ?? []) : null;
             $object->hash = $data['hash'];
 
             return $object;

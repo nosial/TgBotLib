@@ -93,10 +93,10 @@
         {
             $object = new self();
 
-            $object->message_thread_id = $data['message_thread_id'];
-            $object->name = $data['name'];
-            $object->icon_color = $data['icon_color'];
-            $object->icon_custom_emoji_id = @$data['icon_custom_emoji_id'] ?: null;
+            $object->message_thread_id = $data['message_thread_id'] ?? null;
+            $object->name = $data['name'] ?? null;
+            $object->icon_color = $data['icon_color'] ?? null;
+            $object->icon_custom_emoji_id = $data['icon_custom_emoji_id'] ?? null;
 
             return $object;
         }

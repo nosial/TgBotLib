@@ -1,7 +1,10 @@
 <?php
 
+    /** @noinspection PhpMissingFieldTypeInspection */
+
     namespace TgBotLib\Objects\ChatMember;
 
+    use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
@@ -60,8 +63,10 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->status = $data['status'];
-            $object->user = User::fromArray($data['user']);
+
+            $object->status = $data['status'] ?? ChatMemberStatus::Left;
+            $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
+
             return $object;
         }
 
@@ -74,8 +79,10 @@
         public static function fromChatMember(ChatMember $chatMember): self
         {
             $object = new self();
+
             $object->status = $chatMember->getStatus();
             $object->user = $chatMember->getUser();
+
             return $object;
         }
     }

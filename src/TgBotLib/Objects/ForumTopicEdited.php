@@ -62,8 +62,8 @@
         {
             $object = new self();
 
-            $object->name = @$data['name'] ?? null;
-            $object->icon_custom_emoji_id = @$data['icon_custom_emoji_id'] ?? null;
+            $object->name = $data['name'] ?? null;
+            $object->icon_custom_emoji_id = $data['icon_custom_emoji_id'] ?? null;
 
             return $object;
         }

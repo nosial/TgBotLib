@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\BotCommandScope;
 
+    use TgBotLib\Abstracts\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
@@ -77,9 +78,11 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-            $object->type = $data['type'];
-            $object->chat_id = $data['chat_id'];
-            $object->user_id = $data['user_id'];
+
+            $object->type = $data['type'] ?? BotCommandScopeType::ChatMember;
+            $object->chat_id = $data['chat_id'] ?? null;
+            $object->user_id = $data['user_id'] ?? null;
+
             return $object;
         }
 

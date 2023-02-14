@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\BotCommandScope;
 
+    use TgBotLib\Abstracts\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
@@ -46,7 +47,7 @@
         {
             $object = new self();
 
-            $object->type = $data['type'];
+            $object->type = $data['type'] ?? BotCommandScopeType::AllPrivateChats;
 
             return $object;
         }

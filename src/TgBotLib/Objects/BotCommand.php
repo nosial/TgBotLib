@@ -61,8 +61,8 @@
         {
             $object = new self();
 
-            $object->command = $data['command'];
-            $object->description = $data['description'];
+            $object->command = $data['command'] ?? null;
+            $object->description = $data['description'] ?? null;
 
             return $object;
         }

@@ -94,10 +94,10 @@
         {
             $object = new self();
 
-            $object->file_id = $data['file_id'];
-            $object->file_unique_id = $data['file_unique_id'];
-            $object->file_size = $data['file_size'];
-            $object->file_date = $data['file_date'];
+            $object->file_id = $data['file_id'] ?? null;
+            $object->file_unique_id = $data['file_unique_id'] ?? null;
+            $object->file_size = $data['file_size'] ?? null;
+            $object->file_date = $data['file_date'] ?? null;
 
             return $object;
         }

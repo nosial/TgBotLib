@@ -130,12 +130,12 @@
         {
             return [
                 'text' => $this->text,
-                'request_user' => ($this->request_user instanceof KeyboardButtonRequestUser) ? $this->request_user->toArray() : null,
-                'request_chat' => ($this->request_chat instanceof KeyboardButtonRequestChat) ? $this->request_chat->toArray() : null,
+                'request_user' => ($this->request_user instanceof ObjectTypeInterface) ? $this->request_user->toArray() : null,
+                'request_chat' => ($this->request_chat instanceof ObjectTypeInterface) ? $this->request_chat->toArray() : null,
                 'request_contact' => $this->request_contact,
                 'request_location' => $this->request_location,
-                'request_poll' => ($this->request_poll instanceof KeyboardButtonPollType) ? $this->request_poll->toArray() : null,
-                'web_app' => ($this->web_app instanceof WebAppInfo) ? $this->web_app->toArray() : null,
+                'request_poll' => ($this->request_poll instanceof ObjectTypeInterface) ? $this->request_poll->toArray() : null,
+                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null,
             ];
         }
 
@@ -149,11 +149,11 @@
         {
             $object = new self();
 
-            $object->text = $data['text'];
+            $object->text = $data['text'] ?? null;
             $object->request_user = isset($data['request_user']) ? KeyboardButtonRequestUser::fromArray($data['request_user']) : null;
             $object->request_chat = isset($data['request_chat']) ? KeyboardButtonRequestChat::fromArray($data['request_chat']) : null;
-            $object->request_contact = $data['request_contact'];
-            $object->request_location = $data['request_location'];
+            $object->request_contact = $data['request_contact'] ?? null;
+            $object->request_location = $data['request_location'] ?? null;
             $object->request_poll = isset($data['request_poll']) ? KeyboardButtonPollType::fromArray($data['request_poll']) : null;
             $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
 

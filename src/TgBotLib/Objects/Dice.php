@@ -57,8 +57,8 @@
         {
             $object = new self();
 
-            $object->emoji = @$data['emoji'] ?? null;
-            $object->value = @$data['value'] ?? null;
+            $object->emoji = $data['emoji'] ?? null;
+            $object->value = $data['value'] ?? null;
 
             return $object;
         }

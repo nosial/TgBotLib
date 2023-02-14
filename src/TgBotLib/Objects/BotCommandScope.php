@@ -5,6 +5,9 @@
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\BotCommandScope\BotCommandScopeChat;
+    use TgBotLib\Objects\BotCommandScope\BotCommandScopeChatAdministrators;
+    use TgBotLib\Objects\BotCommandScope\BotCommandScopeChatMember;
 
     class BotCommandScope implements ObjectTypeInterface
     {
@@ -76,9 +79,22 @@
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
+            if(isset($data['type']))
+            {
+                switch($data['type'])
+                {
+                    case 'chat':
+                        return BotCommandScopeChat::fromArray($data);
+                    case 'chat_administrators':
+                        return BotCommandScopeChatAdministrators::fromArray($data);
+                    case 'chat_member':
+                        return BotCommandScopeChatMember::fromArray($data);
+                }
+            }
+
             $object = new self();
 
-            $object->type = $data['type'];
+            $object->type = $data['type'] ?? null;
             $object->chat_id = $data['chat_id'] ?? null;
             $object->user_id = $data['user_id'] ?? null;
 

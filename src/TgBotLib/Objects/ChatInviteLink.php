@@ -79,7 +79,7 @@
          *
          * @return bool
          */
-        public function isCreatesJoinRequest(): bool
+        public function createsJoinRequest(): bool
         {
             return $this->creates_join_request;
         }
@@ -89,7 +89,7 @@
          *
          * @return bool
          */
-        public function isIsPrimary(): bool
+        public function isPrimary(): bool
         {
             return $this->is_primary;
         }
@@ -99,7 +99,7 @@
          *
          * @return bool
          */
-        public function isIsRevoked(): bool
+        public function isRevoked(): bool
         {
             return $this->is_revoked;
         }
@@ -174,15 +174,15 @@
         {
             $object = new self();
 
-            $object->invite_link = $data['invite_link'];
+            $object->invite_link = $data['invite_link'] ?? null;
             $object->creator = isset($data['creator']) ? User::fromArray($data['creator']) : null;
-            $object->creates_join_request = $data['creates_join_request'];
-            $object->is_primary = $data['is_primary'];
-            $object->is_revoked = $data['is_revoked'];
-            $object->name = $data['name'];
-            $object->expire_date = $data['expire_date'];
-            $object->member_limit = $data['member_limit'];
-            $object->pending_join_request_count = $data['pending_join_request_count'];
+            $object->creates_join_request = $data['creates_join_request'] ?? null;
+            $object->is_primary = $data['is_primary'] ?? null;
+            $object->is_revoked = $data['is_revoked'] ?? null;
+            $object->name = $data['name'] ?? null;
+            $object->expire_date = $data['expire_date'] ?? null;
+            $object->member_limit = $data['member_limit'] ?? null;
+            $object->pending_join_request_count = $data['pending_join_request_count'] ?? null;
 
             return $object;
         }

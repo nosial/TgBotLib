@@ -79,9 +79,9 @@
         {
             $object = new self();
 
-            $object->force_reply = $data['force_reply'];
+            $object->force_reply = $data['force_reply'] ?? false;
             $object->inline_field_placeholder = $data['inline_field_placeholder'] ?? null;
-            $object->selective = $data['selective'];
+            $object->selective = $data['selective'] ?? false;
 
             return $object;
         }

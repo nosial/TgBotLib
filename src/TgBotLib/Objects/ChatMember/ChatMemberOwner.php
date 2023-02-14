@@ -56,7 +56,7 @@
          *
          * @return bool
          */
-        public function isIsAnonymous(): bool
+        public function isAnonymous(): bool
         {
             return $this->is_anonymous;
         }
@@ -95,10 +95,12 @@
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new ChatMemberOwner();
+
             $object->status = $data['status'] ?? ChatMemberStatus::Creator;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->is_anonymous = $data['is_anonymous'] ?? false;
             $object->custom_title = $data['custom_title'] ?? null;
+
             return $object;
         }
 
@@ -111,10 +113,12 @@
         public static function fromChatMember(ChatMember $chatMember): ChatMemberOwner
         {
             $object = new ChatMemberOwner();
+
             $object->status = $chatMember->getStatus();
             $object->user = $chatMember->getUser();
-            $object->is_anonymous = $chatMember->isIsAnonymous();
+            $object->is_anonymous = $chatMember->isAnonymous();
             $object->custom_title = $chatMember->getCustomTitle();
+
             return $object;
         }
     }

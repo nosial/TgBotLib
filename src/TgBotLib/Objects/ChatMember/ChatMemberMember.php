@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\ChatMember;
 
+    use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
@@ -63,7 +64,7 @@
         {
             $object = new self();
 
-            $object->status = $data['status'];
+            $object->status = $data['status'] ?? ChatMemberStatus::Member;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
 
             return $object;

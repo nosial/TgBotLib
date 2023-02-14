@@ -100,7 +100,7 @@
         {
             $object = new self();
 
-            $object->url = $data['url'];
+            $object->url = $data['url'] ?? null;
             $object->forward_text = $data['forward_text'] ?? null;
             $object->bot_username = $data['bot_username'] ?? null;
             $object->request_write_access = $data['request_write_access'] ?? false;

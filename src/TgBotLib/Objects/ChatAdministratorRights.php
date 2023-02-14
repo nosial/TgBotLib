@@ -73,7 +73,7 @@
          *
          * @return bool
          */
-        public function isIsAnonymous(): bool
+        public function isAnonymous(): bool
         {
             return $this->is_anonymous;
         }
@@ -85,7 +85,7 @@
          *
          * @return bool
          */
-        public function isCanManageChat(): bool
+        public function canManageChat(): bool
         {
             return $this->can_manage_chat;
         }
@@ -95,7 +95,7 @@
          *
          * @return bool
          */
-        public function isCanDeleteMessages(): bool
+        public function canDeleteMessages(): bool
         {
             return $this->can_delete_messages;
         }
@@ -105,7 +105,7 @@
          *
          * @return bool
          */
-        public function isCanManageVideoChats(): bool
+        public function canManageVideoChats(): bool
         {
             return $this->can_manage_video_chats;
         }
@@ -115,7 +115,7 @@
          *
          * @return bool
          */
-        public function isCanRestrictMembers(): bool
+        public function canRestrictMembers(): bool
         {
             return $this->can_restrict_members;
         }
@@ -127,7 +127,7 @@
          *
          * @return bool
          */
-        public function isCanPromoteMembers(): bool
+        public function canPromoteMembers(): bool
         {
             return $this->can_promote_members;
         }
@@ -137,7 +137,7 @@
          *
          * @return bool
          */
-        public function isCanChangeInfo(): bool
+        public function canChangeInfo(): bool
         {
             return $this->can_change_info;
         }
@@ -147,7 +147,7 @@
          *
          * @return bool
          */
-        public function isCanInviteUsers(): bool
+        public function canInviteUsers(): bool
         {
             return $this->can_invite_users;
         }
@@ -157,7 +157,7 @@
          *
          * @return bool
          */
-        public function isCanPostMessages(): bool
+        public function canPostMessages(): bool
         {
             return $this->can_post_messages;
         }
@@ -167,7 +167,7 @@
          *
          * @return bool
          */
-        public function isCanEditMessages(): bool
+        public function canEditMessages(): bool
         {
             return $this->can_edit_messages;
         }
@@ -177,7 +177,7 @@
          *
          * @return bool
          */
-        public function isCanPinMessages(): bool
+        public function canPinMessages(): bool
         {
             return $this->can_pin_messages;
         }
@@ -187,7 +187,7 @@
          *
          * @return bool
          */
-        public function isCanManageTopics(): bool
+        public function canManageTopics(): bool
         {
             return $this->can_manage_topics;
         }
@@ -220,6 +220,7 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
