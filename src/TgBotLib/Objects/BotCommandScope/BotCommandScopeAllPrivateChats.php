@@ -5,6 +5,7 @@
     namespace TgBotLib\Objects\BotCommandScope;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\BotCommandScope;
 
     class BotCommandScopeAllPrivateChats implements ObjectTypeInterface
     {
@@ -49,4 +50,20 @@
 
             return $object;
         }
+
+        /**
+         * Constructs object from BotCommandScope
+         *
+         * @param BotCommandScope $botCommandScope
+         * @return BotCommandScopeAllPrivateChats
+         */
+        public static function fromBotCommandScope(BotCommandScope $botCommandScope): BotCommandScopeAllPrivateChats
+        {
+            $object = new self();
+
+            $object->type = $botCommandScope->getType();
+
+            return $object;
+        }
+
     }
