@@ -101,7 +101,7 @@
 
         /**
          * Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is
-         * independent from its format, which is determined by the fields is_animated and is_video.
+         * independent of its format, which is determined by the fields is_animated and is_video.
          *
          * @return string
          */
