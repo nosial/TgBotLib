@@ -169,9 +169,9 @@
          * Constructs the object from an array
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return WebhookInfo
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): WebhookInfo
         {
             $object = new self();
 

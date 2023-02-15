@@ -1221,9 +1221,9 @@
          * Constructs the object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return Message
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): Message
         {
             $object = new self();
 
