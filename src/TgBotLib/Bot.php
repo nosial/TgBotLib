@@ -4,8 +4,7 @@
 
     namespace TgBotLib;
 
-    use CurlHandle;
-    use TgBotLib\Exceptions\RequestException;
+    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\Telegram\Update;
 
     class Bot
@@ -110,7 +109,7 @@
          * @param string $method
          * @param array $params
          * @return array
-         * @throws RequestException
+         * @throws TelegramException
          */
         public function sendRequest(string $method, array $params = []): array
         {
@@ -129,12 +128,12 @@
             ]);
             $response = curl_exec($ch);
             if ($response === false)
-                throw new RequestException('Curl error: ' . curl_error($ch), curl_errno($ch));
+                throw new TelegramException('Curl error: ' . curl_error($ch), curl_errno($ch));
 
             curl_close($ch);
             $parsed = json_decode($response, true);
             if($parsed['ok'] === false)
-                throw new RequestException($parsed['description'], $parsed['error_code']);
+                throw new TelegramException($parsed['description'], $parsed['error_code']);
 
             return $parsed['result'];
         }
@@ -145,7 +144,7 @@
          *
          * @param array $params
          * @return Update[]
-         * @throws RequestException
+         * @throws TelegramException
          */
         public function getUpdates(array $params=[]): array
         {
@@ -161,6 +160,26 @@
                 $this->last_update_id = $results[count($results) - 1]->getUpdateId();
 
             return $results;
+        }
+
+        /**
+         * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an
+         * update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized
+         * Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+         * Returns True on success.
+         *
+         * If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter
+         * secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the
+         * secret token as content.
+         *
+         * @param array $params
+         * @return bool
+         * @throws TelegramException
+         */
+        public function setWebhook(array $params=[]): bool
+        {
+            $this->sendRequest('setWebhook', $params);
+            return true;
         }
 
     }
