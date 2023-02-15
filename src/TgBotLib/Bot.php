@@ -142,19 +142,19 @@
         /**
          * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
          *
-         * @param array $params
+         * @param array $options
          * @return Update[]
          * @throws TelegramException
          */
-        public function getUpdates(array $params=[]): array
+        public function getUpdates(array $options=[]): array
         {
-            if(!isset($params['offset']))
-                $params['offset'] = $this->last_update_id + 1;
+            if(!isset($options['offset']))
+                $options['offset'] = $this->last_update_id + 1;
 
 
             $results = array_map(function ($update) {
                 return Update::fromArray($update);
-            }, $this->sendRequest('getUpdates', $params));
+            }, $this->sendRequest('getUpdates', $options));
 
             if(count($results) > 0)
                 $this->last_update_id = $results[count($results) - 1]->getUpdateId();
@@ -172,14 +172,14 @@
          * secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the
          * secret token as content.
          *
-         * @param array $params
+         * @param string $url HTTPS URL to send updates to. Use an empty string to remove webhook integration
+         * @param array $options
          * @return bool
          * @throws TelegramException
          */
-        public function setWebhook(array $params=[]): bool
+        public function setWebhook(string $url, array $options=[]): bool
         {
-            $this->sendRequest('setWebhook', $params);
+            $this->sendRequest('setWebhook', $options);
             return true;
         }
-
     }
