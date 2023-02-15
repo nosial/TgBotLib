@@ -15,7 +15,7 @@
     },
     "build": {
         "source_path": "src",
-        "default_configuration": "release"
+        "default_configuration": "release",
         "configurations": [
             {
                 "name": "release",
