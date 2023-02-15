@@ -1229,20 +1229,20 @@
 
             $object->message_id = $data['message_id'] ?? null;
             $object->message_thread_id = $data['message_thread_id'] ?? null;
-            $object->from = ($data['from'] !== null) ? User::fromArray($data['from']) : null;
-            $object->sender_chat = ($data['sender_chat'] !== null) ? Chat::fromArray($data['sender_chat']) : null;
+            $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
+            $object->sender_chat = isset($data['sender_chat']) ? Chat::fromArray($data['sender_chat']) : null;
             $object->date = $data['date'] ?? null;
-            $object->chat = ($data['chat'] !== null) ? Chat::fromArray($data['chat']) : null;
-            $object->forward_from = ($data['forward_from'] !== null) ? User::fromArray($data['forward_from']) : null;
-            $object->forward_from_chat = ($data['forward_from_chat'] !== null) ? Chat::fromArray($data['forward_from_chat']) : null;
+            $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : null;
+            $object->forward_from = isset($data['forward_from']) ? User::fromArray($data['forward_from']) : null;
+            $object->forward_from_chat = isset($data['forward_from_chat']) ? Chat::fromArray($data['forward_from_chat']) : null;
             $object->forward_from_message_id = $data['forward_from_message_id'] ?? null;
             $object->forward_signature = $data['forward_signature'] ?? null;
             $object->forward_sender_name = $data['forward_sender_name'] ?? null;
             $object->forward_date = $data['forward_date'] ?? null;
             $object->is_topic_message = $data['is_topic_message'] ?? null;
             $object->is_automatic_forward = $data['is_automatic_forward'] ?? null;
-            $object->reply_to_message = ($data['reply_to_message'] !== null) ? self::fromArray($data['reply_to_message']) : null;
-            $object->via_bot = ($data['via_bot'] !== null) ? User::fromArray($data['via_bot']) : null;
+            $object->reply_to_message = isset($data['reply_to_message']) ? self::fromArray($data['reply_to_message']) : null;
+            $object->via_bot = isset($data['via_bot']) ? User::fromArray($data['via_bot']) : null;
             $object->edit_date = $data['edit_date'] ?? null;
             $object->has_protected_content = $data['has_protected_content'] ?? null;
             $object->media_group_id = $data['media_group_id'] ?? null;
@@ -1251,32 +1251,32 @@
             $object->entities = isset($data['entities']) && is_array($data['entities']) ? array_map(function ($item) {
                 return MessageEntity::fromArray($item);
             }, $data['entities']) : null;
-            $object->animation = ($data['animation'] !== null) ? Animation::fromArray($data['animation']) : null;
-            $object->audio = ($data['audio'] !== null) ? Audio::fromArray($data['audio']) : null;
-            $object->document = ($data['document'] !== null) ? Document::fromArray($data['document']) : null;
+            $object->animation = isset($data['animation']) ? Animation::fromArray($data['animation']) : null;
+            $object->audio = isset($data['audio']) ? Audio::fromArray($data['audio']) : null;
+            $object->document = isset($data['document']) ? Document::fromArray($data['document']) : null;
             $object->photo = isset($data['photo']) && is_array($data['photo']) ? array_map(function ($item)
             {
                 return PhotoSize::fromArray($item);
             }, $data['photo']) : null;
-            $object->sticker = ($data['sticker'] !== null) ? Sticker::fromArray($data['sticker']) : null;
-            $object->video = ($data['video'] !== null) ? Video::fromArray($data['video']) : null;
-            $object->video_note = ($data['video_note'] !== null) ? VideoNote::fromArray($data['video_note']) : null;
-            $object->voice = ($data['voice'] !== null) ? Voice::fromArray($data['voice']) : null;
+            $object->sticker = isset($data['sticker']) ? Sticker::fromArray($data['sticker']) : null;
+            $object->video = isset($data['video']) ? Video::fromArray($data['video']) : null;
+            $object->video_note = isset($data['video_note']) ? VideoNote::fromArray($data['video_note']) : null;
+            $object->voice = isset($data['voice']) ? Voice::fromArray($data['voice']) : null;
             $object->caption = $data['caption'] ?? null;
             $object->caption_entities = isset($data['caption_entities']) && is_array($data['caption_entities']) ? array_map(function ($item) {
                 return MessageEntity::fromArray($item);
             }, $data['caption_entities']) : null;
             $object->has_media_spoiler = $data['has_media_spoiler'] ?? null;
-            $object->contact = ($data['contact'] !== null) ? Contact::fromArray($data['contact']) : null;
-            $object->dice = ($data['dice'] !== null) ? Dice::fromArray($data['dice']) : null;
-            $object->game = ($data['game'] !== null) ? Game::fromArray($data['game']) : null;
-            $object->poll = ($data['poll'] !== null) ? Poll::fromArray($data['poll']) : null;
-            $object->venue = ($data['venue'] !== null) ? Venue::fromArray($data['venue']) : null;
-            $object->location = ($data['location'] !== null) ? Location::fromArray($data['location']) : null;
+            $object->contact = isset($data['contact']) ? Contact::fromArray($data['contact']) : null;
+            $object->dice = isset($data['dice']) ? Dice::fromArray($data['dice']) : null;
+            $object->game = isset($data['game']) ? Game::fromArray($data['game']) : null;
+            $object->poll = isset($data['poll']) ? Poll::fromArray($data['poll']) : null;
+            $object->venue = isset($data['venue']) ? Venue::fromArray($data['venue']) : null;
+            $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
             $object->new_chat_members = isset($data['new_chat_members']) && is_array($data['new_chat_members']) ? array_map(function ($item) {
                 return User::fromArray($item);
             }, $data['new_chat_members']) : null;
-            $object->left_chat_member = ($data['left_chat_member'] !== null) ? User::fromArray($data['left_chat_member']) : null;
+            $object->left_chat_member = isset($data['left_chat_member']) ? User::fromArray($data['left_chat_member']) : null;
             $object->new_chat_title = $data['new_chat_title'] ?? null;
             $object->new_chat_photo = isset($data['new_chat_photo']) && is_array($data['new_chat_photo']) ? array_map(function ($item) {
                 return PhotoSize::fromArray($item);
@@ -1285,30 +1285,30 @@
             $object->group_chat_created = $data['group_chat_created'] ?? null;
             $object->supergroup_chat_created = $data['supergroup_chat_created'] ?? null;
             $object->channel_chat_created = $data['channel_chat_created'] ?? null;
-            $object->message_auto_delete_timer_changed = ($data['message_auto_delete_timer_changed'] !== null) ? MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']) : null;
+            $object->message_auto_delete_timer_changed = isset($data['message_auto_delete_timer_changed']) ? MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']) : null;
             $object->migrate_to_chat_id = $data['migrate_to_chat_id'] ?? null;
             $object->migrate_from_chat_id = $data['migrate_from_chat_id'] ?? null;
-            $object->pinned_message = ($data['pinned_message'] !== null) ? self::fromArray($data['pinned_message']) : null;
-            $object->invoice = ($data['invoice'] !== null) ? Invoice::fromArray($data['invoice']) : null;
-            $object->successful_payment = ($data['successful_payment'] !== null) ? SuccessfulPayment::fromArray($data['successful_payment']) : null;
-            $object->user_shared = ($data['user_shared'] !== null) ? UserShared::fromArray($data['user_shared']) : null;
-            $object->chat_shared = ($data['chat_shared'] !== null) ? ChatShared::fromArray($data['chat_shared']) : null;
+            $object->pinned_message = isset($data['pinned_message']) ? self::fromArray($data['pinned_message']) : null;
+            $object->invoice = isset($data['invoice']) ? Invoice::fromArray($data['invoice']) : null;
+            $object->successful_payment = isset($data['successful_payment']) ? SuccessfulPayment::fromArray($data['successful_payment']) : null;
+            $object->user_shared = isset($data['user_shared']) ? UserShared::fromArray($data['user_shared']) : null;
+            $object->chat_shared = isset($data['chat_shared']) ? ChatShared::fromArray($data['chat_shared']) : null;
             $object->connected_website = $data['connected_website'] ?? null;
-            $object->write_access_allowed = ($data['write_access_allowed'] !== null) ? WriteAccessAllowed::fromArray($data['write_access_allowed']) : null;
-            $object->passport_data = ($data['passport_data'] !== null) ? PassportData::fromArray($data['passport_data']) : null;
-            $object->proximity_alert_triggered = ($data['proximity_alert_triggered'] !== null) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
-            $object->forum_topic_created = ($data['forum_topic_created'] !== null) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
-            $object->forum_topic_edited = ($data['forum_topic_edited'] !== null) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
-            $object->forum_topic_closed = ($data['forum_topic_closed'] !== null) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
-            $object->forum_topic_reopened = ($data['forum_topic_reopened'] !== null) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
-            $object->general_forum_topic_hidden = ($data['general_forum_topic_hidden'] !== null) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;
-            $object->general_forum_topic_unhidden = ($data['general_forum_topic_unhidden'] !== null) ? GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']) : null;
-            $object->video_chat_scheduled = ($data['video_chat_scheduled'] !== null) ? VideoChatScheduled::fromArray($data['video_chat_scheduled']) : null;
-            $object->video_chat_started = ($data['video_chat_started'] !== null) ? VideoChatStarted::fromArray($data['video_chat_started']) : null;
-            $object->video_chat_ended = ($data['video_chat_ended'] !== null) ? VideoChatEnded::fromArray($data['video_chat_ended']) : null;
-            $object->video_chat_participants_invited = ($data['video_chat_participants_invited'] !== null) ? VideoChatParticipantsInvited::fromArray($data['video_chat_participants_invited']) : null;
-            $object->web_app_data = ($data['web_app_data'] !== null) ? WebAppData::fromArray($data['web_app_data']) : null;
-            $object->reply_markup = ($data['reply_markup'] !== null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
+            $object->write_access_allowed = isset($data['write_access_allowed']) ? WriteAccessAllowed::fromArray($data['write_access_allowed']) : null;
+            $object->passport_data = isset($data['passport_data']) ? PassportData::fromArray($data['passport_data']) : null;
+            $object->proximity_alert_triggered = isset($data['proximity_alert_triggered']) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
+            $object->forum_topic_created = isset($data['forum_topic_created']) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
+            $object->forum_topic_edited = isset($data['forum_topic_created']) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
+            $object->forum_topic_closed = isset($data['forum_topic_closed']) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
+            $object->forum_topic_reopened = isset($data['forum_topic_reopened']) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
+            $object->general_forum_topic_hidden = isset($data['general_forum_topic_hidden']) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;
+            $object->general_forum_topic_unhidden = isset($data['general_forum_topic_unhidden']) ? GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']) : null;
+            $object->video_chat_scheduled = isset($data['video_chat_scheduled']) ? VideoChatScheduled::fromArray($data['video_chat_scheduled']) : null;
+            $object->video_chat_started = isset($data['video_chat_started']) ? VideoChatStarted::fromArray($data['video_chat_started']) : null;
+            $object->video_chat_ended = isset($data['video_chat_ended']) ? VideoChatEnded::fromArray($data['video_chat_ended']) : null;
+            $object->video_chat_participants_invited = isset($data['video_chat_participants_invited']) ? VideoChatParticipantsInvited::fromArray($data['video_chat_participants_invited']) : null;
+            $object->web_app_data = isset($data['web_app_data']) ? WebAppData::fromArray($data['web_app_data']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
 
             return $object;
         }
