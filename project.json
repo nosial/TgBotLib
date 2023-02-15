@@ -15,27 +15,11 @@
     },
     "build": {
         "source_path": "src",
-        "default_configuration": "debug",
-        "define_constants": {
-            "ASSEMBLY_NAME": "%ASSEMBLY.NAME%",
-            "ASSEMBLY_PACKAGE": "%ASSEMBLY.PACKAGE%",
-            "ASSEMBLY_VERSION": "%ASSEMBLY.VERSION%",
-            "ASSEMBLY_UID": "%ASSEMBLY.UID%"
-        },
+        "default_configuration": "release"
         "configurations": [
             {
-                "name": "debug",
-                "output_path": "build/debug",
-                "define_constants": {
-                    "DEBUG": "1"
-                }
-            },
-            {
                 "name": "release",
-                "output_path": "build/release",
-                "define_constants": {
-                    "DEBUG": "0"
-                }
+                "output_path": "build/release"
             }
         ]
     }
