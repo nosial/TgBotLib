@@ -6,6 +6,7 @@
 
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\Telegram\Update;
+    use TgBotLib\Objects\Telegram\User;
     use TgBotLib\Objects\Telegram\WebhookInfo;
 
     class Bot
@@ -213,5 +214,17 @@
         public function getWebhookInfo(): WebHookInfo
         {
             return WebhookInfo::fromArray($this->sendRequest('getWebhookInfo'));
+        }
+
+        /**
+         * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic
+         * information about the bot in form of a User object.
+         *
+         * @return User
+         * @throws TelegramException
+         */
+        public function getMe(): User
+        {
+            return User::fromArray($this->sendRequest('getMe'));
         }
     }
