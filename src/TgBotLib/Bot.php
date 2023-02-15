@@ -184,4 +184,21 @@
             ]));
             return true;
         }
+
+        /**
+         * Use this method to remove webhook integration if you decide to switch back to getUpdates.
+         * Returns True on success.
+         *
+         * @param bool $drop_pending_updates
+         * @return bool
+         * @throws TelegramException
+         */
+        public function deleteWebhook(bool $drop_pending_updates=false): bool
+        {
+            $this->sendRequest('deleteWebhook', [
+                'drop_pending_updates' => $drop_pending_updates
+            ]);
+
+            return true;
+        }
     }
