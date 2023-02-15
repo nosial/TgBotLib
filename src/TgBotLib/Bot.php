@@ -179,7 +179,9 @@
          */
         public function setWebhook(string $url, array $options=[]): bool
         {
-            $this->sendRequest('setWebhook', $options);
+            $this->sendRequest('setWebhook', array_merge($options, [
+                'url' => $url
+            ]));
             return true;
         }
     }
