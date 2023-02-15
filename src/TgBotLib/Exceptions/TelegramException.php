@@ -1,4 +1,3 @@
-
 <?php
 
     namespace TgBotLib\Exceptions;
@@ -6,7 +5,7 @@
     use Exception;
     use Throwable;
 
-    class RequestException extends Exception
+    class TelegramException extends Exception
     {
         /**
          * Public Constructor
