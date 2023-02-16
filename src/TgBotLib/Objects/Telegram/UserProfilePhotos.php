@@ -47,8 +47,10 @@
         {
             return [
                 'total_count' => $this->total_count,
-                'photos' => array_map(function (array $photo) {
-                    return array_map(function (PhotoSize $photoSize) {
+                'photos' => array_map(function (array $photo)
+                {
+                    return array_map(function (PhotoSize $photoSize)
+                    {
                         return $photoSize->toArray();
                     }, $photo);
                 }, $this->photos),
@@ -59,14 +61,16 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return UserProfilePhotos
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): UserProfilePhotos
         {
             $object = new self();
             $object->total_count = $data['total_count'];
-            $object->photos = array_map(function (array $photo) {
-                return array_map(function (array $photoSize) {
+            $object->photos = array_map(function (array $photo)
+            {
+                return array_map(function (array $photoSize)
+                {
                     return PhotoSize::fromArray($photoSize);
                 }, $photo);
             }, $data['photos']);

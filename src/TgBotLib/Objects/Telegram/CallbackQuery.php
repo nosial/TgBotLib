@@ -140,9 +140,9 @@
          * Constructs CallbackQuery object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return CallbackQuery
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new self();
 

@@ -202,10 +202,10 @@
          * Constructs object from an array representation.
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return InputMediaAnimation
          * @noinspection DuplicatedCode
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new static();
             $object->type = $data['type'] ?? InputMediaType::Animation;

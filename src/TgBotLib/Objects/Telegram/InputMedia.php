@@ -259,9 +259,9 @@
          * Constructs a new object from an array representation.
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return InputMedia
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new self();
             $object->type = $data['type'] ?? null;

@@ -153,10 +153,10 @@
          * Constructs object from an array representation.
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return InputMediaDocument
          * @noinspection DuplicatedCode
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new InputMediaDocument();
             $object->type = $data['type'] ?? null;

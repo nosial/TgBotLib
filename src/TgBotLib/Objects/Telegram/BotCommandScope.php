@@ -75,9 +75,9 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return BotCommandScope
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             if(isset($data['type']))
             {

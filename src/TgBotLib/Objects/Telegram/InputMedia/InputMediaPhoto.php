@@ -131,9 +131,9 @@
          * Constructs the object from an array
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return InputMediaPhoto
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new self();
 

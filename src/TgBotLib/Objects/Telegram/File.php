@@ -90,9 +90,9 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return File
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): File
         {
             $object = new self();
             $object->file_id = $data['file_id'] ?? null;

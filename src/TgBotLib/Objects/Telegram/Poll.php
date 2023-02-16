@@ -239,9 +239,9 @@
          * Constructs object from array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return Poll
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new self();
 

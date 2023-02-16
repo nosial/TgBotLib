@@ -23,9 +23,9 @@
          * Returns object from array
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return ForumTopicClosed
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             return new self();
         }

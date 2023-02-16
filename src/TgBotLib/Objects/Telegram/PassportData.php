@@ -62,9 +62,9 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return PassportData
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             $object = new self();
             $object->data = array_map(function (array $element)

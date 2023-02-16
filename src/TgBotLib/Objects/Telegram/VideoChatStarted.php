@@ -23,9 +23,9 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return ObjectTypeInterface
+         * @return VideoChatStarted
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): self
         {
             return new self();
         }
