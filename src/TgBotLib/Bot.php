@@ -332,7 +332,7 @@
         /**
          * Use this method to send text messages. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $text Text of the message to be sent, 1-4096 characters after entities parsing
          * @param array $options Optional parameters
          * @return Message
@@ -340,7 +340,7 @@
          * @link https://core.telegram.org/bots/api#sendmessage
          * @noinspection PhpUnused
          */
-        public function sendMessage(string $chat_id, string $text, array $options=[]): Message
+        public function sendMessage(string|int $chat_id, string $text, array ...$options): Message
         {
             return Message::fromArray($this->sendRequest('sendMessage', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -352,7 +352,7 @@
          * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent
          * Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
          * @param int $message_id Message identifier in the chat specified in from_chat_id
          * @param array $options Optional parameters
@@ -361,7 +361,7 @@
          * @link https://core.telegram.org/bots/api#forwardmessage
          * @noinspection PhpUnused
          */
-        public function forwardMessage(string $chat_id, string $from_chat_id, int $message_id, array $options=[]): Message
+        public function forwardMessage(string|int $chat_id, string $from_chat_id, int $message_id, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('forwardMessage', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -376,7 +376,7 @@
          * analogous to the method forwardMessage, but the copied message doesn't have a link to the original message.
          * Returns the MessageId of the sent message on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
          * @param int $message_id Message identifier in the chat specified in from_chat_id
          * @param array $options Optional parameters
@@ -385,7 +385,7 @@
          * @link https://core.telegram.org/bots/api#copymessage
          * @noinspection PhpUnused
          */
-        public function copyMessage(string $chat_id, string $from_chat_id, int $message_id, array $options=[]): Message
+        public function copyMessage(string|int $chat_id, string $from_chat_id, int $message_id, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('copyMessage', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -397,7 +397,7 @@
         /**
          * Use this method to send photos. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
          * @param array $options Optional parameters
          * @return Message
@@ -405,7 +405,7 @@
          * @link https://core.telegram.org/bots/api#sendphoto
          * @noinspection PhpUnused
          */
-        public function sendPhoto(string $chat_id, string $photo, array $options=[]): Message
+        public function sendPhoto(string|int $chat_id, string $photo, array $options=[]): Message
         {
             if(file_exists($photo))
             {
@@ -427,7 +427,7 @@
          *
          * For sending voice messages, use the sendVoice method instead.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
          * @param array $options Optional parameters
          * @return Message
@@ -435,7 +435,7 @@
          * @link https://core.telegram.org/bots/api#sendaudio
          * @noinspection PhpUnused
          */
-        public function sendAudio(string $chat_id, string $audio, array $options=[]): Message
+        public function sendAudio(string|int $chat_id, string $audio, array $options=[]): Message
         {
             if(file_exists($audio))
             {
@@ -454,7 +454,7 @@
          * Use this method to send general files. On success, the sent Message is returned. Bots can currently send
          * files of any type of up to 50 MB in size, this limit may be changed in the future.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
          * @param array $options Optional parameters
          * @return Message
@@ -462,7 +462,7 @@
          * @link https://core.telegram.org/bots/api#senddocument
          * @noinspection PhpUnused
          */
-        public function sendDocument(string $chat_id, string $document, array $options=[]): Message
+        public function sendDocument(string|int $chat_id, string $document, array $options=[]): Message
         {
             if(file_exists($document))
             {
@@ -482,7 +482,7 @@
          * Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in
          * size, this limit may be changed in the future.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
          * @param array $options Optional parameters
          * @return Message
@@ -490,7 +490,7 @@
          * @link https://core.telegram.org/bots/api#sendvideo
          * @noinspection PhpUnused
          */
-        public function sendVideo(string $chat_id, string $video, array $options=[]): Message
+        public function sendVideo(string|int $chat_id, string $video, array $options=[]): Message
         {
             if(file_exists($video))
             {
@@ -510,7 +510,7 @@
          * Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be
          * changed in the future.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
          * @param array $options Optional parameters
          * @return Message
@@ -518,7 +518,7 @@
          * @link https://core.telegram.org/bots/api#sendanimation
          * @noinspection PhpUnused
          */
-        public function sendAnimation(string $chat_id, string $animation, array $options=[]): Message
+        public function sendAnimation(string|int $chat_id, string $animation, array $options=[]): Message
         {
             if(file_exists($animation))
             {
@@ -539,7 +539,7 @@
          * as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of
          * up to 50 MB in size, this limit may be changed in the future.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
          * @param array $options Optional parameters
          * @return Message
@@ -547,7 +547,7 @@
          * @link https://core.telegram.org/bots/api#sendvoice
          * @noinspection PhpUnused
          */
-        public function sendVoice(string $chat_id, string $voice, array $options=[]): Message
+        public function sendVoice(string|int $chat_id, string $voice, array $options=[]): Message
         {
             if(file_exists($voice))
             {
@@ -566,14 +566,14 @@
          * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to
          * send video messages. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. (Sending video notes by a URL is currently unsupported)
          * @param array $options Optional parameters
          * @return Message
          * @throws TelegramException
          * @noinspection PhpUnused
          */
-        public function sendVideoNote(string $chat_id, string $video_note, array $options=[]): Message
+        public function sendVideoNote(string|int $chat_id, string $video_note, array $options=[]): Message
         {
             if(file_exists($video_note))
             {
@@ -593,7 +593,7 @@
          * can be only grouped on an album with messages of the same type. On success, an array of Messages that were
          * sent is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param array $media A JSON-serialized array describing messages to be sent, must include 2-10 items
          * @param array $options Optional parameters
          * @return array
@@ -601,7 +601,7 @@
          * @link https://core.telegram.org/bots/api#sendmediagroup
          * @noinspection PhpUnused
          */
-        public function sendMediaGroup(string $chat_id, array $media, array $options=[]): array
+        public function sendMediaGroup(string|int $chat_id, array $media, array $options=[]): array
         {
             return array_map(function ($message)
             {
@@ -620,7 +620,7 @@
         /**
          * Use this method to send point on the map. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param float $latitude Latitude of the location
          * @param float $longitude Longitude of the location
          * @param array $options Optional parameters
@@ -628,7 +628,7 @@
          * @throws TelegramException
          * @noinspection PhpUnused
          */
-        public function sendLocation(string $chat_id, float $latitude, float $longitude, array $options=[]): Message
+        public function sendLocation(string|int $chat_id, float $latitude, float $longitude, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendLocation', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -676,7 +676,7 @@
         /**
          * Use this method to send information about a venue. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param float $latitude Latitude of the venue
          * @param float $longitude Longitude of the venue
          * @param string $title Name of the venue
@@ -687,7 +687,7 @@
          * @see https://core.telegram.org/bots/api#sendvenue
          * @noinspection PhpUnused
          */
-        public function sendVenue(string $chat_id, float $latitude, float $longitude, string $title, string $address, array $options=[]): Message
+        public function sendVenue(string|int $chat_id, float $latitude, float $longitude, string $title, string $address, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendVenue', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -701,7 +701,7 @@
         /**
          * Use this method to send phone contacts. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $phone_number Contact's phone number
          * @param string $first_name Contact's first name
          * @param array $options Optional parameters
@@ -710,7 +710,7 @@
          * @see https://core.telegram.org/bots/api#sendcontact
          * @noinspection PhpUnused
          */
-        public function sendContact(string $chat_id, string $phone_number, string $first_name, array $options=[]): Message
+        public function sendContact(string|int $chat_id, string $phone_number, string $first_name, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendContact', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -722,7 +722,7 @@
         /**
          * Use this method to send a native poll. On success, the sent Message is returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $question Poll question, 1-300 characters
          * @param array $options A JSON-serialized list of answer options, 2-10 strings 1-100 characters each
          * @param array $params Optional parameters
@@ -731,7 +731,7 @@
          * @link https://core.telegram.org/bots/api#sendpoll
          * @noinspection PhpUnused
          */
-        public function sendPoll(string $chat_id, string $question, array $options, array $params=[]): Message
+        public function sendPoll(string|int $chat_id, string $question, array $options, array $params=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendPoll', array_merge($params, [
                 'chat_id' => $chat_id,
@@ -744,14 +744,14 @@
          * Use this method to send an animated emoji that will display a random value. On success, the sent Message is
          * returned.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param array $params Optional parameters
          * @return Message
          * @throws TelegramException
          * @link https://core.telegram.org/bots/api#senddice
          * @noinspection PhpUnused
          */
-        public function sendDice(string $chat_id, array $params=[]): Message
+        public function sendDice(string|int $chat_id, array $params=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendDice', array_merge($params, [
                 'chat_id' => $chat_id
@@ -763,7 +763,7 @@
          * set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
          * Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
          * @param array $options Optional parameters
          * @return bool
@@ -771,7 +771,7 @@
          * @link https://core.telegram.org/bots/api#sendchataction
          * @noinspection PhpUnused
          */
-        public function sendChatAction(string $chat_id, string $action, array $options=[]): bool
+        public function sendChatAction(string|int $chat_id, string $action, array $options=[]): bool
         {
             $this->sendRequest('sendChatAction', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -825,7 +825,7 @@
          * The bot must be an administrator in the chat for this to work and must have the appropriate administrator
          * rights. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
          * @param int $user_id Unique identifier of the target user
          * @param array $options Optional parameters
          * @return bool
@@ -833,7 +833,7 @@
          * @link https://core.telegram.org/bots/api#banchatmember
          * @noinspection PhpUnused
          */
-        public function banChatMember(string $chat_id, int $user_id, array $options=[]): bool
+        public function banChatMember(string|int $chat_id, int $user_id, array $options=[]): bool
         {
             $this->sendRequest('banChatMember', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -850,7 +850,7 @@
          * but will be able to join it. So if the user is a member of the chat they will also be removed from the chat.
          * If you don't want this, use the parameter only_if_banned. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
          * @param int $user_id Unique identifier of the target user
          * @param array $options Optional parameters
          * @return bool
@@ -858,7 +858,7 @@
          * @link https://core.telegram.org/bots/api#unbanchatmember
          * @noinspection PhpUnused
          */
-        public function unbanChatMember(string $chat_id, int $user_id, array $options=[]): bool
+        public function unbanChatMember(string|int $chat_id, int $user_id, array $options=[]): bool
         {
             $this->sendRequest('unbanChatMember', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -873,7 +873,7 @@
          * this to work and must have the appropriate administrator rights. Pass True for all permissions to lift
          * restrictions from a user. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
          * @param int $user_id Unique identifier of the target user
          * @param array $permissions A JSON-serialized object for new user permissions (https://core.telegram.org/bots/api#chatpermissions)
          * @param array $options Optional parameters
@@ -883,7 +883,7 @@
          * @see https://core.telegram.org/bots/api#chatpermissions
          * @noinspection PhpUnused
          */
-        public function restrictChatMember(string $chat_id, int $user_id, array $permissions, array $options=[]): bool
+        public function restrictChatMember(string|int $chat_id, int $user_id, array $permissions, array $options=[]): bool
         {
             $this->sendRequest('restrictChatMember', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -899,7 +899,7 @@
          * the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean
          * parameters to demote a user. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param int $user_id Unique identifier of the target user
          * @param array $options Optional parameters
          * @return bool
@@ -907,7 +907,7 @@
          * @link https://core.telegram.org/bots/api#promotechatmember
          * @noinspection PhpUnused
          */
-        public function promoteChatMember(string $chat_id, int $user_id, array $options=[]): bool
+        public function promoteChatMember(string|int $chat_id, int $user_id, array $options=[]): bool
         {
             $this->sendRequest('promoteChatMember', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -920,7 +920,7 @@
         /**
          * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
          * @param int $user_id Unique identifier of the target user
          * @param string $custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
          * @return bool
@@ -928,7 +928,7 @@
          * @link https://core.telegram.org/bots/api#setchatadministratorcustomtitle
          * @noinspection PhpUnused
          */
-        public function setChatAdministratorCustomTitle(string $chat_id, int $user_id, string $custom_title): bool
+        public function setChatAdministratorCustomTitle(string|int $chat_id, int $user_id, string $custom_title): bool
         {
             $this->sendRequest('setChatAdministratorCustomTitle', [
                 'chat_id' => $chat_id,
@@ -945,13 +945,13 @@
          * administrator in the supergroup or channel for this to work and must have the appropriate administrator
          * rights. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param int $user_id Unique identifier of the target sender chat
          * @return bool
          * @throws TelegramException
          * @noinspection PhpUnused
          */
-        public function banChatSenderChat(string $chat_id, int $user_id): bool
+        public function banChatSenderChat(string|int $chat_id, int $user_id): bool
         {
             $this->sendRequest('banChatSenderChat', [
                 'chat_id' => $chat_id,
@@ -965,14 +965,14 @@
          * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an
          * administrator for this to work and must have the appropriate administrator rights. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param int $user_id Unique identifier of the target sender chat
          * @return bool
          * @throws TelegramException
          * @link https://core.telegram.org/bots/api#unbanchatsenderchat
          * @noinspection PhpUnused
          */
-        public function unbanChatSenderChat(string $chat_id, int $user_id): bool
+        public function unbanChatSenderChat(string|int $chat_id, int $user_id): bool
         {
             $this->sendRequest('unbanChatSenderChat', [
                 'chat_id' => $chat_id,
@@ -985,7 +985,7 @@
         /**
          * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
          * @param array $permissions A JSON-serialized object for new default chat permissions (https://core.telegram.org/bots/api#chatpermissions)
          * @param bool $use_independent_chat_permissions Pass True if chat permissions are set independently. Otherwise, the can_send_other_messages and can_add_web_page_previews permissions will imply the can_send_messages, can_send_audios, can_send_documents, can_send_photos, can_send_videos, can_send_video_notes, and can_send_voice_notes permissions; the can_send_polls permission will imply the can_send_messages permission.
          * @return bool
@@ -993,7 +993,7 @@
          * @link https://core.telegram.org/bots/api#setchatpermissions
          * @noinspection PhpUnused
          */
-        public function setChatPermissions(string $chat_id, array $permissions, bool $use_independent_chat_permissions=false): bool
+        public function setChatPermissions(string|int $chat_id, array $permissions, bool $use_independent_chat_permissions=false): bool
         {
             $this->sendRequest('setChatPermissions', [
                 'chat_id' => $chat_id,
@@ -1009,13 +1009,13 @@
          * revoked. The bot must be an administrator in the chat for this to work and must have the appropriate
          * administrator rights. Returns the new invite link as String on success.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @return string
          * @throws TelegramException
          * @link https://core.telegram.org/bots/api#exportchatinvitelink
          * @noinspection PhpUnused
          */
-        public function exportChatInviteLink(string $chat_id): string
+        public function exportChatInviteLink(string|int $chat_id): string
         {
             return $this->sendRequest('exportChatInviteLink', [
                 'chat_id' => $chat_id
@@ -1027,18 +1027,50 @@
          * for this to work and must have the appropriate administrator rights. The link can be revoked using the method
          * revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
          *
-         * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param array $options Optional parameters
          * @return ChatInviteLink
          * @link https://core.telegram.org/bots/api#createchatinvitelink
          * @noinspection PhpUnused
          */
-        public function createChatInviteLink(string $chat_id, array $options=[]): ChatInviteLink
+        public function createChatInviteLink(string|int $chat_id, array $options=[]): ChatInviteLink
         {
             return ChatInviteLink::fromArray($this->sendRequest('createChatInviteLink', array_merge([
                 'chat_id' => $chat_id
             ], $options)));
         }
 
+        /**
+         * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the
+         * chat for this to work and must have the appropriate administrator rights. Returns the edited invite link
+         * as a ChatInviteLink object.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string $invite_link The invite link to edit
+         * @param array $options
+         * @return ChatInviteLink
+         * @throws TelegramException
+         */
+        public function editChatInviteLink(string|int $chat_id, string $invite_link, array $options=[]): ChatInviteLink
+        {
+            return ChatInviteLink::fromArray($this->sendRequest('editChatInviteLink', array_merge([
+                'chat_id' => $chat_id,
+                'invite_link' => $invite_link
+            ], $options)));
+        }
+
+        /**
+         * @param string|int $chat_id
+         * @param string $invite_link
+         * @return ChatInviteLink
+         * @throws TelegramException
+         */
+        public function revokeChatInviteLink(string|int $chat_id, string $invite_link): ChatInviteLink
+        {
+            return ChatInviteLink::fromArray($this->sendRequest('revokeChatInviteLink', [
+                'chat_id' => $chat_id,
+                'invite_link' => $invite_link
+            ]));
+        }
 
     }
