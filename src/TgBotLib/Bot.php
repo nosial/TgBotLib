@@ -17,6 +17,7 @@
     use TgBotLib\Objects\Telegram\ForumTopic;
     use TgBotLib\Objects\Telegram\MenuButton;
     use TgBotLib\Objects\Telegram\Message;
+    use TgBotLib\Objects\Telegram\Poll;
     use TgBotLib\Objects\Telegram\Sticker;
     use TgBotLib\Objects\Telegram\Update;
     use TgBotLib\Objects\Telegram\User;
@@ -1805,5 +1806,124 @@
             return ChatAdministratorRights::fromArray($this->sendRequest('getMyDefaultAdministratorRights', [
                 'for_channels' => $for_channels
             ]));
+        }
+
+        /**
+         * Use this method to edit text and game messages. On success, if the edited message is not an inline message,
+         * the edited Message is returned, otherwise True is returned.
+         *
+         * @param string $text New text of the message, 1-4096 characters after entities parsing
+         * @param array $options Optional parameters
+         * @return Message
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editmessagetext
+         * @noinspection PhpUnused
+         */
+        public function editMessageText(string $text, array $options=[]): Message
+        {
+            return Message::fromArray($this->sendRequest('editMessageText', array_merge([
+                'text' => $text
+            ], $options)));
+        }
+
+        /**
+         * Use this method to edit captions of messages. On success, if the edited message is not an inline message,
+         * the edited Message is returned, otherwise True is returned.
+         *
+         * @param array $options Optional parameters
+         * @return Message
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editmessagecaption
+         * @noinspection PhpUnused
+         */
+        public function editMessageCaption(array $options=[]): Message
+        {
+            return Message::fromArray($this->sendRequest('editMessageCaption', $options));
+        }
+
+        /**
+         * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a
+         * message album, then it can be edited only to an audio for audio albums, only to a document for document
+         * albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded;
+         * use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an
+         * inline message, the edited Message is returned, otherwise True is returned.
+         *
+         * @param string $media
+         * @param array $options
+         * @return Message
+         * @throws TelegramException
+         */
+        public function editMessageMedia(string $media, array $options=[]): Message
+        {
+            if(file_exists($media))
+            {
+                return Message::fromArray(
+                    $this->sendFileUpload('editMessageMedia', 'media', $options['media'], $options)
+                );
+            }
+
+            return Message::fromArray($this->sendRequest('editMessageMedia', $options));
+        }
+
+        /**
+         * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline
+         * message, the edited Message is returned, otherwise True is returned.
+         *
+         * @param array $options Optional parameters
+         * @return Message
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editmessagereplymarkup
+         * @noinspection PhpUnused
+         */
+        public function editMessageReplyMarkup(array $options=[]): Message
+        {
+            return Message::fromArray($this->sendRequest('editMessageReplyMarkup', $options));
+        }
+
+        /**
+         * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned.
+         *
+         * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $message_id Identifier of the original message with the poll
+         * @param array $options Optional parameters
+         * @return Poll
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#stoppoll
+         * @noinspection PhpUnused
+         */
+        public function stopPoll(int|string $chat_id, int $message_id, array $options=[]): Poll
+        {
+            return Poll::fromArray($this->sendRequest('stopPoll', array_merge([
+                'chat_id' => $chat_id,
+                'message_id' => $message_id
+            ], $options)));
+        }
+
+        /**
+         * Use this method to delete a message, including service messages, with the following limitations:
+         *  - A message can only be deleted if it was sent less than 48 hours ago.
+         *  - Service messages about a supergroup, channel, or forum topic creation can't be deleted.
+         *  - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+         *  - Bots can delete outgoing messages in private chats, groups, and supergroups.
+         *  - Bots can delete incoming messages in private chats.
+         *  - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+         *  - If the bot is an administrator of a group, it can delete any message there.
+         * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+         * Returns True on success.
+         *
+         * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $message_id Identifier of the message to delete
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deletemessage
+         * @noinspection PhpUnused
+         */
+        public function deleteMessage(int|string $chat_id, int $message_id): bool
+        {
+            $this->sendRequest('deleteMessage', [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id
+            ]);
+            return true;
         }
     }
