@@ -1,7 +1,13 @@
 <?php
 
+    use commands\StartCommand;
+
     require 'ncc';
     import('net.nosial.tgbotlib');
 
-    $bot = new TgBotLib\Bot('5126030313:AAEn3QcwSvTJ2eAKUnSb_MkC5U0tlqkM1xw');
-    $bot->sendMessage(chat_id: 570787098, text: 'Hello world!');
+    require 'commands/StartCommand.php';
+
+    $bot = new TgBotLib\Bot('YOUR_BOT_TOKEN');
+    $bot->setCommandHandler('start', new StartCommand());
+
+    $bot->handleGetUpdates(true);

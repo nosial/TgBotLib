@@ -7,6 +7,7 @@
     use CURLFile;
     use CurlHandle;
     use TgBotLib\Exceptions\TelegramException;
+    use TgBotLib\Interfaces\CommandInterface;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
     use TgBotLib\Objects\Telegram\Chat;
@@ -52,6 +53,11 @@
         private $curl_handle;
 
         /**
+         * @var CommandInterface[]
+         */
+        private $command_handlers;
+
+        /**
          * Public Constructor
          *
          * @param string $token
@@ -62,6 +68,7 @@
             $this->host = 'api.telegram.org';
             $this->ssl = true;
             $this->last_update_id = 0;
+            $this->command_handlers = [];
         }
 
         /**
@@ -204,6 +211,71 @@
             return $parsed['result'];
         }
 
+        /**
+         * Sets a command handler for the specified command
+         *
+         * @param string $command
+         * @param CommandInterface $handler
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function setCommandHandler(string $command, CommandInterface $handler): void
+        {
+            $this->command_handlers[$command] = $handler;
+        }
+
+        /**
+         * Removes the command handler for the specified command
+         *
+         * @param string $command
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function removeCommandHandler(string $command): void
+        {
+            unset($this->command_handlers[$command]);
+        }
+
+        /**
+         * Handles a single update object
+         *
+         * @param Update $update
+         * @return void
+         */
+        public function handleUpdate(Update $update): void
+        {
+            if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getText() ?? null) !== null)
+            {
+                $text = $update->getMessage()->getText();
+                if(strpos($text, '/') === 0)
+                {
+                    $command = explode(' ', substr($text, 1))[0];
+                    if(isset($this->command_handlers[$command]))
+                    {
+                        $this->command_handlers[$command]->handle($this, $update);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Handles all updates received from the Telegram API using long polling
+         *
+         * @param bool $run_forever
+         * @return void
+         * @throws TelegramException
+         */
+        public function handleGetUpdates(bool $run_forever = false): void
+        {
+            do
+            {
+                $updates = $this->getUpdates();
+                foreach($updates as $update)
+                {
+                    $this->handleUpdate($update);
+                }
+            } while($run_forever);
+        }
 
         /**
          * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
@@ -348,7 +420,7 @@
          * @link https://core.telegram.org/bots/api#sendmessage
          * @noinspection PhpUnused
          */
-        public function sendMessage(string|int $chat_id, string $text, array $options): Message
+        public function sendMessage(string|int $chat_id, string $text, array $options=[]): Message
         {
             return Message::fromArray($this->sendRequest('sendMessage', array_merge($options, [
                 'chat_id' => $chat_id,
