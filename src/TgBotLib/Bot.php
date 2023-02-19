@@ -8,9 +8,13 @@
     use CurlHandle;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Telegram\Chat;
     use TgBotLib\Objects\Telegram\ChatInviteLink;
+    use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\File;
+    use TgBotLib\Objects\Telegram\ForumTopic;
     use TgBotLib\Objects\Telegram\Message;
+    use TgBotLib\Objects\Telegram\Sticker;
     use TgBotLib\Objects\Telegram\Update;
     use TgBotLib\Objects\Telegram\User;
     use TgBotLib\Objects\Telegram\UserProfilePhotos;
@@ -340,7 +344,7 @@
          * @link https://core.telegram.org/bots/api#sendmessage
          * @noinspection PhpUnused
          */
-        public function sendMessage(string|int $chat_id, string $text, array ...$options): Message
+        public function sendMessage(string|int $chat_id, string $text, array $options): Message
         {
             return Message::fromArray($this->sendRequest('sendMessage', array_merge($options, [
                 'chat_id' => $chat_id,
@@ -1030,6 +1034,7 @@
          * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param array $options Optional parameters
          * @return ChatInviteLink
+         * @throws TelegramException
          * @link https://core.telegram.org/bots/api#createchatinvitelink
          * @noinspection PhpUnused
          */
@@ -1047,9 +1052,11 @@
          *
          * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
          * @param string $invite_link The invite link to edit
-         * @param array $options
+         * @param array $options Optional parameters
          * @return ChatInviteLink
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editchatinvitelink
+         * @noinspection PhpUnused
          */
         public function editChatInviteLink(string|int $chat_id, string $invite_link, array $options=[]): ChatInviteLink
         {
@@ -1064,6 +1071,8 @@
          * @param string $invite_link
          * @return ChatInviteLink
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#revokechatinvitelink
+         * @noinspection PhpUnused
          */
         public function revokeChatInviteLink(string|int $chat_id, string $invite_link): ChatInviteLink
         {
@@ -1073,4 +1082,592 @@
             ]));
         }
 
+        /**
+         * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work
+         * and must have the can_invite_users administrator right. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $user_id Unique identifier of the target user
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#approvechatjoinrequest
+         * @noinspection PhpUnused
+         */
+        public function approveChatJoinRequest(string|int $chat_id, int $user_id): bool
+        {
+            $this->sendRequest('approveChatJoinRequest', [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work
+         * and must have the can_invite_users administrator right. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $user_id Unique identifier of the target user
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#declinechatjoinrequest
+         * @noinspection PhpUnused
+         */
+        public function declineChatJoinRequest(string|int $chat_id, int $user_id): bool
+        {
+            $this->sendRequest('declineChatJoinRequest', [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot
+         * must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+         * Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string $photo New chat photo, uploaded using multipart/form-data
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setchatphoto
+         * @noinspection PhpUnused
+         */
+        public function setChatPhoto(string|int $chat_id, string $photo): bool
+        {
+            if(file_exists($photo))
+            {
+                $this->sendFileUpload('sendChatPhoto', 'photo', $photo, [
+                    'chat_id' => $chat_id
+                ]);
+
+                return true;
+            }
+
+            $this->sendRequest('setChatPhoto', [
+                'chat_id' => $chat_id,
+                'photo' => $photo
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
+         * administrator in the chat for this to work and must have the appropriate administrator rights. Returns True
+         * on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deletechatphoto
+         * @noinspection PhpUnused
+         */
+        public function deleteChatPhoto(string|int $chat_id): bool
+        {
+            $this->sendRequest('deleteChatPhoto', [
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an
+         * administrator in the chat for this to work and must have the appropriate administrator rights. Returns True
+         * on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string $title New chat title, 1-128 characters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setchattitle
+         * @noinspection PhpUnused
+         */
+        public function setChatTitle(string|int $chat_id, string $title): bool
+        {
+            $this->sendRequest('setChatTitle', [
+                'chat_id' => $chat_id,
+                'title' => $title
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to change the description of a group, a supergroup or a channel. The bot must be an
+         * administrator in the chat for this to work and must have the appropriate administrator rights. Returns True
+         * on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param string $description New chat description, 0-255 characters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setchatdescription
+         * @noinspection PhpUnused
+         */
+        public function setChatDescription(string|int $chat_id, string $description): bool
+        {
+            $this->sendRequest('setChatDescription', [
+                'chat_id' => $chat_id,
+                'description' => $description
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat,
+         * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages'
+         * administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on
+         * success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $message_id Identifier of a message to pin
+         * @param bool $disable_notification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#pinchatmessage
+         * @noinspection PhpUnused
+         */
+        public function pinChatMessage(string|int $chat_id, int $message_id, bool $disable_notification=false): bool
+        {
+            $this->sendRequest('pinChatMessage', [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id,
+                'disable_notification' => $disable_notification
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private
+         * chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages'
+         * administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on
+         * success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @param int $message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#unpinchatmessage
+         * @noinspection PhpUnused
+         */
+        public function unpinChatMessage(string|int $chat_id, int $message_id): bool
+        {
+            $this->sendRequest('unpinChatMessage', [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot
+         * must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
+         * right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#unpinallchatmessages
+         * @noinspection PhpUnused
+         */
+        public function unpinAllChatMessages(string|int $chat_id): bool
+        {
+            $this->sendRequest('unpinAllChatMessages', [
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#leavechat
+         * @noinspection PhpUnused
+         */
+        public function leaveChat(string|int $chat_id): bool
+        {
+            $this->sendRequest('leaveChat', [
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to get up-to-date information about the chat (current name of the user for one-on-one
+         * conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+         * @return Chat
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getchat
+         * @noinspection PhpUnused
+         */
+        public function getChat(string|int $chat_id): Chat
+        {
+            return Chat::fromArray($this->sendRequest('getChat', [
+                'chat_id' => $chat_id
+            ]));
+        }
+
+        /**
+         * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember
+         * objects.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+         * @return ChatMember[]
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getchatadministrators
+         * @noinspection PhpUnused
+         */
+        public function getChatAdministrators(string|int $chat_id): array
+        {
+            return array_map(function ($item) {
+                return ChatMember::fromArray($item);
+            }, $this->sendRequest('getChatAdministrators', [
+                'chat_id' => $chat_id
+            ]));
+        }
+
+        /**
+         * Use this method to get the number of members in a chat. Returns Int on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+         * @return int
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getchatmembercount
+         * @noinspection PhpUnused
+         */
+        public function getChatMemberCount(string|int $chat_id): int
+        {
+            return $this->sendRequest('getChatMemberCount', [
+                'chat_id' => $chat_id
+            ]);
+        }
+
+        /**
+         * Use this method to get information about a member of a chat. The method is only guaranteed to work for other
+         * users if the bot is an administrator in the chat. Returns a ChatMember object on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+         * @param int $user_id Unique identifier of the target user
+         * @return ChatMember
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getchatmember
+         * @noinspection PhpUnused
+         */
+        public function getChatMember(string|int $chat_id, int $user_id): ChatMember
+        {
+            return ChatMember::fromArray($this->sendRequest('getChatMember', [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id
+            ]));
+        }
+
+        /**
+         * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat
+         * for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set
+         * optionally returned in getChat requests to check if the bot can use this method. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string $sticker_set_name Name of the sticker set to be set as the group sticker set
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setchatstickerset
+         * @noinspection PhpUnused
+         */
+        public function setChatStickerSet(string|int $chat_id, string $sticker_set_name): bool
+        {
+            $this->sendRequest('setChatStickerSet', [
+                'chat_id' => $chat_id,
+                'sticker_set_name' => $sticker_set_name
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat
+         * for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set
+         * optionally returned in getChat requests to check if the bot can use this method. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deletechatstickerset
+         * @noinspection PhpUnused
+         */
+        public function deleteChatStickerSet(string|int $chat_id): bool
+        {
+            $this->sendRequest('deleteChatStickerSet', [
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires
+         * no parameters. Returns an Array of Sticker objects.
+         *
+         * @return Sticker[]
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getforumtopiciconstickers
+         * @noinspection PhpUnused
+         */
+        public function getForumTopicIconStickers(): array
+        {
+            return array_map(function ($item) {
+                return Sticker::fromArray($item);
+            }, $this->sendRequest('getForumTopicIconStickers'));
+        }
+
+        /**
+         * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat
+         * for this to work and must have the can_manage_topics administrator rights. Returns information about the
+         * created topic as a ForumTopic object.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string $name Topic name, 1-128 characters
+         * @param array $options Optional parameters
+         * @return ForumTopic
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#createforumtopic
+         * @noinspection PhpUnused
+         */
+        public function createForumTopic(string|int $chat_id, string $name, array $options=[]): ForumTopic
+        {
+            return ForumTopic::fromArray($this->sendRequest('createForumTopic', array_merge([
+                'chat_id' => $chat_id,
+                'name' => $name
+            ], $options)));
+        }
+
+        /**
+         * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator
+         * in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator
+         * of the topic. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string $name Unique identifier for the target message thread of the forum topic
+         * @param array $options Optional parameters
+         * @return ForumTopic
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editforumtopic
+         * @noinspection PhpUnused
+         */
+        public function editForumTopic(string|int $chat_id, string $name, array $options=[]): ForumTopic
+        {
+            return ForumTopic::fromArray($this->sendRequest('editForumTopic', array_merge([
+                'chat_id' => $chat_id,
+                'name' => $name
+            ], $options)));
+        }
+
+        /**
+         * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the
+         * chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of
+         * the topic. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#closeforumtopic
+         * @noinspection PhpUnused
+         */
+        public function closeForumTopic(string|int $chat_id, int $message_thread_id): bool
+        {
+            $this->sendRequest('closeForumTopic',[
+                'chat_id' => $chat_id,
+                'message_thread_id' => $message_thread_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the
+         * chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of
+         * the topic. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#reopenforumtopic
+         * @noinspection PhpUnused
+         */
+        public function reopenForumTopic(string|int $chat_id, int $message_thread_id): bool
+        {
+            $this->sendRequest('reopenForumTopic',[
+                'chat_id' => $chat_id,
+                'message_thread_id' => $message_thread_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must
+         * be an administrator in the chat for this to work and must have the can_delete_messages administrator rights.
+         * Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deleteforumtopic
+         * @noinspection PhpUnused
+         */
+        public function deleteForumTopic(string|int $chat_id, int $message_thread_id): bool
+        {
+            $this->sendRequest('deleteForumTopic',[
+                'chat_id' => $chat_id,
+                'message_thread_id' => $message_thread_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in
+         * the chat for this to work and must have the can_pin_messages administrator right in the supergroup.
+         * Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#unpinallforumtopicmessages
+         * @noinspection PhpUnused
+         */
+        public function unpinAllForumTopicMessages(string|int $chat_id, int $message_thread_id): bool
+        {
+            $this->sendRequest('unpinAllForumTopicMessages',[
+                'chat_id' => $chat_id,
+                'message_thread_id' => $message_thread_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
+         * administrator in the chat for this to work and must have can_manage_topics administrator rights.
+         * Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @param string $name New topic name, 1-128 characters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editgeneralforumtopic
+         * @noinspection PhpUnused
+         */
+        public function editGeneralForumTopic(string|int $chat_id, string $name): bool
+        {
+            $this->sendRequest('editGeneralForumTopic',[
+                'chat_id' => $chat_id,
+                'name' => $name
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator
+         * in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#closegeneralforumtopic
+         * @noinspection PhpUnused
+         */
+        public function closeGeneralForumTopic(string|int $chat_id): bool
+        {
+            $this->sendRequest('closeGeneralForumTopic',[
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an
+         * administrator in the chat for this to work and must have the can_manage_topics administrator rights.
+         * The topic will be automatically unhidden if it was hidden. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#reopengeneralforumtopic
+         * @noinspection PhpUnused
+         */
+        public function reopenGeneralForumTopic(string|int $chat_id): bool
+        {
+            $this->sendRequest('reopenGeneralForumTopic',[
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * @param string|int $chat_id
+         * @return bool
+         * @throws TelegramException
+         */
+        public function hideGeneralForumTopic(string|int $chat_id): bool
+        {
+            $this->sendRequest('hideGeneralForumTopic',[
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in
+         * the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#unhidegeneralforumtopic
+         * @noinspection PhpUnused
+         */
+        public function unhideGeneralForumTopic(string|int $chat_id): bool
+        {
+            $this->sendRequest('unhideGeneralForumTopic',[
+                'chat_id' => $chat_id
+            ]);
+
+            return true;
+        }
+
+        /**
+         * @param string $callback_query_id
+         * @param array $options
+         * @return bool
+         * @throws TelegramException
+         */
+        public function answerCallbackQuery(string $callback_query_id, array $options=[]): bool
+        {
+            $this->sendRequest('answerCallbackQuery', array_merge([
+                'callback_query_id' => $callback_query_id
+            ], $options));
+        }
     }

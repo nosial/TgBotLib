@@ -4,7 +4,16 @@ TgBotLib is a library for creating Telegram Bots in PHP, based on the [Telegram 
 
 The approach taken by this library is to be as close as possible to the Telegram Bot API, while providing a simple and
 easy to use interface that is easy to understand and out of your way, allowing you to use the library as a simple
-wrapper around the API.
+native around the API.
+
+## Versioning
+
+The library's version is based on the version of the Telegram Bot API that it supports, for example, the version `6.5.0`
+of the library supports the Telegram Bot API version `6.5` and patch version reflect the current patch version of the library.
+
+To clarify, for example `6.5.4` means the library is based on the Telegram Bot API version `6.5` and the library's patch
+version is `4`. Library patches are used to fix bugs or add improvements in the library, and are not related to the
+Telegram Bot API version.
 
 ## Installation
 
@@ -37,7 +46,6 @@ ncc source add --name n64 --type gitlab --host git.n64.cc
  3. Profit
 
 ```php
-
 require 'ncc';
 import('net.nosial.tgbotlib');
 
@@ -58,10 +66,14 @@ named parameters. For example, the `sendMessage` method requires the `chat_id` a
 of passing them as an array, you can pass them as named parameters:
 
 ```php
-$bot->sendMessage('<CHAT ID>', 'Hello World!', [
-    'parse_mode' => 'Markdown',
-    'disable_web_page_preview' => true,
-]);
+$bot->sendMessage(
+    chat_id: '<CHAT ID>',
+    text: 'Hello World!', 
+    options: [
+        'parse_mode' => 'Markdown',
+        'disable_web_page_preview' => true,
+    ]
+);
 ```
 
 ## Documentation
