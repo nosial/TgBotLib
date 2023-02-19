@@ -8,11 +8,14 @@
     use CurlHandle;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Telegram\BotCommandScope;
     use TgBotLib\Objects\Telegram\Chat;
+    use TgBotLib\Objects\Telegram\ChatAdministratorRights;
     use TgBotLib\Objects\Telegram\ChatInviteLink;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\File;
     use TgBotLib\Objects\Telegram\ForumTopic;
+    use TgBotLib\Objects\Telegram\MenuButton;
     use TgBotLib\Objects\Telegram\Message;
     use TgBotLib\Objects\Telegram\Sticker;
     use TgBotLib\Objects\Telegram\Update;
@@ -1626,9 +1629,15 @@
         }
 
         /**
-         * @param string|int $chat_id
+         * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in
+         * the chat for this to work and must have the can_manage_topics administrator rights. The topic will be
+         * automatically closed if it was open. Returns True on success.
+         *
+         * @param string|int $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
          * @return bool
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#hidegeneralforumtopic
+         * @noinspection PhpUnused
          */
         public function hideGeneralForumTopic(string|int $chat_id): bool
         {
@@ -1659,15 +1668,142 @@
         }
 
         /**
-         * @param string $callback_query_id
-         * @param array $options
+         * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed
+         * to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
+         *
+         * @param string $callback_query_id Unique identifier for the query to be answered
+         * @param array $options Optional parameters
          * @return bool
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#answercallbackquery
+         * @noinspection PhpUnused
          */
         public function answerCallbackQuery(string $callback_query_id, array $options=[]): bool
         {
             $this->sendRequest('answerCallbackQuery', array_merge([
                 'callback_query_id' => $callback_query_id
             ], $options));
+
+            return true;
+        }
+
+        /**
+         * Use this method to change the list of the bot's commands.
+         * Returns True on success.
+         *
+         * @param array $commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setmycommands
+         * @see https://core.telegram.org/bots/features#commands See this manual for more details about bot commands.
+         * @noinspection PhpUnused
+         */
+        public function setMyCommands(array $commands, array $options=[]): bool
+        {
+            $this->sendRequest('setMyCommands', array_merge([
+                'commands' => $commands
+            ], $options));
+
+            return true;
+        }
+
+        /**
+         * Use this method to delete the list of the bot's commands for the given scope and user language. After
+         * deletion, higher level commands will be shown to affected users. Returns True on success.
+         *
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deletemycommands
+         * @noinspection PhpUnused
+         */
+        public function deleteMyCommands(array $options=[]): bool
+        {
+            $this->sendRequest('deleteMyCommands', $options);
+
+            return true;
+        }
+
+        /**
+         * Use this method to get the current list of the bot's commands for the given scope and user language. Returns
+         * an Array of BotCommand objects. If commands aren't set, an empty list is returned.
+         *
+         * @param array $options Optional parameters
+         * @return BotCommandScope[]
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getmycommands
+         * @noinspection PhpUnused
+         */
+        public function getMyCommands(array $options=[]): array
+        {
+            return array_map(function ($command) {
+                return BotCommandScope::fromArray($command);
+            }, $this->sendRequest('getMyCommands', $options));
+        }
+
+        /**
+         * Use this method to change the bot's menu button in a private chat, or the default menu button.
+         * Returns True on success.
+         *
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setchatmenubutton
+         * @noinspection PhpUnused
+         */
+        public function setChatMenuButton(array $options=[]): bool
+        {
+            $this->sendRequest('setChatMenuButton', $options);
+            return true;
+        }
+
+        /**
+         * Use this method to get the current value of the bot's menu button in a private chat, or the default menu
+         * button. Returns MenuButton on success.
+         *
+         * @param array $options Optional parameters
+         * @return MenuButton
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getchatmenubutton
+         * @noinspection PhpUnused
+         */
+        public function getChatMenuButton(array $options=[]): MenuButton
+        {
+            return MenuButton::fromArray($this->sendRequest('getChatMenuButton', $options));
+        }
+
+        /**
+         * Use this method to change the default administrator rights requested by the bot when it's added as an
+         * administrator to groups or channels. These rights will be suggested to users, but they are are free to
+         * modify the list before adding the bot. Returns True on success.
+         *
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setmydefaultadministratorrights
+         * @noinspection PhpUnused
+         */
+        public function setMyDefaultAdministratorRights(array $options=[]): bool
+        {
+            $this->sendRequest('setMyDefaultAdministratorRights', $options);
+            return true;
+        }
+
+        /**
+         * Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights
+         * on success.
+         *
+         * @param bool $for_channels Pass True to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+         * @return ChatAdministratorRights
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getmydefaultadministratorrights
+         * @noinspection PhpUnused
+         */
+        public function getMyDefaultAdministratorRights(bool $for_channels=false): ChatAdministratorRights
+        {
+            return ChatAdministratorRights::fromArray($this->sendRequest('getMyDefaultAdministratorRights', [
+                'for_channels' => $for_channels
+            ]));
         }
     }
