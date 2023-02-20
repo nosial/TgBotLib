@@ -6,6 +6,7 @@
 
     use CURLFile;
     use CurlHandle;
+    use Exception;
     use InvalidArgumentException;
     use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Abstracts\EventType;
@@ -129,6 +130,7 @@
          * Sets whether the library will use SSL to send requests
          *
          * @param bool $ssl
+         * @noinspection PhpUnused
          */
         public function setSsl(bool $ssl): void
         {
@@ -401,6 +403,13 @@
 
                     case EventType::ChatPhotoChanged:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatPhoto() ?? null) !== null)
+                        {
+                            $handler->handle($this, $update);
+                        }
+                        break;
+
+                    case EventType::CallbackQuery:
+                        if(($update->getCallbackQuery() ?? null) !== null)
                         {
                             $handler->handle($this, $update);
                         }
@@ -2164,5 +2173,20 @@
                 'message_id' => $message_id
             ]);
             return true;
+        }
+
+        /**
+         * Public Destructor
+         */
+        public function __destruct()
+        {
+            try
+            {
+                $this->close();
+            }
+            catch(Exception $e)
+            {
+                unset($e);
+            }
         }
     }
