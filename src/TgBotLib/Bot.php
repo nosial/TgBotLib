@@ -6,8 +6,12 @@
 
     use CURLFile;
     use CurlHandle;
+    use InvalidArgumentException;
+    use TgBotLib\Abstracts\ChatMemberStatus;
+    use TgBotLib\Abstracts\EventType;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\CommandInterface;
+    use TgBotLib\Interfaces\EventInterface;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
     use TgBotLib\Objects\Telegram\Chat;
@@ -58,6 +62,11 @@
         private $command_handlers;
 
         /**
+         * @var EventInterface[]
+         */
+        private $event_handlers;
+
+        /**
          * Public Constructor
          *
          * @param string $token
@@ -69,6 +78,7 @@
             $this->ssl = true;
             $this->last_update_id = 0;
             $this->command_handlers = [];
+            $this->event_handlers = [];
         }
 
         /**
@@ -160,7 +170,7 @@
             ]);
 
             $response = curl_exec($ch);
-            print_r($response);
+            print_r($response . PHP_EOL);
             if ($response === false)
                 throw new TelegramException('curl error: ' . curl_error($ch), curl_errno($ch));
 
@@ -225,6 +235,30 @@
         }
 
         /**
+         * Sets an event handler for the specified event
+         *
+         * @param string $event
+         * @param EventInterface $handler
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function setEventHandler(string $event, EventInterface $handler): void
+        {
+            switch($event)
+            {
+                case EventType::GenericUpdate:
+                case EventType::Message:
+                case EventType::EditedMessage:
+                    break;
+
+                default:
+                    throw new InvalidArgumentException('Invalid event type');
+            }
+
+            $this->event_handlers[$event] = $handler;
+        }
+
+        /**
          * Removes the command handler for the specified command
          *
          * @param string $command
@@ -237,6 +271,18 @@
         }
 
         /**
+         * Removes the event handler for the specified event
+         *
+         * @param string $event
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function removeEventHandler(string $event): void
+        {
+            unset($this->event_handlers[$event]);
+        }
+
+        /**
          * Handles a single update object
          *
          * @param Update $update
@@ -244,6 +290,125 @@
          */
         public function handleUpdate(Update $update): void
         {
+            // Process event handlers
+            foreach($this->event_handlers as $event => $handler)
+            {
+                switch($event)
+                {
+                    case EventType::GenericUpdate:
+                        $handler->handle($this, $update);
+                        break;
+
+                    case EventType::Message:
+                        if(($update->getMessage() ?? null) !== null)
+                            $handler->handle($this, $update);
+                        break;
+
+                    case EventType::EditedMessage:
+                        if(($update->getEditedMessage() ?? null) !== null)
+                            $handler->handle($this, $update);
+                        break;
+
+                    case EventType::GenericCommandMessage:
+                        if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getText() ?? null) !== null)
+                        {
+                            $text = $update->getMessage()->getText();
+                            if(str_starts_with($text, '/'))
+                            {
+                                $handler->handle($this, $update);
+                            }
+                        }
+                        break;
+
+                    case EventType::ChatMemberJoined:
+                        if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatMembers() ?? null) !== null)
+                        {
+                            $handler->handle($this, $update);
+                        }
+                        break;
+
+                    case EventType::ChatMemberLeft:
+                        if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getLeftChatMember() ?? null) !== null)
+                        {
+                            $handler->handle($this, $update);
+                        }
+                        break;
+
+                    case EventType::ChatMemberKicked:
+                           if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
+                            {
+                                if(
+                                    $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Kicked &&
+                                    $update->getMyChatMember()->getNewChatMember()->getUntilDate() === null
+                                )
+                                {
+                                    $handler->handle($this, $update);
+                                }
+                            }
+                        break;
+
+                    case EventType::ChatMemberBanned:
+                        if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
+                        {
+                            if(
+                                $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Kicked &&
+                                $update->getMyChatMember()->getNewChatMember()->getUntilDate() !== null
+                            )
+                            {
+                                $handler->handle($this, $update);
+                            }
+                        }
+                        break;
+
+                    case EventType::ChatMemberUnrestricted:
+                    case EventType::ChatMemberDemoted:
+                    case EventType::ChatMemberUnbanned:
+                        if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
+                        {
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Member)
+                            {
+                                $handler->handle($this, $update);
+                            }
+                        }
+                        break;
+
+                    case EventType::ChatMemberPromoted:
+                        if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
+                        {
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Administrator)
+                            {
+                                $handler->handle($this, $update);
+                            }
+                        }
+                        break;
+
+                    case EventType::ChatMemberRestricted:
+                        if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
+                        {
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Restricted)
+                            {
+                                $handler->handle($this, $update);
+                            }
+                        }
+                        break;
+
+                    case EventType::ChatTitleChanged:
+                        if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatTitle() ?? null) !== null)
+                        {
+                            $handler->handle($this, $update);
+                        }
+                        break;
+
+                    case EventType::ChatPhotoChanged:
+                        if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatPhoto() ?? null) !== null)
+                        {
+                            $handler->handle($this, $update);
+                        }
+                        break;
+                }
+            }
+
+            // Process command handlers
             if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getText() ?? null) !== null)
             {
                 $text = $update->getMessage()->getText();
@@ -256,6 +421,8 @@
                     }
                 }
             }
+
+
         }
 
         /**
