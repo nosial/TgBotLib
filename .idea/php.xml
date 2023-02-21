@@ -17,7 +17,6 @@
       <path value="/var/ncc/packages/net.nosial.loglib=1.0.0" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
