@@ -132,10 +132,19 @@ To implement a single-threaded bot, it's very self-explanatory, you just need to
 ```php
 <?php
 
-    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    // Import ncc
+    require 'ncc';
 
+    import('net.nosial.tgbotlib');
+
+    // Require commands & event handlers
+    require 'commands' . DIRECTORY_SEPARATOR . 'StartCommand.php';
+    require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
+    
+    // Create a new instance of the bot
     $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
 
+    // Loop forever
     while(true)
     {
         /** @var \TgBotLib\Objects\Telegram\Update $update */
@@ -161,21 +170,32 @@ First create a worker process that will handle the updates:
 ```php
 <?php
 
-    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    // Import ncc
+    require 'ncc';
+
+    // Import packages
+    import('net.nosial.tgbotlib');
     import('net.nosial.tamerlib');
 
+    // Require commands
+    require 'commands' . DIRECTORY_SEPARATOR . 'StartCommand.php';
+    require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
+
+    // Initialize the bot
     $bot = new TgBotLib\Bot('bot_token');
 
+    // Set the command handlers
     $bot->setCommandHandler('start', new \commands\StartCommand());
     $bot->setCommandHandler('hash', new \commands\HashCommand());
 
+    // Initialize the worker & register the handle_update function
     TamerLib\Tamer::initWorker();
-
     TamerLib\Tamer::addFunction('handle_update', function (\TamerLib\Objects\Job $job) use ($bot)
     {
         $bot->handleUpdate(\TgBotLib\Objects\Telegram\Update::fromArray(json_decode($job->getData(), true)));
     });
 
+    // Work forever
     TamerLib\Tamer::work();
 ```
 
@@ -184,20 +204,36 @@ Then create a master process that will send the updates to the worker:
 ```php
 <?php
 
-    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    // Import ncc
+    require 'ncc';
+
+    // Import packages
+    import('net.nosial.tgbotlib');
     import('net.nosial.tamerlib');
 
+    // Require commands
+    require 'commands' . DIRECTORY_SEPARATOR . 'StartCommand.php';
+    require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
+
+    // Initialize the bot
     $bot = new TgBotLib\Bot('bot_token');
 
-    TamerLib\Tamer::initMaster();
+    // Initialize the master & add the worker
+    TamerLib\Tamer::init(\TamerLib\Abstracts\ProtocolType::Gearman, [
+        '127.0.0.1:4730'
+    ]);
     TamerLib\Tamer::addWorker('handle_update', 4);
+    
+    // Start the workers
+    TamerLib\Tamer::startWorkers();
 
+    // Handle updates forever
     while(true)
     {
         /** @var \TgBotLib\Objects\Telegram\Update $update */
         foreach ($bot->getUpdates() as $update)
         {
-            TamerLib\Tamer::sendJob('handle_update', json_encode($update->toArray()));
+            TamerLib\Tamer::do('handle_update', json_encode($update->toArray()));
         }
     }
 ```
@@ -215,11 +251,10 @@ the `/start` command, you can use the `setCommandHandler` method:
 
 ```php
 <?php
-
-    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    require 'ncc';
+    import('net.nosial.tgbotlib');
 
     $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
-
     $bot->setCommandHandler('start', new \commands\StartCommand());
 ```
 
