@@ -16,6 +16,14 @@
     "build": {
         "source_path": "src",
         "default_configuration": "release",
+        "dependencies": [
+            {
+                "name": "net.nosial.loglib",
+                "version": "latest",
+                "source_type": "remote",
+                "source": "nosial/libs.log=latest@n64"
+            }
+        ],
         "configurations": [
             {
                 "name": "release",

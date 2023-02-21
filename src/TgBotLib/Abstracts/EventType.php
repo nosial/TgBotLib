@@ -21,6 +21,23 @@
         const ChatPhotoChanged = 'chat_photo_changed';
         Const CallbackQuery = 'callback_query';
 
-
+        const All = [
+            self::GenericUpdate,
+            self::Message,
+            self::EditedMessage,
+            self::GenericCommandMessage,
+            self::ChatMemberJoined,
+            self::ChatMemberLeft,
+            self::ChatMemberKicked,
+            self::ChatMemberBanned,
+            self::ChatMemberUnbanned,
+            self::ChatMemberPromoted,
+            self::ChatMemberDemoted,
+            self::ChatMemberRestricted,
+            self::ChatMemberUnrestricted,
+            self::ChatTitleChanged,
+            self::ChatPhotoChanged,
+            self::CallbackQuery,
+        ];
 
     }
