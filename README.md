@@ -6,6 +6,26 @@ The approach taken by this library is to be as close as possible to the Telegram
 easy to use interface that is easy to understand and out of your way, allowing you to use the library as a simple
 native around the API.
 
+## Table of contents
+
+<!-- TOC -->
+* [TgBotLib](#tgbotlib)
+  * [Table of contents](#table-of-contents)
+  * [Versioning](#versioning)
+  * [Installation](#installation)
+  * [Compile from source](#compile-from-source)
+  * [Requirements](#requirements)
+  * [Usage](#usage)
+  * [Documentation](#documentation)
+  * [Single-Threaded & Multi-Threaded Bots](#single-threaded--multi-threaded-bots)
+    * [Single-Threaded Bots](#single-threaded-bots)
+    * [Multi-Threaded Bots](#multi-threaded-bots)
+  * [Commands & Event Handlers](#commands--event-handlers)
+    * [Commands](#commands)
+    * [Event Handlers](#event-handlers)
+* [License](#license)
+<!-- TOC -->
+
 ## Versioning
 
 The library's version is based on the version of the Telegram Bot API that it supports, for example, the version `6.5.0`
@@ -14,6 +34,7 @@ of the library supports the Telegram Bot API version `6.5` and patch version ref
 To clarify, for example `6.5.4` means the library is based on the Telegram Bot API version `6.5` and the library's patch
 version is `4`. Library patches are used to fix bugs or add improvements in the library, and are not related to the
 Telegram Bot API version.
+
 
 ## Installation
 
@@ -37,6 +58,21 @@ If you don't have the n64 source configured, you can add it by running the follo
 ```bash
 ncc source add --name n64 --type gitlab --host git.n64.cc
 ```
+
+
+## Compile from source
+
+To compile the library from source, you need to have [ncc](https://git.n64.cc/nosial/ncc) installed, then run the
+following command:
+
+```bash
+ncc build
+```
+
+
+## Requirements
+
+The library requires PHP 8.0 or higher.
 
 
 ## Usage
@@ -82,6 +118,172 @@ Almost everything in the library has PhpDoc documentation, so you can use your I
 library. For example, in PhpStorm, you can press `Ctrl+Q` on a method to get the documentation for it:
 
 ![PhpStorm Documentation](assets/documentation.png)
+
+## Single-Threaded & Multi-Threaded Bots
+
+This part will explain how to implement single-threaded and multi-threaded bots using the library.
+For more examples see the [tests](tests) directory.
+
+### Single-Threaded Bots
+
+To implement a single-threaded bot, it's very self-explanatory, you just need to create a new instance of the
+`TgBotLib\Bot` class and use it to handle the updates:
+
+```php
+<?php
+
+    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+
+    while(true)
+    {
+        /** @var \TgBotLib\Objects\Telegram\Update $update */
+        foreach ($bot->getUpdates() as $update)
+        {
+            $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
+        }
+    } 
+```
+
+This approach is very simple and allows for easier debugging, but it's not recommended for production use, because
+it will block the script until the updates are handled, and if the bot receives a lot of updates, it will take a
+long time to handle them. So it's recommended to use a multithreaded approach for production bots.
+
+
+### Multi-Threaded Bots
+
+To implement a multi-threaded bot, you need to install [TamerLib](https://git.n64.cc/nosial/libs/tamer) which will allow
+you to run parallel operations using a Message Server
+
+First create a worker process that will handle the updates:
+
+```php
+<?php
+
+    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    import('net.nosial.tamerlib');
+
+    $bot = new TgBotLib\Bot('bot_token');
+
+    $bot->setCommandHandler('start', new \commands\StartCommand());
+    $bot->setCommandHandler('hash', new \commands\HashCommand());
+
+    TamerLib\Tamer::initWorker();
+
+    TamerLib\Tamer::addFunction('handle_update', function (\TamerLib\Objects\Job $job) use ($bot)
+    {
+        $bot->handleUpdate(\TgBotLib\Objects\Telegram\Update::fromArray(json_decode($job->getData(), true)));
+    });
+
+    TamerLib\Tamer::work();
+```
+
+Then create a master process that will send the updates to the worker:
+
+```php
+<?php
+
+    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+    import('net.nosial.tamerlib');
+
+    $bot = new TgBotLib\Bot('bot_token');
+
+    TamerLib\Tamer::initMaster();
+    TamerLib\Tamer::addWorker('handle_update', 4);
+
+    while(true)
+    {
+        /** @var \TgBotLib\Objects\Telegram\Update $update */
+        foreach ($bot->getUpdates() as $update)
+        {
+            TamerLib\Tamer::sendJob('handle_update', json_encode($update->toArray()));
+        }
+    }
+```
+
+## Commands & Event Handlers
+
+Commands and event handlers are a way to handle commands and events sent by the user, for example, when the user
+sends the `/start` command, you can send a welcome message to the user.
+
+
+### Commands
+
+The library provides a way to handle commands and events using the `TgBotLib\Bot` class, for example, to handle
+the `/start` command, you can use the `setCommandHandler` method:
+
+```php
+<?php
+
+    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+
+    $bot->setCommandHandler('start', new \commands\StartCommand());
+```
+
+The `setCommandHandler` method takes two arguments, the first being the command name (without the `/` prefix), and
+the second being a class that implements the `TgBotLib\Interfaces\CommandInterface` interface.
+
+The interface has only one method, `handle`, which takes two arguments, the first being an instance of the
+`TgBotLib\Bot` class which is used to invoke the API without having to recreate the instance, and the second being
+the update object. The update object is an instance of the `TgBotLib\Objects\Telegram\Update` class, which contains
+all the information about the update.
+
+```php
+<?php
+
+    namespace commands;
+
+    use TgBotLib\Bot;
+    use TgBotLib\Interfaces\CommandInterface;
+    use TgBotLib\Objects\Telegram\Update;
+
+    class StartCommand extends CommandInterface
+    {
+        public function handle(Bot $bot, Update $update): void
+        {
+            $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
+        }
+    }
+```
+
+### Event Handlers
+
+Event handles are similarly implemented, but instead of using the `setCommandHandler` method, you use the
+`setEventHandler` method:
+
+```php
+<?php
+
+    require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+
+    $bot->setEventHandler('message', new \events\MessageEvent());
+```
+
+And the interface EventInterface is used instead of CommandInterface:
+
+```php
+<?php
+
+    namespace events;
+
+    use TgBotLib\Bot;
+    use TgBotLib\Interfaces\EventInterface;
+    use TgBotLib\Objects\Telegram\Update;
+
+    class MessageEvent implements EventInterface
+    {
+        public function handle(Bot $bot, Update $update): void
+        {
+            $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
+        }
+    }
+```
+
 
 # License
 
