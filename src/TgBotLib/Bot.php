@@ -8,6 +8,7 @@
     use CurlHandle;
     use Exception;
     use InvalidArgumentException;
+    use LogLib\Log;
     use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Abstracts\EventType;
     use TgBotLib\Exceptions\TelegramException;
@@ -51,11 +52,6 @@
          * @var int
          */
         private $last_update_id;
-
-        /**
-         * @var CurlHandle|null
-         */
-        private $curl_handle;
 
         /**
          * @var CommandInterface[]
@@ -171,13 +167,14 @@
                 ]
             ]);
 
+            Log::debug('net.nosial.tgbotlib', sprintf('=> %s(%s)', $method, json_encode($params, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
             $response = curl_exec($ch);
-            print_r($response . PHP_EOL);
             if ($response === false)
                 throw new TelegramException('curl error: ' . curl_error($ch), curl_errno($ch));
 
             curl_close($ch);
             $parsed = json_decode($response, true);
+            Log::debug('net.nosial.tgbotlib', sprintf('<= %s', $response));
             if($parsed['ok'] === false)
                 throw new TelegramException($parsed['description'], $parsed['error_code']);
 
@@ -210,13 +207,14 @@
                 ]
             ]);
 
+            Log::debug('net.nosial.tgbotlib', sprintf('=> %s {%s}', $method, json_encode($params, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
             $response = curl_exec($ch);
-            print_r($response);
             if ($response === false)
                 throw new TelegramException('curl error: ' . curl_error($ch), curl_errno($ch));
 
             curl_close($ch);
             $parsed = json_decode($response, true);
+            Log::debug('net.nosial.tgbotlib', sprintf('<= %s', $response));
             if($parsed['ok'] === false)
                 throw new TelegramException($parsed['description'], $parsed['error_code']);
 
@@ -237,6 +235,21 @@
         }
 
         /**
+         * Sets multiple command handlers at once
+         *
+         * @param array $handlers
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function setCommandHandlers(array $handlers): void
+        {
+            foreach($handlers as $command => $handler)
+            {
+                $this->command_handlers[$command] = $handler;
+            }
+        }
+
+        /**
          * Sets an event handler for the specified event
          *
          * @param string $event
@@ -246,18 +259,26 @@
          */
         public function setEventHandler(string $event, EventInterface $handler): void
         {
-            switch($event)
-            {
-                case EventType::GenericUpdate:
-                case EventType::Message:
-                case EventType::EditedMessage:
-                    break;
-
-                default:
-                    throw new InvalidArgumentException('Invalid event type');
-            }
-
+            if(!in_array($event, EventType::All))
+                throw new InvalidArgumentException('Invalid event type: ' . $event);
             $this->event_handlers[$event] = $handler;
+        }
+
+        /**
+         * Sets multiple event handlers at once
+         *
+         * @param array $handlers
+         * @return void
+         * @noinspection PhpUnused
+         */
+        public function setEventHandlers(array $handlers): void
+        {
+            foreach($handlers as $event => $handler)
+            {
+                if(!in_array($event, EventType::All))
+                    throw new InvalidArgumentException('Invalid event type: ' . $event);
+                $this->event_handlers[$event] = $handler;
+            }
         }
 
         /**
