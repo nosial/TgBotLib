@@ -3,7 +3,7 @@
     require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
     import('net.nosial.tamerlib');
 
-    $bot = new TgBotLib\Bot('865804194:AAHTo9aIFP5X47dMYLJ6eoldHJnM6sc3LBc');
+    $bot = new TgBotLib\Bot('bot_token');
 
     $bot->setCommandHandler('start', new \commands\StartCommand());
     $bot->setCommandHandler('hash', new \commands\HashCommand());
