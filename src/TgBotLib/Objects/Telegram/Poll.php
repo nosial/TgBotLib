@@ -258,12 +258,15 @@
             $object->open_period = $data['open_period'] ?? null;
             $object->close_date = $data['close_date'] ?? null;
 
-            $explanation_entities = null;
-            foreach($data['explanation_entities'] as $explanation_entity)
+            $object->explanation_entities = null;
+            if(isset($data['explanation_entities']) && is_array($data['explanation_entities']))
             {
-                $explanation_entities[] = MessageEntity::fromArray($explanation_entity);
+                $object->explanation_entities = [];
+                foreach($data['explanation_entities'] as $explanation_entity)
+                {
+                    $object->explanation_entities[] = MessageEntity::fromArray($explanation_entity);
+                }
             }
-            $object->explanation_entities = $explanation_entities ?? null;
 
             return $object;
         }
