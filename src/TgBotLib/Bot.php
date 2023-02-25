@@ -5,10 +5,10 @@
     namespace TgBotLib;
 
     use CURLFile;
-    use CurlHandle;
     use Exception;
     use InvalidArgumentException;
     use LogLib\Log;
+    use TempFile\TempFile;
     use TgBotLib\Abstracts\ChatMemberStatus;
     use TgBotLib\Abstracts\EventType;
     use TgBotLib\Exceptions\TelegramException;
@@ -141,6 +141,7 @@
          */
         private function getMethodUrl(string $method): string
         {
+            /** @noinspection HttpUrlsUsage */
             return ($this->ssl ? 'https://' : 'http://') . $this->host . '/bot' . $this->token . '/' . $method;
         }
 
@@ -442,7 +443,7 @@
             if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getText() ?? null) !== null)
             {
                 $text = $update->getMessage()->getText();
-                if(strpos($text, '/') === 0)
+                if(str_starts_with($text, '/'))
                 {
                     $command = explode(' ', substr($text, 1))[0];
                     if(isset($this->command_handlers[$command]))
@@ -691,10 +692,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendPhoto', array_merge($options, [
-                'chat_id' => $chat_id,
-                'photo' => $photo
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $photo);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendPhoto', 'photo', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -721,10 +735,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendAudio', array_merge($options, [
-                'chat_id' => $chat_id,
-                'audio' => $audio
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $audio);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendAudio', 'audio', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -748,10 +775,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendDocument', array_merge($options, [
-                'chat_id' => $chat_id,
-                'document' => $document
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $document);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendDocument', 'document', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -776,10 +816,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendVideo', array_merge($options, [
-                'chat_id' => $chat_id,
-                'video' => $video
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $video);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendVideo', 'video', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -804,10 +857,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendAnimation', array_merge($options, [
-                'chat_id' => $chat_id,
-                'animation' => $animation
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $animation);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendAnimation', 'animation', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -833,10 +899,23 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendVoice', array_merge($options, [
-                'chat_id' => $chat_id,
-                'voice' => $voice
-            ])));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $voice);
+
+            try
+            {
+                $response = Message::fromArray($this->sendFileUpload('sendVoice', 'voice', $tmp_file, array_merge($options, [
+                    'chat_id' => $chat_id
+                ])));
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -859,10 +938,15 @@
                 ])));
             }
 
-            return Message::fromArray($this->sendRequest('sendVideoNote', array_merge($options, [
-                'chat_id' => $chat_id,
-                'video_note' => $video_note
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $video_note);
+
+            $response = Message::fromArray($this->sendFileUpload('sendVideoNote', 'video_note', $tmp_file, array_merge($options, [
+                'chat_id' => $chat_id
             ])));
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
@@ -1420,11 +1504,22 @@
                 return true;
             }
 
-            $this->sendRequest('setChatPhoto', [
-                'chat_id' => $chat_id,
-                'photo' => $photo
-            ]);
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $photo);
 
+            try
+            {
+                $this->sendFileUpload('sendChatPhoto', 'photo', $tmp_file, [
+                    'chat_id' => $chat_id
+                ]);
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
             return true;
         }
 
@@ -2131,7 +2226,23 @@
                 );
             }
 
-            return Message::fromArray($this->sendRequest('editMessageMedia', $options));
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $media);
+
+            try
+            {
+                $response = Message::fromArray(
+                    $this->sendFileUpload('editMessageMedia', 'media', $tmp_file, $options)
+                );
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
         }
 
         /**
