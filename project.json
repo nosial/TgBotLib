@@ -12,7 +12,7 @@
         "package": "net.nosial.tgbotlib",
         "description": "TgBotLib is a library for interacting with the Telegram Bot API",
         "company": "Nosial",
-        "version": "6.5.1",
+        "version": "6.5.2",
         "uuid": "b409e036-ab04-11ed-b32e-9d3f57a644ae"
     },
     "build": {
