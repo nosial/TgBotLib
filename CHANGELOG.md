@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  * Added dependency `net.nosial.tempfile` to create temporary files when uploading content from memory.
  * Added `\TgBotLib\Abstracts > ChatActionType`
+ * Added logging events to `\TgBotLib\Bot > handleUpdate()`
+
+### Fixed
+ * Fixed file uploads when trying to upload content from memory.
 
 
 ## [6.5.1] - 2023-02-23
