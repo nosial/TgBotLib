@@ -317,6 +317,7 @@
             // Process event handlers
             foreach($this->event_handlers as $event => $handler)
             {
+                $do_handle = false;
                 switch($event)
                 {
                     case EventType::GenericUpdate:
@@ -325,12 +326,16 @@
 
                     case EventType::Message:
                         if(($update->getMessage() ?? null) !== null)
-                            $handler->handle($this, $update);
+                        {
+                            $do_handle = true;
+                        }
                         break;
 
                     case EventType::EditedMessage:
                         if(($update->getEditedMessage() ?? null) !== null)
-                            $handler->handle($this, $update);
+                        {
+                            $do_handle = true;
+                        }
                         break;
 
                     case EventType::GenericCommandMessage:
@@ -339,7 +344,7 @@
                             $text = $update->getMessage()->getText();
                             if(str_starts_with($text, '/'))
                             {
-                                $handler->handle($this, $update);
+                                $do_handle = true;
                             }
                         }
                         break;
@@ -347,14 +352,14 @@
                     case EventType::ChatMemberJoined:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatMembers() ?? null) !== null)
                         {
-                            $handler->handle($this, $update);
+                            $do_handle = true;
                         }
                         break;
 
                     case EventType::ChatMemberLeft:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getLeftChatMember() ?? null) !== null)
                         {
-                            $handler->handle($this, $update);
+                            $do_handle = true;
                         }
                         break;
 
@@ -366,7 +371,7 @@
                                     $update->getMyChatMember()->getNewChatMember()->getUntilDate() === null
                                 )
                                 {
-                                    $handler->handle($this, $update);
+                                    $do_handle = true;
                                 }
                             }
                         break;
@@ -379,7 +384,7 @@
                                 $update->getMyChatMember()->getNewChatMember()->getUntilDate() !== null
                             )
                             {
-                                $handler->handle($this, $update);
+                                $do_handle = true;
                             }
                         }
                         break;
@@ -391,7 +396,7 @@
                         {
                             if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Member)
                             {
-                                $handler->handle($this, $update);
+                                $do_handle = true;
                             }
                         }
                         break;
@@ -401,7 +406,7 @@
                         {
                             if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Administrator)
                             {
-                                $handler->handle($this, $update);
+                                $do_handle = true;
                             }
                         }
                         break;
@@ -411,7 +416,7 @@
                         {
                             if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Restricted)
                             {
-                                $handler->handle($this, $update);
+                                $do_handle = true;
                             }
                         }
                         break;
@@ -426,16 +431,29 @@
                     case EventType::ChatPhotoChanged:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatPhoto() ?? null) !== null)
                         {
-                            $handler->handle($this, $update);
+                            $do_handle = true;
                         }
                         break;
 
                     case EventType::CallbackQuery:
                         if(($update->getCallbackQuery() ?? null) !== null)
                         {
-                            $handler->handle($this, $update);
+                            $do_handle = true;
                         }
                         break;
+                }
+
+                if($do_handle)
+                {
+                    try
+                    {
+                        Log::verbose('net.nosial.tgbotlib', sprintf('%s handling event %s', get_class($handler), $event));
+                        $handler->handle($this, $update);
+                    }
+                    catch(Exception $e)
+                    {
+                        Log::error('net.nosial.tgbotlib', sprintf('Unhandled exception while handling event %s: %s', $event, $e->getMessage()), $e);
+                    }
                 }
             }
 
@@ -448,7 +466,16 @@
                     $command = explode(' ', substr($text, 1))[0];
                     if(isset($this->command_handlers[$command]))
                     {
-                        $this->command_handlers[$command]->handle($this, $update);
+                        Log::verbose('net.nosial.tgbotlib', sprintf('%s handling command %s', get_class($this->command_handlers[$command]), $command));
+
+                        try
+                        {
+                            $this->command_handlers[$command]->handle($this, $update);
+                        }
+                        catch(Exception $e)
+                        {
+                            Log::error('net.nosial.tgbotlib', sprintf('Unhandled exception while executing command %s: %s', $command, $e->getMessage()), $e);
+                        }
                     }
                 }
             }
