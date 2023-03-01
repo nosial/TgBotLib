@@ -2333,19 +2333,4 @@
             ]);
             return true;
         }
-
-        /**
-         * Public Destructor
-         */
-        public function __destruct()
-        {
-            try
-            {
-                $this->close();
-            }
-            catch(Exception $e)
-            {
-                unset($e);
-            }
-        }
     }
