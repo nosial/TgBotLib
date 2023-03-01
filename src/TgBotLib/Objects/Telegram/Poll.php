@@ -247,7 +247,6 @@
 
             $object->id = $data['id'] ?? null;
             $object->question = $data['question'] ?? null;
-            $object->options = $data['options'] ?? null;
             $object->total_voter_count = $data['total_voter_count'] ?? null;
             $object->is_closed = $data['is_closed'] ?? null;
             $object->is_anonymous = $data['is_anonymous'] ?? null;
@@ -265,6 +264,16 @@
                 foreach($data['explanation_entities'] as $explanation_entity)
                 {
                     $object->explanation_entities[] = MessageEntity::fromArray($explanation_entity);
+                }
+            }
+
+            $object->options = null;
+            if(isset($data['options']) && is_array($data['options']))
+            {
+                $object->options = [];
+                foreach($data['options'] as $option)
+                {
+                    $object->options[] = PollOption::fromArray($option);
                 }
             }
 
