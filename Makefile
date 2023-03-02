@@ -1,8 +1,8 @@
-release:
-	ncc build --config="release"
+build:
+	ncc build --config="release" --log-level debug
 
 install:
-	ncc package install --package="build/release/net.nosial.tgbotlib.ncc" --skip-dependencies --reinstall -y
+	sudo ncc package install --package="build/release/net.nosial.tgbotlib.ncc" --skip-dependencies --reinstall -y --log-level debug
 
-uninstall:
-	ncc package uninstall -y --package="net.nosial.tgbotlib"
+clean:
+	rm -rf build
