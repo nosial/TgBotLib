@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
  * Added the ability to set different bot descriptions for different user languages using the method `\TgBotLib\Bot > setMyDescription()`
+ * Added the ability to get the current bot description in the given language as the class [BotDescription](https://core.telegram.org/bots/api#botdescription)
+   using the method `\TgBotLib\Bot > getMyDescription()`
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`

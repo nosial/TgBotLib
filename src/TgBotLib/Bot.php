@@ -16,6 +16,7 @@
     use TgBotLib\Interfaces\EventInterface;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
+    use TgBotLib\Objects\Telegram\BotDescription;
     use TgBotLib\Objects\Telegram\Chat;
     use TgBotLib\Objects\Telegram\ChatAdministratorRights;
     use TgBotLib\Objects\Telegram\ChatInviteLink;
@@ -2154,6 +2155,22 @@
             ], $options));
 
             return true;
+        }
+
+        /**
+         * Use this method to get the current bot description for the given user language.
+         * Returns BotDescription on success.
+         *
+         * @param string|null $language_code
+         * @param array $options
+         * @return BotDescription
+         * @throws TelegramException
+         */
+        public function getMyDescription(?string $language_code=null, array $options=[]): BotDescription
+        {
+            return BotDescription::fromArray($this->sendRequest('getMyDescription', array_merge([
+                'language_code' => $language_code
+            ], $options)));
         }
 
         /**
