@@ -2415,4 +2415,48 @@
             ]);
             return true;
         }
+
+        /**
+         * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers.
+         * On success, the sent Message is returned.
+         *
+         * @param int|string $chat_id
+         * @param string $sticker
+         * @param array $options
+         * @return Message
+         * @throws TelegramException
+         * @link Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
+         * @noinspection PhpUnused
+         */
+        public function sendSticker(int|string $chat_id, string $sticker, array $options=[]): Message
+        {
+            if(file_exists($sticker))
+            {
+                return Message::fromArray(
+                    $this->sendFileUpload('sendSticker', 'sticker', $sticker, array_merge([
+                        'chat_id' => $chat_id
+                    ], $options))
+                );
+            }
+
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $sticker);
+
+            try
+            {
+                $response = Message::fromArray(
+                    $this->sendFileUpload('sendSticker', 'sticker', $tmp_file, array_merge([
+                        'chat_id' => $chat_id
+                    ], $options))
+                );
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
+        }
     }
