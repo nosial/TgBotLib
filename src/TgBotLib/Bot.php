@@ -17,6 +17,7 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
     use TgBotLib\Objects\Telegram\BotDescription;
+    use TgBotLib\Objects\Telegram\BotShortDescription;
     use TgBotLib\Objects\Telegram\Chat;
     use TgBotLib\Objects\Telegram\ChatAdministratorRights;
     use TgBotLib\Objects\Telegram\ChatInviteLink;
@@ -2195,6 +2196,24 @@
             ], $options));
 
             return true;
+        }
+
+        /**
+         * Use this method to get the current bot short description for the given user language.
+         * Returns BotShortDescription on success.
+         *
+         * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
+         * @param array $options Optional parameters
+         * @return BotShortDescription
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getmyshortdescription
+         * @noinspection PhpUnused
+         */
+        public function getMyShortDescription(?string $language_code=null, array $options=[]): BotShortDescription
+        {
+            return BotShortDescription::fromArray($this->sendRequest('getMyShortDescription', array_merge([
+                'language_code' => $language_code
+            ], $options)));
         }
 
         /**
