@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.6.0] - Unreleased
 
+This update accompanies the release of the [Telegram Bot API 6.6](https://core.telegram.org/bots/api#march-9-2023).
+
 ### Added
  * Added the ability to set different bot descriptions for different user languages using the method `\TgBotLib\Bot > setMyDescription()`
    see [setMyDescription](https://core.telegram.org/bots/api#setmydescription) for more information.
