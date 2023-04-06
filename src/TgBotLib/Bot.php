@@ -2165,6 +2165,8 @@
          * @param array $options
          * @return BotDescription
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#getmydescription
+         * @noinspection PhpUnused
          */
         public function getMyDescription(?string $language_code=null, array $options=[]): BotDescription
         {
