@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.6.0] - Unreleased
 
+### Added
+ * Added the ability to set different bot descriptions for different user languages using the method `\TgBotLib\Bot > setMyDescription()`
+
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
  * Added proper construction for `PollOption[]` objects in `TgBotLib\Objects\Telegram > Poll`
