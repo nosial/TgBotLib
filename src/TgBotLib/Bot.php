@@ -2459,4 +2459,46 @@
             unset($tmp_file);
             return $response;
         }
+
+        /**
+         * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker
+         * set thus created. Returns True on success.
+         *
+         * @param int $user_id User identifier of created sticker set owner
+         * @param string $name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in "_by_<bot_username>". <bot_username> is case insensitive. 1-64 characters.
+         * @param string $title Sticker set title, 1-64 characters
+         * @param array $stickers A list of 1-50 initial stickers to be added to the sticker set
+         * @param string $sticker_format Format of stickers in the set, must be one of “static”, “animated”, “video”
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#createnewstickerset
+         * @noinspection PhpUnused
+         */
+        public function createNewStickerSet(int $user_id, string $name, string $title, array $stickers, string $sticker_format, array $options=[]): bool
+        {
+            foreach($stickers as $key => $sticker)
+            {
+                if(file_exists($sticker))
+                {
+                    $stickers[$key] = new CURLFile($sticker);
+                }
+                else
+                {
+                    $tmp_file = new TempFile();
+                    file_put_contents($tmp_file, $sticker);
+                    $stickers[$key] = new CURLFile($tmp_file);
+                }
+            }
+
+            $this->sendRequest('createNewStickerSet', array_merge([
+                'user_id' => $user_id,
+                'name' => $name,
+                'title' => $title,
+                'stickers' => $stickers,
+                'sticker_format' => $sticker_format
+            ], $options));
+
+            return true;
+        }
     }

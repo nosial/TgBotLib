@@ -19,6 +19,7 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added the ability to get the current bot short description in the given language as the class [BotShortDescription](https://core.telegram.org/bots/api#botshortdescription)
    using the method `\TgBotLib\Bot > getMyShortDescription()` see [getMyShortDescription](https://core.telegram.org/bots/api#getmyshortdescription) for more information.
  * Added method `\TgBotLib\Bot > sendSticker()` to send a sticker to a chat. See [sendSticker](https://core.telegram.org/bots/api#sendsticker) for more information.
+ * Added method `\TgBotLib\Bot > createNewStickerSet()` to create a new sticker set owned by a user. See [createNewStickerSet](https://core.telegram.org/bots/api#createnewstickerset) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
