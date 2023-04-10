@@ -74,6 +74,11 @@
         private $custom_emoji_id;
 
         /**
+         * @var bool
+         */
+        private $needs_repainting;
+
+        /**
          * @var int|null
          */
         private $file_size;
@@ -213,6 +218,17 @@
         }
 
         /**
+         * Optional. True, if the sticker must be repainted to a text color in messages, the color of the Telegram
+         * Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
+         *
+         * @return bool
+         */
+        public function needsRepainting(): bool
+        {
+            return $this->needs_repainting;
+        }
+
+        /**
          * Optional. File size in bytes
          *
          * @return int|null
@@ -243,6 +259,7 @@
                 'premium_animation' => ($this->premium_animation instanceof ObjectTypeInterface) ? $this->premium_animation->toArray() : $this->thumb,
                 'mask_position' => ($this->mask_position instanceof ObjectTypeInterface) ? $this->mask_position->toArray() : $this->mask_position,
                 'custom_emoji_id' => $this->custom_emoji_id,
+                'needs_repainting' => $this->needs_repainting,
                 'file_size' => $this->file_size,
             ];
         }
@@ -270,6 +287,7 @@
             $object->premium_animation = isset($data['premium_animation']) ? File::fromArray($data['premium_animation']) : null;
             $object->mask_position = isset($data['mask_position']) ? MaskPosition::fromArray($data['mask_position']) : null;
             $object->custom_emoji_id = $data['custom_emoji_id'] ?? null;
+            $object->needs_repainting = $data['needs_repainting'] ?? false;
             $object->file_size = $data['file_size'] ?? null;
 
             return $object;
