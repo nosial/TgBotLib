@@ -51,7 +51,7 @@
         /**
          * @var PhotoSize|null
          */
-        private $thumb;
+        private $thumbnail;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -141,9 +141,9 @@
          *
          * @return PhotoSize|null
          */
-        public function getThumb(): ?PhotoSize
+        public function getThumbnail(): ?PhotoSize
         {
-            return $this->thumb;
+            return $this->thumbnail;
         }
 
         public function toArray(): array
@@ -157,7 +157,7 @@
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null,
-                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : null,
+                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
             ];
         }
 
@@ -179,7 +179,7 @@
             $object->file_name = $data['file_name'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->file_size = $data['file_size'] ?? null;
-            $object->thumb = ($data['thumb'] ?? null) ? PhotoSize::fromArray($data['thumb']) : null;
+            $object->thumbnail = ($data['thumbnail'] ?? null) ? PhotoSize::fromArray($data['thumbnail']) : null;
 
             return $object;
         }
