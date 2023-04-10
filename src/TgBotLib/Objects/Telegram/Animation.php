@@ -105,7 +105,7 @@
         }
 
         /**
-         * Optional. Animation thumbnailnail as defined by sender
+         * Optional. Animation thumbnail as defined by sender
          *
          * @return PhotoSize|null
          */
