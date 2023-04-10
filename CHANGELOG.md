@@ -30,6 +30,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added method `\TgBotLib\Bot > setCustomEmojiStickerSetThumbnail()` to set the thumbnail of a sticker set. 
    See [setCustomEmojiStickerSetThumbnail](https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail) for more information.
  * Added object `\TgBotLib\Objects\Telegram > StickerSet` to represent a sticker set.
+ * Added method `\TgBotLib\Bot > setStickerSetThumbnail()` to set the thumbnail of a sticker set. 
+   See [setStickerSetThumbnail](https://core.telegram.org/bots/api#setstickersetthumbnail) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
