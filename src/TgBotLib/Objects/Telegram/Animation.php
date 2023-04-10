@@ -36,7 +36,7 @@
         /**
          * @var PhotoSize|null
          */
-        private $thumb;
+        private $thumbnail;
 
         /**
          * @var string|null
@@ -105,13 +105,13 @@
         }
 
         /**
-         * Optional. Animation thumbnail as defined by sender
+         * Optional. Animation thumbnailnail as defined by sender
          *
          * @return PhotoSize|null
          */
-        public function getThumb(): ?PhotoSize
+        public function getThumbnail(): ?PhotoSize
         {
-            return $this->thumb;
+            return $this->thumbnail;
         }
 
         /**
@@ -159,7 +159,7 @@
                 'width' => $this->width ?? null,
                 'height' => $this->height ?? null,
                 'duration' => $this->duration ?? null,
-                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : null,
+                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null
@@ -181,7 +181,7 @@
             $object->width = $data['width'] ?? null;
             $object->height = $data['height'] ?? null;
             $object->duration = $data['duration'] ?? null;
-            $object->thumb = ($data['thumb'] ?? null) ? PhotoSize::fromArray($data['thumb']) : null;
+            $object->thumbnail = ($data['thumbnail'] ?? null) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->file_name = $data['file_name'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->file_size = $data['file_size'] ?? null;
