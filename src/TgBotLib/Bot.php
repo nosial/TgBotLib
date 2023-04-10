@@ -2526,4 +2526,51 @@
 
             return true;
         }
+
+        /**
+         * Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet
+         * methods (the file can be used multiple times). Returns the uploaded File on success.
+         *
+         * @param int $user_id User identifier of sticker file owner
+         * @param string $sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements.
+         * @param string $sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
+         * @return File
+         * @throws TelegramException
+         * @see https://core.telegram.org/bots/api#sending-files
+         * @link https://core.telegram.org/bots/api#uploadstickerfile
+         * @noinspection PhpUnused
+         */
+        public function uploadStickerFile(int $user_id, string $sticker, string $sticker_format): File
+        {
+            if(file_exists($sticker))
+            {
+                return File::fromArray(
+                    $this->sendFileUpload('uploadStickerFile', 'sticker', $sticker, [
+                        'user_id' => $user_id,
+                        'sticker_format' => $sticker_format
+                    ])
+                );
+            }
+
+            $tmp_file = new TempFile();
+            file_put_contents($tmp_file, $sticker);
+
+            try
+            {
+                $response = File::fromArray(
+                    $this->sendFileUpload('uploadStickerFile', 'sticker', $tmp_file, [
+                        'user_id' => $user_id,
+                        'sticker_format' => $sticker_format
+                    ])
+                );
+            }
+            catch(TelegramException $e)
+            {
+                unset($tmp_file);
+                throw $e;
+            }
+
+            unset($tmp_file);
+            return $response;
+        }
     }
