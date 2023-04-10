@@ -21,7 +21,7 @@
         /**
          * @var PhotoSize|null
          */
-        private $thumb;
+        private $thumbnail;
 
         /**
          * @var string|null
@@ -64,9 +64,9 @@
          *
          * @return PhotoSize|null
          */
-        public function getThumb(): ?PhotoSize
+        public function getThumbnail(): ?PhotoSize
         {
-            return $this->thumb;
+            return $this->thumbnail;
         }
 
         /**
@@ -111,7 +111,7 @@
             return [
                 'file_id' => $this->file_id ?? null,
                 'file_unique_id' => $this->file_unique_id ?? null,
-                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : null,
+                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null,
@@ -129,7 +129,7 @@
             $object = new self();
             $object->file_id = $data['file_id'] ?? null;
             $object->file_unique_id = $data['file_unique_id'] ?? null;
-            $object->thumb = isset($data['thumb']) ? PhotoSize::fromArray($data['thumb']) : null;
+            $object->thumbnail = isset($data['thumbnail']) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->file_name = $data['file_name'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->file_size = $data['file_size'] ?? null;

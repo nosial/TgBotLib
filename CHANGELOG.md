@@ -35,6 +35,7 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added proper construction for `PollOption[]` objects in `TgBotLib\Objects\Telegram > Poll`
  * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Animation` to `thumbnail`
  * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Audio` to `thumbnail`
+ * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Document` to `thumbnail`
 
 ## [6.5.2] - 2023-02-26
 
