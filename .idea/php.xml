@@ -14,9 +14,8 @@
       <path value="/usr/share/php" />
       <path value="/etc/ncc" />
       <path value="/var/ncc/packages/net.nosial.tamerlib=1.0.0" />
-      <path value="/var/ncc/packages/net.nosial.loglib=1.0.1" />
+      <path value="/var/ncc/packages/net.nosial.loglib=1.0.2" />
       <path value="/var/ncc/packages/net.nosial.tempfile=1.1.0" />
-      <path value="/var/ncc/packages/net.nosial.loglib=1.0.1" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
