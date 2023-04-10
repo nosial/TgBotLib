@@ -38,6 +38,7 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Document` to `thumbnail`
  * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Sticker` to `thumbnail`
  * Renamed `thumb` field in `TgBotLib\Objects\Telegram > Video` to `thumbnail`
+ * Renamed `thumb` field in `TgBotLib\Objects\Telegram > VideoNote` to `thumbnail`
 
 ## Fixed
  * Fixed `TgBotLib\Objects\Telegram > Sticker > toArray()` to properly return the `premium_animation` field

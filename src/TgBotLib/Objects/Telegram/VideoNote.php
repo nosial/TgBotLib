@@ -29,7 +29,7 @@
         /**
          * @var PhotoSize|null
          */
-        private $thumb;
+        private $thumbnail;
 
         /**
          * @var int|null
@@ -82,9 +82,9 @@
          *
          * @return PhotoSize|null
          */
-        public function getThumb(): ?PhotoSize
+        public function getThumbnail(): ?PhotoSize
         {
-            return $this->thumb;
+            return $this->thumbnail;
         }
 
         /**
@@ -109,7 +109,7 @@
                 'file_unique_id' => $this->file_unique_id,
                 'length' => $this->length,
                 'duration' => $this->duration,
-                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : $this->thumb,
+                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : $this->thumbnail,
                 'file_size' => $this->file_size,
             ];
         }
@@ -128,7 +128,7 @@
             $object->file_unique_id = $data['file_unique_id'];
             $object->length = $data['length'];
             $object->duration = $data['duration'];
-            $object->thumb = (isset($data['thumb'])) ? PhotoSize::fromArray($data['thumb']) : null;
+            $object->thumbnail = (isset($data['thumbnail'])) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->file_size = $data['file_size'];
 
             return $object;
