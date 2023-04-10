@@ -2573,4 +2573,24 @@
             unset($tmp_file);
             return $response;
         }
+
+        /**
+         * Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.
+         *
+         * @param string $name Sticker set name
+         * @param string $custom_emoji_id Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail.
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+         * @noinspection PhpUnused
+         */
+        public function setCustomEmojiStickerSetThumbnail(string $name, string $custom_emoji_id=''): bool
+        {
+            $this->sendRequest('setCustomEmojiStickerSetThumbnail', [
+                'name' => $name,
+                'custom_emoji_id' => $custom_emoji_id
+            ]);
+
+            return true;
+        }
     }

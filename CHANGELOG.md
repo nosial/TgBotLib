@@ -27,6 +27,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added abstract class `\TgBotLib\Abstracts > StickerFormat` to represent a sticker format ("`static`", "`animated`" or "`video`")
  * Added method `\TgBotLib\Bot > uploadStickerFile()` to upload a sticker file with a sticker for later use in `createNewStickerSet` and `addStickerToSet` methods (can be used multiple times). 
    See [uploadStickerFile](https://core.telegram.org/bots/api#uploadstickerfile) for more information.
+ * Added method `\TgBotLib\Bot > setCustomEmojiStickerSetThumbnail()` to set the thumbnail of a sticker set. 
+   See [setCustomEmojiStickerSetThumbnail](https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
