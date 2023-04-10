@@ -22,6 +22,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added method `\TgBotLib\Bot > createNewStickerSet()` to create a new sticker set owned by a user. See [createNewStickerSet](https://core.telegram.org/bots/api#createnewstickerset) for more information.
  * Added the field _needs_repainting_ to the [Sticker](https://core.telegram.org/bots/api#sticker) class
    which can be obtained via `TgBotLib\Objects\Telegram > Sticker > needsRepainting()`
+ * Added method `\TgBotLib\Bot > addStickerToSet()` to add a new sticker to a set created by the bot. 
+   See [addStickerToSet](https://core.telegram.org/bots/api#addstickertoset) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`

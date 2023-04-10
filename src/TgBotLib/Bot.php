@@ -2501,4 +2501,29 @@
 
             return true;
         }
+
+        /**
+         * Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match
+         * the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and
+         * video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
+         * Returns True on success.
+         *
+         * @param int $user_id User identifier of sticker set owner
+         * @param string $name Sticker set name
+         * @param array $sticker An InputSticker object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#addstickertoset
+         * @noinspection PhpUnused
+         */
+        public function addStickerToSet(int $user_id, string $name, array $sticker): bool
+        {
+            $this->sendRequest('addStickerToSet', [
+                'user_id' => $user_id,
+                'name' => $name,
+                'sticker' => $sticker
+            ]);
+
+            return true;
+        }
     }
