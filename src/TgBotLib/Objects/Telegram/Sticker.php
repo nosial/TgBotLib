@@ -46,7 +46,7 @@
         /**
          * @var PhotoSize|null
          */
-        private $thumb;
+        private $thumbnail;
 
         /**
          * @var string|null
@@ -162,9 +162,9 @@
          *
          * @return PhotoSize|null
          */
-        public function getThumb(): ?PhotoSize
+        public function getThumbnail(): ?PhotoSize
         {
-            return $this->thumb;
+            return $this->thumbnail;
         }
 
         /**
@@ -253,10 +253,10 @@
                 'height' => $this->height,
                 'is_animated' => $this->is_animated,
                 'is_video' => $this->is_video,
-                'thumb' => ($this->thumb instanceof ObjectTypeInterface) ? $this->thumb->toArray() : $this->thumb,
+                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : $this->thumbnail,
                 'emoji' => $this->emoji,
                 'set_name' => $this->set_name,
-                'premium_animation' => ($this->premium_animation instanceof ObjectTypeInterface) ? $this->premium_animation->toArray() : $this->thumb,
+                'premium_animation' => ($this->premium_animation instanceof ObjectTypeInterface) ? $this->premium_animation->toArray() : $this->premium_animation,
                 'mask_position' => ($this->mask_position instanceof ObjectTypeInterface) ? $this->mask_position->toArray() : $this->mask_position,
                 'custom_emoji_id' => $this->custom_emoji_id,
                 'needs_repainting' => $this->needs_repainting,
@@ -281,7 +281,7 @@
             $object->height = $data['height'];
             $object->is_animated = $data['is_animated'];
             $object->is_video = $data['is_video'];
-            $object->thumb = isset($data['thumb']) ? PhotoSize::fromArray($data['thumb']) : null;
+            $object->thumbnail = isset($data['thumbnail']) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->emoji = $data['emoji'] ?? null;
             $object->set_name = $data['set_name'] ?? null;
             $object->premium_animation = isset($data['premium_animation']) ? File::fromArray($data['premium_animation']) : null;
