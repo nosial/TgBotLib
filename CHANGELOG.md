@@ -24,6 +24,7 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
    which can be obtained via `TgBotLib\Objects\Telegram > Sticker > needsRepainting()`
  * Added method `\TgBotLib\Bot > addStickerToSet()` to add a new sticker to a set created by the bot. 
    See [addStickerToSet](https://core.telegram.org/bots/api#addstickertoset) for more information.
+ * Added abstract class `\TgBotLib\Abstracts > StickerFormat` to represent a sticker format ("`static`", "`animated`" or "`video`")
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
