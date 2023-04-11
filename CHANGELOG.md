@@ -38,6 +38,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
    See [deleteStickerSet](https://core.telegram.org/bots/api#deletestickerset) for more information.
  * Added method `\TgBotLib\Bot > setStickerEmojiList()` to set the list of emojis for a sticker set. 
    See [setStickerEmojiList](https://core.telegram.org/bots/api#setstickeremojilist) for more information.
+ * Added method `\TgBotLib\Bot > setStickerKeywords()` to set the list of emojis for a sticker set. 
+   See [setStickerKeywords](https://core.telegram.org/bots/api#setstickerkeywords) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
