@@ -2604,6 +2604,8 @@
          * @param array $options Optional parameters
          * @return bool
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setstickersetthumbnail
+         * @noinspection PhpUnused
          */
         public function setStickerSetThumbnail(string $name, int $user_id, string $thumb, array $options=[]): bool
         {
@@ -2622,6 +2624,27 @@
                 'name' => $name,
                 'user_id' => $user_id,
                 'thumb' => $thumb
+            ], $options));
+
+            return true;
+        }
+
+        /**
+         * Use this method to set the title of a created sticker set. Returns True on success.
+         *
+         * @param string $name Sticker set name
+         * @param string $title Sticker set title, 1-64 characters
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setstickersettitle
+         * @noinspection PhpUnused
+         */
+        public function setStickerSetTitle(string $name, string $title, array $options=[]): bool
+        {
+            $this->sendRequest('setStickerSetTitle', array_merge([
+                'name' => $name,
+                'title' => $title
             ], $options));
 
             return true;

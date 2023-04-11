@@ -32,6 +32,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
  * Added object `\TgBotLib\Objects\Telegram > StickerSet` to represent a sticker set.
  * Added method `\TgBotLib\Bot > setStickerSetThumbnail()` to set the thumbnail of a sticker set. 
    See [setStickerSetThumbnail](https://core.telegram.org/bots/api#setstickersetthumbnail) for more information.
+ * Added method `\TgBotLib\Bot > setStickerSetTitle()` to set the title of a sticker set. 
+   See [setStickerSetTitle](https://core.telegram.org/bots/api#setstickersettitle) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
