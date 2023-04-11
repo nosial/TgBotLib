@@ -2668,4 +2668,26 @@
 
             return true;
         }
+
+        /**
+         * Use this method to change the list of emoji assigned to a regular or custom emoji sticker.
+         * The sticker must belong to a sticker set created by the bot. Returns True on success.
+         *
+         * @param string $sticker File identifier of the sticker
+         * @param string[] $emoji_list A JSON-serialized list of 1-20 emoji associated with the sticker
+         * @param array $options
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setstickeremojilist
+         * @noinspection PhpUnused
+         */
+        public function setStickerEmojiList(string $sticker, array $emoji_list, array $options=[]): bool
+        {
+            $this->sendRequest('setStickerEmojiList', array_merge([
+                'sticker' => $sticker,
+                'emoji_list' => $emoji_list
+            ], $options));
+
+            return true;
+        }
     }
