@@ -41,7 +41,7 @@ Telegram Bot API version.
 The library can be installed using ncc:
 
 ```bash
-ncc install -p "nosial/libs.tgbot=latest@n64"
+ncc package install -p "nosial/libs.tgbot=latest@n64"
 ```
 
 or by adding the following to your project.json file under the `build.dependencies` section:
