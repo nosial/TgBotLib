@@ -2712,4 +2712,27 @@
 
             return true;
         }
+
+        /**
+         * Use this method to change the mask position of a mask sticker.
+         * The sticker must belong to a sticker set that was created by the bot. Returns True on success.
+         *
+         * @param string $sticker File identifier of the sticker
+         * @param array $mask_position A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#setstickermaskposition
+         * @noinspection PhpUnused
+         * @see https://core.telegram.org/bots/api#maskposition
+         */
+        public function setStickerMaskPosition(string $sticker, array $mask_position, array $options=[]): bool
+        {
+            $this->sendRequest('setStickerMaskPosition', array_merge([
+                'sticker' => $sticker,
+                'mask_position' => $mask_position
+            ], $options));
+
+            return true;
+        }
     }

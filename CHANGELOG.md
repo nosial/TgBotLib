@@ -40,6 +40,8 @@ This update accompanies the release of the [Telegram Bot API 6.6](https://core.t
    See [setStickerEmojiList](https://core.telegram.org/bots/api#setstickeremojilist) for more information.
  * Added method `\TgBotLib\Bot > setStickerKeywords()` to set the list of emojis for a sticker set. 
    See [setStickerKeywords](https://core.telegram.org/bots/api#setstickerkeywords) for more information.
+ * Added method `\TgBotLib\Bot > setStickerMaskPosition()` to change the mask position of a mask sticker. 
+   See [setStickerMaskPosition](https://core.telegram.org/bots/api#setstickermaskposition) for more information.
 
 ### Changed
  * Removed unused `__destruct()` method from `\TgBotLib\Bot`
