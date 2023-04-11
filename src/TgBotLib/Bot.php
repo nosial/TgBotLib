@@ -2649,4 +2649,23 @@
 
             return true;
         }
+
+        /**
+         * Use this method to delete a sticker set that was created by the bot. Returns True on success.
+         *
+         * @param string $name Sticker set name
+         * @param array $options Optional parameters
+         * @return bool
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#deletestickerset
+         * @noinspection PhpUnused
+         */
+        public function deleteStickerSet(string $name, array $options=[]): bool
+        {
+            $this->sendRequest('deleteStickerSet', array_merge([
+                'name' => $name
+            ], $options));
+
+            return true;
+        }
     }
