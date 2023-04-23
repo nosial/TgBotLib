@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.7.0] - Unreleased
 
 This update accompanies the release of the [Telegram Bot API 6.7](https://core.telegram.org/bots/api#april-21-2023).
+Additionally, this update includes some bug fixes and improvements such as the ability for some objects to be treated as
+input objects for methods that require input objects.
 
 ### Added
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputTextMessageContent` to represent the content of a text message to be sent as the result of an inline query.
