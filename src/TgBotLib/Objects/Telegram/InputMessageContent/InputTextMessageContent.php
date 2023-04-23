@@ -2,9 +2,10 @@
 
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\Telegram;
+    namespace TgBotLib\Objects\Telegram\InputMessageContent;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Telegram\MessageEntity;
 
     class InputTextMessageContent implements ObjectTypeInterface
     {

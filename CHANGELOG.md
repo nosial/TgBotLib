@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This update accompanies the release of the [Telegram Bot API 6.7](https://core.telegram.org/bots/api#april-21-2023).
 
 ### Added
- * Added object `\TgBotLib\Objects\Telegram > InputTextMessageContent` to represent the content of a text message to be sent as the result of an inline query.
- * Added object `\TgBotLib\Objects\Telegram > InputLocationMessageContent` to represent the content of a location message to be sent as the result of an inline query.
- * Added object `\TgBotLib\Objects\Telegram > InputVenueMessageContent` to represent the content of a venue message to be sent as the result of an inline query.
- * Added object `\TgBotLib\Objects\Telegram > InputContactMessageContent` to represent the content of a contact message to be sent as the result of an inline query.
- * Added object `\TgBotLib\Objects\Telegram > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
+ * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputTextMessageContent` to represent the content of a text message to be sent as the result of an inline query.
+ * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputLocationMessageContent` to represent the content of a location message to be sent as the result of an inline query.
+ * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputVenueMessageContent` to represent the content of a venue message to be sent as the result of an inline query.
+ * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputContactMessageContent` to represent the content of a contact message to be sent as the result of an inline query.
+ * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
  * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
 
 ## [6.6.0] - 2023-04-10

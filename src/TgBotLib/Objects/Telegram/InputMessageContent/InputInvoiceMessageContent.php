@@ -3,9 +3,10 @@
     /** @noinspection PhpMissingFieldTypeInspection */
     /** @noinspection PhpUnused */
 
-    namespace TgBotLib\Objects\Telegram;
+    namespace TgBotLib\Objects\Telegram\InputMessageContent;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Telegram\LabeledPrice;
 
     class InputInvoiceMessageContent implements \TgBotLib\Interfaces\ObjectTypeInterface
     {

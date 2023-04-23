@@ -2,11 +2,12 @@
 
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\Telegram;
+    namespace TgBotLib\Objects\Telegram\InputMessageContent;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
-    class InputLocationMessageContent implements ObjectTypeInterface
+    class
+    InputLocationMessageContent implements ObjectTypeInterface
     {
         /**
          * @var float
