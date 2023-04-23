@@ -12,7 +12,7 @@ This update accompanies the release of the [Telegram Bot API 6.7](https://core.t
 ### Added
  * Added object `\TgBotLib\Objects\Telegram > InputTextMessageContent` to represent the content of a text message to be sent as the result of an inline query.
  * Added object `\TgBotLib\Objects\Telegram > InputLocationMessageContent` to represent the content of a location message to be sent as the result of an inline query.
-
+ * Added object `\TgBotLib\Objects\Telegram > InputVenueMessageContent` to represent the content of a venue message to be sent as the result of an inline query.
 
 
 ## [6.6.0] - 2023-04-10
