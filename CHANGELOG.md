@@ -15,7 +15,7 @@ This update accompanies the release of the [Telegram Bot API 6.7](https://core.t
  * Added object `\TgBotLib\Objects\Telegram > InputVenueMessageContent` to represent the content of a venue message to be sent as the result of an inline query.
  * Added object `\TgBotLib\Objects\Telegram > InputContactMessageContent` to represent the content of a contact message to be sent as the result of an inline query.
  * Added object `\TgBotLib\Objects\Telegram > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
-
+ * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
 
 ## [6.6.0] - 2023-04-10
 
