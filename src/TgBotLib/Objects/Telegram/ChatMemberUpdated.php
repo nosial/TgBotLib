@@ -39,6 +39,11 @@
         private $invite_link;
 
         /**
+         * @var bool
+         */
+        private $via_chat_folder_invite_link;
+
+        /**
          * Chat the user belongs to
          *
          * @return Chat
@@ -100,6 +105,16 @@
         }
 
         /**
+         * Optional. True, if the user joined the chat via a chat folder invite link
+         *
+         * @return bool
+         */
+        public function isViaChatFolderInviteLink(): bool
+        {
+            return $this->via_chat_folder_invite_link;
+        }
+
+        /**
          * Returns an array representation of the object
          *
          * @return array
@@ -113,6 +128,7 @@
                 'old_chat_member' => ($this->old_chat_member instanceof ObjectTypeInterface) ? $this->old_chat_member->toArray() : $this->old_chat_member,
                 'new_chat_member' => ($this->new_chat_member instanceof ObjectTypeInterface) ? $this->new_chat_member->toArray() : $this->new_chat_member,
                 'invite_link' => ($this->invite_link instanceof ObjectTypeInterface) ? $this->invite_link->toArray() : $this->invite_link,
+                'via_chat_folder_invite_link' => $this->via_chat_folder_invite_link,
             ];
         }
 
@@ -132,6 +148,7 @@
             $object->old_chat_member = isset($data['old_chat_member']) ? ChatMember::fromArray($data['old_chat_member']) : new ChatMember();
             $object->new_chat_member = isset($data['new_chat_member']) ? ChatMember::fromArray($data['new_chat_member']) : new ChatMember();
             $object->invite_link = isset($data['invite_link']) ? ChatInviteLink::fromArray($data['invite_link']) : null;
+            $object->via_chat_folder_invite_link = $data['via_chat_folder_invite_link'] ?? false;
 
             return $object;
         }
