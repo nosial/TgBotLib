@@ -18,6 +18,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
  * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle`, see [InlineQueryResultArticle](https://core.telegram.org/bots/api#inlinequeryresultarticle) for more information.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultPhoto`, see [InlineQueryResultPhoto](https://core.telegram.org/bots/api#inlinequeryresultphoto) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
