@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This update accompanies the release of the [Telegram Bot API 6.7](https://core.telegram.org/bots/api#april-21-2023).
 
+### Added
+ * Added object `\TgBotLib\Objects\Telegram > InputTextMessageContent` to represent the content of a text message to be sent as the result of an inline query.
+
 
 
 ## [6.6.0] - 2023-04-10
