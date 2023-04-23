@@ -19,7 +19,11 @@ This update accompanies the release of the [Telegram Bot API 6.7](https://core.t
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
-
+ * Added methods `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setUrl`, `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setText`, `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setCallbackData`,
+   `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setWebApp`, `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setLoginUrl`,
+   `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setSwitchInlineQuery`, `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setSwitchInlineQueryCurrentChat`,
+   `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setCallbackGame`,  `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setPay`
+   to `\TgBotLib\Objects\Telegram\InlineKeyboardButton`
 
 ## [6.6.0] - 2023-04-10
 

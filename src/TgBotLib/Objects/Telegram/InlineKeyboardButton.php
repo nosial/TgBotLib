@@ -4,6 +4,8 @@
 
     namespace TgBotLib\Objects\Telegram;
 
+    use InvalidArgumentException;
+    use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class InlineKeyboardButton implements ObjectTypeInterface
@@ -64,6 +66,18 @@
         }
 
         /**
+         * Label text on the button
+         *
+         * @param string $text
+         * @return $this
+         */
+        public function setText(string $text): self
+        {
+            $this->text = $text;
+            return $this;
+        }
+
+        /**
          * Optional. HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be
          * used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
          *
@@ -75,6 +89,22 @@
         }
 
         /**
+         * Optional. HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used
+         * to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+         *
+         * @param string|null $url
+         * @return $this
+         */
+        public function setUrl(?string $url): self
+        {
+            if(!Validate::url($url))
+                throw new InvalidArgumentException(sprintf('Invalid url: %s', $url));
+
+            $this->url = $url;
+            return $this;
+        }
+
+        /**
          * Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
          *
          * @see https://core.telegram.org/bots/api#callbackquery
@@ -83,6 +113,27 @@
         public function getCallbackData(): ?string
         {
             return $this->callback_data;
+        }
+
+        /**
+         * Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+         *
+         * @param string|null $callbackData
+         * @return $this
+         */
+        public function setCallbackData(?string $callbackData): self
+        {
+            if($callbackData == null)
+            {
+                $this->callback_data = null;
+                return $this;
+            }
+
+            if(!Validate::length($callbackData, 1, 64))
+                throw new InvalidArgumentException(sprintf('Invalid callback data length: %s', $callbackData));
+
+            $this->callback_data = $callbackData;
+            return $this;
         }
 
         /**
@@ -98,6 +149,20 @@
         }
 
         /**
+         * Optional. Description of the Web App that will be launched when the user presses the button. The Web App will
+         * be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only
+         * in private chats between a user and the bot.
+         *
+         * @param WebAppInfo|null $webApp
+         * @return $this
+         */
+        public function setWebApp(?WebAppInfo $webApp): self
+        {
+            $this->web_app = $webApp;
+            return $this;
+        }
+
+        /**
          * Optional. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the
          * Telegram Login Widget.
          *
@@ -106,6 +171,25 @@
         public function getLoginUrl(): ?LoginUrl
         {
             return $this->login_url;
+        }
+
+        /**
+         * Optional. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the
+         * Telegram Login Widget.
+         *
+         * @param LoginUrl|null $loginUrl
+         * @return $this
+         */
+        public function setLoginUrl(?LoginUrl $loginUrl): self
+        {
+            if(!Validate::url($loginUrl->getUrl()))
+                throw new InvalidArgumentException(sprintf('Invalid login url: %s', $loginUrl->getUrl()));
+
+            if(!Validate::isHttps($loginUrl->getUrl()))
+                throw new InvalidArgumentException(sprintf('The login url must be https: %s', $loginUrl->getUrl()));
+
+            $this->login_url = $loginUrl;
+            return $this;
         }
 
         /**
@@ -126,6 +210,24 @@
         }
 
         /**
+         * Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and
+         * insert the bot's username and the specified inline query in the input field. May be empty, in which case just
+         * the bot's username will be inserted.
+         *
+         * Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a
+         * private chat with it. Especially useful when combined with switch_pm… actions - in this case the user will be
+         * automatically returned to the chat they switched from, skipping the chat selection screen.
+         *
+         * @param string|null $switchInlineQuery
+         * @return $this
+         */
+        public function setSwitchInlineQuery(?string $switchInlineQuery): self
+        {
+            $this->switch_inline_query = $switchInlineQuery;
+            return $this;
+        }
+
+        /**
          * Optional. If set, pressing the button will insert the bot's username and the specified inline query in
          * the current chat's input field. May be empty, in which case only the bot's username will be inserted.
          *
@@ -140,6 +242,22 @@
         }
 
         /**
+         * Optional. If set, pressing the button will insert the bot's username and the specified inline query in the
+         * current chat's input field. May be empty, in which case only the bot's username will be inserted.
+         *
+         * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting
+         * something from multiple options.
+         *
+         * @param string|null $switchInlineQueryCurrentChat
+         * @return $this
+         */
+        public function setSwitchInlineQueryCurrentChat(?string $switchInlineQueryCurrentChat): self
+        {
+            $this->switch_inline_query_current_chat = $switchInlineQueryCurrentChat;
+            return $this;
+        }
+
+        /**
          * Optional. Description of the game that will be launched when the user presses the button.
          * NOTE: This type of button must always be the first button in the first row.
          *
@@ -148,6 +266,19 @@
         public function getCallbackGame(): ?CallbackGame
         {
             return $this->callback_game;
+        }
+
+        /*
+         * Optional. If set, pressing the button will insert the bot's username and the specified inline query in the
+         * current chat's input field. May be empty, in which case only the bots username will be inserted.
+         *
+         * This offers a quick way for the user to open your bot in inline mode in the same chat -
+         * good for selecting something from multiple options.
+         */
+        public function setCallbackGame(?CallbackGame $callbackGame): self
+        {
+            $this->callback_game = $callbackGame;
+            return $this;
         }
 
         /**
@@ -160,6 +291,21 @@
         public function isPay(): bool
         {
             return $this->pay;
+        }
+
+        /**
+         * Optional. Specify True, to send a Pay button.
+         *
+         * NOTE: This type of button must always be the first button in the first row and can only be used in invoice
+         * messages.
+         *
+         * @param bool $pay
+         * @return $this
+         */
+        public function setPay(bool $pay): self
+        {
+            $this->pay = $pay;
+            return $this;
         }
 
         /**
