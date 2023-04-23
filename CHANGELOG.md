@@ -17,6 +17,10 @@ This update accompanies the release of the [Telegram Bot API 6.7](https://core.t
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
  * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
 
+### Changed
+ * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
+
+
 ## [6.6.0] - 2023-04-10
 
 This update accompanies the release of the [Telegram Bot API 6.6](https://core.telegram.org/bots/api#march-9-2023).
