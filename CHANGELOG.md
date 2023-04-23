@@ -24,6 +24,7 @@ This update accompanies the release of the [Telegram Bot API 6.7](https://core.t
    `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setSwitchInlineQuery`, `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setSwitchInlineQueryCurrentChat`,
    `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setCallbackGame`,  `\TgBotLib\Objects\Telegram\InlineKeyboardButton::setPay`
    to `\TgBotLib\Objects\Telegram\InlineKeyboardButton`
+ * Added methods `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup::removeRow` & `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup::addRow` to `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup`
 
 ## [6.6.0] - 2023-04-10
 

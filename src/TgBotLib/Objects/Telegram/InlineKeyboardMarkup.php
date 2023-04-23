@@ -25,6 +25,30 @@
         }
 
         /**
+         * Adds a row of buttons
+         *
+         * @param InlineKeyboardButton ...$buttons
+         * @return $this
+         */
+        public function addRow(InlineKeyboardButton ...$buttons): self
+        {
+            $this->inline_keyboard[] = $buttons;
+            return $this;
+        }
+
+        /**
+         * Removes a row of buttons by index
+         *
+         * @param int $index
+         * @return $this
+         */
+        public function removeRow(int $index): self
+        {
+            unset($this->inline_keyboard[$index]);
+            return $this;
+        }
+
+        /**
          * Returns an array representation of the object
          *
          * @return array[][]
