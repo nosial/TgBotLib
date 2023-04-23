@@ -23,6 +23,7 @@ input objects for methods that require input objects.
  * Added abstract class `\TgBotLib\Abstracts\ThumbnailMimeType` to represent the mime type of thumbnail, photo, or a file / sticker thumbnail.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultMpeg4Gif`, see [InlineQueryResultMpeg4Gif](https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif) for more information.
  * Added field `via_chat_folder_invite_link` to `\TgBotLib\Objects\Telegram\ChatMemberUpdated` to represent the invite link, which was used by the user to join the chat; for joining by invite link events only.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVideo`, see [InlineQueryResultVideo](https://core.telegram.org/bots/api#inlinequeryresultvideo) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
