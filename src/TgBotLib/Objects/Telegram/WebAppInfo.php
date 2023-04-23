@@ -2,6 +2,8 @@
 
     namespace TgBotLib\Objects\Telegram;
 
+    use InvalidArgumentException;
+    use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class WebAppInfo implements ObjectTypeInterface
@@ -20,6 +22,21 @@
         public function getUrl(): string
         {
             return $this->url;
+        }
+
+        /**
+         * An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps
+         *
+         * @param string $url
+         * @return $this
+         */
+        public function setUrl(string $url): self
+        {
+            if(!Validate::url($url))
+                throw new InvalidArgumentException('Invalid url format');
+
+            $this->url = $url;
+            return $this;
         }
 
         /**
