@@ -1,7 +1,6 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -18,6 +17,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputContactMessageContent` to represent the content of a contact message to be sent as the result of an inline query.
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
  * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle`, see [InlineQueryResultArticle](https://core.telegram.org/bots/api#inlinequeryresultarticle) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
