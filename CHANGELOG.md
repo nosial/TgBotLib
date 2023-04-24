@@ -41,6 +41,7 @@ input objects for methods that require input objects.
  * Added method `\TgBotLib\Objects\Telegram\WebAppInfo::setUrl` to `\TgBotLib\Objects\Telegram\WebAppInfo`
  * Added methods `\TgBotLib\Classes\Validate::url`, `\TgBotLib\Classes\Validate::length`, & `\TgBotLib\Classes\Validate::isHttps` to `\TgBotLib\Classes\Validate`
 
+
 ## [6.6.0] - 2023-04-10
 
 This update accompanies the release of the [Telegram Bot API 6.6](https://core.telegram.org/bots/api#march-9-2023).
