@@ -18,7 +18,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InputMessageContent > InputInvoiceMessageContent` to represent the content of an invoice message to be sent as the result of an inline query.
  * Added new exception class `NotImplementedException` to represent the case when a method is not implemented yet or the method is not applicable to the current object.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle`, see [InlineQueryResultArticle](https://core.telegram.org/bots/api#inlinequeryresultarticle) for more information.
- * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultPhoto`, see [InlineQueryResultPhoto](https://core.telegram.org/bots/api#inlinequeryresultphoto) for more information.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultPhoto`, see [InlineQueryResultPhoto](hthttps://git.n64.cc/nosial/libs/tgbot/-/issues/3https://git.n64.cc/nosial/libs/tgbot/-/issues/3tps://core.telegram.org/bots/api#inlinequeryresultphoto) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultGif`, see [InlineQueryResultGif](https://core.telegram.org/bots/api#inlinequeryresultgif) for more information.
  * Added abstract class `\TgBotLib\Abstracts\ThumbnailMimeType` to represent the mime type of thumbnail, photo, or a file / sticker thumbnail.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultMpeg4Gif`, see [InlineQueryResultMpeg4Gif](https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif) for more information.
@@ -27,6 +27,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultAudio`, see [InlineQueryResultAudio](https://core.telegram.org/bots/api#inlinequeryresultaudio) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVoice`, see [InlineQueryResultVoice](https://core.telegram.org/bots/api#inlinequeryresultvoice) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultDocument`, see [InlineQueryResultDocument](https://core.telegram.org/bots/api#inlinequeryresultdocument) for more information.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultLocation`, see [InlineQueryResultLocation](https://core.telegram.org/bots/api#inlinequeryresultlocation) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
