@@ -89,6 +89,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultGif constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'gif';
+        }
+
+        /**
          * Type of the result, must be gif
          *
          * @return string

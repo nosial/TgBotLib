@@ -81,6 +81,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultPhoto constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'photo';
+        }
+
+        /**
          * Type of the result, must be photo
          *
          * @return string

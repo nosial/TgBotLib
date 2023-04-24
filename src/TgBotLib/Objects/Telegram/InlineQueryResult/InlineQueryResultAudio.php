@@ -71,6 +71,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultAudio constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'audio';
+        }
+
+        /**
          * Type of the result, must be audio
          *
          * @return string

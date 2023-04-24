@@ -86,6 +86,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultMpeg4Gif constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'mpeg4_gif';
+        }
+
+        /**
          * Type of the result, must be mpeg4_gif
          *
          * @return string

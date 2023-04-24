@@ -92,6 +92,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultVideo constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'video';
+        }
+
+        /**
          * Type of the result, must be video
          *
          * @return string

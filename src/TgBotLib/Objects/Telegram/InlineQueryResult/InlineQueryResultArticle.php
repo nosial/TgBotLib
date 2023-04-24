@@ -70,6 +70,14 @@
         private $thumbnail_height;
 
         /**
+         * InlineQueryResultArticle constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'article';
+        }
+
+        /**
          * Type of the result, must be article
          *
          * @return string
