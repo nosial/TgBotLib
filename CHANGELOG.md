@@ -28,6 +28,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVoice`, see [InlineQueryResultVoice](https://core.telegram.org/bots/api#inlinequeryresultvoice) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultDocument`, see [InlineQueryResultDocument](https://core.telegram.org/bots/api#inlinequeryresultdocument) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultLocation`, see [InlineQueryResultLocation](https://core.telegram.org/bots/api#inlinequeryresultlocation) for more information.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVenue`, see [InlineQueryResultVenue](https://core.telegram.org/bots/api#inlinequeryresultvenue) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
