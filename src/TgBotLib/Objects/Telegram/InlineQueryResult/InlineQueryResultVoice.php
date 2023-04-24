@@ -62,6 +62,14 @@
         private $input_message_content;
 
         /**
+         * InlineQueryResultVoice constructor.
+         */
+        public function __construct()
+        {
+            $this->type = 'voice';
+        }
+
+        /**
          * Type of the result, must be voice
          *
          * @return string
