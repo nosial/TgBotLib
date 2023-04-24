@@ -203,9 +203,9 @@
                 'url' => $this->url,
                 'hide_url' => $this->hide_url,
                 'description' => $this->description,
-                'thumb_url' => $this->thumbnail_url,
-                'thumb_width' => $this->thumbnail_width,
-                'thumb_height' => $this->thumbnail_height
+                'thumbnail_url' => $this->thumbnail_url,
+                'thumbnail_width' => $this->thumbnail_width,
+                'thumbnail_height' => $this->thumbnail_height
             ];
         }
 
@@ -227,9 +227,9 @@
             $object->url = $data['url'] ?? null;
             $object->hide_url = $data['hide_url'] ?? null;
             $object->description = $data['description'] ?? null;
-            $object->thumbnail_url = $data['thumb_url'] ?? null;
-            $object->thumbnail_width = (int)$data['thumb_width'] ?? null;
-            $object->thumbnail_height = (int)$data['thumb_height'] ?? null;
+            $object->thumbnail_url = $data['thumbnail_url'] ?? null;
+            $object->thumbnail_width = (int)$data['thumbnail_width'] ?? null;
+            $object->thumbnail_height = (int)$data['thumbnail_height'] ?? null;
 
             return $object;
         }
