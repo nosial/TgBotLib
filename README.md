@@ -60,6 +60,11 @@ ncc source add --name n64 --type gitlab --host git.n64.cc
 ```
 
 
+If you don't have ncc installed, you can refer to the [ncc documentation](https://git.n64.cc/nosial/ncc) for more
+information on how to install it. See [Building NCC from source](https://git.n64.cc/nosial/ncc/-/blob/master/DOCUMENTATION.md#building-ncc-from-source)
+and [Installing NCC](https://git.n64.cc/nosial/ncc/-/blob/master/DOCUMENTATION.md#installing-ncc) for more information.
+
+
 ## Compile from source
 
 To compile the library from source, you need to have [ncc](https://git.n64.cc/nosial/ncc) installed, then run the
