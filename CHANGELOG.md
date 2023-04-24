@@ -25,6 +25,7 @@ input objects for methods that require input objects.
  * Added field `via_chat_folder_invite_link` to `\TgBotLib\Objects\Telegram\ChatMemberUpdated` to represent the invite link, which was used by the user to join the chat; for joining by invite link events only.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVideo`, see [InlineQueryResultVideo](https://core.telegram.org/bots/api#inlinequeryresultvideo) for more information.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultAudio`, see [InlineQueryResultAudio](https://core.telegram.org/bots/api#inlinequeryresultaudio) for more information.
+ * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVoice`, see [InlineQueryResultVoice](https://core.telegram.org/bots/api#inlinequeryresultvoice) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
