@@ -44,6 +44,7 @@ input objects for methods that require input objects.
  * Added methods `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup::removeRow` & `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup::addRow` to `\TgBotLib\Objects\Telegram\InlineKeyboardMarkup`
  * Added method `\TgBotLib\Objects\Telegram\WebAppInfo::setUrl` to `\TgBotLib\Objects\Telegram\WebAppInfo`
  * Added methods `\TgBotLib\Classes\Validate::url`, `\TgBotLib\Classes\Validate::length`, & `\TgBotLib\Classes\Validate::isHttps` to `\TgBotLib\Classes\Validate`
+ * Updated documentation for `\TgBotLib\Bot::editMessageMedia`
 
 
 ## [6.6.0] - 2023-04-10

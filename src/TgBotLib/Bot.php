@@ -2338,6 +2338,8 @@
          * @param array $options
          * @return Message
          * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#editmessagemedia
+         * @noinspection PhpUnused
          */
         public function editMessageMedia(string $media, array $options=[]): Message
         {
