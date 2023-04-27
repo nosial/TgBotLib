@@ -24,9 +24,22 @@
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\File;
     use TgBotLib\Objects\Telegram\ForumTopic;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultAudio;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultContact;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultDocument;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultGame;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultGif;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultLocation;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultMpeg4Gif;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultPhoto;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVenue;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVideo;
+    use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultVoice;
     use TgBotLib\Objects\Telegram\MenuButton;
     use TgBotLib\Objects\Telegram\Message;
     use TgBotLib\Objects\Telegram\Poll;
+    use TgBotLib\Objects\Telegram\SentWebAppMessage;
     use TgBotLib\Objects\Telegram\Sticker;
     use TgBotLib\Objects\Telegram\Update;
     use TgBotLib\Objects\Telegram\User;
@@ -2734,5 +2747,30 @@
             ], $options));
 
             return true;
+        }
+
+        /**
+         * Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf
+         * of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.
+         *
+         * @param string $web_app_query_id Unique identifier for the query to be answered
+         * @param InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultDocument|InlineQueryResultGame|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice $result This object represents one result of an inline query.
+         * @return SentWebAppMessage
+         * @throws TelegramException
+         * @link https://core.telegram.org/bots/api#answerwebappquery
+         * @noinspection PhpUnused
+         * @see https://core.telegram.org/bots/webapps
+         */
+        public function answerWebAppQuery(
+            string $web_app_query_id,
+            InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultDocument|
+            InlineQueryResultGame|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|
+            InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice $result
+        ): SentWebAppMessage
+        {
+            return SentWebAppMessage::fromArray($this->sendRequest('answerWebAppQuery', [
+                'web_app_query_id' => $web_app_query_id,
+                'result' => $result->toArray()
+            ]));
         }
     }
