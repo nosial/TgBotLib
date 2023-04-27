@@ -5,10 +5,12 @@
 
     namespace TgBotLib\Objects\Telegram\InputMessageContent;
 
+    use InvalidArgumentException;
+    use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\LabeledPrice;
 
-    class InputInvoiceMessageContent implements \TgBotLib\Interfaces\ObjectTypeInterface
+    class InputInvoiceMessageContent implements ObjectTypeInterface
     {
         /**
          * @var string
@@ -121,6 +123,22 @@
         }
 
         /**
+         * Sets the value of 'title' property
+         * Product name, 1-32 characters
+         *
+         * @param string $title
+         * @return $this
+         */
+        public function setTitle(string $title): self
+        {
+            if(!Validate::length($title, 1, 32))
+                throw new InvalidArgumentException('title should be between 1-32 characters');
+
+            $this->title = $title;
+            return $this;
+        }
+
+        /**
          * Product description, 1-255 characters
          *
          * @return string
@@ -128,6 +146,22 @@
         public function getDescription(): string
         {
             return $this->description;
+        }
+
+        /**
+         * Sets the value of 'description' property
+         * Product description, 1-255 characters
+         *
+         * @param string $description
+         * @return $this
+         */
+        public function setDescription(string $description): self
+        {
+            if(!Validate::length($description, 1, 255))
+                throw new InvalidArgumentException('description should be between 1-255 characters');
+
+            $this->description = $description;
+            return $this;
         }
 
         /**
@@ -142,6 +176,22 @@
         }
 
         /**
+         * Set's the value of 'payload' property
+         * Bot-defined invoice payload, 1-128 bytes.
+         *
+         * @param string $payload
+         * @return $this
+         */
+        public function setPayload(string $payload): self
+        {
+            if(!Validate::length($payload, 1, 128))
+                throw new InvalidArgumentException('payload should be between 1-128 characters');
+
+            $this->payload = $payload;
+            return $this;
+        }
+
+        /**
          * Payment provider token, obtained via @BotFather
          *
          * @see https://t.me/botfather
@@ -150,6 +200,19 @@
         public function getProviderToken(): string
         {
             return $this->provider_token;
+        }
+
+        /**
+         * Sets the value of 'provider_token' property
+         * Payment provider token, obtained via @BotFather
+         *
+         * @param string $provider_token
+         * @return $this
+         */
+        public function setProviderToken(string $provider_token): self
+        {
+            $this->provider_token = $provider_token;
+            return $this;
         }
 
         /**
@@ -164,6 +227,22 @@
         }
 
         /**
+         * Sets the value of 'currency' property
+         * Three-letter ISO 4217 currency code, see more on currencies
+         *
+         * @param string $currency
+         * @return $this
+         */
+        public function setCurrency(string $currency): self
+        {
+            if(!Validate::length($currency, 3, 3))
+                throw new InvalidArgumentException('currency should be 3 characters');
+
+            $this->currency = $currency;
+            return $this;
+        }
+
+        /**
          * Price breakdown, a JSON-serialized list of components
          * (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
          *
@@ -172,6 +251,29 @@
         public function getPrices(): array
         {
             return $this->prices;
+        }
+
+        /**
+         * Adds a price to the list of prices
+         *
+         * @param LabeledPrice $price
+         * @return $this
+         */
+        public function addPrice(LabeledPrice $price): self
+        {
+            $this->prices[] = $price;
+            return $this;
+        }
+
+        /**
+         * Clears the current list of prices
+         *
+         * @return $this
+         */
+        public function clearPrices(): self
+        {
+            $this->prices = [];
+            return $this;
         }
 
         /**
@@ -188,6 +290,22 @@
         }
 
         /**
+         * Sets the value of 'max_tip_amount' property
+         * Optional. The maximum accepted amount for tips in the smallest units of the currency
+         * (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the
+         * exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency
+         * (2 for the majority of currencies). Defaults to 0
+         *
+         * @param int $max_tip_amount
+         * @return $this
+         */
+        public function setMaxTipAmount(int $max_tip_amount): self
+        {
+            $this->max_tip_amount = $max_tip_amount;
+            return $this;
+        }
+
+        /**
          * Optional. A JSON-serialized array of suggested amounts of tip in the smallest units of the currency
          * (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts
          * must be positive, passed in a strictly increased order and must not exceed max_tip_amount.
@@ -197,6 +315,21 @@
         public function getSuggestedTipAmounts(): ?array
         {
             return $this->suggested_tip_amounts;
+        }
+
+        /**
+         * Sets the value of 'suggested_tip_amounts' property
+         * Optional. A JSON-serialized array of suggested amounts of tip in the smallest units of the currency
+         * (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts
+         * must be positive, passed in a strictly increased order and must not exceed max_tip_amount.
+         *
+         * @param array $suggested_tip_amounts
+         * @return $this
+         */
+        public function setSuggestionsTipAmounts(array $suggested_tip_amounts): self
+        {
+            $this->suggested_tip_amounts = $suggested_tip_amounts;
+            return $this;
         }
 
         /**
@@ -211,6 +344,26 @@
         }
 
         /**
+         * Sets the value of 'provider_data' property
+         * Optional. A JSON-serialized object for data about the invoice, which will be shared with the payment provider.
+         * A detailed description of the required fields should be provided by the payment provider.
+         *
+         * @param string|null $provider_data
+         * @return $this
+         */
+        public function setProviderData(?string $provider_data): self
+        {
+            if($provider_data === null)
+            {
+                $this->provider_data = null;
+                return $this;
+            }
+
+            $this->provider_data = $provider_data;
+            return $this;
+        }
+
+        /**
          * Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.
          *
          * @return string|null
@@ -218,6 +371,25 @@
         public function getPhotoUrl(): ?string
         {
             return $this->photo_url;
+        }
+
+        /**
+         * Sets the value of 'photo_url' property
+         * Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.
+         *
+         * @param string|null $photo_url
+         * @return $this
+         */
+        public function setPhotoUrl(?string $photo_url): self
+        {
+            if($photo_url === null)
+            {
+                $this->photo_url = null;
+                return $this;
+            }
+
+            $this->photo_url = $photo_url;
+            return $this;
         }
 
         /**
@@ -231,6 +403,25 @@
         }
 
         /**
+         * Sets the value of 'photo_size' property
+         * Optional. Photo size in bytes
+         *
+         * @param int|null $photo_size
+         * @return $this
+         */
+        public function setPhotoSize(?int $photo_size): self
+        {
+            if($photo_size === null)
+            {
+                $this->photo_size = null;
+                return $this;
+            }
+
+            $this->photo_size = $photo_size;
+            return $this;
+        }
+
+        /**
          * Optional. Photo width
          *
          * @return int|null
@@ -238,6 +429,25 @@
         public function getPhotoWidth(): ?int
         {
             return $this->photo_width;
+        }
+
+        /**
+         * Sets the value of 'photo_width' property
+         * Optional. Photo width
+         *
+         * @param int|null $photo_width
+         * @return $this
+         */
+        public function setPhotoWidth(?int $photo_width): self
+        {
+            if($photo_width === null)
+            {
+                $this->photo_width = null;
+                return $this;
+            }
+
+            $this->photo_width = $photo_width;
+            return $this;
         }
 
         /**
@@ -251,6 +461,25 @@
         }
 
         /**
+         * Sets the value of 'photo_height' property
+         * Optional. Photo height
+         *
+         * @param int|null $photo_height
+         * @return $this
+         */
+        public function setPhotoHeight(?int $photo_height): self
+        {
+            if($photo_height === null)
+            {
+                $this->photo_height = null;
+                return $this;
+            }
+
+            $this->photo_height = $photo_height;
+            return $this;
+        }
+
+        /**
          * Optional. Pass True if you require the user's full name to complete the order
          *
          * @return bool
@@ -258,6 +487,19 @@
         public function needName(): bool
         {
             return $this->need_name;
+        }
+
+        /**
+         * Sets the value of 'need_name' property
+         * Optional. Pass True if you require the user's full name to complete the order
+         *
+         * @param bool $need_name
+         * @return $this
+         */
+        public function setNeedName(bool $need_name): self
+        {
+            $this->need_name = $need_name;
+            return $this;
         }
 
         /**
@@ -271,6 +513,19 @@
         }
 
         /**
+         * Sets the value of 'need_phone_number' property
+         * Optional. Pass True if you require the user's phone number to complete the order
+         *
+         * @param bool $need_phone_number
+         * @return $this
+         */
+        public function setNeedPhoneNumber(bool $need_phone_number): self
+        {
+            $this->need_phone_number = $need_phone_number;
+            return $this;
+        }
+
+        /**
          * Optional. Pass True if you require the user's email address to complete the order
          *
          * @return bool
@@ -278,6 +533,19 @@
         public function needEmail(): bool
         {
             return $this->need_email;
+        }
+
+        /**
+         * Sets the value of 'need_email' property
+         * Optional. Pass True if you require the user's email address to complete the order
+         *
+         * @param bool $need_email
+         * @return $this
+         */
+        public function setNeedEmail(bool $need_email): self
+        {
+            $this->need_email = $need_email;
+            return $this;
         }
 
         /**
@@ -291,6 +559,19 @@
         }
 
         /**
+         * Sets the value of 'need_shipping_address' property
+         * Optional. Pass True if you require the user's shipping address to complete the order
+         *
+         * @param bool $need_shipping_address
+         * @return $this
+         */
+        public function setNeedShippingAddress(bool $need_shipping_address): self
+        {
+            $this->need_shipping_address = $need_shipping_address;
+            return $this;
+        }
+
+        /**
          * Optional. Pass True if the user's phone number should be sent to provider
          *
          * @return bool
@@ -298,6 +579,19 @@
         public function isSendPhoneNumberToProvider(): bool
         {
             return $this->send_phone_number_to_provider;
+        }
+
+        /**
+         * Sets the value of 'send_phone_number_to_provider' property
+         * Optional. Pass True if the user's phone number should be sent to provider
+         *
+         * @param bool $send_phone_number_to_provider
+         * @return $this
+         */
+        public function setSendPhoneNumberToProvider(bool $send_phone_number_to_provider): self
+        {
+            $this->send_phone_number_to_provider = $send_phone_number_to_provider;
+            return $this;
         }
 
         /**
@@ -311,13 +605,39 @@
         }
 
         /**
+         * Sets the value of 'send_email_to_provider' property
+         * Optional. Pass True if the user's email address should be sent to provider
+         *
+         * @param bool $send_email_to_provider
+         * @return $this
+         */
+        public function setSendEmailToProvider(bool $send_email_to_provider): self
+        {
+            $this->send_email_to_provider = $send_email_to_provider;
+            return $this;
+        }
+
+        /**
          * Optional. Pass True if the final price depends on the shipping method
          *
          * @return bool
          */
-        public function isIsFlexible(): bool
+        public function isFlexible(): bool
         {
             return $this->is_flexible;
+        }
+
+        /**
+         * Sets the value of 'is_flexible' property
+         * Optional. Pass True if the final price depends on the shipping method
+         *
+         * @param bool $is_flexible
+         * @return $this
+         */
+        public function setIsFlexible(bool $is_flexible): self
+        {
+            $this->is_flexible = $is_flexible;
+            return $this;
         }
 
         /**
