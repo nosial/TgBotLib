@@ -33,6 +33,7 @@ input objects for methods that require input objects.
  * Added object `\TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultGame`, see [InlineQueryResultGame](https://core.telegram.org/bots/api#inlinequeryresultgame) for more information.
  * Added class `\TgBotLib\Objects\Telegram\InlineQueryResult` which is the base class for all inline query results, additionally added `\TgBotLib\Abstracts\InlineQueryResultType` to represent the type of inline query result object.
  * Added method `\TgBotLib\Bot::answerWebAppQuery` to answer a callback query sent from a web app, which returns the newly added `\TgBotLib\Objects\Telegram\SentWebAppMessage` object on success.
+ * Implemented Telegram's currency API `\TgBotLib\Classes\Utilities::getCurrency` to get basic information about the currency of the specified country, see [Telegram's currency API](https://core.telegram.org/bots/payments) for more information.
 
 ### Changed
  * Refactored InputMessageContent types to its own namespace so InputMessageContent can always return the correct InputMessageContent object type when calling `fromArray()`
