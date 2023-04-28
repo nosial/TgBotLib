@@ -57,7 +57,7 @@
         private $reply_markup;
 
         /**
-         * @var InputMessageContent|null
+         * @var InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent|null
          */
         private $input_message_content;
 
@@ -93,6 +93,7 @@
          * A valid URL for the voice recording
          *
          * @return string
+         * @noinspection PhpUnused
          */
         public function getVoiceUrl(): string
         {
@@ -143,6 +144,7 @@
          * Optional. Recording duration in seconds
          *
          * @return int|null
+         * @noinspection PhpUnused
          */
         public function getVoiceDuration(): ?int
         {
@@ -162,9 +164,9 @@
         /**
          * Optional. Content of the message to be sent instead of the voice recording
          *
-         * @return InputMessageContent|null
+         * @return InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent|null
          */
-        public function getInputMessageContent(): ?InputMessageContent
+        public function getInputMessageContent(): InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent|null
         {
             return $this->input_message_content;
         }
@@ -173,7 +175,6 @@
          * Returns an array representation of the object.
          *
          * @return array
-         * @throws \TgBotLib\Exceptions\NotImplementedException
          */
         public function toArray(): array
         {
@@ -193,7 +194,7 @@
                 })($this->caption_entities ?? null),
                 'voice_duration' => $this->voice_duration,
                 'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
-                'input_message_content' => ($this->input_message_content instanceof InputMessageContent) ? $this->input_message_content->toArray() : null,
+                'input_message_content' => ($this->input_message_content instanceof ObjectTypeInterface) ? $this->input_message_content->toArray() : null,
             ];
         }
 
@@ -202,6 +203,7 @@
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
