@@ -61,6 +61,19 @@
         }
 
         /**
+         * Sets the value of 'latitude' property
+         * Latitude of the venue in degrees
+         *
+         * @param float $latitude
+         * @return $this
+         */
+        public function setLatitude(float $latitude): self
+        {
+            $this->latitude = $latitude;
+            return $this;
+        }
+
+        /**
          * Longitude of the venue in degrees
          *
          * @return float
@@ -68,6 +81,19 @@
         public function getLongitude(): float
         {
             return $this->longitude;
+        }
+
+        /**
+         * Sets the value of 'longitude' property
+         * Longitude of the venue in degrees
+         *
+         * @param float $longitude
+         * @return $this
+         */
+        public function setLongitude(float $longitude): self
+        {
+            $this->longitude = $longitude;
+            return $this;
         }
 
         /**
@@ -81,6 +107,19 @@
         }
 
         /**
+         * Sets the value of 'title' property
+         * Name of the venue
+         *
+         * @param string $title
+         * @return $this
+         */
+        public function setTitle(string $title): self
+        {
+            $this->title = $title;
+            return $this;
+        }
+
+        /**
          * Address of the venue
          *
          * @return string
@@ -91,6 +130,19 @@
         }
 
         /**
+         * Sets the value of 'address' property
+         * Address of the venue
+         *
+         * @param string $address
+         * @return $this
+         */
+        public function setAddress(string $address): self
+        {
+            $this->address = $address;
+            return $this;
+        }
+
+        /**
          * Optional. Foursquare identifier of the venue, if known
          *
          * @return string|null
@@ -98,6 +150,19 @@
         public function getFoursquareId(): ?string
         {
             return $this->foursquare_id;
+        }
+
+        /**
+         * Sets the value of 'foursquare_id' property
+         * Optional. Foursquare identifier of the venue, if known
+         *
+         * @param string|null $foursquare_id
+         * @return $this
+         */
+        public function setFoursquareId(?string $foursquare_id): self
+        {
+            $this->foursquare_id = $foursquare_id;
+            return $this;
         }
 
         /**
@@ -112,6 +177,20 @@
         }
 
         /**
+         * Sets the value of 'foursquare_type' property
+         * Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”,
+         * “arts_entertainment/aquarium” or “food/icecream”.)
+         *
+         * @param string|null $foursquare_type
+         * @return $this
+         */
+        public function setFoursquareType(?string $foursquare_type): self
+        {
+            $this->foursquare_type = $foursquare_type;
+            return $this;
+        }
+
+        /**
          * Optional. Google Places identifier of the venue
          *
          * @return string|null
@@ -119,6 +198,19 @@
         public function getGooglePlaceId(): ?string
         {
             return $this->google_place_id;
+        }
+
+        /**
+         * Sets the value of 'google_place_id' property
+         * Optional. Google Places identifier of the venue
+         *
+         * @param string|null $google_place_id
+         * @return $this
+         */
+        public function setGooglePlaceId(?string $google_place_id): self
+        {
+            $this->google_place_id = $google_place_id;
+            return $this;
         }
 
         /**
@@ -130,6 +222,19 @@
         public function getGooglePlaceType(): ?string
         {
             return $this->google_place_type;
+        }
+
+        /**
+         * Sets the value of 'google_place_type' property
+         * Optional. Google Places type of the venue.
+         *
+         * @param string|null $google_place_type
+         * @return $this
+         */
+        public function setGooglePlaceType(?string $google_place_type): self
+        {
+            $this->google_place_type = $google_place_type;
+            return $this;
         }
 
         /**
