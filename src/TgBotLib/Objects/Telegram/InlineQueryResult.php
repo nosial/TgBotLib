@@ -31,7 +31,7 @@
          */
         public function toArray(): array
         {
-            throw new NotImplementedException(sprintf('This object is abstract, you can\'t use it directly, try constructing one of the child classes with fromArray()'));
+            throw new NotImplementedException('This object is abstract, you can\'t use it directly, try constructing one of the child classes with fromArray()');
         }
 
         /**
@@ -47,34 +47,21 @@
                 throw new InvalidArgumentException('The type of the InlineQueryResult is not set, this is required!');
             }
 
-            switch(strtolower($data['type']))
+            return match (strtolower($data['type']))
             {
-                case InlineQueryResultType::ARTICLE:
-                    return InlineQueryResultArticle::fromArray($data);
-                case InlineQueryResultType::PHOTO:
-                    return InlineQueryResultPhoto::fromArray($data);
-                case InlineQueryResultType::GIF:
-                    return InlineQueryResultGif::fromArray($data);
-                case InlineQueryResultType::MPEG_4_GIF:
-                    return InlineQueryResultMpeg4Gif::fromArray($data);
-                case InlineQueryResultType::VIDEO:
-                    return InlineQueryResultVideo::fromArray($data);
-                case InlineQueryResultType::AUDIO:
-                    return InlineQueryResultAudio::fromArray($data);
-                case InlineQueryResultType::VOICE:
-                    return InlineQueryResultVoice::fromArray($data);
-                case InlineQueryResultType::DOCUMENT:
-                    return InlineQueryResultDocument::fromArray($data);
-                case InlineQueryResultType::LOCATION:
-                    return InlineQueryResultLocation::fromArray($data);
-                case InlineQueryResultType::VENUE:
-                    return InlineQueryResultVenue::fromArray($data);
-                case InlineQueryResultType::CONTACT:
-                    return InlineQueryResultContact::fromArray($data);
-                case InlineQueryResultType::GAME:
-                    return InlineQueryResultGame::fromArray($data);
-                default:
-                    throw new InvalidArgumentException(sprintf('The type of the InlineQueryResult is invalid, got "%s", expected one of "%s"', $data['type'], implode('", "', InlineQueryResultType::ALL)));
-            }
+                InlineQueryResultType::ARTICLE => InlineQueryResultArticle::fromArray($data),
+                InlineQueryResultType::PHOTO => InlineQueryResultPhoto::fromArray($data),
+                InlineQueryResultType::GIF => InlineQueryResultGif::fromArray($data),
+                InlineQueryResultType::MPEG_4_GIF => InlineQueryResultMpeg4Gif::fromArray($data),
+                InlineQueryResultType::VIDEO => InlineQueryResultVideo::fromArray($data),
+                InlineQueryResultType::AUDIO => InlineQueryResultAudio::fromArray($data),
+                InlineQueryResultType::VOICE => InlineQueryResultVoice::fromArray($data),
+                InlineQueryResultType::DOCUMENT => InlineQueryResultDocument::fromArray($data),
+                InlineQueryResultType::LOCATION => InlineQueryResultLocation::fromArray($data),
+                InlineQueryResultType::VENUE => InlineQueryResultVenue::fromArray($data),
+                InlineQueryResultType::CONTACT => InlineQueryResultContact::fromArray($data),
+                InlineQueryResultType::GAME => InlineQueryResultGame::fromArray($data),
+                default => throw new InvalidArgumentException(sprintf('The type of the InlineQueryResult is invalid, got "%s", expected one of "%s"', $data['type'], implode('", "', InlineQueryResultType::ALL))),
+            };
         }
     }
