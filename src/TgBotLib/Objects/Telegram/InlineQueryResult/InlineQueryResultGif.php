@@ -387,21 +387,23 @@
          *
          * @param MessageEntity[]|null $caption_entities
          * @return $this
+         * @noinspection DuplicatedCode
          */
         public function setCaptionEntities(?array $caption_entities): InlineQueryResultGif
         {
-            if($caption_entities == null)
+            if($caption_entities === null)
             {
                 $this->caption_entities = null;
                 return $this;
             }
 
             $this->caption_entities = [];
-
             foreach($caption_entities as $entity)
             {
                 if(!$entity instanceof MessageEntity)
+                {
                     throw new InvalidArgumentException(sprintf('caption_entities must be array of MessageEntity, got %s', gettype($entity)));
+                }
 
                 $this->caption_entities[] = $entity;
             }
@@ -475,7 +477,7 @@
                 'title' => $this->title ?? null,
                 'caption' => $this->caption ?? null,
                 'parse_mode' => $this->parse_mode ?? null,
-                'caption_entities' => (function (array $captionEntities)
+                'caption_entities' => (static function (array $captionEntities)
                 {
                     $result = [];
                     foreach($captionEntities as $captionEntity)
@@ -483,35 +485,22 @@
                         $result[] = $captionEntity->toArray();
                     }
                     return $result;
-
                 })($this->caption_entities ?? []),
-                'reply_markup' => (function (InlineKeyboardMarkup|null $replyMarkup)
-                {
-                    if($replyMarkup !== null)
-                    {
-                        return $replyMarkup->toArray();
-                    }
-
-                    return null;
+                'reply_markup' => (static function (InlineKeyboardMarkup|null $replyMarkup) {
+                    return $replyMarkup?->toArray();
                 })($this->reply_markup ?? null),
-                'input_message_content' => (function (ObjectTypeInterface|null $inputMessageContent)
-                {
-                    if($inputMessageContent !== null)
-                    {
-                        return $inputMessageContent->toArray();
-                    }
-
-                    return null;
-
+                'input_message_content' => (static function (ObjectTypeInterface|null $inputMessageContent) {
+                    return $inputMessageContent?->toArray();
                 })($this->input_message_content ?? null),
             ];
         }
 
         /**
-         * Constructs object from an array representation
+         * Constructs an object from an array representation
          *
          * @param array $data
          * @return ObjectTypeInterface
+         * @noinspection DuplicatedCode
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
@@ -528,17 +517,19 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = (function (array $captionEntities)
+
+            $object->caption_entities = (static function (array $captionEntities)
             {
                 $result = [];
                 foreach($captionEntities as $captionEntity)
                 {
                     $result[] = MessageEntity::fromArray($captionEntity);
                 }
-                return $result;
 
+                return $result;
             })($data['caption_entities'] ?? []);
-            $object->reply_markup = (function (array|null $replyMarkup)
+
+            $object->reply_markup = (static function (array|null $replyMarkup)
             {
                 if($replyMarkup !== null)
                 {
@@ -547,7 +538,8 @@
 
                 return null;
             })($data['reply_markup'] ?? null);
-            $object->input_message_content = (function (array|null $inputMessageContent)
+
+            $object->input_message_content = (static function (array|null $inputMessageContent)
             {
                 if($inputMessageContent !== null)
                 {
@@ -555,7 +547,6 @@
                 }
 
                 return null;
-
             })($data['input_message_content'] ?? null);
 
             return $object;
