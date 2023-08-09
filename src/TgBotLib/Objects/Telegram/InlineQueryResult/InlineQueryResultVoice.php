@@ -1,5 +1,6 @@
 <?php
 
+    /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
