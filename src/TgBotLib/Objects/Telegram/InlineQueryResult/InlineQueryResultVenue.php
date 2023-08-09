@@ -1,9 +1,10 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
-    /** @noinspection PhpMissingFieldTypeInspection */
+/** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
+    use InvalidArgumentException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent\InputContactMessageContent;
@@ -118,6 +119,23 @@
         }
 
         /**
+         * Sets id.
+         *
+         * @param string $id
+         * @return $this
+         */
+        public function setId(string $id): InlineQueryResultVenue
+        {
+            if(strlen($id) > 64)
+            {
+                throw new InvalidArgumentException('id must be between 1 and 64 characters');
+            }
+
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * Latitude of the venue location in degrees
          *
          * @return float
@@ -125,6 +143,18 @@
         public function getLatitude(): float
         {
             return $this->latitude;
+        }
+
+        /**
+         * Sets the latitude of the venue location in degrees
+         *
+         * @param float $latitude
+         * @return $this
+         */
+        public function setLatitude(float $latitude): InlineQueryResultVenue
+        {
+            $this->latitude = $latitude;
+            return $this;
         }
 
         /**
@@ -138,6 +168,18 @@
         }
 
         /**
+         * Sets the longitude of the venue location in degrees
+         *
+         * @param float $longitude
+         * @return $this
+         */
+        public function setLongitude(float $longitude): InlineQueryResultVenue
+        {
+            $this->longitude = $longitude;
+            return $this;
+        }
+
+        /**
          * Title of the venue
          *
          * @return string
@@ -145,6 +187,18 @@
         public function getTitle(): string
         {
             return $this->title;
+        }
+
+        /**
+         * Sets the title of the venue
+         *
+         * @param string $title
+         * @return $this
+         */
+        public function setTitle(string $title): InlineQueryResultVenue
+        {
+            $this->title = $title;
+            return $this;
         }
 
         /**
@@ -158,6 +212,18 @@
         }
 
         /**
+         * Sets the address of the venue
+         *
+         * @param string $address
+         * @return $this
+         */
+        public function setAddress(string $address): InlineQueryResultVenue
+        {
+            $this->address = $address;
+            return $this;
+        }
+
+        /**
          * Optional. Foursquare identifier of the venue if known
          *
          * @return string|null
@@ -165,6 +231,18 @@
         public function getFoursquareId(): ?string
         {
             return $this->foursquare_id;
+        }
+
+        /**
+         * Sets the foursquare identifier of the venue if known
+         *
+         * @param string|null $foursquare_id
+         * @return $this
+         */
+        public function setFoursquareId(?string $foursquare_id): InlineQueryResultVenue
+        {
+            $this->foursquare_id = $foursquare_id;
+            return $this;
         }
 
         /**
@@ -179,6 +257,18 @@
         }
 
         /**
+         * Sets the foursquare type of the venue, if known.
+         *
+         * @param string|null $foursquare_type
+         * @return $this
+         */
+        public function setFoursquareType(?string $foursquare_type): InlineQueryResultVenue
+        {
+            $this->foursquare_type = $foursquare_type;
+            return $this;
+        }
+
+        /**
          * Optional. Google Places identifier of the venue
          *
          * @return string|null
@@ -186,6 +276,18 @@
         public function getGooglePlaceId(): ?string
         {
             return $this->google_place_id;
+        }
+
+        /**
+         * Sets the google places identifier of the venue
+         *
+         * @param string|null $google_place_id
+         * @return $this
+         */
+        public function setGooglePlaceId(?string $google_place_id): InlineQueryResultVenue
+        {
+            $this->google_place_id = $google_place_id;
+            return $this;
         }
 
         /**
@@ -200,6 +302,18 @@
         }
 
         /**
+         * Sets the google places type of the venue.
+         *
+         * @param string|null $google_place_type
+         * @return $this
+         */
+        public function setGooglePlaceType(?string $google_place_type): InlineQueryResultVenue
+        {
+            $this->google_place_type = $google_place_type;
+            return $this;
+        }
+
+        /**
          * Optional. Inline keyboard attached to the message
          *
          * @return InlineKeyboardMarkup|null
@@ -207,6 +321,18 @@
         public function getReplyMarkup(): ?InlineKeyboardMarkup
         {
             return $this->reply_markup;
+        }
+
+        /**
+         * Sets the inline keyboard attached to the message
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return $this
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): InlineQueryResultVenue
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
         }
 
         /**
@@ -220,6 +346,18 @@
         }
 
         /**
+         * Sets the content of the message to be sent instead of the venue
+         *
+         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @return $this
+         */
+        public function setInputMessageContent(null|InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent $input_message_content): InlineQueryResultVenue
+        {
+            $this->input_message_content = $input_message_content;
+            return $this;
+        }
+
+        /**
          * Optional. Url of the thumbnail for the result
          *
          * @return string|null
@@ -227,6 +365,18 @@
         public function getThumbnailUrl(): ?string
         {
             return $this->thumbnail_url;
+        }
+
+        /**
+         * Sets the url of the thumbnail for the result
+         *
+         * @param string|null $thumbnail_url
+         * @return $this
+         */
+        public function setThumbnailUrl(?string $thumbnail_url): InlineQueryResultVenue
+        {
+            $this->thumbnail_url = $thumbnail_url;
+            return $this;
         }
 
         /**
@@ -240,6 +390,18 @@
         }
 
         /**
+         * Sets the thumbnail width
+         *
+         * @param int|null $thumbnail_width
+         * @return $this
+         */
+        public function setThumbnailWidth(?int $thumbnail_width): InlineQueryResultVenue
+        {
+            $this->thumbnail_width = $thumbnail_width;
+            return $this;
+        }
+
+        /**
          * Optional. Thumbnail height
          *
          * @return int|null
@@ -247,6 +409,18 @@
         public function getThumbnailHeight(): ?int
         {
             return $this->thumbnail_height;
+        }
+
+        /**
+         * Sets the thumbnail height
+         *
+         * @param int|null $thumbnail_height
+         * @return $this
+         */
+        public function setThumbnailHeight(?int $thumbnail_height): InlineQueryResultVenue
+        {
+            $this->thumbnail_height = $thumbnail_height;
+            return $this;
         }
 
         /**
@@ -276,7 +450,7 @@
         }
 
         /**
-         * Constructs object from an array representation
+         * Constructs an object from an array representation
          *
          * @param array $data
          * @return ObjectTypeInterface
