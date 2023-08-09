@@ -82,7 +82,7 @@
         }
 
         /**
-         * Type of the result, must be contact
+         * Type of the result must be contact
          *
          * @return string
          */
@@ -111,7 +111,9 @@
         public function setId(string $id): self
         {
             if(!Validate::length($id, 1, 64))
+            {
                 throw new InvalidArgumentException('id should be between 1-64 characters');
+            }
 
             $this->id = $id;
             return $this;
@@ -206,7 +208,9 @@
         public function setVcard(?string $vcard): self
         {
             if(!Validate::length($vcard, 0, 2048))
+            {
                 throw new InvalidArgumentException('vcard should be between 0-2048 characters');
+            }
 
             $this->vcard = $vcard;
             return $this;
@@ -350,7 +354,7 @@
         }
 
         /**
-         * Constructs object from an array representation
+         * Constructs an object from an array representation
          *
          * @param array $data
          * @return ObjectTypeInterface
