@@ -139,7 +139,9 @@
         public function setAudioUrl(string $audio_url): InlineQueryResultAudio
         {
             if(!Validate::url($audio_url))
+            {
                 throw new InvalidArgumentException(sprintf('audio_url is not a valid URL: %s', $audio_url));
+            }
 
             $this->audio_url = $audio_url;
             return $this;
@@ -187,14 +189,16 @@
          */
         public function setCaption(?string $caption): InlineQueryResultAudio
         {
-            if($caption == null)
+            if($caption === null)
             {
                 $this->caption = null;
                 return $this;
             }
 
             if(!Validate::length($caption, 0, 1024))
+            {
                 throw new InvalidArgumentException(sprintf('caption must be between 0 and 1024 characters long, got %s characters', $caption));
+            }
 
             $this->caption = $caption;
             return $this;
@@ -219,14 +223,16 @@
          */
         public function setParseMode(?string $parse_mode): InlineQueryResultAudio
         {
-            if($parse_mode == null)
+            if($parse_mode === null)
             {
                 $this->parse_mode = null;
                 return $this;
             }
 
             if(!in_array(strtolower($parse_mode), ['markdown', 'html']))
+            {
                 throw new InvalidArgumentException(sprintf('parse_mode must be one of Markdown, HTML, got %s', $parse_mode));
+            }
 
             $this->parse_mode = $parse_mode;
             return $this;
@@ -251,7 +257,7 @@
          */
         public function setCaptionEntities(?array $caption_entities): InlineQueryResultAudio
         {
-            if($caption_entities == null)
+            if($caption_entities === null)
             {
                 $this->caption_entities = null;
                 return $this;
@@ -262,7 +268,9 @@
             foreach($caption_entities as $entity)
             {
                 if(!$entity instanceof MessageEntity)
+                {
                     throw new InvalidArgumentException(sprintf('caption_entities must be array of MessageEntity, got %s', gettype($entity)));
+                }
 
                 $this->caption_entities[] = $entity;
             }
@@ -289,7 +297,7 @@
          */
         public function setPerformer(?string $performer): InlineQueryResultAudio
         {
-            if($performer == null)
+            if($performer === null)
             {
                 $this->performer = null;
                 return $this;
@@ -318,7 +326,7 @@
          */
         public function setAudioDuration(?int $audio_duration): InlineQueryResultAudio
         {
-            if($audio_duration == null)
+            if($audio_duration === null)
             {
                 $this->audio_duration = null;
                 return $this;
@@ -388,7 +396,7 @@
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => ($this->caption_entities) ? array_map(function (MessageEntity $messageEntity) {
+                'caption_entities' => ($this->caption_entities) ? array_map(static function (MessageEntity $messageEntity) {
                     return $messageEntity->toArray();
                 }, $this->caption_entities) : null,
                 'performer' => $this->performer,
@@ -414,7 +422,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = ($data['caption_entities']) ? array_map(function (array $messageEntity) {
+            $object->caption_entities = ($data['caption_entities']) ? array_map(static function (array $messageEntity) {
                 return MessageEntity::fromArray($messageEntity);
             }, $data['caption_entities']) : null;
             $object->performer = $data['performer'] ?? null;
