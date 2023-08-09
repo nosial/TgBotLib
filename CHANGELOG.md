@@ -46,6 +46,22 @@ input objects for methods that require input objects.
  * Added method `\TgBotLib\Objects\Telegram\WebAppInfo::setUrl` to `\TgBotLib\Objects\Telegram\WebAppInfo`
  * Added methods `\TgBotLib\Classes\Validate::url`, `\TgBotLib\Classes\Validate::length`, & `\TgBotLib\Classes\Validate::isHttps` to `\TgBotLib\Classes\Validate`
  * Updated documentation for `\TgBotLib\Bot::editMessageMedia`
+ * Renamed namespace from `\TgBotLib\Abstracts` to `\TgBotLib\Enums`
+ * Updated class type to `final class` in `\TgBotLib\Enums > BotCommandScopeType`
+ * Updated class type to `final class` in `\TgBotLib\Enums >  ChatActionType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > ChatMemberStatus`
+ * Updated class type to `final class` in `\TgBotLib\Enums > ChatType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > EventType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > InlineQueryResultType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > InputMediaType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > InputButtonType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > MessageEntityType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > PassportElementType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > PollType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > StickerFormat`
+ * Updated class type to `final class` in `\TgBotLib\Enums > StickerType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > ThumbnailMimeType`
+ * Updated class type to `final class` in `\TgBotLib\Enums > UpdateEventType`
 
 
 ## [6.6.0] - 2023-04-10

@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram;
 
-    use TgBotLib\Abstracts\ChatType;
+    use TgBotLib\Enums\ChatType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class Chat implements ObjectTypeInterface

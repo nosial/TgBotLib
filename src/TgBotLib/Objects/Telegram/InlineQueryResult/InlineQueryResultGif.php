@@ -5,7 +5,9 @@
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
-    use TgBotLib\Abstracts\ThumbnailMimeType;
+    use InvalidArgumentException;
+    use TgBotLib\Enums\ThumbnailMimeType;
+    use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent\InputContactMessageContent;
@@ -117,6 +119,24 @@
         }
 
         /**
+         * Sets the value of the 'id' field.
+         * Unique identifier for this result, 1-64 bytes
+         *
+         * @param string $id
+         * @return $this
+         */
+        public function setId(string $id): InlineQueryResultGif
+        {
+            if(!Validate::length($id, 1, 64))
+            {
+                throw new InvalidArgumentException();
+            }
+
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * A valid URL for the GIF file. File size must not exceed 1MB
          *
          * @return string
@@ -124,6 +144,24 @@
         public function getGifUrl(): string
         {
             return $this->gif_url;
+        }
+
+        /**
+         * Sets the value of the 'gif_url' field.
+         * A valid URL for the GIF file. File size must not exceed 1MB
+         *
+         * @param string $gif_url
+         * @return $this
+         */
+        public function setGifUrl(string $gif_url): InlineQueryResultGif
+        {
+            if(!Validate::url($gif_url))
+            {
+                throw new InvalidArgumentException(sprintf('"%s" is not a valid url', $gif_url));
+            }
+
+            $this->gif_url = $gif_url;
+            return $this;
         }
 
         /**
@@ -137,6 +175,19 @@
         }
 
         /**
+         * Sets the value of the 'gif_width' field.
+         * Optional. Width of the GIF
+         *
+         * @param int $gif_width
+         * @return $this
+         */
+        public function setGifWidth(int $gif_width): InlineQueryResultGif
+        {
+            $this->gif_width = $gif_width;
+            return $this;
+        }
+
+        /**
          * Optional. Height of the GIF
          *
          * @return int|null
@@ -144,6 +195,25 @@
         public function getGifHeight(): ?int
         {
             return $this->gif_height;
+        }
+
+        /**
+         * Sets the value of the 'gif_height' field.
+         * Optional. Height of the GIF
+         *
+         * @param int|null $gif_height
+         * @return $this
+         */
+        public function setGifHeight(?int $gif_height): InlineQueryResultGif
+        {
+            if(is_null($gif_height))
+            {
+                $this->gif_height = null;
+                return $this;
+            }
+
+            $this->gif_height = $gif_height;
+            return $this;
         }
 
         /**
@@ -157,6 +227,25 @@
         }
 
         /**
+         * Sets the value of the 'gif_duration' field.
+         * Optional. Duration of the GIF in seconds
+         *
+         * @param int|null $gif_duration
+         * @return $this
+         */
+        public function setGifDuration(?int $gif_duration): InlineQueryResultGif
+        {
+            if(is_null($gif_duration))
+            {
+                $this->gif_duration = null;
+                return $this;
+            }
+
+            $this->gif_duration = $gif_duration;
+            return $this;
+        }
+
+        /**
          * URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
          *
          * @return string|null
@@ -164,6 +253,24 @@
         public function getThumbnailUrl(): ?string
         {
             return $this->thumbnail_url;
+        }
+
+        /**
+         * Sets the value of the 'thumbnail_url' field.
+         * URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+         *
+         * @param string $thumbnail_url
+         * @return $this
+         */
+        public function setThumbnailUrl(string $thumbnail_url): InlineQueryResultGif
+        {
+            if(!Validate::url($thumbnail_url))
+            {
+                throw new InvalidArgumentException(sprintf('"%s" is not a valid url', $thumbnail_url));
+            }
+
+            $this->thumbnail_url = $thumbnail_url;
+            return $this;
         }
 
         /**
@@ -177,6 +284,25 @@
         }
 
         /**
+         * Sets the value of the 'thumbnail_mime_type' field.
+         * Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
+         *
+         * @param string|null $thumbnail_mime_type
+         * @return $this
+         */
+        public function setThumbnailMimeType(?string $thumbnail_mime_type): InlineQueryResultGif
+        {
+            if(is_null($thumbnail_mime_type))
+            {
+                $this->thumbnail_mime_type = null;
+                return $this;
+            }
+
+            $this->thumbnail_mime_type = $thumbnail_mime_type;
+            return $this;
+        }
+
+        /**
          * Optional. Title for the result
          *
          * @return string|null
@@ -184,6 +310,19 @@
         public function getTitle(): ?string
         {
             return $this->title;
+        }
+
+        /**
+         * Sets the value of the 'title' field.
+         * Optional. Title for the result
+         *
+         * @param string|null $title
+         * @return $this
+         */
+        public function setTitle(?string $title): InlineQueryResultGif
+        {
+            $this->title = $title;
+            return $this;
         }
 
         /**
@@ -197,6 +336,19 @@
         }
 
         /**
+         * Sets the value of the 'caption' field.
+         * Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
+         *
+         * @param string|null $caption
+         * @return $this
+         */
+        public function setCaption(?string $caption): InlineQueryResultGif
+        {
+            $this->caption = $caption;
+            return $this;
+        }
+
+        /**
          * Optional. Mode for parsing entities in the caption. See formatting options for more details.
          *
          * @return string|null
@@ -204,6 +356,19 @@
         public function getParseMode(): ?string
         {
             return $this->parse_mode;
+        }
+
+        /**
+         * Sets the value of the 'parse_mode' field.
+         * Optional. Mode for parsing entities in the caption. See formatting options for more details.
+         *
+         * @param string|null $parse_mode
+         * @return $this
+         */
+        public function setParseMode(?string $parse_mode): InlineQueryResultGif
+        {
+            $this->parse_mode = $parse_mode;
+            return $this;
         }
 
         /**
@@ -217,6 +382,34 @@
         }
 
         /**
+         * Sets the value of the 'caption_entities' field.
+         * Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+         *
+         * @param MessageEntity[]|null $caption_entities
+         * @return $this
+         */
+        public function setCaptionEntities(?array $caption_entities): InlineQueryResultGif
+        {
+            if($caption_entities == null)
+            {
+                $this->caption_entities = null;
+                return $this;
+            }
+
+            $this->caption_entities = [];
+
+            foreach($caption_entities as $entity)
+            {
+                if(!$entity instanceof MessageEntity)
+                    throw new InvalidArgumentException(sprintf('caption_entities must be array of MessageEntity, got %s', gettype($entity)));
+
+                $this->caption_entities[] = $entity;
+            }
+
+            return $this;
+        }
+
+        /**
          * Optional. Inline keyboard attached to the message
          *
          * @return InlineKeyboardMarkup|null
@@ -227,6 +420,19 @@
         }
 
         /**
+         * Sets the value of the 'reply_markup' field.
+         * Optional. Inline keyboard attached to the message
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return $this
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): InlineQueryResultGif
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
+        }
+
+        /**
          * Optional. Content of the message to be sent instead of the GIF animation
          *
          * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
@@ -234,6 +440,19 @@
         public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
         {
             return $this->input_message_content;
+        }
+
+        /**
+         * Sets the value of the 'input_message_content' field.
+         * Optional. Content of the message to be sent instead of the GIF animation
+         *
+         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @return $this
+         */
+        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultGif
+        {
+            $this->input_message_content = $input_message_content;
+            return $this;
         }
 
 

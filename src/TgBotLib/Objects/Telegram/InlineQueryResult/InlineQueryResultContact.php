@@ -1,9 +1,12 @@
 <?php
 
+    /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
+    use InvalidArgumentException;
+    use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent;
@@ -99,6 +102,22 @@
         }
 
         /**
+         * Sets the value of 'id' property
+         * Unique identifier for this result, 1-64 Bytes
+         *
+         * @param string $id
+         * @return $this
+         */
+        public function setId(string $id): self
+        {
+            if(!Validate::length($id, 1, 64))
+                throw new InvalidArgumentException('id should be between 1-64 characters');
+
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * Contact's phone number
          *
          * @return string
@@ -106,6 +125,19 @@
         public function getPhoneNumber(): string
         {
             return $this->phone_number;
+        }
+
+        /**
+         * Sets the value of 'phone_number' property
+         * Contact's phone number
+         *
+         * @param string $phone_number
+         * @return $this
+         */
+        public function setPhoneNumber(string $phone_number): self
+        {
+            $this->phone_number = $phone_number;
+            return $this;
         }
 
         /**
@@ -119,6 +151,19 @@
         }
 
         /**
+         * Sets the value of 'first_name' property
+         * Contact's first name
+         *
+         * @param string $first_name
+         * @return $this
+         */
+        public function setFirstName(string $first_name): self
+        {
+            $this->first_name = $first_name;
+            return $this;
+        }
+
+        /**
          * Optional. Contact's last name
          *
          * @return string|null
@@ -126,6 +171,19 @@
         public function getLastName(): ?string
         {
             return $this->last_name;
+        }
+
+        /**
+         * Sets the value of 'last_name' property
+         * Optional. Contact's last name
+         *
+         * @param string|null $last_name
+         * @return $this
+         */
+        public function setLastName(?string $last_name): self
+        {
+            $this->last_name = $last_name;
+            return $this;
         }
 
         /**
@@ -139,6 +197,22 @@
         }
 
         /**
+         * Sets the value of 'vcard' property
+         * Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
+         *
+         * @param string|null $vcard
+         * @return $this
+         */
+        public function setVcard(?string $vcard): self
+        {
+            if(!Validate::length($vcard, 0, 2048))
+                throw new InvalidArgumentException('vcard should be between 0-2048 characters');
+
+            $this->vcard = $vcard;
+            return $this;
+        }
+
+        /**
          * Optional. Inline keyboard attached to the message
          *
          * @return InlineKeyboardMarkup|null
@@ -146,6 +220,19 @@
         public function getReplyMarkup(): ?InlineKeyboardMarkup
         {
             return $this->reply_markup;
+        }
+
+        /**
+         * Sets the value of 'reply_markup' property
+         * Optional. Inline keyboard attached to the message
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return $this
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): self
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
         }
 
         /**
@@ -159,6 +246,19 @@
         }
 
         /**
+         * Sets the value of 'input_message_content' property
+         * Optional. Content of the message to be sent instead of the contact
+         *
+         * @param InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @return $this
+         */
+        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): self
+        {
+            $this->input_message_content = $input_message_content;
+            return $this;
+        }
+
+        /**
          * Optional. Url of the thumbnail for the result
          *
          * @return string|null
@@ -166,6 +266,19 @@
         public function getThumbnailUrl(): ?string
         {
             return $this->thumbnail_url;
+        }
+
+        /**
+         * Sets the value of 'thumbnail_url' property
+         * Optional. Url of the thumbnail for the result
+         *
+         * @param string|null $thumbnail_url
+         * @return $this
+         */
+        public function setThumbnailUrl(?string $thumbnail_url): self
+        {
+            $this->thumbnail_url = $thumbnail_url;
+            return $this;
         }
 
         /**
@@ -179,6 +292,19 @@
         }
 
         /**
+         * Sets the value of 'thumbnail_width' property
+         * Optional. Thumbnail width
+         *
+         * @param int|null $thumbnail_width
+         * @return $this
+         */
+        public function setThumbnailWidth(?int $thumbnail_width): self
+        {
+            $this->thumbnail_width = $thumbnail_width;
+            return $this;
+        }
+
+        /**
          * Optional. Thumbnail height
          *
          * @return int|null
@@ -186,6 +312,19 @@
         public function getThumbnailHeight(): ?int
         {
             return $this->thumbnail_height;
+        }
+
+        /**
+         * Sets the value of 'thumbnail_height' property
+         * Optional. Thumbnail height
+         *
+         * @param int|null $thumbnail_height
+         * @return $this
+         */
+        public function setThumbnailHeight(?int $thumbnail_height): self
+        {
+            $this->thumbnail_height = $thumbnail_height;
+            return $this;
         }
 
         /**

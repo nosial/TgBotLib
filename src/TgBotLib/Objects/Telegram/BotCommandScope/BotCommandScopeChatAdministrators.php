@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\BotCommandScope;
 
-    use TgBotLib\Abstracts\BotCommandScopeType;
+    use TgBotLib\Enums\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
 
@@ -47,7 +47,7 @@
         {
             $object = new self();
 
-            $object->type = $data['type'] ?? BotCommandScopeType::ChatAdministrators;
+            $object->type = $data['type'] ?? BotCommandScopeType::CHAT_ADMINISTRATORS;
 
             return $object;
         }

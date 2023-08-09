@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\ChatMember;
 
-    use TgBotLib\Abstracts\ChatMemberStatus;
+    use TgBotLib\Enums\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\User;
@@ -80,7 +80,7 @@
         {
             $object = new self();
 
-            $object->status = $data['status'] ?? ChatMemberStatus::Kicked;
+            $object->status = $data['status'] ?? ChatMemberStatus::KICKED;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->until_date = $data['until_date'] ?? null;
 

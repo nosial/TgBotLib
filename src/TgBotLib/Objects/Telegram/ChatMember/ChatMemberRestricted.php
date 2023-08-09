@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\ChatMember;
 
-    use TgBotLib\Abstracts\ChatMemberStatus;
+    use TgBotLib\Enums\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\User;
@@ -321,7 +321,7 @@
         {
             $object = new static();
 
-            $object->status = $data['status'] ?? ChatMemberStatus::Restricted;
+            $object->status = $data['status'] ?? ChatMemberStatus::RESTRICTED;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->is_member = $data['is_member'] ?? false;
             $object->can_send_messages = $data['can_send_messages'] ?? false;

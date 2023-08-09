@@ -19,6 +19,9 @@
           <option value="X-Args-3" />
           <option value="X-Args-4" />
           <option value="X-Args-5" />
+          <option value="X-Temperature" />
+          <option value="X-Model" />
+          <option value="X-OPENAI-API-KEY" />
         </set>
       </option>
     </inspection_tool>

@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\InputMedia;
 
-    use TgBotLib\Abstracts\InputMediaType;
+    use TgBotLib\Enums\InputMediaType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InputMedia;
     use TgBotLib\Objects\Telegram\MessageEntity;
@@ -208,7 +208,7 @@
         public static function fromArray(array $data): self
         {
             $object = new static();
-            $object->type = $data['type'] ?? InputMediaType::Animation;
+            $object->type = $data['type'] ?? InputMediaType::ANIMATION;
             $object->media = $data['media'] ?? null;
             $object->thumb = $data['thumb'] ?? null;
             $object->caption = $data['caption'] ?? null;

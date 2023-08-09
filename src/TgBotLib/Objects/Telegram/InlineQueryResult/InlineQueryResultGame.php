@@ -1,5 +1,6 @@
 <?php
 
+    /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
@@ -50,6 +51,19 @@
         }
 
         /**
+         * Sets the value of the 'id' field
+         * Unique identifier for this result, 1-64 bytes
+         *
+         * @param string $id
+         * @return InlineQueryResultGame
+         */
+        public function setId(string $id): InlineQueryResultGame
+        {
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * Short name of the game
          *
          * @return string
@@ -60,6 +74,19 @@
         }
 
         /**
+         * Sets the value of the 'game_short_name' field
+         * Short name of the game
+         *
+         * @param string $game_short_name
+         * @return InlineQueryResultGame
+         */
+        public function setGameShortName(string $game_short_name): InlineQueryResultGame
+        {
+            $this->game_short_name = $game_short_name;
+            return $this;
+        }
+
+        /**
          * Optional. Inline keyboard attached to the message
          *
          * @return InlineKeyboardMarkup|null
@@ -67,6 +94,18 @@
         public function getReplyMarkup(): ?InlineKeyboardMarkup
         {
             return $this->reply_markup;
+        }
+
+        /**
+         * Optional. Inline keyboard attached to the message
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return InlineQueryResultGame
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): InlineQueryResultGame
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
         }
 
         /**

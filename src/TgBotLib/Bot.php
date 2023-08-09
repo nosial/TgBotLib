@@ -9,8 +9,8 @@
     use InvalidArgumentException;
     use LogLib\Log;
     use TempFile\TempFile;
-    use TgBotLib\Abstracts\ChatMemberStatus;
-    use TgBotLib\Abstracts\EventType;
+    use TgBotLib\Enums\ChatMemberStatus;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\CommandInterface;
     use TgBotLib\Interfaces\EventInterface;
@@ -335,25 +335,25 @@
                 $do_handle = false;
                 switch($event)
                 {
-                    case EventType::GenericUpdate:
+                    case EventType::GENERIC_UPDATE:
                         $handler->handle($this, $update);
                         break;
 
-                    case EventType::Message:
+                    case EventType::MESSAGE:
                         if(($update->getMessage() ?? null) !== null)
                         {
                             $do_handle = true;
                         }
                         break;
 
-                    case EventType::EditedMessage:
+                    case EventType::EDITED_MESSAGE:
                         if(($update->getEditedMessage() ?? null) !== null)
                         {
                             $do_handle = true;
                         }
                         break;
 
-                    case EventType::GenericCommandMessage:
+                    case EventType::GENERIC_COMMAND_MESSAGE:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getText() ?? null) !== null)
                         {
                             $text = $update->getMessage()->getText();
@@ -364,25 +364,25 @@
                         }
                         break;
 
-                    case EventType::ChatMemberJoined:
+                    case EventType::CHAT_MEMBER_JOINED:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatMembers() ?? null) !== null)
                         {
                             $do_handle = true;
                         }
                         break;
 
-                    case EventType::ChatMemberLeft:
+                    case EventType::CHAT_MEMBER_LEFT:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getLeftChatMember() ?? null) !== null)
                         {
                             $do_handle = true;
                         }
                         break;
 
-                    case EventType::ChatMemberKicked:
+                    case EventType::CHAT_MEMBER_KICKED:
                            if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
                             {
                                 if(
-                                    $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Kicked &&
+                                    $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::KICKED &&
                                     $update->getMyChatMember()->getNewChatMember()->getUntilDate() === null
                                 )
                                 {
@@ -391,11 +391,11 @@
                             }
                         break;
 
-                    case EventType::ChatMemberBanned:
+                    case EventType::CHAT_MEMBER_BANNED:
                         if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
                         {
                             if(
-                                $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Kicked &&
+                                $update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::KICKED &&
                                 $update->getMyChatMember()->getNewChatMember()->getUntilDate() !== null
                             )
                             {
@@ -404,53 +404,53 @@
                         }
                         break;
 
-                    case EventType::ChatMemberUnrestricted:
-                    case EventType::ChatMemberDemoted:
-                    case EventType::ChatMemberUnbanned:
+                    case EventType::CHAT_MEMBER_UNRESTRICTED:
+                    case EventType::CHAT_MEMBER_DEMOTED:
+                    case EventType::CHAT_MEMBER_UNBANNED:
                         if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
                         {
-                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Member)
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::MEMBER)
                             {
                                 $do_handle = true;
                             }
                         }
                         break;
 
-                    case EventType::ChatMemberPromoted:
+                    case EventType::CHAT_MEMBER_PROMOTED:
                         if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
                         {
-                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Administrator)
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::ADMINISTRATOR)
                             {
                                 $do_handle = true;
                             }
                         }
                         break;
 
-                    case EventType::ChatMemberRestricted:
+                    case EventType::CHAT_MEMBER_RESTRICTED:
                         if(($update->getMyChatMember() ?? null) !== null && ($update->getMyChatMember()->getNewChatMember() ?? null) !== null)
                         {
-                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::Restricted)
+                            if($update->getMyChatMember()->getNewChatMember()->getStatus() === ChatMemberStatus::RESTRICTED)
                             {
                                 $do_handle = true;
                             }
                         }
                         break;
 
-                    case EventType::ChatTitleChanged:
+                    case EventType::CHAT_TITLE_CHANGED:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatTitle() ?? null) !== null)
                         {
                             $handler->handle($this, $update);
                         }
                         break;
 
-                    case EventType::ChatPhotoChanged:
+                    case EventType::CHAT_PHOTO_CHANGED:
                         if(($update->getMessage() ?? null) !== null && ($update->getMessage()->getNewChatPhoto() ?? null) !== null)
                         {
                             $do_handle = true;
                         }
                         break;
 
-                    case EventType::CallbackQuery:
+                    case EventType::CALLBACK_QUERY:
                         if(($update->getCallbackQuery() ?? null) !== null)
                         {
                             $do_handle = true;

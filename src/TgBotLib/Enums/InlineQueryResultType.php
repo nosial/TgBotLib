@@ -1,81 +1,81 @@
 <?php
 
-    namespace TgBotLib\Abstracts;
+    namespace TgBotLib\Enums;
 
-    abstract class InlineQueryResultType
+    final class InlineQueryResultType
     {
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultarticle
          */
-        const Article = 'article';
+        public const ARTICLE = 'article';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultphoto
          */
-        const Photo = 'photo';
+        public const PHOTO = 'photo';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultgif
          */
-        const Gif = 'gif';
+        public const GIF = 'gif';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif
          */
-        const Mpeg4Gif = 'mpeg4_gif';
+        public const MPEG_4_GIF = 'mpeg4_gif';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultvideompeg4
          */
-        const Video = 'video';
+        public const VIDEO = 'video';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultaudio
          */
-        const Audio = 'audio';
+        public const AUDIO = 'audio';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultvoice
          */
-        const Voice = 'voice';
+        public const VOICE = 'voice';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultdocument
          */
-        const Document = 'document';
+        public const DOCUMENT = 'document';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultlocation
          */
-        const Location = 'location';
+        public const LOCATION = 'location';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultvenue
          */
-        const Venue = 'venue';
+        public const VENUE = 'venue';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultcontact
          */
-        const Contact = 'contact';
+        public const CONTACT = 'contact';
 
         /**
          * @link https://core.telegram.org/bots/api#inlinequeryresultgame
          */
-        const Game = 'game';
+        public const GAME = 'game';
 
-        const All = [
-            self::Article,
-            self::Photo,
-            self::Gif,
-            self::Mpeg4Gif,
-            self::Video,
-            self::Audio,
-            self::Voice,
-            self::Document,
-            self::Location,
-            self::Venue,
-            self::Contact,
-            self::Game,
+        public const ALL = [
+            self::ARTICLE,
+            self::PHOTO,
+            self::GIF,
+            self::MPEG_4_GIF,
+            self::VIDEO,
+            self::AUDIO,
+            self::VOICE,
+            self::DOCUMENT,
+            self::LOCATION,
+            self::VENUE,
+            self::CONTACT,
+            self::GAME,
         ];
     }

@@ -3,7 +3,7 @@
     namespace TgBotLib\Objects\Telegram;
 
     use InvalidArgumentException;
-    use TgBotLib\Abstracts\InlineQueryResultType;
+    use TgBotLib\Enums\InlineQueryResultType;
     use TgBotLib\Exceptions\NotImplementedException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle;
@@ -49,32 +49,32 @@
 
             switch(strtolower($data['type']))
             {
-                case InlineQueryResultType::Article:
+                case InlineQueryResultType::ARTICLE:
                     return InlineQueryResultArticle::fromArray($data);
-                case InlineQueryResultType::Photo:
+                case InlineQueryResultType::PHOTO:
                     return InlineQueryResultPhoto::fromArray($data);
-                case InlineQueryResultType::Gif:
+                case InlineQueryResultType::GIF:
                     return InlineQueryResultGif::fromArray($data);
-                case InlineQueryResultType::Mpeg4Gif:
+                case InlineQueryResultType::MPEG_4_GIF:
                     return InlineQueryResultMpeg4Gif::fromArray($data);
-                case InlineQueryResultType::Video:
+                case InlineQueryResultType::VIDEO:
                     return InlineQueryResultVideo::fromArray($data);
-                case InlineQueryResultType::Audio:
+                case InlineQueryResultType::AUDIO:
                     return InlineQueryResultAudio::fromArray($data);
-                case InlineQueryResultType::Voice:
+                case InlineQueryResultType::VOICE:
                     return InlineQueryResultVoice::fromArray($data);
-                case InlineQueryResultType::Document:
+                case InlineQueryResultType::DOCUMENT:
                     return InlineQueryResultDocument::fromArray($data);
-                case InlineQueryResultType::Location:
+                case InlineQueryResultType::LOCATION:
                     return InlineQueryResultLocation::fromArray($data);
-                case InlineQueryResultType::Venue:
+                case InlineQueryResultType::VENUE:
                     return InlineQueryResultVenue::fromArray($data);
-                case InlineQueryResultType::Contact:
+                case InlineQueryResultType::CONTACT:
                     return InlineQueryResultContact::fromArray($data);
-                case InlineQueryResultType::Game:
+                case InlineQueryResultType::GAME:
                     return InlineQueryResultGame::fromArray($data);
                 default:
-                    throw new InvalidArgumentException(sprintf('The type of the InlineQueryResult is invalid, got "%s", expected one of "%s"', $data['type'], implode('", "', InlineQueryResultType::All)));
+                    throw new InvalidArgumentException(sprintf('The type of the InlineQueryResult is invalid, got "%s", expected one of "%s"', $data['type'], implode('", "', InlineQueryResultType::ALL)));
             }
         }
     }

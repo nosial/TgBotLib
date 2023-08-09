@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\ChatMember;
 
-    use TgBotLib\Abstracts\ChatMemberStatus;
+    use TgBotLib\Enums\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\User;
@@ -292,7 +292,7 @@
         {
             $object = new self();
 
-            $object->status = $data['status'] ?? ChatMemberStatus::Administrator;
+            $object->status = $data['status'] ?? ChatMemberStatus::ADMINISTRATOR;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->can_be_edited = $data['can_be_edited'] ?? false;
             $object->is_anonymous = $data['is_anonymous'] ?? false;

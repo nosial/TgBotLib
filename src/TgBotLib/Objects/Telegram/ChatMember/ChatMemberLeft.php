@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\ChatMember;
 
-    use TgBotLib\Abstracts\ChatMemberStatus;
+    use TgBotLib\Enums\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\User;
@@ -64,7 +64,7 @@
         {
             $object = new self();
 
-            $object->status = $data['status'] ?? ChatMemberStatus::Left;
+            $object->status = $data['status'] ?? ChatMemberStatus::LEFT;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
 
             return $object;

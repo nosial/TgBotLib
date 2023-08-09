@@ -26,7 +26,6 @@
         public static function length(string $input, int $min_length, int $max_length): bool
         {
             $length = strlen($input);
-
             return $length >= $min_length && $length <= $max_length;
         }
 
