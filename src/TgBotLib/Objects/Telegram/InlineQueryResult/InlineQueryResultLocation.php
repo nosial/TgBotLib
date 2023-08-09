@@ -1,6 +1,6 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
-    /** @noinspection PhpMissingFieldTypeInspection */
+/** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
@@ -93,7 +93,7 @@
         }
 
         /**
-         * Type of the result, must be location
+         * Type of the result must be location
          *
          * @return string
          */
@@ -153,7 +153,7 @@
         }
 
         /**
-         * Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+         * Optional. Period in seconds for which the location can be updated should be between 60 and 86400.
          *
          * @return int|null
          */
@@ -163,7 +163,7 @@
         }
 
         /**
-         * Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+         * Optional. For live locations, the direction in which the user is moving, in degrees. It Must be between 1 and 360 if specified.
          *
          * @return int|null
          */
@@ -174,7 +174,7 @@
 
         /**
          * Optional. For live locations, a maximum distance for proximity alerts about
-         * approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+         * approaching another chat member, in meters. It Must be between 1 and 100000 if specified.
          *
          * @return int|null
          */
