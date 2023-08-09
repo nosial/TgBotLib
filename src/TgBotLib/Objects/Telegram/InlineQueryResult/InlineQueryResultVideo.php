@@ -1,9 +1,11 @@
 <?php
 
+    /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
+    use InvalidArgumentException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent;
@@ -120,6 +122,23 @@
         }
 
         /**
+         * Sets the unique identifier for this result, 1-64 bytes
+         *
+         * @param string $id
+         * @return $this
+         */
+        public function setId(string $id): InlineQueryResultVideo
+        {
+            if(strlen($id) > 64)
+            {
+                throw new InvalidArgumentException('ID must be between 1 and 64 characters');
+            }
+
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * A valid URL for the embedded video player or video file
          *
          * @return string
@@ -127,6 +146,23 @@
         public function getVideoUrl(): string
         {
             return $this->video_url;
+        }
+
+        /**
+         * Sets a valid URL for the embedded video player or video file
+         *
+         * @param string $video_url
+         * @return $this
+         */
+        public function setVideoUrl(string $video_url): InlineQueryResultVideo
+        {
+            if(!filter_var($video_url, FILTER_VALIDATE_URL))
+            {
+                throw new InvalidArgumentException('Video URL must be a valid URL');
+            }
+
+            $this->video_url = $video_url;
+            return $this;
         }
 
         /**
@@ -140,6 +176,18 @@
         }
 
         /**
+         * Sets the MIME type of the content of the video URL, “text/html” or “video/mp4”
+         *
+         * @param string $mime_type
+         * @return $this
+         */
+        public function setMimeType(string $mime_type): InlineQueryResultVideo
+        {
+            $this->mime_type = $mime_type;
+            return $this;
+        }
+
+        /**
          * URL of the thumbnail (JPEG only) for the video
          *
          * @return string
@@ -147,6 +195,23 @@
         public function getThumbnailUrl(): string
         {
             return $this->thumbnail_url;
+        }
+
+        /**
+         * Sets the URL of the thumbnail (JPEG only) for the video
+         *
+         * @param string $thumbnail_url
+         * @return $this
+         */
+        public function setThumbnailUrl(string $thumbnail_url): InlineQueryResultVideo
+        {
+            if(!filter_var($thumbnail_url, FILTER_VALIDATE_URL))
+            {
+                throw new InvalidArgumentException('Thumbnail URL must be a valid URL');
+            }
+
+            $this->thumbnail_url = $thumbnail_url;
+            return $this;
         }
 
         /**
@@ -160,6 +225,18 @@
         }
 
         /**
+         * Sets the title for the result
+         *
+         * @param string $title
+         * @return $this
+         */
+        public function setTitle(string $title): InlineQueryResultVideo
+        {
+            $this->title = $title;
+            return $this;
+        }
+
+        /**
          * Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
          *
          * @return string|null
@@ -167,6 +244,18 @@
         public function getCaption(): ?string
         {
             return $this->caption;
+        }
+
+        /**
+         * Sets the caption of the video to be sent, 0-1024 characters after entities parsing
+         *
+         * @param string $caption
+         * @return $this
+         */
+        public function setCaption(string $caption): InlineQueryResultVideo
+        {
+            $this->caption = $caption;
+            return $this;
         }
 
         /**
@@ -180,6 +269,18 @@
         }
 
         /**
+         * Sets the mode for parsing entities in the video caption. See formatting options for more details.
+         *
+         * @param string|null $parse_mode
+         * @return $this
+         */
+        public function setParseMode(?string $parse_mode): InlineQueryResultVideo
+        {
+            $this->parse_mode = $parse_mode;
+            return $this;
+        }
+
+        /**
          * Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
          *
          * @return MessageEntity[]|null
@@ -187,6 +288,18 @@
         public function getCaptionEntities(): ?array
         {
             return $this->caption_entities;
+        }
+
+        /**
+         * Sets the list of special entities that appear in the caption, which can be specified instead of parse_mode
+         *
+         * @param array|null $caption_entities
+         * @return $this
+         */
+        public function setCaptionEntities(?array $caption_entities): InlineQueryResultVideo
+        {
+            $this->caption_entities = $caption_entities;
+            return $this;
         }
 
         /**
@@ -200,6 +313,18 @@
         }
 
         /**
+         * Sets the video width
+         *
+         * @param int|null $video_width
+         * @return $this
+         */
+        public function setVideoWidth(?int $video_width): InlineQueryResultVideo
+        {
+            $this->video_width = $video_width;
+            return $this;
+        }
+
+        /**
          * Optional. Video height
          *
          * @return int|null
@@ -207,6 +332,18 @@
         public function getVideoHeight(): ?int
         {
             return $this->video_height;
+        }
+
+        /**
+         * Sets the video height
+         *
+         * @param int|null $video_height
+         * @return $this
+         */
+        public function setVideoHeight(?int $video_height): InlineQueryResultVideo
+        {
+            $this->video_height = $video_height;
+            return $this;
         }
 
         /**
@@ -220,6 +357,18 @@
         }
 
         /**
+         * Sets the video duration in seconds
+         *
+         * @param int|null $video_duration
+         * @return $this
+         */
+        public function setVideoDuration(?int $video_duration): InlineQueryResultVideo
+        {
+            $this->video_duration = $video_duration;
+            return $this;
+        }
+
+        /**
          * Optional. Short description of the result
          *
          * @return string|null
@@ -227,6 +376,18 @@
         public function getDescription(): ?string
         {
             return $this->description;
+        }
+
+        /**
+         * Sets the short description of the result
+         *
+         * @param string|null $description
+         * @return $this
+         */
+        public function setDescription(?string $description): InlineQueryResultVideo
+        {
+            $this->description = $description;
+            return $this;
         }
 
         /**
@@ -240,6 +401,18 @@
         }
 
         /**
+         * Sets the inline keyboard attached to the message
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return $this
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): InlineQueryResultVideo
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
+        }
+
+        /**
          * Optional. Content of the message to be sent instead of the video. This field is required if
          * InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
          *
@@ -248,6 +421,18 @@
         public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
         {
             return $this->input_message_content;
+        }
+
+        /**
+         * Sets the content of the message to be sent instead of the video. This field is required if
+         *
+         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @return $this
+         */
+        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): static
+        {
+            $this->input_message_content = $input_message_content;
+            return $this;
         }
 
         /**
@@ -266,7 +451,7 @@
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => ($this->caption_entities ?? null) ? array_map(function (MessageEntity $item) {
+                'caption_entities' => ($this->caption_entities ?? null) ? array_map(static function (MessageEntity $item) {
                     return $item->toArray();
                 }, $this->caption_entities) : null,
                 'video_width' => $this->video_width,
@@ -296,7 +481,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item) {
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(static function ($item) {
                 return MessageEntity::fromArray($item);
             }, $data['caption_entities']) : null;
             $object->video_width = $data['video_width'] ?? null;
