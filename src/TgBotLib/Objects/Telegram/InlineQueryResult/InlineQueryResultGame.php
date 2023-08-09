@@ -31,7 +31,7 @@
         private $reply_markup;
 
         /**
-         * Type of the result, must be game
+         * Type of the result must be game
          *
          * @return string
          */
