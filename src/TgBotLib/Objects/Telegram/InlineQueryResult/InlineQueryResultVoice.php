@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
+    use InvalidArgumentException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent;
@@ -70,7 +71,7 @@
         }
 
         /**
-         * Type of the result, must be voice
+         * The Type of the result must be voice
          *
          * @return string
          */
@@ -90,6 +91,23 @@
         }
 
         /**
+         * Sets the id of the result.
+         *
+         * @param string $id
+         * @return $this
+         */
+        public function setId(string $id): InlineQueryResultVoice
+        {
+            if(strlen($id) > 64)
+            {
+                throw new InvalidArgumentException('id must be between 1 and 64 characters');
+            }
+
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * A valid URL for the voice recording
          *
          * @return string
@@ -98,6 +116,23 @@
         public function getVoiceUrl(): string
         {
             return $this->voice_url;
+        }
+
+        /**
+         * Sets the voice_url of the result.
+         *
+         * @param string $voice_url
+         * @return $this
+         */
+        public function setVoiceUrl(string $voice_url): InlineQueryResultVoice
+        {
+            if(!filter_var($voice_url, FILTER_VALIDATE_URL))
+            {
+                throw new InvalidArgumentException('voice_url must be a valid URL');
+            }
+
+            $this->voice_url = $voice_url;
+            return $this;
         }
 
         /**
@@ -111,6 +146,18 @@
         }
 
         /**
+         * Sets the title of the result.
+         *
+         * @param string $title
+         * @return $this
+         */
+        public function setTitle(string $title): InlineQueryResultVoice
+        {
+            $this->title = $title;
+            return $this;
+        }
+
+        /**
          * Optional. Caption, 0-1024 characters after entities parsing
          *
          * @return string|null
@@ -118,6 +165,18 @@
         public function getCaption(): ?string
         {
             return $this->caption;
+        }
+
+        /**
+         * Sets the caption of the result.
+         *
+         * @param string|null $caption
+         * @return $this
+         */
+        public function setCaption(?string $caption): InlineQueryResultVoice
+        {
+            $this->caption = $caption;
+            return $this;
         }
 
         /**
@@ -131,6 +190,18 @@
         }
 
         /**
+         * Sets the parse_mode of the result.
+         *
+         * @param string|null $parse_mode
+         * @return $this
+         */
+        public function setParseMode(?string $parse_mode): InlineQueryResultVoice
+        {
+            $this->parse_mode = $parse_mode;
+            return $this;
+        }
+
+        /**
          * Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
          *
          * @return MessageEntity[]|null
@@ -138,6 +209,18 @@
         public function getCaptionEntities(): ?array
         {
             return $this->caption_entities;
+        }
+
+        /**
+         * Sets the caption_entities of the result.
+         *
+         * @param array|null $caption_entities
+         * @return $this
+         */
+        public function setCaptionEntities(?array $caption_entities): InlineQueryResultVoice
+        {
+            $this->caption_entities = $caption_entities;
+            return $this;
         }
 
         /**
@@ -152,6 +235,18 @@
         }
 
         /**
+         * Sets the voice_duration of the result.
+         *
+         * @param int|null $voice_duration
+         * @return $this
+         */
+        public function setVoiceDuration(?int $voice_duration): InlineQueryResultVoice
+        {
+            $this->voice_duration = $voice_duration;
+            return $this;
+        }
+
+        /**
          * Optional. Inline keyboard attached to the message
          *
          * @return InlineKeyboardMarkup|null
@@ -162,6 +257,18 @@
         }
 
         /**
+         * Sets the reply_markup of the result.
+         *
+         * @param InlineKeyboardMarkup|null $reply_markup
+         * @return $this
+         */
+        public function setReplyMarkup(?InlineKeyboardMarkup $reply_markup): InlineQueryResultVoice
+        {
+            $this->reply_markup = $reply_markup;
+            return $this;
+        }
+
+        /**
          * Optional. Content of the message to be sent instead of the voice recording
          *
          * @return InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent|null
@@ -169,6 +276,18 @@
         public function getInputMessageContent(): InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent|null
         {
             return $this->input_message_content;
+        }
+
+        /**
+         * Sets the input_message_content of the result.
+         *
+         * @param InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent $input_message_content
+         * @return $this
+         */
+        public function setInputMessageContent(InputMessageContent\InputContactMessageContent|InputMessageContent\InputInvoiceMessageContent|InputMessageContent\InputLocationMessageContent|InputMessageContent\InputTextMessageContent|InputMessageContent\InputVenueMessageContent $input_message_content): InlineQueryResultVoice
+        {
+            $this->input_message_content = $input_message_content;
+            return $this;
         }
 
         /**
@@ -185,7 +304,7 @@
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => (function (array $data) {
+                'caption_entities' => (static function (array $data) {
                     $result = [];
                     foreach ($data as $item) {
                         $result[] = $item->toArray();
@@ -215,7 +334,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = (function (array $data) {
+            $object->caption_entities = (static function (array $data) {
                 $result = [];
                 foreach ($data as $item)
                 {
