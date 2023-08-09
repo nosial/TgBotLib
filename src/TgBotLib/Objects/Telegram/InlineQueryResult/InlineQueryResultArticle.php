@@ -81,7 +81,7 @@
         }
 
         /**
-         * Type of the result, must be article
+         * The Type of the result must be article
          *
          * @return string
          */
@@ -110,7 +110,9 @@
         public function setId(string $id): InlineQueryResultArticle
         {
             if(!Validate::length($id, 1, 64))
+            {
                 throw new InvalidArgumentException('id should be between 1-64 characters');
+            }
 
             $this->id = $id;
             return $this;
@@ -205,7 +207,9 @@
         public function setUrl(?string $url): InlineQueryResultArticle
         {
             if(!Validate::url($url))
+            {
                 throw new InvalidArgumentException(sprintf('url is not a valid url: %s', $url));
+            }
 
             $this->url = $url;
             return $this;
@@ -277,7 +281,9 @@
         public function setThumbnailUrl(?string $thumbnail_url): InlineQueryResultArticle
         {
             if(!Validate::url($thumbnail_url))
+            {
                 throw new InvalidArgumentException(sprintf('thumbnail_url is not a valid url: %s', $thumbnail_url));
+            }
 
             $this->thumbnail_url = $thumbnail_url;
             return $this;
@@ -352,7 +358,7 @@
         }
 
         /**
-         * Constructs object from an array representation
+         * Constructs the object from an array representation
          *
          * @param array $data
          * @return ObjectTypeInterface
@@ -370,8 +376,8 @@
             $object->hide_url = $data['hide_url'] ?? null;
             $object->description = $data['description'] ?? null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
-            $object->thumbnail_width = (int)$data['thumbnail_width'] ?? null;
-            $object->thumbnail_height = (int)$data['thumbnail_height'] ?? null;
+            $object->thumbnail_width = is_null($data['thumbnail_width']) ? null : (int)$data['thumbnail_width'];
+            $object->thumbnail_height = is_null($data['thumbnail_height']) ? null : (int)$data['thumbnail_height'];
 
             return $object;
         }
