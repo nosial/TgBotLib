@@ -505,14 +505,26 @@
          * @return void
          * @throws TelegramException
          */
-        public function handleGetUpdates(bool $run_forever = false): void
+        public function handleGetUpdates(bool $run_forever=false): void
         {
             do
             {
                 $updates = $this->getUpdates();
                 foreach($updates as $update)
                 {
-                    $this->handleUpdate($update);
+                    try
+                    {
+                        $this->handleUpdate($update);
+                    }
+                    catch(Exception $e)
+                    {
+                        Log::error('net.nosial.tgbotlib', sprintf('Unhandled exception while handling update: %s', $e->getMessage()), $e);
+
+                        if(!$run_forever)
+                        {
+                            throw new TelegramException('Unhandled exception while handling update', 0, $e);
+                        }
+                    }
                 }
             } while($run_forever);
         }

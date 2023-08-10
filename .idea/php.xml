@@ -14,12 +14,12 @@
     <include_path>
       <path value="/usr/share/php" />
       <path value="/etc/ncc" />
-      <path value="/var/ncc/packages/net.nosial.tamerlib=1.0.0" />
-      <path value="/var/ncc/packages/net.nosial.loglib=1.0.1" />
+      <path value="/var/ncc/packages/net.nosial.tamerlib=2.1.5" />
+      <path value="/var/ncc/packages/net.nosial.loglib=1.0.2" />
       <path value="/var/ncc/packages/net.nosial.tempfile=1.1.0" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStanOptionsConfiguration">

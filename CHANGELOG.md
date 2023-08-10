@@ -62,6 +62,7 @@ input objects for methods that require input objects.
  * Updated class type to `final class` in `\TgBotLib\Enums > StickerType`
  * Updated class type to `final class` in `\TgBotLib\Enums > ThumbnailMimeType`
  * Updated class type to `final class` in `\TgBotLib\Enums > UpdateEventType`
+ * Updated method `\TgBotLib > Bot > handleGetUpdates()` to handle exceptions 
 
 
 ## [6.6.0] - 2023-04-10

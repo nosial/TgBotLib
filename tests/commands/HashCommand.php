@@ -18,9 +18,9 @@
         public function handle(Bot $bot, Update $update): void
         {
             // Usage: /hash <text>
-            $data = str_replace('/hash ', '', $update->getMessage()->getText());
+            $data = str_replace('/hash ', '', $update->getMessage()?->getText());
             $bot->sendMessage(
-                $update->getMessage()->getChat()->getId(), md5($data)
+                $update->getMessage()?->getChat()?->getId(), md5($data)
             );
         }
     }

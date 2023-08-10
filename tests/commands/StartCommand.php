@@ -19,7 +19,7 @@
         {
             // reply to the incoming message
             $bot->sendMessage(
-                $update->getMessage()->getChat()->getId(), 'Hello, ' . $update->getMessage()->getFrom()->getFirstName()
+                $update->getMessage()?->getChat()?->getId(), 'Hello, ' . $update->getMessage()?->getFrom()?->getFirstName()
             );
         }
     }
