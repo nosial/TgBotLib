@@ -91,6 +91,11 @@
             $this->last_update_id = 0;
             $this->command_handlers = [];
             $this->event_handlers = [];
+
+            if(!preg_match('/^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$/', $this->token))
+            {
+                throw new InvalidArgumentException(sprintf('Invalid token "%s"', $this->token));
+            }
         }
 
         /**

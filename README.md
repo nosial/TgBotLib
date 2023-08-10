@@ -187,21 +187,16 @@ First create a worker process that will handle the updates:
     require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
 
     // Initialize the bot
-    $bot = new TgBotLib\Bot('bot_token');
+    $bot = new TgBotLib\Bot('<BOT TOKEN>');
 
-    // Set the command handlers
+    // Setup command handlers
     $bot->setCommandHandler('start', new \commands\StartCommand());
     $bot->setCommandHandler('hash', new \commands\HashCommand());
 
-    // Initialize the worker & register the handle_update function
-    TamerLib\Tamer::initWorker();
-    TamerLib\Tamer::addFunction('handle_update', function (\TamerLib\Objects\Job $job) use ($bot)
-    {
-        $bot->handleUpdate(\TgBotLib\Objects\Telegram\Update::fromArray(json_decode($job->getData(), true)));
-    });
-
-    // Work forever
-    TamerLib\Tamer::work();
+    // Run TamerLib forever.
+    \TamerLib\tm::initialize(\TamerLib\Enums\TamerMode::WORKER);
+    \TamerLib\tm::addFunction('handle_update', [$bot, 'handleUpdate']);
+    \TamerLib\tm::run();
 ```
 
 Then create a master process that will send the updates to the worker:
@@ -216,30 +211,20 @@ Then create a master process that will send the updates to the worker:
     import('net.nosial.tgbotlib');
     import('net.nosial.tamerlib');
 
-    // Require commands
-    require 'commands' . DIRECTORY_SEPARATOR . 'StartCommand.php';
-    require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
-
-    // Initialize the bot
-    $bot = new TgBotLib\Bot('bot_token');
-
-    // Initialize the master & add the worker
-    TamerLib\Tamer::init(\TamerLib\Abstracts\ProtocolType::Gearman, [
-        '127.0.0.1:4730'
-    ]);
-    TamerLib\Tamer::addWorker('handle_update', 4);
-    
-    // Start the workers
-    TamerLib\Tamer::startWorkers();
+    $bot = new TgBotLib\Bot('<BOT TOKEN>');
+    \TamerLib\tm::initialize(\TamerLib\Enums\TamerMode::CLIENT);
+    \TamerLib\tm::createWorker(8, __DIR__ . DIRECTORY_SEPARATOR . 'worker.php');
 
     // Handle updates forever
     while(true)
     {
-        /** @var \TgBotLib\Objects\Telegram\Update $update */
+        // Get updates, push the update object to the worker
         foreach ($bot->getUpdates() as $update)
         {
-            TamerLib\Tamer::do('handle_update', json_encode($update->toArray()));
+            \TamerLib\tm::dof('handle_update', [$update]);
         }
+        
+        \TamerLib\tm::wait(3);
     }
 ```
 

@@ -1298,7 +1298,7 @@
             $object->passport_data = isset($data['passport_data']) ? PassportData::fromArray($data['passport_data']) : null;
             $object->proximity_alert_triggered = isset($data['proximity_alert_triggered']) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
             $object->forum_topic_created = isset($data['forum_topic_created']) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
-            $object->forum_topic_edited = isset($data['forum_topic_created']) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
+            $object->forum_topic_edited = isset($data['forum_topic_edited']) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
             $object->forum_topic_closed = isset($data['forum_topic_closed']) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
             $object->forum_topic_reopened = isset($data['forum_topic_reopened']) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
             $object->general_forum_topic_hidden = isset($data['general_forum_topic_hidden']) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;

@@ -62,7 +62,14 @@ input objects for methods that require input objects.
  * Updated class type to `final class` in `\TgBotLib\Enums > StickerType`
  * Updated class type to `final class` in `\TgBotLib\Enums > ThumbnailMimeType`
  * Updated class type to `final class` in `\TgBotLib\Enums > UpdateEventType`
- * Updated method `\TgBotLib > Bot > handleGetUpdates()` to handle exceptions 
+ * Updated method `\TgBotLib > Bot > handleGetUpdates()` to handle exceptions
+ * Updated README.md to reflect the new changes with TamerLib 2.+
+
+
+### Fixed
+ * Fixed type in `\TgBotLib\Objects\Telegram > Message > fromArray()` where `forum_topic_created` is being parsed for
+   forum_topic_edited instead of `forum_topic_edited`
+
 
 
 ## [6.6.0] - 2023-04-10
