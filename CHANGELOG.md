@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.7.0] - Unreleased
+## [6.7.0] - 2023-08-10
 
 This update accompanies the release of the [Telegram Bot API 6.7](https://core.telegram.org/bots/api#april-21-2023).
 Additionally, this update includes some bug fixes and improvements such as the ability for some objects to be treated as
