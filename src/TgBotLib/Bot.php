@@ -744,6 +744,14 @@
          */
         public function sendPhoto(string|int $chat_id, string $photo, array $options=[]): Message
         {
+            if(filter_var($photo, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendPhoto', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'photo' => $photo
+                ])));
+            }
+
             if(file_exists($photo))
             {
                 return Message::fromArray($this->sendFileUpload('sendPhoto', 'photo', $photo, array_merge($options, [
@@ -787,6 +795,14 @@
          */
         public function sendAudio(string|int $chat_id, string $audio, array $options=[]): Message
         {
+            if(filter_var($audio, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendAudio', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'audio' => $audio
+                ])));
+            }
+
             if(file_exists($audio))
             {
                 return Message::fromArray($this->sendFileUpload('sendAudio', 'audio', $audio, array_merge($options, [
@@ -827,6 +843,14 @@
          */
         public function sendDocument(string|int $chat_id, string $document, array $options=[]): Message
         {
+            if(filter_var($document, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendDocument', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'document' => $document
+                ])));
+            }
+
             if(file_exists($document))
             {
                 return Message::fromArray($this->sendFileUpload('sendDocument', 'document', $document, array_merge($options, [
@@ -868,6 +892,14 @@
          */
         public function sendVideo(string|int $chat_id, string $video, array $options=[]): Message
         {
+            if(filter_var($video, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendVideo', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'video' => $video
+                ])));
+            }
+
             if(file_exists($video))
             {
                 return Message::fromArray($this->sendFileUpload('sendVideo', 'video', $video, array_merge($options, [
@@ -909,6 +941,14 @@
          */
         public function sendAnimation(string|int $chat_id, string $animation, array $options=[]): Message
         {
+            if(filter_var($animation, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendAnimation', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'animation' => $animation
+                ])));
+            }
+
             if(file_exists($animation))
             {
                 return Message::fromArray($this->sendFileUpload('sendAnimation', 'animation', $animation, array_merge($options, [
@@ -951,6 +991,14 @@
          */
         public function sendVoice(string|int $chat_id, string $voice, array $options=[]): Message
         {
+            if(filter_var($voice, FILTER_VALIDATE_URL))
+            {
+                return Message::fromArray($this->sendRequest('sendVoice', array_merge($options, [
+                    'chat_id' => $chat_id,
+                    'voice' => $voice
+                ])));
+            }
+
             if(file_exists($voice))
             {
                 return Message::fromArray($this->sendFileUpload('sendVoice', 'voice', $voice, array_merge($options, [
@@ -990,6 +1038,11 @@
          */
         public function sendVideoNote(string|int $chat_id, string $video_note, array $options=[]): Message
         {
+            if(filter_var($video_note, FILTER_VALIDATE_URL))
+            {
+                throw new TelegramException('Sending video notes by a URL is currently unsupported');
+            }
+
             if(file_exists($video_note))
             {
                 return Message::fromArray($this->sendFileUpload('sendVideoNote', 'video_note', $video_note, array_merge($options, [

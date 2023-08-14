@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.1] - 2023-08-13
+
+This update introduces a bug fix in a few functions
+
+### Fixed
+ * Updated `\TgBotLib\Bot::sendPhoto()` to accept URLs as a parameter for the `photo` field.
+ * Updated `\TgBotLib\Bot::sendAudio()` to accept URLs as a parameter for the `audio` field.
+ * Updated `\TgBotLib\Bot::sendDocument()` to accept URLs as a parameter for the `document` field.
+ * Updated `\TgBotLib\Bot::sendVideo()` to accept URLs as a parameter for the `video` field.
+ * Updated `\TgBotLib\Bot::sendAnimation()` to accept URLs as a parameter for the `animation` field.
+ * Updated `\TgBotLib\Bot::sendVoice()` to accept URLs as a parameter for the `voice` field.
+
+
+
 ## [6.7.0] - 2023-08-10
 
 This update accompanies the release of the [Telegram Bot API 6.7](https://core.telegram.org/bots/api#april-21-2023).
