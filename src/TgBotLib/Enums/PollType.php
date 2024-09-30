@@ -2,9 +2,9 @@
 
     namespace TgBotLib\Enums;
 
-    final class PollType
+    enum PollType : string
     {
-        public const REGULAR = 'regular';
+        case REGULAR = 'regular';
 
-        public const QUIZ = 'quiz';
+        case QUIZ = 'quiz';
     }

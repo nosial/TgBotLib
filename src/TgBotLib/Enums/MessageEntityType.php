@@ -2,40 +2,40 @@
 
     namespace TgBotLib\Enums;
 
-    final class MessageEntityType
+    enum MessageEntityType : string
     {
-        public const MENTION = 'mention';
+        case MENTION = 'mention';
 
-        public const HASHTAG = 'hashtag';
+        case HASHTAG = 'hashtag';
 
-        public const CASHTAG = 'cashtag';
+        case CASHTAG = 'cashtag';
 
-        public const BOT_COMMAND = 'bot_command';
+        case BOT_COMMAND = 'bot_command';
 
-        public const URL = 'url';
+        case URL = 'url';
 
-        public const EMAIL = 'email';
+        case EMAIL = 'email';
 
-        public const PHONE_NUMBER = 'phone_number';
+        case PHONE_NUMBER = 'phone_number';
 
-        public const BOLD = 'bold';
+        case BOLD = 'bold';
 
-        public const ITALIC = 'italic';
+        case ITALIC = 'italic';
 
-        public const UNDERLINE = 'underline';
+        case UNDERLINE = 'underline';
 
-        public const STRIKETHROUGH = 'strikethrough';
+        case STRIKETHROUGH = 'strikethrough';
 
-        public const SPOILER = 'spoiler';
+        case SPOILER = 'spoiler';
 
-        public const CODE = 'code';
+        case CODE = 'code';
 
-        public const PRE = 'pre';
+        case PRE = 'pre';
 
-        public const TEXT_LINK = 'text_link';
+        case TEXT_LINK = 'text_link';
 
-        public const TEXT_MENTION = 'text_mention';
+        case TEXT_MENTION = 'text_mention';
 
-        public const CUSTOM_EMOJI = 'custom_emoji';
+        case CUSTOM_EMOJI = 'custom_emoji';
 
     }

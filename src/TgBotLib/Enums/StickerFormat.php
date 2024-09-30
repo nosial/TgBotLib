@@ -2,9 +2,9 @@
 
     namespace TgBotLib\Enums;
 
-    final class StickerFormat
+    enum StickerFormat : string
     {
-        public const STATIC = 'static';
-        public const ANIMATED = 'animated';
-        public const VIDEO = 'video';
+        case STATIC = 'static';
+        case ANIMATED = 'animated';
+        case VIDEO = 'video';
     }

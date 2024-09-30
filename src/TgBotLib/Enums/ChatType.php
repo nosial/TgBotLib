@@ -2,10 +2,10 @@
 
     namespace TgBotLib\Enums;
 
-    final class ChatType
+    enum ChatType : string
     {
-        public const PRIVATE = 'private';
-        public const GROUP = 'group';
-        public const SUPERGROUP = 'supergroup';
-        public const CHANNEL = 'channel';
+        case PRIVATE = 'private';
+        case GROUP = 'group';
+        case SUPERGROUP = 'supergroup';
+        case CHANNEL = 'channel';
     }

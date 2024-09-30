@@ -2,11 +2,11 @@
 
     namespace TgBotLib\Enums;
 
-    final class StickerType
+    enum StickerType : string
     {
-        public const REGULAR = 'regular';
+        case REGULAR = 'regular';
 
-        public const MASK = 'mask';
+        case MASK = 'mask';
 
-        public const CUSTOM_EMOJI = 'custom_emoji';
+        case CUSTOM_EMOJI = 'custom_emoji';
     }

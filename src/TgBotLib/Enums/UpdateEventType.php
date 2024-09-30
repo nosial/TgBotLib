@@ -2,11 +2,11 @@
 
     namespace TgBotLib\Enums;
 
-    final class UpdateEventType
+    enum UpdateEventType : string
     {
-        public const GENERIC_UPDATE = 'generic_update';
+        case GENERIC_UPDATE = 'generic_update';
 
-        public const MESSAGE = 'message';
+        case MESSAGE = 'message';
 
-        public const EDITED_MESSAGE = 'edited_message';
+        case EDITED_MESSAGE = 'edited_message';
     }

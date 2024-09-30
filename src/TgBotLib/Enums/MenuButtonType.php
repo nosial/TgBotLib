@@ -2,9 +2,9 @@
 
     namespace TgBotLib\Enums;
 
-    final class MenuButtonType
+    enum MenuButtonType : string
     {
-        public const COMMANDS = 'commands';
-        public const WEB_APP = 'web_app';
-        public const DEFAULT = 'default';
+        case COMMANDS = 'commands';
+        case WEB_APP = 'web_app';
+        case DEFAULT = 'default';
     }

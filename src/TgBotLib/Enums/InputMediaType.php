@@ -2,11 +2,11 @@
 
     namespace TgBotLib\Enums;
 
-    final class InputMediaType
+    enum InputMediaType : string
     {
-        public const PHOTO = 'photo';
-        public const VIDEO = 'video';
-        public const ANIMATION = 'animation';
-        public const AUDIO = 'audio';
-        public const DOCUMENT = 'document';
+        case PHOTO = 'photo';
+        case VIDEO = 'video';
+        case ANIMATION = 'animation';
+        case AUDIO = 'audio';
+        case DOCUMENT = 'document';
     }

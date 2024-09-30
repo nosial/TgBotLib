@@ -2,13 +2,13 @@
 
     namespace TgBotLib\Enums;
 
-    final class BotCommandScopeType
+    enum BotCommandScopeType : string
     {
-        public const DEFAULT = 'default';
-        public const ALL_PRIVATE_CHATS = 'all_private_chats';
-        public const ALL_CHAT_GROUPS = 'all_group_chats';
-        public const ALL_CHAT_ADMINISTRATORS = 'all_chat_administrators';
-        public const CHAT = 'chat';
-        public const CHAT_ADMINISTRATORS = 'chat_administrators';
-        public const CHAT_MEMBER = 'chat_member';
+        case DEFAULT = 'default';
+        case ALL_PRIVATE_CHATS = 'all_private_chats';
+        case ALL_CHAT_GROUPS = 'all_group_chats';
+        case ALL_CHAT_ADMINISTRATORS = 'all_chat_administrators';
+        case CHAT = 'chat';
+        case CHAT_ADMINISTRATORS = 'chat_administrators';
+        case CHAT_MEMBER = 'chat_member';
     }

@@ -2,9 +2,9 @@
 
     namespace TgBotLib\Enums;
 
-    final class ThumbnailMimeType
+    enum ThumbnailMimeType : string
     {
-        public const IMAGE_JPEG = 'image/jpeg';
-        public const IMAGE_GIF = 'image/gif';
-        public const VIDEO_MP4 = 'video/mp4';
+        case IMAGE_JPEG = 'image/jpeg';
+        case IMAGE_GIF = 'image/gif';
+        case VIDEO_MP4 = 'video/mp4';
     }
