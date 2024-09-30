@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * Refactored the way HTTP requests are handled & methods are called
  * Refactor enums to use native PHP 8.1 syntax
  * Moved Types to their own namespace
- 8 Refactored `close` method
+ * Refactored `close` method
  * Refactored `getMe` method
  * Refactored `logOut` method
 
