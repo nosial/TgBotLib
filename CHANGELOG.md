@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * Added unit tests
  * Added `can_connect_to_business` & `has_main_web_app` to User object
  * Added LinkPreviewOptions object
+ * Added PaidMedia, PaidMediaPhoto, PaidMediaPreview, PaidMediaVideo & PaidMediaType Enum
 
 ### Changed
  * Refactored the way HTTP requests are handled & methods are called
