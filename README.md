@@ -90,7 +90,7 @@ The library requires PHP 8.0 or higher.
 require 'ncc';
 import('net.nosial.tgbotlib');
 
-$bot = new TgBotLib\Bot('<BOT TOKEN>');
+$bot = new TgBotLib\BotOld('<BOT TOKEN>');
 
 /** @var \TgBotLib\Objects\Telegram\Update $update */
 foreach ($bot->getUpdates() as $update)
@@ -147,7 +147,7 @@ To implement a single-threaded bot, it's very self-explanatory, you just need to
     require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
     
     // Create a new instance of the bot
-    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+    $bot = new TgBotLib\BotOld(getenv('BOT_TOKEN'));
 
     // Loop forever
     while(true)
@@ -187,7 +187,7 @@ First create a worker process that will handle the updates:
     require 'commands' . DIRECTORY_SEPARATOR . 'HashCommand.php';
 
     // Initialize the bot
-    $bot = new TgBotLib\Bot('<BOT TOKEN>');
+    $bot = new TgBotLib\BotOld('<BOT TOKEN>');
 
     // Setup command handlers
     $bot->setCommandHandler('start', new \commands\StartCommand());
@@ -211,7 +211,7 @@ Then create a master process that will send the updates to the worker:
     import('net.nosial.tgbotlib');
     import('net.nosial.tamerlib');
 
-    $bot = new TgBotLib\Bot('<BOT TOKEN>');
+    $bot = new TgBotLib\BotOld('<BOT TOKEN>');
     \TamerLib\tm::initialize(\TamerLib\Enums\TamerMode::CLIENT);
     \TamerLib\tm::createWorker(8, __DIR__ . DIRECTORY_SEPARATOR . 'worker.php');
 
@@ -244,7 +244,7 @@ the `/start` command, you can use the `setCommandHandler` method:
     require 'ncc';
     import('net.nosial.tgbotlib');
 
-    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+    $bot = new TgBotLib\BotOld(getenv('BOT_TOKEN'));
     $bot->setCommandHandler('start', new \commands\StartCommand());
 ```
 
@@ -261,13 +261,13 @@ all the information about the update.
 
     namespace commands;
 
-    use TgBotLib\Bot;
+    use TgBotLib\BotOld;
     use TgBotLib\Interfaces\CommandInterface;
     use TgBotLib\Objects\Telegram\Update;
 
     class StartCommand extends CommandInterface
     {
-        public function handle(Bot $bot, Update $update): void
+        public function handle(BotOld $bot, Update $update): void
         {
             $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
         }
@@ -284,7 +284,7 @@ Event handles are similarly implemented, but instead of using the `setCommandHan
 
     require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
 
-    $bot = new TgBotLib\Bot(getenv('BOT_TOKEN'));
+    $bot = new TgBotLib\BotOld(getenv('BOT_TOKEN'));
 
     $bot->setEventHandler('message', new \events\MessageEvent());
 ```
@@ -296,13 +296,13 @@ And the interface EventInterface is used instead of CommandInterface:
 
     namespace events;
 
-    use TgBotLib\Bot;
+    use TgBotLib\BotOld;
     use TgBotLib\Interfaces\EventInterface;
     use TgBotLib\Objects\Telegram\Update;
 
     class MessageEvent implements EventInterface
     {
-        public function handle(Bot $bot, Update $update): void
+        public function handle(BotOld $bot, Update $update): void
         {
             $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
         }
