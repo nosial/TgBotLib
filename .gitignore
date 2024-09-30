@@ -1,2 +1,4 @@
 build/
 tests/token.txt
+/.phpunit.result.cache
+/.idea/php-test-framework.xml
