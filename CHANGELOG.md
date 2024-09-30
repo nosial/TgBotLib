@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * Added PaidMedia, PaidMediaPhoto, PaidMediaPreview, PaidMediaVideo & PaidMediaType Enum
  * Added PaidMediaInfo Object
  * Added Story object
+ * Added Giveaway object
 
 ### Changed
  * Refactored the way HTTP requests are handled & methods are called
