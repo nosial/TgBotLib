@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * Added PaidMediaInfo Object
  * Added Story object
  * Added Giveaway object
+ * Added GiveawayWinners object
 
 ### Changed
  * Refactored the way HTTP requests are handled & methods are called
