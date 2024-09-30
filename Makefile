@@ -1,8 +1,23 @@
-build:
-	ncc build --config="release" --log-level debug
+# Variables
+CONFIG ?= release
+LOG_LEVEL = debug
+OUTDIR = build/$(CONFIG)
+PACKAGE = $(OUTDIR)/net.nosial.tgbotlib.ncc
 
-install:
-	sudo ncc package install --package="build/release/net.nosial.tgbotlib.ncc" --skip-dependencies --reinstall -y --log-level debug
+# Default Target
+all: build
+
+# Build Steps
+build:
+	ncc build --config=$(CONFIG) --log-level $(LOG_LEVEL)
+
+install: build
+	ncc package install --package=$(PACKAGE) --skip-dependencies --build-source --reinstall -y --log-level $(LOG_LEVEL)
+
+test: build
+	phpunit
 
 clean:
 	rm -rf build
+
+.PHONY: all build install test clean
