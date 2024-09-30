@@ -2,7 +2,7 @@
 
     namespace TgBotLib\Interfaces;
 
-    use TgBotLib\Bot;
+    use TgBotLib\BotOld;
     use TgBotLib\Objects\Telegram\Update;
 
     interface CommandInterface
@@ -10,9 +10,9 @@
         /**
          * Execute the command
          *
-         * @param Bot $bot
+         * @param BotOld $bot
          * @param Update $update
          * @return void
          */
-        public function handle(Bot $bot, Update $update): void;
+        public function handle(BotOld $bot, Update $update): void;
     }
