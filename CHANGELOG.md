@@ -6,9 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.10.0] - Ongoing
 
+### Added
+ * Added unit tests
+ * Added `can_connect_to_business` & `has_main_web_app` to User object
+ * Added LinkPreviewOptions object
+
 ### Changed
+ * Refactored the way HTTP requests are handled & methods are called
  * Refactor enums to use native PHP 8.1 syntax
  * Moved Types to their own namespace
+ 8 Refactored `close` method
+ * Refactored `getMe` method
+ * Refactored `logOut` method
 
 
 ## [6.7.0] - 2023-08-10
