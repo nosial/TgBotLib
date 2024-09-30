@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\BotCommandScope;
 
-    use TgBotLib\Enums\BotCommandScopeType;
+    use TgBotLib\Enums\Types\BotCommandScopeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\BotCommandScope;
 

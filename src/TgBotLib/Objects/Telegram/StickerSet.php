@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram;
 
-    use TgBotLib\Enums\StickerType;
+    use TgBotLib\Enums\Types\StickerType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class StickerSet implements ObjectTypeInterface

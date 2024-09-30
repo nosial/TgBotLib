@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Enums;
+    namespace TgBotLib\Enums\Types;
 
     enum StickerFormat : string
     {

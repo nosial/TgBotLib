@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\ChatMember;
 
-    use TgBotLib\Enums\ChatMemberStatus;
+    use TgBotLib\Enums\Types\ChatMemberStatus;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\ChatMember;
     use TgBotLib\Objects\Telegram\User;

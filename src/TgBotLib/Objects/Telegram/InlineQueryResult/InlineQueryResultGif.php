@@ -6,8 +6,8 @@
     namespace TgBotLib\Objects\Telegram\InlineQueryResult;
 
     use InvalidArgumentException;
-    use TgBotLib\Enums\ThumbnailMimeType;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\ThumbnailMimeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineKeyboardMarkup;
     use TgBotLib\Objects\Telegram\InputMessageContent\InputContactMessageContent;

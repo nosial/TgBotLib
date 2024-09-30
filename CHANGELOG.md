@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  * Refactor enums to use native PHP 8.1 syntax
+ * Moved Types to their own namespace
 
 
 ## [6.7.0] - 2023-08-10

@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Enums;
+    namespace TgBotLib\Enums\Types;
 
     enum MessageEntityType : string
     {

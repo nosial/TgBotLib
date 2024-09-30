@@ -4,7 +4,7 @@
 
     namespace TgBotLib\Objects\Telegram\InputMedia;
 
-    use TgBotLib\Enums\InputMediaType;
+    use TgBotLib\Enums\Types\InputMediaType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InputMedia;
     use TgBotLib\Objects\Telegram\MessageEntity;

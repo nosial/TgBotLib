@@ -9,8 +9,8 @@
     use InvalidArgumentException;
     use LogLib\Log;
     use TempFile\TempFile;
-    use TgBotLib\Enums\ChatMemberStatus;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\Types\ChatMemberStatus;
+    use TgBotLib\Enums\Types\EventType;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\CommandInterface;
     use TgBotLib\Interfaces\EventInterface;

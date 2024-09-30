@@ -3,7 +3,7 @@
     namespace TgBotLib\Objects\Telegram;
 
     use InvalidArgumentException;
-    use TgBotLib\Enums\InlineQueryResultType;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Exceptions\NotImplementedException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Telegram\InlineQueryResult\InlineQueryResultArticle;
