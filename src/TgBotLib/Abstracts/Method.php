@@ -4,6 +4,7 @@ namespace TgBotLib\Abstracts;
 
 use CURLFile;
 use CurlHandle;
+use InvalidArgumentException;
 use TgBotLib\Bot;
 use TgBotLib\Exceptions\TelegramException;
 use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -17,6 +18,7 @@ abstract class Method
      * @param array $parameters The parameters required for the bot command.
      * @return ObjectTypeInterface|ObjectTypeInterface[]|mixed The result of the bot command.
      * @throws TelegramException if the response from the bot command is not valid.
+     * @throws InvalidArgumentException if the required parameters are not provided.
      */
     public abstract static function execute(Bot $bot, array $parameters=[]): mixed;
 
@@ -96,7 +98,7 @@ abstract class Method
      * @throws TelegramException if the response is not a valid array,
      *                           or if the 'ok' field is not set or is false.
      */
-    protected  static function executeCurl(CurlHandle $curl): array
+    protected  static function executeCurl(CurlHandle $curl): mixed
     {
         $response = curl_exec($curl);
         curl_close($curl);
