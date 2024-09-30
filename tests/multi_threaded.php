@@ -3,7 +3,7 @@
     require __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';
     import('net.nosial.tamerlib');
     
-    $bot = new TgBotLib\Bot('<BOT TOKEN>');
+    $bot = new TgBotLib\BotOld('<BOT TOKEN>');
     \TamerLib\tm::initialize(\TamerLib\Enums\TamerMode::CLIENT);
     \TamerLib\tm::createWorker(8, __DIR__ . DIRECTORY_SEPARATOR . 'worker.php');
 
