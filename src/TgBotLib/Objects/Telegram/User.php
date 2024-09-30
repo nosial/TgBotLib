@@ -1,67 +1,23 @@
 <?php
-
-    /** @noinspection PhpMissingFieldTypeInspection */
-
     namespace TgBotLib\Objects\Telegram;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class User implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $id;
-
-        /**
-         * @var bool
-         */
-        private $is_bot;
-
-        /**
-         * @var string
-         */
-        private $first_name;
-
-        /**
-         * @var string|null
-         */
-        private $last_name;
-
-        /**
-         * @var string|null
-         */
-        private $username;
-
-        /**
-         * @var string|null
-         */
-        private $language_code;
-
-        /**
-         * @var bool
-         */
-        private $is_premium;
-
-        /**
-         * @var bool
-         */
-        private $added_to_attachment_menu;
-
-        /**
-         * @var bool
-         */
-        private $can_join_groups;
-
-        /**
-         * @var bool
-         */
-        private $can_read_all_group_messages;
-
-        /**
-         * @var bool
-         */
-        private $supports_inline_queries;
+        private int $id;
+        private bool $is_bot;
+        private string $first_name;
+        private ?string $last_name;
+        private ?string $username;
+        private ?string $language_code;
+        private bool $is_premium;
+        private bool $added_to_attachment_menu;
+        private bool $can_join_groups;
+        private bool $can_read_all_group_messages;
+        private bool $supports_inline_queries;
+        private bool $can_connect_to_business;
+        private bool $has_main_web_app;
 
         /**
          * Unique identifier for this user or bot. This number may have more than 32 significant bits and some
@@ -180,6 +136,17 @@
         }
 
         /**
+         * Optional. True, if the bot has a main Web App. Returned only in getMe.only in getMe.
+         *
+         * @return bool
+         */
+        public function canConnectToBusiness(): bool
+        {
+            return $this->can_connect_to_business;
+        }
+
+
+        /**
          * Returns an array representation of the object
          *
          * @return array
@@ -198,6 +165,8 @@
                 'can_join_groups' => $this->can_join_groups,
                 'can_read_all_group_messages' => $this->can_read_all_group_messages,
                 'supports_inline_queries' => $this->supports_inline_queries,
+                'can_connect_to_business' => $this->can_connect_to_business,
+                'has_main_web_app' => $this->has_main_web_app,
             ];
         }
 
@@ -222,6 +191,8 @@
             $object->can_join_groups = $data['can_join_groups'] ?? false;
             $object->can_read_all_group_messages = $data['can_read_all_group_messages'] ?? false;
             $object->supports_inline_queries = $data['supports_inline_queries'] ?? false;
+            $object->can_connect_to_business = $data['can_connect_to_business'] ?? false;
+            $object->has_main_web_app = $data['has_main_web_app'] ?? false;
 
             return $object;
         }
