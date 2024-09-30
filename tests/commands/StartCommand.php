@@ -7,7 +7,7 @@
     use TgBotLib\Interfaces\CommandInterface;
     use TgBotLib\Objects\Telegram\Update;
 
-    class HashCommand implements CommandInterface
+    class StartCommand implements CommandInterface
     {
         /**
          * @param BotOld $bot
@@ -17,10 +17,9 @@
          */
         public function handle(BotOld $bot, Update $update): void
         {
-            // Usage: /hash <text>
-            $data = str_replace('/hash ', '', $update->getMessage()?->getText());
+            // reply to the incoming message
             $bot->sendMessage(
-                $update->getMessage()?->getChat()?->getId(), md5($data)
+                $update->getMessage()?->getChat()?->getId(), 'Hello, ' . $update->getMessage()?->getFrom()?->getFirstName()
             );
         }
     }
