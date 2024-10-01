@@ -4,7 +4,7 @@
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
-    class UserShared implements ObjectTypeInterface
+    class UsersShared implements ObjectTypeInterface
     {
         /**
          * @var int
@@ -57,7 +57,7 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return UserShared
+         * @return UsersShared
          */
         public static function fromArray(array $data): self
         {
