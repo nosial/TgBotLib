@@ -31,7 +31,7 @@ abstract class PaidMedia implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(array $data): PaidMedia
     {
         if(!isset($data['type']))
         {
