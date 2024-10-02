@@ -8,61 +8,25 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
-    class BotCommandScopeDefault implements ObjectTypeInterface
+    class BotCommandScopeDefault extends BotCommandScope implements ObjectTypeInterface
     {
         /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * Scope type, must be default
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Returns an array representation of the object
-         *
-         * @return string[]
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type
+                'type' => $this->type->value
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotCommandScopeDefault
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): BotCommandScopeDefault
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? BotCommandScopeType::DEFAULT;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from BotCommandScope
-         *
-         * @param BotCommandScope $botCommandScope
-         * @return BotCommandScopeDefault
-         */
-        public static function fromBotCommandScope(BotCommandScope $botCommandScope): BotCommandScopeDefault
-        {
-            $object = new self();
-
-            $object->type = $botCommandScope->getType();
+            $object->type = BotCommandScopeType::DEFAULT;
 
             return $object;
         }

@@ -8,27 +8,12 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
-    class BotCommandScopeAllChatAdministrators implements ObjectTypeInterface
+    class BotCommandScopeAllChatAdministrators extends BotCommandScope implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
         /**
          * @var int|string
          */
         private $chat_id;
-
-        /**
-         * Scope type, must be all_chat_administrators
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
 
         /**
          * Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
@@ -48,7 +33,7 @@
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'chat_id' => $this->chat_id
             ];
         }
@@ -59,28 +44,11 @@
          * @param array $data
          * @return BotCommandScopeAllChatAdministrators
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): BotCommandScopeAllChatAdministrators
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? BotCommandScopeType::ALL_CHAT_ADMINISTRATORS;
+            $object->type = BotCommandScopeType::ALL_CHAT_ADMINISTRATORS;
             $object->chat_id = $data['chat_id'] ?? null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from BotCommandScope
-         *
-         * @param BotCommandScope $botCommandScope
-         * @return static
-         */
-        public static function fromBotCommandScope(BotCommandScope $botCommandScope): self
-        {
-            $object = new self();
-
-            $object->type = $botCommandScope->getType();
-            $object->chat_id = $botCommandScope->getChatId();
 
             return $object;
         }

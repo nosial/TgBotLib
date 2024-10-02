@@ -8,32 +8,10 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\BotCommandScope;
 
-    class BotCommandScopeChatMember implements ObjectTypeInterface
+    class BotCommandScopeChatMember extends BotCommandScope implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string|int
-         */
-        private $chat_id;
-
-        /**
-         * @var int
-         */
-        private $user_id;
-
-        /**
-         * Scope type, must be chat_member
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
+        private string|int $chat_id;
+        private int $user_id;
 
         /**
          * Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
@@ -56,48 +34,27 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'chat_id' => $this->chat_id,
                 'user_id' => $this->user_id
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotCommandScopeChatMember
+         * @inheritDoc
          */
         public static function fromArray(array $data): self
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? BotCommandScopeType::CHAT_MEMBER;
+            $object->type = BotCommandScopeType::CHAT_MEMBER;
             $object->chat_id = $data['chat_id'] ?? null;
             $object->user_id = $data['user_id'] ?? null;
 
-            return $object;
-        }
-
-        /**
-         * Constructs object from BotCommandScope
-         *
-         * @param BotCommandScope $botCommandScope
-         * @return static
-         */
-        public static function fromBotCommandScope(BotCommandScope $botCommandScope): self
-        {
-            $object = new self();
-            $object->type = $botCommandScope->getType();
-            $object->chat_id = $botCommandScope->getChatId();
-            $object->user_id = $botCommandScope->getUserId();
             return $object;
         }
     }
