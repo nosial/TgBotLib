@@ -20,7 +20,7 @@
         /**
          * @var BotCommandScopeType
          */
-        protected $type;
+        protected BotCommandScopeType $type;
 
         /**
          * Scope type, one of “default”, “all_private_chats”, “all_group_chats”, “all_chat_administrators”, “chat”,
