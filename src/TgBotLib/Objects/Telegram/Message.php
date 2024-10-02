@@ -6,370 +6,114 @@
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
-    class Message implements ObjectTypeInterface
+    class Message extends MaybeInaccessibleMessage implements ObjectTypeInterface
     {
-
-        /**
-         * @var int|null
-         */
-        private $message_id;
-
-        /**
-         * @var int|null
-         */
-        private $message_thread_id;
-
-        /**
-         * @var User|null
-         */
-        private $from;
-
-        /**
-         * @var Chat|null
-         */
-        private $sender_chat;
-
-        /**
-         * @var int
-         */
-        private $date;
-
-        /**
-         * @var Chat|null
-         */
-        private $chat;
-
-        /**
-         * @var User|null
-         */
-        private $forward_from;
-
-        /**
-         * @var Chat|null
-         */
-        private $forward_from_chat;
-
-        /**
-         * @var int|null
-         */
-        private $forward_from_message_id;
-
-        /**
-         * @var string|null
-         */
-        private $forward_signature;
-
-        /**
-         * @var string|null
-         */
-        private $forward_sender_name;
-
-        /**
-         * @var int|null
-         */
-        private $forward_date;
-
-        /**
-         * @var bool
-         */
-        private $is_topic_message;
-
-        /**
-         * @var bool
-         */
-        private $is_automatic_forward;
-
-        /**
-         * @var Message|null
-         */
-        private $reply_to_message;
-
-        /**
-         * @var User|null
-         */
-        private $via_bot;
-
-        /**
-         * @var int|null
-         */
-        private $edit_date;
-
-        /**
-         * @var bool
-         */
-        private $has_protected_content;
-
-        /**
-         * @var string|null
-         */
-        private $media_group_id;
-
-        /**
-         * @var string|null
-         */
-        private $author_signature;
-
-        /**
-         * @var string|null
-         */
-        private $text;
-
+        private int $message_id;
+        private ?int $message_thread_id;
+        private ?User $from;
+        private ?Chat $sender_chat;
+        private ?int $sender_boost_count;
+        private ?User $sender_business_bot;
+        private ?string $business_connection_id;
+        private ?Chat $chat;
+        private ?MessageOrigin $forward_origin;
+        private bool $is_topic_message;
+        private bool $is_automatic_forward;
+        private ?Message $reply_to_message;
+        private ?ExternalReplyInfo $external_reply;
+        private ?TextQuote $quote;
+        private ?Story $reply_to_story;
+        private ?User $via_bot;
+        private ?int $edit_date;
+        private bool $has_protected_content;
+        private bool $is_from_offline;
+        private ?string $media_group_id;
+        private ?string $author_signature;
+        private ?string $text;
         /**
          * @var MessageEntity[]|null
          */
-        private $entities;
-
-        /**
-         * @var Animation|null
-         */
-        private $animation;
-
-        /**
-         * @var Audio|null
-         */
-        private $audio;
-
-        /**
-         * @var Document|null
-         */
-        private $document;
-
+        private ?array $entities;
+        private ?LinkPreviewOptions $link_preview_options;
+        private ?string $effect_id;
+        private ?Animation $animation;
+        private ?Audio $audio;
+        private ?Document $document;
+        private ?PaidMediaInfo $paid_media;
         /**
          * @var PhotoSize[]|null
          */
-        private $photo;
-
-        /**
-         * @var Sticker|null
-         */
-        private $sticker;
-
-        /**
-         * @var Video|null
-         */
-        private $video;
-
-        /**
-         * @var VideoNote|null
-         */
-        private $video_note;
-
-        /**
-         * @var Voice|null
-         */
-        private $voice;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
+        private ?array $photo;
+        private ?Sticker $sticker;
+        private ?Story $story;
+        private ?Video $video;
+        private ?VideoNote $video_note;
+        private ?Voice $voice;
+        private ?string $caption;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var bool
-         */
-        private $has_media_spoiler;
-
-        /**
-         * @var Contact|null
-         */
-        private $contact;
-
-        /**
-         * @var Dice|null
-         */
-        private $dice;
-
-        /**
-         * @var Game|null
-         */
-        private $game;
-
-        /**
-         * @var Poll|null
-         */
-        private $poll;
-
-        /**
-         * @var Venue|null
-         */
-        private $venue;
-
-        /**
-         * @var Location|null
-         */
-        private $location;
-
+        private ?array $caption_entities;
+        private bool $show_caption_above_media;
+        private bool $has_media_spoiler;
+        private ?Contact $contact;
+        private ?Dice $dice;
+        private ?Game $game;
+        private ?Poll $poll;
+        private ?Venue $venue;
+        private ?Location $location;
         /**
          * @var User[]|null
          */
-        private $new_chat_members;
-
-        /**
-         * @var User|null
-         */
-        private $left_chat_member;
-
-        /**
-         * @var string|null
-         */
-        private $new_chat_title;
-
+        private ?array $new_chat_members;
+        private ?User $left_chat_member;
+        private ?string $new_chat_title;
         /**
          * @var PhotoSize[]|null
          */
-        private $new_chat_photo;
-
-        /**
-         * @var bool
-         */
-        private $delete_chat_photo;
-
-        /**
-         * @var bool
-         */
-        private $group_chat_created;
-
-        /**
-         * @var bool
-         */
-        private $supergroup_chat_created;
-
-        /**
-         * @var bool
-         */
-        private $channel_chat_created;
-
-        /**
-         * @var MessageAutoDeleteTimerChanged|null
-         */
-        private $message_auto_delete_timer_changed;
-
-        /**
-         * @var int|null
-         */
-        private $migrate_to_chat_id;
-
-        /**
-         * @var int|null
-         */
-        private $migrate_from_chat_id;
-
-        /**
-         * @var Message|null
-         */
-        private $pinned_message;
-
-        /**
-         * @var Invoice|null
-         */
-        private $invoice;
-
-        /**
-         * @var SuccessfulPayment|null
-         */
-        private $successful_payment;
-
-        /**
-         * @var UserShared|null
-         */
-        private $user_shared;
-
-        /**
-         * @var ChatShared|null
-         */
-        private $chat_shared;
-
-        /**
-         * @var string|null
-         */
-        private $connected_website;
-
-        /**
-         * @var WriteAccessAllowed|null
-         */
-        private $write_access_allowed;
-
-        /**
-         * @var PassportData|null
-         */
-        private $passport_data;
-
-        /**
-         * @var ProximityAlertTriggered|null
-         */
-        private $proximity_alert_triggered;
-
-        /**
-         * @var ForumTopicCreated|null
-         */
-        private $forum_topic_created;
-
-        /**
-         * @var ForumTopicEdited|null
-         */
-        private $forum_topic_edited;
-
-        /**
-         * @var ForumTopicClosed|null
-         */
-        private $forum_topic_closed;
-
-        /**
-         * @var ForumTopicReopened|null
-         */
-        private $forum_topic_reopened;
-
-        /**
-         * @var GeneralForumTopicHidden|null
-         */
-        private $general_forum_topic_hidden;
-
-        /**
-         * @var GeneralForumTopicUnhidden|null
-         */
-        private $general_forum_topic_unhidden;
-
-        /**
-         * @var VideoChatScheduled|null
-         */
-        private $video_chat_scheduled;
-
-        /**
-         * @var VideoChatStarted|null
-         */
-        private $video_chat_started;
-
-        /**
-         * @var VideoChatEnded|null
-         */
-        private $video_chat_ended;
-
-        /**
-         * @var VideoChatParticipantsInvited|null
-         */
-        private $video_chat_participants_invited;
-
-        /**
-         * @var WebAppData|null
-         */
-        private $web_app_data;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
+        private ?array $new_chat_photo;
+        private bool $delete_chat_photo;
+        private bool $group_chat_created;
+        private bool $supergroup_chat_created;
+        private bool $channel_chat_created;
+        private ?MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed;
+        private ?int $migrate_to_chat_id;
+        private ?int $migrate_from_chat_id;
+        private ?MaybeInaccessibleMessage $pinned_message;
+        private ?Invoice $invoice;
+        private ?SuccessfulPayment $successful_payment;
+        private ?RefundedPayment $refunded_payment;
+        private ?UsersShared $users_shared;
+        private ?ChatShared $chat_shared;
+        private ?string $connected_website;
+        private ?WriteAccessAllowed $write_access_allowed;
+        private ?PassportData $passport_data;
+        private ?ProximityAlertTriggered $proximity_alert_triggered;
+        private ?ChatBoostAdded $boost_added;
+        private ?ChatBackground $chat_background_set;
+        private ?ForumTopicCreated $forum_topic_created;
+        private ?ForumTopicEdited $forum_topic_edited;
+        private ?ForumTopicClosed $forum_topic_closed;
+        private ?ForumTopicReopened $forum_topic_reopened;
+        private ?GeneralForumTopicHidden $general_forum_topic_hidden;
+        private ?GeneralForumTopicUnhidden $general_forum_topic_unhidden;
+        private ?GiveawayCreated $giveaway_created;
+        private ?Giveaway $giveaway;
+        private ?GiveawayWinners $giveaway_winners;
+        private ?GiveawayCompleted $giveaway_completed;
+        private ?VideoChatScheduled $video_chat_scheduled;
+        private ?VideoChatStarted $video_chat_started;
+        private ?VideoChatEnded $video_chat_ended;
+        private ?VideoChatParticipantsInvited $video_chat_participants_invited;
+        private ?WebAppData $web_app_data;
+        private ?InlineKeyboardMarkup $reply_markup;
 
         /**
          * Unique message identifier inside this chat
          *
-         * @return int|null
+         * @return int
          */
-        public function getMessageId(): ?int
+        public function getMessageId(): int
         {
             return $this->message_id;
         }
@@ -385,8 +129,8 @@
         }
 
         /**
-         * Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field
-         * contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+         * Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility,
+         * if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
          *
          * @return User|null
          */
@@ -396,10 +140,10 @@
         }
 
         /**
-         * Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts,
-         * the supergroup itself for messages from anonymous group administrators, the linked channel for messages
-         * automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake
-         * sender user in non-channel chats, if the message was sent on behalf of a chat.
+         * Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for
+         * messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to
+         * the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat,
+         * the field from contains a fake sender user in non-channel chats.
          *
          * @return Chat|null
          */
@@ -409,17 +153,40 @@
         }
 
         /**
-         * Date the message was sent in Unix time
+         * Optional. If the sender of the message boosted the chat, the number of boosts added by the user
          *
-         * @return int
+         * @return int|null
          */
-        public function getDate(): int
+        public function getSenderBoostCount(): ?int
         {
-            return $this->date;
+            return $this->sender_boost_count;
         }
 
         /**
-         * Conversation the message belongs to
+         * Optional. The bot that actually sent the message on behalf of the business account. Available only for
+         * outgoing messages sent on behalf of the connected business account.
+         *
+         * @return User|null
+         */
+        public function getSenderBusinessBot(): ?User
+        {
+            return $this->sender_business_bot;
+        }
+
+        /**
+         * Optional. Unique identifier of the business connection from which the message was received. If non-empty,
+         * the message belongs to a chat of the corresponding business account that is independent from any potential
+         * bot chat which might share the same identifier.
+         *
+         * @return string|null
+         */
+        public function getBusinessConnectionId(): ?string
+        {
+            return $this->business_connection_id;
+        }
+
+        /**
+         * Chat the message belongs to
          *
          * @return Chat|null
          */
@@ -429,66 +196,13 @@
         }
 
         /**
-         * Optional. For forwarded messages, sender of the original message
+         * Optional. Information about the original message for forwarded messages
          *
-         * @return User|null
+         * @return MessageOrigin|null
          */
-        public function getForwardFrom(): ?User
+        public function getForwardOrigin(): ?MessageOrigin
         {
-            return $this->forward_from;
-        }
-
-        /**
-         * Optional. For messages forwarded from channels or from anonymous administrators,
-         * information about the original sender chat
-         *
-         * @return Chat|null
-         */
-        public function getForwardFromChat(): ?Chat
-        {
-            return $this->forward_from_chat;
-        }
-
-        /**
-         * Optional. For messages forwarded from channels, identifier of the original message in the channel
-         *
-         * @return int|null
-         */
-        public function getForwardFromMessageId(): ?int
-        {
-            return $this->forward_from_message_id;
-        }
-
-        /**
-         * Optional. For forwarded messages that were originally sent in channels or by an anonymous chat
-         * administrator, signature of the message sender if present
-         *
-         * @return string|null
-         */
-        public function getForwardSignature(): ?string
-        {
-            return $this->forward_signature;
-        }
-
-        /**
-         * Optional. Sender's name for messages forwarded from users who disallow adding a link
-         * to their account in forwarded messages
-         *
-         * @return string|null
-         */
-        public function getForwardSenderName(): ?string
-        {
-            return $this->forward_sender_name;
-        }
-
-        /**
-         * Optional. For forwarded messages, date the original message was sent in Unix time
-         *
-         * @return int|null
-         */
-        public function getForwardDate(): ?int
-        {
-            return $this->forward_date;
+            return $this->forward_origin;
         }
 
         /**
@@ -502,8 +216,8 @@
         }
 
         /**
-         * Optional. True, if the message is a channel post that was automatically forwarded
-         * to the connected discussion group
+         * Optional. True, if the message is a channel post that was automatically forwarded to the
+         * connected discussion group
          *
          * @return bool
          */
@@ -513,14 +227,45 @@
         }
 
         /**
-         * Optional. For replies, the original message. Note that the Message object in this field will not contain
-         * further reply_to_message fields even if it itself is a reply.
+         * Optional. For replies in the same chat and message thread, the original message. Note that the Message
+         * object in this field will not contain further reply_to_message fields even if it itself is a reply.
          *
          * @return Message|null
          */
         public function getReplyToMessage(): ?Message
         {
             return $this->reply_to_message;
+        }
+
+        /**
+         * Optional. Information about the message that is being replied to, which may come from another
+         * chat or forum topic
+         *
+         * @return ExternalReplyInfo|null
+         */
+        public function getExternalReply(): ?ExternalReplyInfo
+        {
+            return $this->external_reply;
+        }
+
+        /**
+         * Optional. For replies that quote part of the original message, the quoted part of the message
+         *
+         * @return TextQuote|null
+         */
+        public function getQuote(): ?TextQuote
+        {
+            return $this->quote;
+        }
+
+        /**
+         * Optional. For replies to a story, the original story
+         *
+         * @return Story|null
+         */
+        public function getReplyToStory(): ?Story
+        {
+            return $this->reply_to_story;
         }
 
         /**
@@ -548,9 +293,20 @@
          *
          * @return bool
          */
-        public function hasProtectedContent(): bool
+        public function isHasProtectedContent(): bool
         {
             return $this->has_protected_content;
+        }
+
+        /**
+         * Optional. True, if the message was sent by an implicit action, for example,
+         * as an away or a greeting business message, or as a scheduled message
+         *
+         * @return bool
+         */
+        public function isIsFromOffline(): bool
+        {
+            return $this->is_from_offline;
         }
 
         /**
@@ -564,8 +320,8 @@
         }
 
         /**
-         * Optional. Signature of the post author for messages in channels,
-         * or the custom title of an anonymous group administrator
+         * Optional. Signature of the post author for messages in channels, or the custom title of an anonymous
+         * group administrator
          *
          * @return string|null
          */
@@ -585,14 +341,35 @@
         }
 
         /**
-         * Optional. For text messages, special entities like usernames, URLs, bot commands, etc.
-         * that appear in the text
+         * Optional. For text messages, special entities like usernames,
+         * URLs, bot commands, etc. that appear in the text
          *
          * @return MessageEntity[]|null
          */
         public function getEntities(): ?array
         {
             return $this->entities;
+        }
+
+        /**
+         * Optional. Options used for link preview generation for the message,
+         * if it is a text message and link preview options were changed
+         *
+         * @return LinkPreviewOptions|null
+         */
+        public function getLinkPreviewOptions(): ?LinkPreviewOptions
+        {
+            return $this->link_preview_options;
+        }
+
+        /**
+         * Optional. Unique identifier of the message effect added to the message
+         *
+         * @return string|null
+         */
+        public function getEffectId(): ?string
+        {
+            return $this->effect_id;
         }
 
         /**
@@ -627,6 +404,16 @@
         }
 
         /**
+         * Optional. Message contains paid media; information about the paid media
+         *
+         * @return PaidMediaInfo|null
+         */
+        public function getPaidMedia(): ?PaidMediaInfo
+        {
+            return $this->paid_media;
+        }
+
+        /**
          * Optional. Message is a photo, available sizes of the photo
          *
          * @return PhotoSize[]|null
@@ -647,6 +434,16 @@
         }
 
         /**
+         * Optional. Message is a forwarded story
+         *
+         * @return Story|null
+         */
+        public function getStory(): ?Story
+        {
+            return $this->story;
+        }
+
+        /**
          * Optional. Message is a video, information about the video
          *
          * @return Video|null
@@ -659,7 +456,6 @@
         /**
          * Optional. Message is a video note, information about the video message
          *
-         * @see https://telegram.org/blog/video-messages-and-telescope
          * @return VideoNote|null
          */
         public function getVideoNote(): ?VideoNote
@@ -678,7 +474,7 @@
         }
 
         /**
-         * Optional. Caption for the animation, audio, document, photo, video or voice
+         * Optional. Caption for the animation, audio, document, paid media, photo, video or voice
          *
          * @return string|null
          */
@@ -688,8 +484,8 @@
         }
 
         /**
-         * Optional. For messages with a caption, special entities like usernames, URLs,
-         * bot commands, etc. that appear in the caption
+         * Optional. For messages with a caption, special entities like usernames,
+         * URLs, bot commands, etc. that appear in the caption
          *
          * @return MessageEntity[]|null
          */
@@ -699,11 +495,21 @@
         }
 
         /**
+         * Optional. True, if the caption must be shown above the message media
+         *
+         * @return bool
+         */
+        public function isShowCaptionAboveMedia(): bool
+        {
+            return $this->show_caption_above_media;
+        }
+
+        /**
          * Optional. True, if the message media is covered by a spoiler animation
          *
          * @return bool
          */
-        public function hasMediaSpoiler(): bool
+        public function isHasMediaSpoiler(): bool
         {
             return $this->has_media_spoiler;
         }
@@ -729,7 +535,7 @@
         }
 
         /**
-         * Optional. Message is a game, information about the game.
+         * Optional. Message is a game, information about the game
          *
          * @see https://core.telegram.org/bots/api#games
          * @return Game|null
@@ -866,8 +672,8 @@
         }
 
         /**
-         * Optional. The group has been migrated to a supergroup with the specified identifier. This number may
-         * have more than 32 significant bits and some programming languages may have difficulty/silent defects in
+         * Optional. The group has been migrated to a supergroup with the specified identifier. This number may have
+         * more than 32 significant bits and some programming languages may have difficulty/silent defects in
          * interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision
          * float type are safe for storing this identifier.
          *
@@ -879,10 +685,10 @@
         }
 
         /**
-         * Optional. The supergroup has been migrated from a group with the specified identifier. This number may have
-         * more than 32 significant bits and some programming languages may have difficulty/silent defects in
-         * interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float
-         * type are safe for storing this identifier.
+         * Optional. The supergroup has been migrated from a group with the specified identifier. This number may
+         * have more than 32 significant bits and some programming languages may have difficulty/silent defects in
+         * interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision
+         * float type are safe for storing this identifier.
          *
          * @return int|null
          */
@@ -893,17 +699,17 @@
 
         /**
          * Optional. Specified message was pinned. Note that the Message object in this field will not contain further
-         * reply_to_message fields even if it is itself a reply.
+         * reply_to_message fields even if it itself is a reply.
          *
-         * @return Message|null
+         * @return MaybeInaccessibleMessage|null
          */
-        public function getPinnedMessage(): ?Message
+        public function getPinnedMessage(): ?MaybeInaccessibleMessage
         {
             return $this->pinned_message;
         }
 
         /**
-         * Optional. Message is an invoice for a payment, information about the invoice.
+         * Optional. Message is an invoice for a payment, information about the invoice
          *
          * @see https://core.telegram.org/bots/api#payments
          * @return Invoice|null
@@ -914,7 +720,7 @@
         }
 
         /**
-         * Optional. Message is a service message about a successful payment, information about the payment.
+         * Optional. Message is a service message about a successful payment, information about the payment
          *
          * @see https://core.telegram.org/bots/api#payments
          * @return SuccessfulPayment|null
@@ -925,13 +731,24 @@
         }
 
         /**
-         * Optional. Service message: a user was shared with the bot
+         * Optional. Message is a service message about a refunded payment, information about the payment
          *
-         * @return UserShared|null
+         * @see https://core.telegram.org/bots/api#payments
+         * @return RefundedPayment|null
          */
-        public function getUserShared(): ?UserShared
+        public function getRefundedPayment(): ?RefundedPayment
         {
-            return $this->user_shared;
+            return $this->refunded_payment;
+        }
+
+        /**
+         * Optional. Service message: users were shared with the bot
+         *
+         * @return UsersShared|null
+         */
+        public function getUsersShared(): ?UsersShared
+        {
+            return $this->users_shared;
         }
 
         /**
@@ -956,7 +773,9 @@
         }
 
         /**
-         * Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+         * Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or
+         * side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the
+         * method requestWriteAccess
          *
          * @return WriteAccessAllowed|null
          */
@@ -976,14 +795,34 @@
         }
 
         /**
-         * Optional. Service message. A user in the chat triggered another user's proximity alert while sharing
-         * Live Location.
+         * Optional. Service message. A user in the chat triggered another user's proximity alert
+         * while sharing Live Location.
          *
          * @return ProximityAlertTriggered|null
          */
         public function getProximityAlertTriggered(): ?ProximityAlertTriggered
         {
             return $this->proximity_alert_triggered;
+        }
+
+        /**
+         * Optional. Service message: user boosted the chat
+         *
+         * @return ChatBoostAdded|null
+         */
+        public function getBoostAdded(): ?ChatBoostAdded
+        {
+            return $this->boost_added;
+        }
+
+        /**
+         * Optional. Service message: chat background set
+         *
+         * @return ChatBackground|null
+         */
+        public function getChatBackgroundSet(): ?ChatBackground
+        {
+            return $this->chat_background_set;
         }
 
         /**
@@ -1047,6 +886,46 @@
         }
 
         /**
+         * Optional. Service message: a scheduled giveaway was created
+         *
+         * @return GiveawayCreated|null
+         */
+        public function getGiveawayCreated(): ?GiveawayCreated
+        {
+            return $this->giveaway_created;
+        }
+
+        /**
+         * Optional. The message is a scheduled giveaway message
+         *
+         * @return Giveaway|null
+         */
+        public function getGiveaway(): ?Giveaway
+        {
+            return $this->giveaway;
+        }
+
+        /**
+         * Optional. A giveaway with public winners was completed
+         *
+         * @return GiveawayWinners|null
+         */
+        public function getGiveawayWinners(): ?GiveawayWinners
+        {
+            return $this->giveaway_winners;
+        }
+
+        /**
+         * Optional. Service message: a giveaway without public winners was completed
+         *
+         * @return GiveawayCompleted|null
+         */
+        public function getGiveawayCompleted(): ?GiveawayCompleted
+        {
+            return $this->giveaway_completed;
+        }
+
+        /**
          * Optional. Service message: video chat scheduled
          *
          * @return VideoChatScheduled|null
@@ -1097,7 +976,8 @@
         }
 
         /**
-         * Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
+         * Optional. Inline keyboard attached to the message.
+         * login_url buttons are represented as ordinary url buttons.
          *
          * @return InlineKeyboardMarkup|null
          */
@@ -1107,202 +987,185 @@
         }
 
         /**
-         * Returns an array representation of this object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
-            return [
+            return array_filter([
                 'message_id' => $this->message_id,
                 'message_thread_id' => $this->message_thread_id,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
-                'sender_chat' => ($this->sender_chat instanceof ObjectTypeInterface) ? $this->sender_chat->toArray() : null,
+                'from' => $this->from?->toArray(),
+                'sender_chat' => $this->sender_chat?->toArray(),
+                'sender_boost_count' => $this->sender_boost_count,
+                'sender_business_bot' => $this->sender_business_bot?->toArray(),
                 'date' => $this->date,
-                'chat' => ($this->chat instanceof ObjectTypeInterface) ? $this->chat->toArray() : null,
-                'forward_from' => ($this->forward_from instanceof ObjectTypeInterface) ? $this->forward_from->toArray() : null,
-                'forward_from_chat' => ($this->forward_from_chat instanceof ObjectTypeInterface) ? $this->forward_from_chat->toArray() : null,
-                'forward_from_message_id' => $this->forward_from_message_id,
-                'forward_signature' => $this->forward_signature,
-                'forward_sender_name' => $this->forward_sender_name,
-                'forward_date' => $this->forward_date,
+                'business_connection_id' => $this->business_connection_id,
+                'chat' => $this->chat?->toArray(),
+                'forward_origin' => $this->forward_origin?->toArray(),
                 'is_topic_message' => $this->is_topic_message,
                 'is_automatic_forward' => $this->is_automatic_forward,
-                'reply_to_message' => ($this->reply_to_message instanceof ObjectTypeInterface) ? $this->reply_to_message->toArray() : null,
-                'via_bot' => ($this->via_bot instanceof ObjectTypeInterface) ? $this->via_bot->toArray() : null,
+                'reply_to_message' => $this->reply_to_message?->toArray(),
+                'external_reply' => $this->external_reply?->toArray(),
+                'quote' => $this->quote?->toArray(),
+                'reply_to_story' => $this->reply_to_story?->toArray(),
+                'via_bot' => $this->via_bot?->toArray(),
                 'edit_date' => $this->edit_date,
                 'has_protected_content' => $this->has_protected_content,
+                'is_from_offline' => $this->is_from_offline,
                 'media_group_id' => $this->media_group_id,
                 'author_signature' => $this->author_signature,
                 'text' => $this->text,
-                'entities' => is_array($this->entities) ? array_map(function ($entity) {
-                    if ($entity instanceof ObjectTypeInterface)
-                    {
-                        return $entity->toArray();
-                    }
-                    return $entity;
-                }, $this->entities) : null,
-                'animation' => ($this->animation instanceof ObjectTypeInterface) ? $this->animation->toArray() : null,
-                'audio' => ($this->audio instanceof ObjectTypeInterface) ? $this->audio->toArray() : null,
-                'document' => ($this->document instanceof ObjectTypeInterface) ? $this->document->toArray() : null,
-                'photo' => is_array($this->photo) ? array_map(function ($photo) {
-                    if ($photo instanceof ObjectTypeInterface)
-                    {
-                        return $photo->toArray();
-                    }
-                    return $photo;
-                }, $this->photo) : null,
-                'sticker' => ($this->sticker instanceof ObjectTypeInterface) ? $this->sticker->toArray() : null,
-                'video' => ($this->video instanceof ObjectTypeInterface) ? $this->video->toArray() : null,
-                'video_note' => ($this->video_note instanceof ObjectTypeInterface) ? $this->video_note->toArray() : null,
-                'voice' => ($this->voice instanceof ObjectTypeInterface) ? $this->voice->toArray() : null,
+                'entities' => $this->entities? array_map(fn($item) => $item->toArray(), $this->entities) : null,
+                'link_preview_options' => $this->link_preview_options?->toArray(),
+                'effect_id' => $this->effect_id,
+                'animation' => $this->animation?->toArray(),
+                'audio' => $this->audio?->toArray(),
+                'document' => $this->document?->toArray(),
+                'paid_media' => $this->paid_media?->toArray(),
+                'photo' => $this->photo? array_map(fn($item) => $item->toArray(), $this->photo) : null,
+                'sticker' => $this->sticker?->toArray(),
+                'story' => $this->story?->toArray(),
+                'video' => $this->video?->toArray(),
+                'video_note' => $this->video_note?->toArray(),
+                'voice' => $this->voice?->toArray(),
                 'caption' => $this->caption,
-                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($caption_entity) {
-                    if ($caption_entity instanceof ObjectTypeInterface)
-                    {
-                        return $caption_entity->toArray();
-                    }
-                    return $caption_entity;
-                }, $this->caption_entities) : null,
+                'caption_entities' => $this->caption_entities? array_map(fn($item) => $item->toArray(), $this->caption_entities) : null,
+                'show_caption_above_media' => $this->show_caption_above_media,
                 'has_media_spoiler' => $this->has_media_spoiler,
-                'contact' => ($this->contact instanceof ObjectTypeInterface) ? $this->contact->toArray() : null,
-                'dice' => ($this->dice instanceof ObjectTypeInterface) ? $this->dice->toArray() : null,
-                'game' => ($this->game instanceof ObjectTypeInterface) ? $this->game->toArray() : null,
-                'poll' => ($this->poll instanceof ObjectTypeInterface) ? $this->poll->toArray() : null,
-                'venue' => ($this->venue instanceof ObjectTypeInterface) ? $this->venue->toArray() : null,
-                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : null,
-                'new_chat_members' => is_array($this->new_chat_members) ? array_map(function ($new_chat_member) {
-                    if ($new_chat_member instanceof ObjectTypeInterface)
-                    {
-                        return $new_chat_member->toArray();
-                    }
-                    return $new_chat_member;
-                }, $this->new_chat_members) : null,
-                'left_chat_member' => ($this->left_chat_member instanceof ObjectTypeInterface) ? $this->left_chat_member->toArray() : null,
+                'contact' => $this->contact?->toArray(),
+                'dice' => $this->dice?->toArray(),
+                'game' => $this->game?->toArray(),
+                'poll' => $this->poll?->toArray(),
+                'venue' => $this->venue?->toArray(),
+                'location' => $this->location?->toArray(),
+                'new_chat_members' => $this->new_chat_members? array_map(fn($item) => $item->toArray(), $this->new_chat_members) : null,
+                'left_chat_member' => $this->left_chat_member?->toArray(),
                 'new_chat_title' => $this->new_chat_title,
-                'new_chat_photo' => is_array($this->new_chat_photo) ? array_map(function ($new_chat_photo) {
-                    if ($new_chat_photo instanceof ObjectTypeInterface)
-                    {
-                        return $new_chat_photo->toArray();
-                    }
-                    return $new_chat_photo;
-                }, $this->new_chat_photo) : null,
+                'new_chat_photo' => $this->new_chat_photo? array_map(fn($item) => $item->toArray(), $this->new_chat_photo) : null,
                 'delete_chat_photo' => $this->delete_chat_photo,
                 'group_chat_created' => $this->group_chat_created,
                 'supergroup_chat_created' => $this->supergroup_chat_created,
                 'channel_chat_created' => $this->channel_chat_created,
-                'message_auto_delete_timer_changed' => ($this->message_auto_delete_timer_changed instanceof ObjectTypeInterface) ? $this->message_auto_delete_timer_changed->toArray() : null,
+                'message_auto_delete_timer_changed' => $this->message_auto_delete_timer_changed?->toArray(),
                 'migrate_to_chat_id' => $this->migrate_to_chat_id,
-                'pinned_message' => ($this->pinned_message instanceof ObjectTypeInterface) ? $this->pinned_message->toArray() : null,
-                'invoice' => ($this->invoice instanceof ObjectTypeInterface) ? $this->invoice->toArray() : null,
-                'successful_payment' => ($this->successful_payment instanceof ObjectTypeInterface) ? $this->successful_payment->toArray() : null,
-                'user_shared' => ($this->user_shared instanceof ObjectTypeInterface) ? $this->user_shared->toArray() : null,
-                'chat_shared' => ($this->chat_shared instanceof ObjectTypeInterface) ? $this->chat_shared->toArray() : null,
+                'migrate_from_chat_id' => $this->migrate_from_chat_id,
+                'pinned_message' => $this->pinned_message?->toArray(),
+                'invoice' => $this->invoice?->toArray(),
+                'successful_payment' => $this->successful_payment?->toArray(),
+                'refunded_payment' => $this->refunded_payment?->toArray(),
+                'users_shared' => $this->users_shared?->toArray(),
+                'chat_shared' => $this->chat_shared?->toArray(),
                 'connected_website' => $this->connected_website,
-                'write_access_allowed' => ($this->write_access_allowed instanceof ObjectTypeInterface) ? $this->write_access_allowed->toArray() : null,
-                'passport_data' => ($this->passport_data instanceof ObjectTypeInterface) ? $this->passport_data->toArray() : null,
-                'proximity_alert_triggered' => ($this->proximity_alert_triggered instanceof ObjectTypeInterface) ? $this->proximity_alert_triggered->toArray() : null,
-                'forum_topic_created' => ($this->forum_topic_created instanceof ObjectTypeInterface) ? $this->forum_topic_created->toArray() : null,
-                'forum_topic_edited' => ($this->forum_topic_edited instanceof ObjectTypeInterface) ? $this->forum_topic_edited->toArray() : null,
-                'forum_topic_closed' => ($this->forum_topic_closed instanceof ObjectTypeInterface) ? $this->forum_topic_closed->toArray() : null,
-                'forum_topic_reopened' => ($this->forum_topic_reopened instanceof ObjectTypeInterface) ? $this->forum_topic_reopened->toArray() : null,
-                'general_forum_topic_hidden' => ($this->general_forum_topic_hidden instanceof ObjectTypeInterface) ? $this->general_forum_topic_hidden->toArray() : null,
-                'general_forum_topic_unhidden' => ($this->general_forum_topic_unhidden instanceof ObjectTypeInterface) ? $this->general_forum_topic_unhidden->toArray() : null,
-                'video_chat_scheduled' => ($this->video_chat_scheduled instanceof ObjectTypeInterface) ? $this->video_chat_scheduled->toArray() : null,
-                'video_chat_started' => ($this->video_chat_started instanceof ObjectTypeInterface) ? $this->video_chat_started->toArray() : null,
-                'video_chat_ended' => ($this->video_chat_ended instanceof ObjectTypeInterface) ? $this->video_chat_ended->toArray() : null,
-                'video_chat_participants_invited' => ($this->video_chat_participants_invited instanceof ObjectTypeInterface) ? $this->video_chat_participants_invited->toArray() : null,
-                'web_app_data' => ($this->web_app_data instanceof ObjectTypeInterface) ? $this->web_app_data->toArray() : null,
-                'reply_markup' => ($this->reply_markup instanceof ObjectTypeInterface) ? $this->reply_markup->toArray() : null,
-            ];
+                'write_access_allowed' => $this->write_access_allowed?->toArray(),
+                'passport_data' => $this->passport_data?->toArray(),
+                'proximity_alert_triggered' => $this->proximity_alert_triggered?->toArray(),
+                'boost_added' => $this->boost_added?->toArray(),
+                'chat_background_set' => $this->chat_background_set?->toArray(),
+                'forum_topic_created' => $this->forum_topic_created?->toArray(),
+                'forum_topic_edited' => $this->forum_topic_edited?->toArray(),
+                'forum_topic_closed' => $this->forum_topic_closed?->toArray(),
+                'forum_topic_reopened' => $this->forum_topic_reopened?->toArray(),
+                'general_forum_topic_hidden' => $this->general_forum_topic_hidden?->toArray(),
+                'general_forum_topic_unhidden' => $this->general_forum_topic_unhidden?->toArray(),
+                'giveaway_created' => $this->giveaway_created?->toArray(),
+                'giveaway' => $this->giveaway?->toArray(),
+                'giveaway_winners' => $this->giveaway_winners?->toArray(),
+                'giveaway_completed' => $this->giveaway_completed?->toArray(),
+                'video_chat_scheduled' => $this->video_chat_scheduled?->toArray(),
+                'video_chat_started' => $this->video_chat_started?->toArray(),
+                'video_chat_ended' => $this->video_chat_ended?->toArray(),
+                'video_chat_participants_invited' => $this->video_chat_participants_invited?->toArray(),
+                'web_app_data' => $this->web_app_data?->toArray(),
+                'reply_markup' => $this->reply_markup?->toArray()
+            ]);
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return Message
+         * @inheritDoc
          */
         public static function fromArray(array $data): Message
         {
             $object = new self();
 
-            $object->message_id = $data['message_id'] ?? null;
+            $object->message_id = $data['message_id'];
             $object->message_thread_id = $data['message_thread_id'] ?? null;
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->sender_chat = isset($data['sender_chat']) ? Chat::fromArray($data['sender_chat']) : null;
+            $object->sender_boost_count = $data['sender_boost_count'] ?? null;
+            $object->sender_business_bot = isset($data['sender_business_bot']) ? User::fromArray($data['sender_business_bot']) : null;
             $object->date = $data['date'] ?? null;
+            $object->business_connection_id = $data['business_connection_id'] ?? null;
             $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : null;
-            $object->forward_from = isset($data['forward_from']) ? User::fromArray($data['forward_from']) : null;
-            $object->forward_from_chat = isset($data['forward_from_chat']) ? Chat::fromArray($data['forward_from_chat']) : null;
-            $object->forward_from_message_id = $data['forward_from_message_id'] ?? null;
-            $object->forward_signature = $data['forward_signature'] ?? null;
-            $object->forward_sender_name = $data['forward_sender_name'] ?? null;
-            $object->forward_date = $data['forward_date'] ?? null;
-            $object->is_topic_message = $data['is_topic_message'] ?? null;
-            $object->is_automatic_forward = $data['is_automatic_forward'] ?? null;
-            $object->reply_to_message = isset($data['reply_to_message']) ? self::fromArray($data['reply_to_message']) : null;
+            $object->forward_origin = isset($data['forward_origin']) ? MessageOrigin::fromArray($data['forward_origin']) : null;
+            $object->is_topic_message = $data['is_topic_message'] ?? false;
+            $object->is_automatic_forward = $data['is_automatic_forward'] ?? false;
+            $object->reply_to_message = isset($data['reply_to_message']) ? Message::fromArray($data['reply_to_message']) : null;
+            $object->external_reply = isset($data['external_reply']) ? ExternalReplyInfo::fromArray($data['external_reply']) : null;
+            $object->quote = isset($data['quote']) ? TextQuote::fromArray($data['quote']) : null;
+            $object->reply_to_story = isset($data['reply_to_story']) ? Story::fromArray($data['reply_to_story']) : null;
             $object->via_bot = isset($data['via_bot']) ? User::fromArray($data['via_bot']) : null;
             $object->edit_date = $data['edit_date'] ?? null;
-            $object->has_protected_content = $data['has_protected_content'] ?? null;
+            $object->has_protected_content = $data['has_protected_content'] ?? false;
+            $object->is_from_offline = $data['is_from_offline'] ?? false;
             $object->media_group_id = $data['media_group_id'] ?? null;
             $object->author_signature = $data['author_signature'] ?? null;
             $object->text = $data['text'] ?? null;
-            $object->entities = isset($data['entities']) && is_array($data['entities']) ? array_map(function ($item) {
-                return MessageEntity::fromArray($item);
-            }, $data['entities']) : null;
+            $object->entities = isset($data['entities']) ? array_map(fn($item) => MessageEntity::fromArray($item), $data['entities']) : null;
+            $object->link_preview_options = isset($data['link_preview_options']) ? LinkPreviewOptions::fromArray($data['link_preview_options']) : null;
+            $object->effect_id = $data['effect_id'] ?? null;
             $object->animation = isset($data['animation']) ? Animation::fromArray($data['animation']) : null;
             $object->audio = isset($data['audio']) ? Audio::fromArray($data['audio']) : null;
             $object->document = isset($data['document']) ? Document::fromArray($data['document']) : null;
-            $object->photo = isset($data['photo']) && is_array($data['photo']) ? array_map(function ($item)
-            {
-                return PhotoSize::fromArray($item);
-            }, $data['photo']) : null;
+            $object->paid_media = isset($data['paid_media']) ? PaidMedia::fromArray($data['paid_media']) : null;
+            $object->photo = isset($data['photo']) ? array_map(fn($item) => PhotoSize::fromArray($item), $data['photo']) : null;
             $object->sticker = isset($data['sticker']) ? Sticker::fromArray($data['sticker']) : null;
+            $object->story = isset($data['story']) ? Story::fromArray($data['story']) : null;
             $object->video = isset($data['video']) ? Video::fromArray($data['video']) : null;
             $object->video_note = isset($data['video_note']) ? VideoNote::fromArray($data['video_note']) : null;
             $object->voice = isset($data['voice']) ? Voice::fromArray($data['voice']) : null;
             $object->caption = $data['caption'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) && is_array($data['caption_entities']) ? array_map(function ($item) {
-                return MessageEntity::fromArray($item);
-            }, $data['caption_entities']) : null;
-            $object->has_media_spoiler = $data['has_media_spoiler'] ?? null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn($item) => MessageEntity::fromArray($item), $data['caption_entities']) : null;
+            $object->show_caption_above_media = $data['show_caption_above_media'] ?? false;
+            $object->has_media_spoiler = $data['has_media_spoiler'] ?? false;
             $object->contact = isset($data['contact']) ? Contact::fromArray($data['contact']) : null;
             $object->dice = isset($data['dice']) ? Dice::fromArray($data['dice']) : null;
             $object->game = isset($data['game']) ? Game::fromArray($data['game']) : null;
             $object->poll = isset($data['poll']) ? Poll::fromArray($data['poll']) : null;
             $object->venue = isset($data['venue']) ? Venue::fromArray($data['venue']) : null;
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
-            $object->new_chat_members = isset($data['new_chat_members']) && is_array($data['new_chat_members']) ? array_map(function ($item) {
-                return User::fromArray($item);
-            }, $data['new_chat_members']) : null;
+            $object->new_chat_members = isset($data['new_chat_members']) ? array_map(fn($item) => User::fromArray($data), $data['new_chat_members']) : null;
             $object->left_chat_member = isset($data['left_chat_member']) ? User::fromArray($data['left_chat_member']) : null;
             $object->new_chat_title = $data['new_chat_title'] ?? null;
-            $object->new_chat_photo = isset($data['new_chat_photo']) && is_array($data['new_chat_photo']) ? array_map(function ($item) {
-                return PhotoSize::fromArray($item);
-            }, $data['new_chat_photo']) : null;
-            $object->delete_chat_photo = $data['delete_chat_photo'] ?? null;
-            $object->group_chat_created = $data['group_chat_created'] ?? null;
-            $object->supergroup_chat_created = $data['supergroup_chat_created'] ?? null;
-            $object->channel_chat_created = $data['channel_chat_created'] ?? null;
+            $object->new_chat_photo = isset($data['new_chat_photo']) ? array_map(fn($item) => PhotoSize::fromArray($data), $data['new_chat_photo']): null;
+            $object->delete_chat_photo = $data['delete_chat_photo'] ?? false;
+            $object->group_chat_created = $data['group_chat_created'] ?? false;
+            $object->supergroup_chat_created = $data['supergroup_chat_created'] ?? false;
+            $object->channel_chat_created = $data['channel_chat_created'] ?? false;
             $object->message_auto_delete_timer_changed = isset($data['message_auto_delete_timer_changed']) ? MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']) : null;
             $object->migrate_to_chat_id = $data['migrate_to_chat_id'] ?? null;
             $object->migrate_from_chat_id = $data['migrate_from_chat_id'] ?? null;
-            $object->pinned_message = isset($data['pinned_message']) ? self::fromArray($data['pinned_message']) : null;
+            $object->pinned_message = isset($data['pinned_message']) ? MaybeInaccessibleMessage::fromArray($data['pinned_message']) : null;
             $object->invoice = isset($data['invoice']) ? Invoice::fromArray($data['invoice']) : null;
             $object->successful_payment = isset($data['successful_payment']) ? SuccessfulPayment::fromArray($data['successful_payment']) : null;
-            $object->user_shared = isset($data['user_shared']) ? UserShared::fromArray($data['user_shared']) : null;
+            $object->refunded_payment = isset($data['refunded_payment']) ? RefundedPayment::fromArray($data['refunded_payment']) : null;
+            $object->users_shared = isset($data['users_shared']) ? UsersShared::fromArray($data['users_shared']) : null;
             $object->chat_shared = isset($data['chat_shared']) ? ChatShared::fromArray($data['chat_shared']) : null;
             $object->connected_website = $data['connected_website'] ?? null;
             $object->write_access_allowed = isset($data['write_access_allowed']) ? WriteAccessAllowed::fromArray($data['write_access_allowed']) : null;
             $object->passport_data = isset($data['passport_data']) ? PassportData::fromArray($data['passport_data']) : null;
             $object->proximity_alert_triggered = isset($data['proximity_alert_triggered']) ? ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']) : null;
+            $object->boost_added = isset($data['boost_added']) ? ChatBoostAdded::fromArray($data['boost_added']) : null;
+            $object->chat_background_set = isset($data['chat_background_set']) ? ChatBackground::fromArray($data['chat_background_set']) : null;
             $object->forum_topic_created = isset($data['forum_topic_created']) ? ForumTopicCreated::fromArray($data['forum_topic_created']) : null;
             $object->forum_topic_edited = isset($data['forum_topic_edited']) ? ForumTopicEdited::fromArray($data['forum_topic_edited']) : null;
             $object->forum_topic_closed = isset($data['forum_topic_closed']) ? ForumTopicClosed::fromArray($data['forum_topic_closed']) : null;
             $object->forum_topic_reopened = isset($data['forum_topic_reopened']) ? ForumTopicReopened::fromArray($data['forum_topic_reopened']) : null;
             $object->general_forum_topic_hidden = isset($data['general_forum_topic_hidden']) ? GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']) : null;
             $object->general_forum_topic_unhidden = isset($data['general_forum_topic_unhidden']) ? GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']) : null;
+            $object->giveaway_created = isset($data['giveaway_created']) ? GiveawayCreated::fromArray($data['giveaway_created']) : null;
+            $object->giveaway = isset($data['giveaway']) ? GiveawayCreated::fromArray($data['giveaway']) : null;
+            $object->giveaway_winners = isset($data['giveaway_winners']) ? GiveawayWinners::fromArray($data['giveaway_winners']) : null;
+            $object->giveaway_completed = isset($data['giveaway_completed']) ? GiveawayCompleted::fromArray($data['giveaway_completed']) : null;
             $object->video_chat_scheduled = isset($data['video_chat_scheduled']) ? VideoChatScheduled::fromArray($data['video_chat_scheduled']) : null;
             $object->video_chat_started = isset($data['video_chat_started']) ? VideoChatStarted::fromArray($data['video_chat_started']) : null;
             $object->video_chat_ended = isset($data['video_chat_ended']) ? VideoChatEnded::fromArray($data['video_chat_ended']) : null;
