@@ -92,7 +92,7 @@ import('net.nosial.tgbotlib');
 
 $bot = new TgBotLib\BotOld('<BOT TOKEN>');
 
-/** @var \TgBotLib\Objects\Telegram\Update $update */
+/** @var \TgBotLib\Objects\Update $update */
 foreach ($bot->getUpdates() as $update)
 {
     $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
@@ -152,7 +152,7 @@ To implement a single-threaded bot, it's very self-explanatory, you just need to
     // Loop forever
     while(true)
     {
-        /** @var \TgBotLib\Objects\Telegram\Update $update */
+        /** @var \TgBotLib\Objects\Update $update */
         foreach ($bot->getUpdates() as $update)
         {
             $bot->sendMessage($update->getMessage()->getChat()->getId(), 'Hello World!');
@@ -261,9 +261,7 @@ all the information about the update.
 
     namespace commands;
 
-    use TgBotLib\BotOld;
-    use TgBotLib\Interfaces\CommandInterface;
-    use TgBotLib\Objects\Telegram\Update;
+    use TgBotLib\BotOld;use TgBotLib\Interfaces\CommandInterface;use TgBotLib\Objects\Update;
 
     class StartCommand extends CommandInterface
     {
@@ -296,9 +294,7 @@ And the interface EventInterface is used instead of CommandInterface:
 
     namespace events;
 
-    use TgBotLib\BotOld;
-    use TgBotLib\Interfaces\EventInterface;
-    use TgBotLib\Objects\Telegram\Update;
+    use TgBotLib\BotOld;use TgBotLib\Interfaces\EventInterface;use TgBotLib\Objects\Update;
 
     class MessageEvent implements EventInterface
     {

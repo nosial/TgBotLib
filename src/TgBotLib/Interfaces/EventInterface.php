@@ -3,7 +3,7 @@
     namespace TgBotLib\Interfaces;
 
     use TgBotLib\BotOld;
-    use TgBotLib\Objects\Telegram\Update;
+    use TgBotLib\Objects\Update;
 
     interface EventInterface
     {

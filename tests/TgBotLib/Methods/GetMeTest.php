@@ -4,7 +4,7 @@ namespace TgBotLib\Methods;
 
 use PHPUnit\Framework\TestCase;
 use TgBotLib\Bot;
-use TgBotLib\Objects\Telegram\User;
+use TgBotLib\Objects\User;
 
 class GetMeTest extends TestCase
 {

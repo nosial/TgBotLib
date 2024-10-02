@@ -5,7 +5,7 @@ namespace TgBotLib\Methods;
 use TgBotLib\Abstracts\Method;
 use TgBotLib\Bot;
 use TgBotLib\Enums\Methods;
-use TgBotLib\Objects\Telegram\User;
+use TgBotLib\Objects\User;
 
 class GetMe extends Method
 {

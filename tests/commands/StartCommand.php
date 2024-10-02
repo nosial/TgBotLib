@@ -5,7 +5,7 @@
     use TgBotLib\BotOld;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\CommandInterface;
-    use TgBotLib\Objects\Telegram\Update;
+    use TgBotLib\Objects\Update;
 
     class StartCommand implements CommandInterface
     {

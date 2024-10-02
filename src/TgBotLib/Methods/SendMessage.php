@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use TgBotLib\Abstracts\Method;
 use TgBotLib\Bot;
 use TgBotLib\Enums\Methods;
-use TgBotLib\Objects\Telegram\Message;
+use TgBotLib\Objects\Message;
 
 class SendMessage extends Method
 {
