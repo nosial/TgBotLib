@@ -9,107 +9,25 @@
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
-    class ChatMemberRestricted implements ObjectTypeInterface
+    class ChatMemberRestricted extends ChatMember implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $status;
-
-        /**
-         * @var User
-         */
-        private $user;
-
-        /**
-         * @var bool
-         */
-        private $is_member;
-
-        /**
-         * @var bool
-         */
-        private $can_send_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_send_audios;
-
-        /**
-         * @var bool
-         */
-        private $can_send_documents;
-
-        /**
-         * @var bool
-         */
-        private $can_send_photos;
-
-        /**
-         * @var bool
-         */
-        private $can_send_videos;
-
-        /**
-         * @var bool
-         */
-        private $can_send_video_notes;
-
-        /**
-         * @var bool
-         */
-        private $can_send_voice_notes;
-
-        /**
-         * @var bool
-         */
-        private $can_send_polls;
-
-        /**
-         * @var bool
-         */
-        private $can_send_other_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_add_web_page_previews;
-
-        /**
-         * @var bool
-         */
-        private $can_change_info;
-
-        /**
-         * @var bool
-         */
-        private $can_invite_users;
-
-        /**
-         * @var bool
-         */
-        private $can_pin_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_manage_topics;
-
-        /**
-         * @var int
-         */
-        private $until_date;
-
-        /**
-         * The member's status in the chat, always “restricted”
-         *
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
-        }
+        private User $user;
+        private bool $is_member;
+        private bool $can_send_messages;
+        private bool $can_send_audios;
+        private bool $can_send_documents;
+        private bool $can_send_photos;
+        private bool $can_send_videos;
+        private bool $can_send_video_notes;
+        private bool $can_send_voice_notes;
+        private bool $can_send_polls;
+        private bool $can_send_other_messages;
+        private bool $can_add_web_page_previews;
+        private bool $can_change_info;
+        private bool $can_invite_users;
+        private bool $can_pin_messages;
+        private bool $can_manage_topics;
+        private int $until_date;
 
         /**
          * Information about the user
@@ -282,15 +200,13 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'status' => $this->status,
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : $this->user,
+                'status' => $this->status->value,
+                'user' => $this->user?->toArray(),
                 'is_member' => $this->is_member,
                 'can_send_messages' => $this->can_send_messages,
                 'can_send_audios' => $this->can_send_audios,
@@ -311,17 +227,12 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatMemberRestricted
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): ChatMemberRestricted
         {
             $object = new static();
-
-            $object->status = $data['status'] ?? ChatMemberStatus::RESTRICTED;
+            $object->status = ChatMemberStatus::RESTRICTED;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->is_member = $data['is_member'] ?? false;
             $object->can_send_messages = $data['can_send_messages'] ?? false;
@@ -339,38 +250,6 @@
             $object->can_pin_messages = $data['can_pin_messages'] ?? false;
             $object->can_manage_topics = $data['can_manage_topics'] ?? false;
             $object->until_date = $data['until_date'] ?? 0;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from ChatMember
-         *
-         * @param ChatMember $chatMember
-         * @return static
-         */
-        public static function fromChatMember(ChatMember $chatMember): self
-        {
-            $object = new static();
-
-            $object->status = $chatMember->getStatus();
-            $object->user = $chatMember->getUser();
-            $object->is_member = $chatMember->isMember();
-            $object->can_send_messages = $chatMember->canSendMessages();
-            $object->can_send_audios = $chatMember->canSendAudios();
-            $object->can_send_documents = $chatMember->canSendDocuments();
-            $object->can_send_photos = $chatMember->canSendPhotos();
-            $object->can_send_videos = $chatMember->canSendVideos();
-            $object->can_send_video_notes = $chatMember->canSendVideoNotes();
-            $object->can_send_voice_notes = $chatMember->canSendVoiceNotes();
-            $object->can_send_polls = $chatMember->canSendPolls();
-            $object->can_send_other_messages = $chatMember->canSendOtherMessages();
-            $object->can_add_web_page_previews = $chatMember->canAddWebPagePreviews();
-            $object->can_change_info = $chatMember->canChangeInfo();
-            $object->can_invite_users = $chatMember->canInviteUsers();
-            $object->can_pin_messages = $chatMember->canPinMessages();
-            $object->can_manage_topics = $chatMember->canManageTopics();
-            $object->until_date = $chatMember->getUntilDate();
 
             return $object;
         }

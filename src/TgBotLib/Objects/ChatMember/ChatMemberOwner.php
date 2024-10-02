@@ -9,37 +9,11 @@
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
-    class ChatMemberOwner implements ObjectTypeInterface
+    class ChatMemberOwner extends ChatMember implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $status;
-
-        /**
-         * @var User
-         */
-        private $user;
-
-        /**
-         * @var bool
-         */
-        private $is_anonymous;
-
-        /**
-         * @var string|null
-         */
-        private $custom_title;
-
-        /**
-         * The member's status in the chat, always “creator”
-         *
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
-        }
+        private User $user;
+        private bool $is_anonymous;
+        private ?string $custom_title;
 
         /**
          * Information about the user
@@ -72,52 +46,28 @@
         }
 
         /**
-         * Returns an array representation of this object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'status' => $this->status,
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : $this->user,
+                'status' => $this->status->value,
+                'user' => $this->user?->toArray(),
                 'is_anonymous' => $this->is_anonymous,
                 'custom_title' => $this->custom_title
             ];
         }
 
         /**
-         * Constructs ChatMemberOwner object from an array representation
-         *
-         * @param array $data
-         * @return ChatMemberOwner
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): ChatMemberOwner
         {
             $object = new ChatMemberOwner();
-
-            $object->status = $data['status'] ?? ChatMemberStatus::CREATOR;
+            $object->status = ChatMemberStatus::CREATOR;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->is_anonymous = $data['is_anonymous'] ?? false;
             $object->custom_title = $data['custom_title'] ?? null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs ChatMemberOwner object from ChatMember object
-         *
-         * @param ChatMember $chatMember
-         * @return ChatMemberOwner
-         */
-        public static function fromChatMember(ChatMember $chatMember): ChatMemberOwner
-        {
-            $object = new ChatMemberOwner();
-
-            $object->status = $chatMember->getStatus();
-            $object->user = $chatMember->getUser();
-            $object->is_anonymous = $chatMember->isAnonymous();
-            $object->custom_title = $chatMember->getCustomTitle();
 
             return $object;
         }

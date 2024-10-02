@@ -9,97 +9,23 @@
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
-    class ChatMemberAdministrator implements ObjectTypeInterface
+    class ChatMemberAdministrator extends ChatMember implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $status;
-
-        /**
-         * @var User
-         */
-        private $user;
-
-        /**
-         * @var bool
-         */
-        private $can_be_edited;
-
-        /**
-         * @var bool
-         */
-        private $is_anonymous;
-
-        /**
-         * @var bool
-         */
-        private $can_manage_chat;
-
-        /**
-         * @var bool
-         */
-        private $can_delete_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_manage_video_chats;
-
-        /**
-         * @var bool
-         */
-        private $can_restrict_members;
-
-        /**
-         * @var bool
-         */
-        private $can_promote_members;
-
-        /**
-         * @var bool
-         */
-        private $can_change_info;
-
-        /**
-         * @var bool
-         */
-        private $can_invite_users;
-
-        /**
-         * @var bool
-         */
-        private $can_post_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_edit_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_pin_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_manage_topics;
-
-        /**
-         * @var string|null
-         */
-        private $custom_title;
-
-        /**
-         * The member's status in the chat, always “administrator”
-         *
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
-        }
+        private User $user;
+        private bool $can_be_edited;
+        private bool $is_anonymous;
+        private bool $can_manage_chat;
+        private bool $can_delete_messages;
+        private bool $can_manage_video_chats;
+        private bool $can_restrict_members;
+        private bool $can_promote_members;
+        private bool $can_change_info;
+        private bool $can_invite_users;
+        private bool $can_post_messages;
+        private bool $can_edit_messages;
+        private bool $can_pin_messages;
+        private bool $can_manage_topics;
+        private ?string $custom_title;
 
         /**
          * Information about the user
@@ -263,8 +189,8 @@
         public function toArray(): array
         {
             return [
-                'status' => $this->status,
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : $this->user,
+                'status' => $this->status->value,
+                'user' => $this->user?->toArray(),
                 'can_be_edited' => $this->can_be_edited,
                 'is_anonymous' => $this->is_anonymous,
                 'can_manage_chat' => $this->can_manage_chat,
@@ -282,17 +208,12 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatMemberAdministrator
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): ChatMemberAdministrator
         {
             $object = new self();
-
-            $object->status = $data['status'] ?? ChatMemberStatus::ADMINISTRATOR;
+            $object->status = ChatMemberStatus::ADMINISTRATOR;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->can_be_edited = $data['can_be_edited'] ?? false;
             $object->is_anonymous = $data['is_anonymous'] ?? false;
@@ -308,36 +229,6 @@
             $object->can_pin_messages = $data['can_pin_messages'] ?? false;
             $object->can_manage_topics = $data['can_manage_topics'] ?? false;
             $object->custom_title = $data['custom_title'] ?? null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from ChatMember object
-         *
-         * @param ChatMember $chatMember
-         * @return static
-         */
-        public static function fromChatMember(ChatMember $chatMember): self
-        {
-            $object = new self();
-
-            $object->status = $chatMember->getStatus();
-            $object->user = $chatMember->getUser();
-            $object->can_be_edited = $chatMember->canBeEdited();
-            $object->is_anonymous = $chatMember->isAnonymous();
-            $object->can_manage_chat = $chatMember->canManageChat();
-            $object->can_delete_messages = $chatMember->canDeleteMessages();
-            $object->can_manage_video_chats = $chatMember->canManageVideoChats();
-            $object->can_restrict_members = $chatMember->canRestrictMembers();
-            $object->can_promote_members = $chatMember->canPromoteMembers();
-            $object->can_change_info = $chatMember->canChangeInfo();
-            $object->can_invite_users = $chatMember->canInviteUsers();
-            $object->can_post_messages = $chatMember->canPostMessages();
-            $object->can_edit_messages = $chatMember->canEditMessages();
-            $object->can_pin_messages = $chatMember->canPinMessages();
-            $object->can_manage_topics = $chatMember->canManageTopics();
-            $object->custom_title = $chatMember->getCustomTitle();
 
             return $object;
         }

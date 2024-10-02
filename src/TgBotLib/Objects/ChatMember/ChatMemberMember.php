@@ -9,27 +9,9 @@
     use TgBotLib\Objects\ChatMember;
     use TgBotLib\Objects\User;
 
-    class ChatMemberMember implements ObjectTypeInterface
+    class ChatMemberMember extends ChatMember implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $status;
-
-        /**
-         * @var User
-         */
-        private $user;
-
-        /**
-         * The member's status in the chat, always “member”
-         *
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
-        }
+        private User $user;
 
         /**
          * Information about the user
@@ -42,46 +24,24 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'status' => $this->getStatus(),
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : $this->user,
+                'status' => $this->status->value,
+                'user' => $this->user?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatMemberMember
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(array $data): ChatMemberMember
         {
             $object = new self();
-
-            $object->status = $data['status'] ?? ChatMemberStatus::MEMBER;
+            $object->status = ChatMemberStatus::MEMBER;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from ChatMember object
-         *
-         * @param ChatMember $chatMember
-         * @return static
-         */
-        public static function fromChatMember(ChatMember $chatMember): self
-        {
-            $object = new self();
-
-            $object->status = $chatMember->getStatus();
-            $object->user = $chatMember->getUser();
 
             return $object;
         }
