@@ -2,9 +2,11 @@
 
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Inline;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Location;
+    use TgBotLib\Objects\User;
 
     class ChosenInlineResult implements ObjectTypeInterface
     {
