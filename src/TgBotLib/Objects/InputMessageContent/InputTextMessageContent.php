@@ -7,30 +7,20 @@
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InputTextMessageContent implements ObjectTypeInterface
+    class InputTextMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $message_text;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $message_text;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $entities;
-
-        /**
-         * @var bool
-         */
-        private $disable_web_page_preview;
+        private ?array $entities;
+        private bool $disable_web_page_preview;
 
         /**
          * Text of the message to be sent, 1-4096 characters
@@ -52,7 +42,9 @@
         public function setMessageText(string $message_text): self
         {
             if(!Validate::length($message_text, 1, 4096))
+            {
                 throw new InvalidArgumentException('message_text should be between 1-4096 characters');
+            }
 
             $this->message_text = $message_text;
             return $this;
@@ -85,7 +77,9 @@
             }
 
             if(!in_array(strtolower($parse_mode), ['markdown', 'html']))
+            {
                 throw new InvalidArgumentException('parse_mode should be either Markdown or HTML');
+            }
 
             $this->parse_mode = strtolower($parse_mode);
             return $this;
@@ -119,7 +113,9 @@
             foreach($entities as $entity)
             {
                 if(!($entity instanceof MessageEntity))
+                {
                     throw new InvalidArgumentException('entities should be an array of MessageEntity objects');
+                }
             }
 
             $this->entities = $entities;
@@ -172,7 +168,6 @@
 
             }
 
-
             return [
                 'message_text' => $this->message_text,
                 'parse_mode' => $this->parse_mode,
@@ -182,15 +177,13 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InputTextMessageContent
         {
             $object = new self();
 
+            $object->type = InputMessageContentType::TEXT;
             $object->message_text = $data['message_text'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
             $object->disable_web_page_preview = (bool)$data['disable_web_page_preview'] ?? false;

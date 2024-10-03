@@ -2,63 +2,58 @@
 
     namespace TgBotLib\Objects;
 
-    use LogLib\Log;
-    use TgBotLib\Exceptions\NotImplementedException;
+    use InvalidArgumentException;
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
 
-    class InputMessageContent implements ObjectTypeInterface
+    abstract class InputMessageContent implements ObjectTypeInterface
     {
+        protected InputMessageContentType $type;
+
         /**
-         * @inheritDoc
+         * Returns the type for the Input message content
+         *
+         * @return InputMessageContentType
          */
-        public function toArray(): array
+        public function getType(): InputMessageContentType
         {
-            throw new NotImplementedException('This object is abstract, you can\'t use it directly, try constructing one of the child classes with fromArray()');
+            return $this->type;
         }
 
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public abstract function toArray(): array;
+
+        /**
+         * @inheritDoc
+         */
+        public static function fromArray(array $data): InputMessageContent
         {
-            // You may be wondering why this is needed, it's because Telegram Developers can't
-            // actually write good software, they tend to forget the little things.
-            // Like for example, providing the type of the object in the JSON response.
-            // So this little code snippet is needed to determine the type of the object. :(
-            //
-            // Thanks Telegram!
-
-            if(isset($data['provider_token']))
-            {
-                return InputInvoiceMessageContent::fromArray($data);
-            }
-
-            if(isset($data['phone_number']))
-            {
-                return InputContactMessageContent::fromArray($data);
-            }
-
-            if(isset($data['address']))
-            {
-                return InputVenueMessageContent::fromArray($data);
-            }
-
-            if(isset($data['longitude']) && isset($data['latitude']))
-            {
-                return InputLocationMessageContent::fromArray($data);
-            }
-
             if(isset($data['message_text']))
             {
                 return InputTextMessageContent::fromArray($data);
             }
 
-            Log::warning('net.nosial.tgbotlib', 'InputMessageContent::fromArray() - Unknown type of InputMessageContent, returning InputTextMessageContent (go complain to Telegram)');
-            return InputTextMessageContent::fromArray($data);
+            if(isset($data['latitude']) && isset($data['longitude']) && isset($data['tile']) && isset($data['address']))
+            {
+                return InputVenueMessageContent::fromArray($data);
+            }
+
+            if(isset($data['latitude']) && isset($data['longitude']))
+            {
+                return InputLocationMessageContent::fromArray($data);
+            }
+
+            if(isset($data['title']) && isset($data['description']) && isset($data['payload']))
+            {
+                return InputInvoiceMessageContent::fromArray($data);
+            }
+
+            throw new InvalidArgumentException("Invalid object type, unexpected type");
         }
     }

@@ -5,50 +5,20 @@
 
     namespace TgBotLib\Objects\InputMessageContent;
 
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\InputMessageContent;
 
-    class
-    InputVenueMessageContent implements ObjectTypeInterface
+    class InputVenueMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
-        /**
-         * @var float
-         */
-        private $latitude;
-
-        /**
-         * @var float
-         */
-        private $longitude;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $address;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_id;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_type;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_id;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_type;
+        private float $latitude;
+        private float $longitude;
+        private string $title;
+        private string $address;
+        private ?string $foursquare_id;
+        private ?string $foursquare_type;
+        private ?string $google_place_id;
+        private ?string $google_place_type;
 
         /**
          * Latitude of the venue in degrees
@@ -238,9 +208,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -257,15 +225,12 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InputVenueMessageContent
         {
             $object = new self();
-
+            $object->type = InputMessageContentType::VENUE;
             $object->latitude = (float)$data['latitude'] ?? null;
             $object->longitude = (float)$data['longitude'] ?? null;
             $object->title = $data['title'] ?? null;

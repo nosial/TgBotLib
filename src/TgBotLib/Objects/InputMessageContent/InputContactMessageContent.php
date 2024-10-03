@@ -7,29 +7,16 @@
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\InputMessageContent;
 
-    class InputContactMessageContent implements ObjectTypeInterface
+    class InputContactMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $phone_number;
-
-        /**
-         * @var string
-         */
-        private $first_name;
-
-        /**
-         * @var string|null
-         */
-        private $last_name;
-
-        /**
-         * @var string|null
-         */
-        private $vcard;
+        private string $phone_number;
+        private string $first_name;
+        private ?string $last_name;
+        private ?string $vcard;
 
         /**
          * Contact's phone number
@@ -51,7 +38,9 @@
         public function setPhoneNumber(string $phone_number): self
         {
             if(!Validate::length($phone_number, 1, 255))
+            {
                 throw new InvalidArgumentException('phone_number should be between 1-255 characters');
+            }
 
             $this->phone_number = $phone_number;
             return $this;
@@ -77,7 +66,9 @@
         public function setFirstName(string $first_name): self
         {
             if(!Validate::length($first_name, 1, 255))
+            {
                 throw new InvalidArgumentException('first_name should be between 1-255 characters');
+            }
 
             $this->first_name = $first_name;
             return $this;
@@ -109,7 +100,9 @@
             }
 
             if(!Validate::length($last_name, 1, 255))
+            {
                 throw new InvalidArgumentException('last_name should be between 1-255 characters (or null)');
+            }
 
             $this->last_name = $last_name;
             return $this;
@@ -142,16 +135,16 @@
             }
 
             if(!Validate::length($vcard, 1, 2048))
+            {
                 throw new InvalidArgumentException('vcard should be between 1-2048 characters (or null)');
+            }
 
             $this->vcard = $vcard;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -164,15 +157,13 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InputContactMessageContent
         {
             $object = new self();
 
+            $object->type = InputMessageContentType::CONTACT;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->first_name = $data['first_name'] ?? null;
             $object->last_name = $data['last_name'] ?? null;

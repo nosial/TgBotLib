@@ -7,40 +7,18 @@
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\InputMessageContent;
 
-    class
-    InputLocationMessageContent implements ObjectTypeInterface
+    class InputLocationMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
-        /**
-         * @var float
-         */
-        private $latitude;
-
-        /**
-         * @var float
-         */
-        private $longitude;
-
-        /**
-         * @var float|null
-         */
-        private $horizontal_accuracy;
-
-        /**
-         * @var int|null
-         */
-        private $live_period;
-
-        /**
-         * @var int|null
-         */
-        private $heading;
-
-        /**
-         * @var int|null
-         */
-        private $proximity_alert_radius;
+        private float $latitude;
+        private float $longitude;
+        private ?float $horizontal_accuracy;
+        private ?int $live_period;
+        private ?int $heading;
+        private ?int $proximity_alert_radius;
 
         /**
          * Latitude of the location in degrees
@@ -142,7 +120,9 @@
             }
 
             if($live_period < 60 || $live_period > 86400)
+            {
                 throw new InvalidArgumentException('live_period should be a value between 60-86400');
+            }
 
             $this->live_period = $live_period;
             return $this;
@@ -176,7 +156,9 @@
             }
 
             if($heading < 1 || $heading > 360)
+            {
                 throw new InvalidArgumentException('heading should be a value between 1-360');
+            }
 
             $this->heading = $heading;
             return $this;
@@ -209,16 +191,16 @@
             }
 
             if(!Validate::length($proximity_alert_radius, 1, 100000))
+            {
                 throw new InvalidArgumentException('proximity_alert_radius should be between 1-100000 characters');
+            }
 
             $this->proximity_alert_radius = $proximity_alert_radius;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -233,15 +215,13 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InputLocationMessageContent
         {
             $object = new self();
 
+            $object->type = InputMessageContentType::LOCATION;
             $object->latitude = (float)$data['latitude'] ?? null;
             $object->longitude = (float)$data['longitude'] ?? null;
             $object->horizontal_accuracy = (float)$data['horizontal_accuracy'] ?? null;

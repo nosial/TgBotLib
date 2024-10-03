@@ -7,110 +7,39 @@
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\LabeledPrice;
 
-    class InputInvoiceMessageContent implements ObjectTypeInterface
+    class InputInvoiceMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $description;
-
-        /**
-         * @var string
-         */
-        private $payload;
-
-        /**
-         * @var string
-         */
-        private $provider_token;
-
-        /**
-         * @var string
-         */
-        private $currency;
-
+        private string $title;
+        private string $description;
+        private string $payload;
+        private string $provider_token;
+        private string $currency;
         /**
          * @var LabeledPrice[]
          */
-        private $prices;
-
-        /**
-         * @var int|null
-         */
-        private $max_tip_amount;
-
+        private array $prices;
+        private ?int $max_tip_amount;
         /**
          * @var int[]|null
          */
-        private $suggested_tip_amounts;
-
-        /**
-         * @var string|null
-         */
-        private $provider_data;
-
-        /**
-         * @var string|null
-         */
-        private $photo_url;
-
-        /**
-         * @var int|null
-         */
-        private $photo_size;
-
-        /**
-         * @var int|null
-         */
-        private $photo_width;
-
-        /**
-         * @var int|null
-         */
-        private $photo_height;
-
-        /**
-         * @var bool
-         */
-        private $need_name;
-
-        /**
-         * @var bool
-         */
-        private $need_phone_number;
-
-        /**
-         * @var bool
-         */
-        private $need_email;
-
-        /**
-         * @var bool
-         */
-        private $need_shipping_address;
-
-        /**
-         * @var bool
-         */
-        private $send_phone_number_to_provider;
-
-        /**
-         * @var bool
-         */
-        private $send_email_to_provider;
-
-        /**
-         * @var bool
-         */
-        private $is_flexible;
+        private ?array $suggested_tip_amounts;
+        private ?string $provider_data;
+        private ?string $photo_url;
+        private ?int $photo_size;
+        private ?int $photo_width;
+        private ?int $photo_height;
+        private bool $need_name;
+        private bool $need_phone_number;
+        private bool $need_email;
+        private bool $need_shipping_address;
+        private bool $send_phone_number_to_provider;
+        private bool $send_email_to_provider;
+        private bool $is_flexible;
 
         /**
          * Product name, 1-32 characters
@@ -132,7 +61,9 @@
         public function setTitle(string $title): self
         {
             if(!Validate::length($title, 1, 32))
+            {
                 throw new InvalidArgumentException('title should be between 1-32 characters');
+            }
 
             $this->title = $title;
             return $this;
@@ -158,7 +89,9 @@
         public function setDescription(string $description): self
         {
             if(!Validate::length($description, 1, 255))
+            {
                 throw new InvalidArgumentException('description should be between 1-255 characters');
+            }
 
             $this->description = $description;
             return $this;
@@ -185,7 +118,9 @@
         public function setPayload(string $payload): self
         {
             if(!Validate::length($payload, 1, 128))
+            {
                 throw new InvalidArgumentException('payload should be between 1-128 characters');
+            }
 
             $this->payload = $payload;
             return $this;
@@ -236,7 +171,9 @@
         public function setCurrency(string $currency): self
         {
             if(!Validate::length($currency, 3, 3))
+            {
                 throw new InvalidArgumentException('currency should be 3 characters');
+            }
 
             $this->currency = $currency;
             return $this;
@@ -651,9 +588,7 @@
                 'payload' => $this->payload,
                 'provider_token' => $this->provider_token,
                 'currency' => $this->currency,
-                'prices' => array_map(function (LabeledPrice $price) {
-                    return $price->toArray();
-                }, $this->prices),
+                'prices' => array_map(fn(LabeledPrice $labeled_price) => $labeled_price->toArray(), $this->prices),
                 'max_tip_amount' => $this->max_tip_amount,
                 'suggested_tip_amounts' => $this->suggested_tip_amounts,
                 'provider_data' => $this->provider_data,
@@ -674,18 +609,17 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InputInvoiceMessageContent
         {
             $object = new self();
 
+            $object->type = InputMessageContentType::INVOICE;
             $object->title = $data['title'] ?? null;
             $object->description = $data['description'] ?? null;
             $object->payload = $data['payload'] ?? null;
             $object->provider_token = $data['provider_token'] ?? null;
             $object->currency = $data['currency'] ?? null;
-            $object->prices = array_map(function (array $price) {
-                return LabeledPrice::fromArray($price);
-            }, $data['prices'] ?? []);
+            $object->prices = array_map(fn(array $prices) => LabeledPrice::fromArray($prices), $data['prices']);
             $object->max_tip_amount = $data['max_tip_amount'] ?? null;
             $object->suggested_tip_amounts = $data['suggested_tip_amounts'] ?? null;
             $object->provider_data = $data['provider_data'] ?? null;
