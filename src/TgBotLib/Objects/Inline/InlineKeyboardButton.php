@@ -2,11 +2,14 @@
 
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Inline;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\CallbackGame;
+    use TgBotLib\Objects\LoginUrl;
+    use TgBotLib\Objects\WebAppInfo;
 
     class InlineKeyboardButton implements ObjectTypeInterface
     {

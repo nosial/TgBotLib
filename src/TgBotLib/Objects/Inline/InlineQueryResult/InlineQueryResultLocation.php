@@ -2,133 +2,30 @@
 
 /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
 
-    class InlineQueryResultLocation implements ObjectTypeInterface
+    class InlineQueryResultLocation extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var float
-         */
-        private $latitude;
-
-        /**
-         * @var float
-         */
-        private $longitude;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var float|null
-         */
-        private $horizontal_accuracy;
-
-        /**
-         * @var int|null
-         */
-        private $live_period;
-
-        /**
-         * @var int|null
-         */
-        private $heading;
-
-        /**
-         * @var int|null
-         */
-        private $proximity_alert_radius;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_width;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_height;
-
-        /**
-         * InlineQueryResultLocation constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'location';
-        }
-
-        /**
-         * Type of the result must be location
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets a unique identifier for this result, 1-64 Bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultLocation
-        {
-            if(strlen($id) > 64)
-            {
-                throw new InvalidArgumentException('id should be less than 64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private float $latitude;
+        private float $longitude;
+        private string $title;
+        private ?float $horizontal_accuracy;
+        private ?int $live_period;
+        private ?int $heading;
+        private ?int $proximity_alert_radius;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
+        private ?string $thumbnail_url;
+        private ?int $thumbnail_width;
+        private ?int $thumbnail_height;
 
         /**
          * Location latitude in degrees
@@ -331,9 +228,9 @@
         /**
          * Optional. Content of the message to be sent instead of the location
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -341,10 +238,10 @@
         /**
          * Sets the content of the message to be sent instead of the location
          *
-         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(null|InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent $input_message_content): InlineQueryResultLocation
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultLocation
         {
             $this->input_message_content = $input_message_content;
             return $this;
@@ -417,14 +314,12 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
@@ -442,16 +337,12 @@
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultLocation
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::LOCATION;
             $object->id = $data['id'] ?? null;
             $object->latitude = $data['latitude'] ?? null;
             $object->longitude = $data['longitude'] ?? null;
@@ -460,8 +351,8 @@
             $object->live_period = $data['live_period'] ?? null;
             $object->heading = $data['heading'] ?? null;
             $object->proximity_alert_radius = $data['proximity_alert_radius'] ?? null;
-            $object->reply_markup = ($data['reply_markup'] ?? null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
-            $object->input_message_content = ($data['input_message_content'] ?? null) ? InputContactMessageContent::fromArray($data['input_message_content']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
+            $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
             $object->thumbnail_width = $data['thumbnail_width'] ?? null;
             $object->thumbnail_height = $data['thumbnail_height'] ?? null;

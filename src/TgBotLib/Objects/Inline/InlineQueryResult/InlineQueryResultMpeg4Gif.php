@@ -3,128 +3,33 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultMpeg4Gif implements ObjectTypeInterface
+    class InlineQueryResultMpeg4Gif extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $mpeg4_url;
-
-        /**
-         * @var int|null
-         */
-        private $mpeg4_width;
-
-        /**
-         * @var int|null
-         */
-        private $mpeg4_height;
-
-        /**
-         * @var int|null
-         */
-        private $mpeg4_duration;
-
-        /**
-         * @var string
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_mime_type;
-
-        /**
-         * @var string|null
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $mpeg4_url;
+        private ?int $mpeg4_width;
+        private ?int $mpeg4_height;
+        private ?int $mpeg4_duration;
+        private string $thumbnail_url;
+        private ?string $thumbnail_mime_type;
+        private ?string $title;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * InlineQueryResultMpeg4Gif constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'mpeg4_gif';
-        }
-
-        /**
-         * Type of the result, must be mpeg4_gif
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of the 'id' field
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultMpeg4Gif
-        {
-            $this->id = $id;
-            return $this;
-        }
+        private ?array $caption_entities;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
 
         /**
          * A valid URL for the MPEG4 file. File size must not exceed 1MB
@@ -371,9 +276,9 @@
         /**
          * Optional. Content of the message to be sent instead of the video animation
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -381,19 +286,17 @@
         /**
          * Optional. Content of the message to be sent instead of the video animation
          *
-         * @param InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultMpeg4Gif
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultMpeg4Gif
         {
             $this->input_message_content = $input_message_content;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -409,9 +312,7 @@
                 'title' => $this->title ?? null,
                 'caption' => $this->caption ?? null,
                 'parse_mode' => $this->parse_mode ?? null,
-                'caption_entities' => ($this->caption_entities ?? null) ? array_map(static function (MessageEntity $item) {
-                    return $item->toArray();
-                }, $this->caption_entities) : null,
+                'caption_entities' => is_null($this->caption_entities) ? array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities) : null,
                 'reply_markup' => ($this->reply_markup ?? null) ? $this->reply_markup->toArray() : null,
                 'input_message_content' => ($this->input_message_content ?? null) ? $this->input_message_content->toArray() : null,
             ];
@@ -419,30 +320,23 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultMpeg4Gif
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::MPEG_4_GIF;
             $object->id = $data['id'] ?? null;
             $object->mpeg4_url = $data['mpeg4_url'] ?? null;
             $object->mpeg4_width = $data['mpeg4_width'] ?? null;
             $object->mpeg4_height = $data['mpeg4_height'] ?? null;
             $object->mpeg4_duration = $data['mpeg4_duration'] ?? null;
-            /** @noinspection DuplicatedCode */
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
             $object->thumbnail_mime_type = $data['thumbnail_mime_type'] ?? null;
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = array_map(static function ($item) {
-                return MessageEntity::fromArray($item);
-            }, $data['caption_entities'] ?? []);
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->reply_markup = ($data['reply_markup'] ?? null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
             $object->input_message_content = ($data['input_message_content'] ?? null) ? InputVenueMessageContent::fromArray($data['input_message_content']) : null;
 

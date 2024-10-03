@@ -3,52 +3,17 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
 
-    class InlineQueryResultGame implements ObjectTypeInterface
+    class InlineQueryResultGame extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $game_short_name;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * Type of the result must be game
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
+        private string $game_short_name;
+        private ?InlineKeyboardMarkup $reply_markup;
 
         /**
          * Sets the value of the 'id' field
@@ -109,34 +74,28 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'game_short_name' => $this->game_short_name,
-                'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null
+                'reply_markup' => $this->reply_markup?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultGame
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::GAME;
             $object->id = $data['id'] ?? null;
             $object->game_short_name = $data['game_short_name'] ?? null;
-            $object->reply_markup = $data['reply_markup'] ?? null;
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
 
             return $object;
         }

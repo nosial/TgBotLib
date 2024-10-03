@@ -2,138 +2,30 @@
 
 /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
-    use InvalidArgumentException;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
 
-    class InlineQueryResultVenue implements ObjectTypeInterface
+    class InlineQueryResultVenue extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var float
-         */
-        private $latitude;
-
-        /**
-         * @var float
-         */
-        private $longitude;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $address;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_id;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_type;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_id;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_type;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_width;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_height;
-
-        /**
-         * InlineQueryResultVenue constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'venue';
-        }
-
-        /**
-         * Type of the result, must be venue
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets id.
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultVenue
-        {
-            if(strlen($id) > 64)
-            {
-                throw new InvalidArgumentException('id must be between 1 and 64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private float $latitude;
+        private float $longitude;
+        private string $title;
+        private string $address;
+        private ?string $foursquare_id;
+        private ?string $foursquare_type;
+        private ?string $google_place_id;
+        private ?string $google_place_type;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
+        private ?string $thumbnail_url;
+        private ?int $thumbnail_width;
+        private ?int $thumbnail_height;
 
         /**
          * Latitude of the venue location in degrees
@@ -338,9 +230,9 @@
         /**
          * Optional. Content of the message to be sent instead of the venue
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -348,10 +240,10 @@
         /**
          * Sets the content of the message to be sent instead of the venue
          *
-         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(null|InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent $input_message_content): InlineQueryResultVenue
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultVenue
         {
             $this->input_message_content = $input_message_content;
             return $this;
@@ -424,14 +316,12 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
@@ -441,8 +331,8 @@
                 'foursquare_type' => $this->foursquare_type,
                 'google_place_id' => $this->google_place_id,
                 'google_place_type' => $this->google_place_type,
-                'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
-                'input_message_content' => ($this->input_message_content instanceof InputVenueMessageContent) ? $this->input_message_content->toArray() : null,
+                'reply_markup' => $this->reply_markup?->toArray(),
+                'input_message_content' => $this->input_message_content?->toArray(),
                 'thumbnail_url' => $this->thumbnail_url,
                 'thumbnail_width' => $this->thumbnail_width,
                 'thumbnail_height' => $this->thumbnail_height
@@ -450,16 +340,12 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultVenue
         {
             $object = new self();
-
+            $object->type = InlineQueryResultType::VENUE;
             $object->id = $data['id'] ?? null;
             $object->latitude = $data['latitude'] ?? null;
             $object->longitude = $data['longitude'] ?? null;

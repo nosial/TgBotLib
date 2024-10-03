@@ -3,129 +3,33 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultPhoto implements ObjectTypeInterface
+    class InlineQueryResultPhoto extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $photo_url;
-
-        /**
-         * @var string
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $photo_width;
-
-        /**
-         * @var int|null
-         */
-        private $photo_height;
-
-        /**
-         * @var string|null
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $description;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $photo_url;
+        private string $thumbnail_url;
+        private ?int $photo_width;
+        private ?int $photo_height;
+        private ?string $title;
+        private ?string $description;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * InlineQueryResultPhoto constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'photo';
-        }
-
-        /**
-         * Type of the result must be photo
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of the 'id' field
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultPhoto
-        {
-            if(mb_strlen($id) > 64)
-            {
-                throw new InvalidArgumentException('id length must not exceed 64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private ?array $caption_entities;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputTextMessageContent $input_message_content;
 
         /**
          * A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB
@@ -356,9 +260,9 @@
         /**
          * Optional. Content of the message to be sent instead of the photo
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -366,19 +270,17 @@
         /**
          * Sets the value of the 'input_message_content' field
          *
-         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultPhoto
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultPhoto
         {
             $this->input_message_content = $input_message_content;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -393,24 +295,18 @@
                 'description' => $this->description ?? null,
                 'caption' => $this->caption ?? null,
                 'parse_mode' => $this->parse_mode ?? null,
-                'caption_entities' => ($this->caption_entities !== null) ? array_map(static function (MessageEntity $messageEntity) {
-                    return $messageEntity->toArray();
-                }, $this->caption_entities) : null,
+                'caption_entities' => isset($data['caption_entities']) ? array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities) : null,
                 'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
             ];
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultPhoto
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::PHOTO;
             $object->id = $data['id'] ?? null;
             $object->photo_url = $data['photo_url'] ?? null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
@@ -420,9 +316,7 @@
             $object->description = $data['description'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = ($data['caption_entities'] !== null) ? array_map(static function (array $messageEntity) {
-                return MessageEntity::fromArray($messageEntity);
-            }, $data['caption_entities']) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->reply_markup = ($data['reply_markup'] !== null) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
             $object->input_message_content = $data['input_message_content'] ?? null;
 

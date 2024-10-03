@@ -3,118 +3,35 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultDocument implements ObjectTypeInterface
+    class InlineQueryResultDocument extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $title;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var string
-         */
-        private $document_url;
-
-        /**
-         * @var string
-         */
-        private $mime_type;
-
-        /**
-         * @var string|null
-         */
-        private $description;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_width;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_height;
-
-        /**
-         * InlineQueryResultDocument constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'document';
-        }
-
-        /**
-         * Type of the result, must be document
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
+        private ?array $caption_entities;
+        private string $document_url;
+        private string $mime_type;
+        private ?string $description;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
+        private ?string $thumbnail_url;
+        private ?int $thumbnail_width;
+        private ?int $thumbnail_height;
 
         /**
          * Title for the result
@@ -344,9 +261,9 @@
         /**
          * Optional. Content of the message to be sent instead of the file
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -355,10 +272,10 @@
          * Sets the value of the 'input_message_content' field.
          * Optional. Content of the message to be sent instead of the file
          *
-         * @param InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultDocument
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultDocument
         {
             $this->input_message_content = $input_message_content;
             return $this;
@@ -439,31 +356,22 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => (function (array $data) {
-                    $result = [];
-                    foreach ($data as $item) {
-                        $result[] = $item->toArray();
-                    }
-
-                    return $result;
-                })($this->caption_entities ?? []),
+                'caption_entities' => array_map(fn(MessageEntity $entity) => $entity->toArray(), $this->caption_entities),
                 'document_url' => $this->document_url,
                 'mime_type' => $this->mime_type,
                 'description' => $this->description,
-                'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
-                'input_message_content' => ($this->input_message_content instanceof InputVenueMessageContent) ? $this->input_message_content->toArray() : null,
+                'reply_markup' => $this->reply_markup?->toArray(),
+                'input_message_content' => $this->input_message_content?->toArray(),
                 'thumbnail_url' => $this->thumbnail_url,
                 'thumbnail_width' => $this->thumbnail_width,
                 'thumbnail_height' => $this->thumbnail_height,
@@ -471,33 +379,22 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultDocument
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::DOCUMENT;
             $object->id = $data['id'] ?? null;
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = (function (array $data) {
-                $result = [];
-                foreach ($data as $item) {
-                    $result[] = MessageEntity::fromArray($item);
-                }
-
-                return $result;
-            })($data['caption_entities'] ?? []);
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $entity) => MessageEntity::fromArray($entity), $data['caption_entities']) : null;
             $object->document_url = $data['document_url'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->description = $data['description'] ?? null;
-            $object->reply_markup = ($data['reply_markup'] ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null);
-            $object->input_message_content = ($data['input_message_content'] ? InputVenueMessageContent::fromArray($data['input_message_content']) : null);
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
+            $object->input_message_content = isset($data['input_message_content']) ? InputVenueMessageContent::fromArray($data['input_message_content']) : null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
             $object->thumbnail_width = $data['thumbnail_width'] ?? null;
             $object->thumbnail_height = $data['thumbnail_height'] ?? null;

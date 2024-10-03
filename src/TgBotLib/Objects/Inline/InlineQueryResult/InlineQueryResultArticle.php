@@ -1,122 +1,26 @@
 <?php
 
-    /** @noinspection PhpUnused */
-    /** @noinspection PhpMissingFieldTypeInspection */
-
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\InputMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
 
-    class InlineQueryResultArticle implements ObjectTypeInterface
+    class InlineQueryResultArticle extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var InputTextMessageContent|InputLocationMessageContent|InputVenueMessageContent|InputContactMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var string|null
-         */
-        private $url;
-
-        /**
-         * @var bool
-         */
-        private $hide_url;
-
-        /**
-         * @var string|null
-         */
-        private $description;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_width;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_height;
-
-        /**
-         * InlineQueryResultArticle constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'article';
-        }
-
-        /**
-         * The Type of the result must be article
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of the 'id' field.
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultArticle
-        {
-            if(!Validate::length($id, 1, 64))
-            {
-                throw new InvalidArgumentException('id should be between 1-64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private string $title;
+        private InputMessageContent $input_message_content;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?string $url;
+        private bool $hide_url;
+        private ?string $description;
+        private ?string $thumbnail_url;
+        private ?int $thumbnail_width;
+        private ?int $thumbnail_height;
 
         /**
          * Title of the result
@@ -144,9 +48,9 @@
         /**
          * Content of the message to be sent
          *
-         * @return InputContactMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -155,10 +59,10 @@
          * Sets the value of the 'input_message_content' field.
          * Content of the message to be sent
          *
-         * @param InputContactMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|null $input_message_content): InlineQueryResultArticle
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultArticle
         {
             $this->input_message_content = $input_message_content;
             return $this;
@@ -336,18 +240,16 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'title' => $this->title,
-                'input_message_content' => ($this->input_message_content instanceof ObjectTypeInterface) ? $this->input_message_content->toArray() : null,
-                'reply_markup' => ($this->reply_markup instanceof ObjectTypeInterface) ? $this->reply_markup->toArray() : null,
+                'input_message_content' => $this->input_message_content?->toArray(),
+                'reply_markup' => $this->reply_markup?->toArray(),
                 'url' => $this->url,
                 'hide_url' => $this->hide_url,
                 'description' => $this->description,
@@ -358,20 +260,16 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultArticle
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::ARTICLE;
             $object->id = $data['id'] ?? null;
             $object->title = $data['title'] ?? null;
-            $object->input_message_content = InputMessageContent::fromArray($data['input_message_content'] ?? []);
-            $object->reply_markup = InlineKeyboardMarkup::fromArray($data['reply_markup'] ?? []);
+            $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
             $object->url = $data['url'] ?? null;
             $object->hide_url = $data['hide_url'] ?? null;
             $object->description = $data['description'] ?? null;

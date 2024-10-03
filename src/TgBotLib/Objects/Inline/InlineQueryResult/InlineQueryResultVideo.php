@@ -3,140 +3,34 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\InputMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultVideo implements ObjectTypeInterface
+    class InlineQueryResultVideo extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $video_url;
-
-        /**
-         * @var string
-         */
-        private $mime_type;
-
-        /**
-         * @var string
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $video_url;
+        private string $mime_type;
+        private string $thumbnail_url;
+        private string $title;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var int|null
-         */
-        private $video_width;
-
-        /**
-         * @var int|null
-         */
-        private $video_height;
-
-        /**
-         * @var int|null
-         */
-        private $video_duration;
-
-        /**
-         * @var string|null
-         */
-        private $description;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * InlineQueryResultVideo constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'video';
-        }
-
-        /**
-         * Type of the result, must be video
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the unique identifier for this result, 1-64 bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultVideo
-        {
-            if(strlen($id) > 64)
-            {
-                throw new InvalidArgumentException('ID must be between 1 and 64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private ?array $caption_entities;
+        private ?int $video_width;
+        private ?int $video_height;
+        private ?int $video_duration;
+        private ?string $description;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
 
         /**
          * A valid URL for the embedded video player or video file
@@ -416,9 +310,9 @@
          * Optional. Content of the message to be sent instead of the video. This field is required if
          * InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -426,19 +320,17 @@
         /**
          * Sets the content of the message to be sent instead of the video. This field is required if
          *
-         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): static
+        public function setInputMessageContent(?InputMessageContent $input_message_content): static
         {
             $this->input_message_content = $input_message_content;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -451,9 +343,7 @@
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => ($this->caption_entities ?? null) ? array_map(static function (MessageEntity $item) {
-                    return $item->toArray();
-                }, $this->caption_entities) : null,
+                'caption_entities' => is_null($this->caption_entities) ? null : array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities),
                 'video_width' => $this->video_width,
                 'video_height' => $this->video_height,
                 'video_duration' => $this->video_duration,
@@ -464,16 +354,12 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
         public static function fromArray(array $data): ObjectTypeInterface
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::VIDEO;
             $object->id = $data['id'] ?? null;
             $object->video_url = $data['video_url'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
@@ -481,9 +367,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(static function ($item) {
-                return MessageEntity::fromArray($item);
-            }, $data['caption_entities']) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->video_width = $data['video_width'] ?? null;
             $object->video_height = $data['video_height'] ?? null;
             $object->video_duration = $data['video_duration'] ?? null;

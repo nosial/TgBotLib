@@ -3,121 +3,27 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\InputMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
 
-    class InlineQueryResultContact implements ObjectTypeInterface
+    class InlineQueryResultContact extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $phone_number;
-
-        /**
-         * @var string
-         */
-        private $first_name;
-
-        /**
-         * @var string|null
-         */
-        private $last_name;
-
-        /**
-         * @var string|null
-         */
-        private $vcard;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_width;
-
-        /**
-         * @var int|null
-         */
-        private $thumbnail_height;
-
-        /**
-         * InlineQueryResultContact constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'contact';
-        }
-
-        /**
-         * Type of the result must be contact
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of 'id' property
-         * Unique identifier for this result, 1-64 Bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): self
-        {
-            if(!Validate::length($id, 1, 64))
-            {
-                throw new InvalidArgumentException('id should be between 1-64 characters');
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private string $phone_number;
+        private string $first_name;
+        private ?string $last_name;
+        private ?string $vcard;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
+        private ?string $thumbnail_url;
+        private ?int $thumbnail_width;
+        private ?int $thumbnail_height;
 
         /**
          * Contact's phone number
@@ -242,9 +148,9 @@
         /**
          * Optional. Content of the message to be sent instead of the contact
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -253,10 +159,10 @@
          * Sets the value of 'input_message_content' property
          * Optional. Content of the message to be sent instead of the contact
          *
-         * @param InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): self
+        public function setInputMessageContent(?InputMessageContent $input_message_content): self
         {
             $this->input_message_content = $input_message_content;
             return $this;
@@ -332,21 +238,19 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'phone_number' => $this->phone_number,
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
                 'vcard' => $this->vcard,
-                'reply_markup' => ($this->reply_markup instanceof InlineKeyboardMarkup) ? $this->reply_markup->toArray() : null,
-                'input_message_content' => ($this->input_message_content instanceof ObjectTypeInterface) ? $this->input_message_content->toArray() : null,
+                'reply_markup' => $this->reply_markup?->toArray(),
+                'input_message_content' => $this->input_message_content?->toArray(),
                 'thumbnail_url' => $this->thumbnail_url,
                 'thumbnail_width' => $this->thumbnail_width,
                 'thumbnail_height' => $this->thumbnail_height
@@ -354,15 +258,12 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultContact
         {
             $object = new self();
-
+            $object->type = InlineQueryResultType::CONTACT;
             $object->id = $data['id'] ?? null;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->first_name = $data['first_name'] ?? null;

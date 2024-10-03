@@ -1,123 +1,30 @@
 <?php
 
-    /** @noinspection PhpUnused */
-    /** @noinspection PhpMissingFieldTypeInspection */
-
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultAudio implements ObjectTypeInterface
+    class InlineQueryResultAudio extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $audio_url;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $audio_url;
+        private string $title;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var string|null
-         */
-        private $performer;
-
-        /**
-         * @var int|null
-         */
-        private $audio_duration;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * InlineQueryResultAudio constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'audio';
-        }
-
-        /**
-         * Type of the result, must be audio
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of 'id' property
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultAudio
-        {
-            if(!Validate::length($id, 1, 64))
-            {
-                throw new InvalidArgumentException(sprintf('id must be between 1 and 64 characters long, got %s characters', $id));
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private ?array $caption_entities;
+        private ?string $performer;
+        private ?int $audio_duration;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
 
         /**
          * A valid URL for the audio file
@@ -362,9 +269,9 @@
         /**
          * Optional. Content of the message to be sent instead of the audio
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -373,32 +280,28 @@
          * Sets the value of 'input_message_content' property
          * Optional. Content of the message to be sent instead of the audio
          *
-         * @param InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultAudio
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultAudio
         {
             $this->input_message_content = $input_message_content;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'id' => $this->id,
                 'audio_url' => $this->audio_url,
                 'title' => $this->title,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => ($this->caption_entities) ? array_map(static function (MessageEntity $messageEntity) {
-                    return $messageEntity->toArray();
-                }, $this->caption_entities) : null,
+                'caption_entities' => array_map(fn(MessageEntity $messageEntity) => $messageEntity->toArray(), $this->caption_entities),
                 'performer' => $this->performer,
                 'audio_duration' => $this->audio_duration,
                 'reply_markup' => ($this->reply_markup) ? $this->reply_markup->toArray() : null,
@@ -407,24 +310,18 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultAudio
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::AUDIO;
             $object->id = $data['id'] ?? null;
             $object->audio_url = $data['audio_url'] ?? null;
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = ($data['caption_entities']) ? array_map(static function (array $messageEntity) {
-                return MessageEntity::fromArray($messageEntity);
-            }, $data['caption_entities']) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $messageEntity) => MessageEntity::fromArray($messageEntity), $data['caption_entities']) : null;
             $object->performer = $data['performer'] ?? null;
             $object->audio_duration = $data['audio_duration'] ?? null;
             $object->reply_markup = ($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;

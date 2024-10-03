@@ -3,138 +3,35 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InlineQueryResult;
+    namespace TgBotLib\Objects\Inline\InlineQueryResult;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
+    use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Enums\Types\ThumbnailMimeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InlineKeyboardMarkup;
-    use TgBotLib\Objects\InputMessageContent\InputContactMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\InputMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
-    class InlineQueryResultGif implements ObjectTypeInterface
+    class InlineQueryResultGif extends InlineQueryResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $gif_url;
-
-        /**
-         * @var int|null
-         */
-        private $gif_width;
-
-        /**
-         * @var int|null
-         */
-        private $gif_height;
-
-        /**
-         * @var int|null
-         */
-        private $gif_duration;
-
-        /**
-         * @var string|null
-         */
-        private $thumbnail_url;
-
-        /**
-         * @var string|null
-         * @see ThumbnailMimeType
-         */
-        private $thumbnail_mime_type;
-
-        /**
-         * @var string|null
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $gif_url;
+        private ?int $gif_width;
+        private ?int $gif_height;
+        private ?int $gif_duration;
+        private ?string $thumbnail_url;
+        private ?ThumbnailMimeType $thumbnail_mime_type;
+        private ?string $title;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var InlineKeyboardMarkup|null
-         */
-        private $reply_markup;
-
-        /**
-         * @var InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
-         */
-        private $input_message_content;
-
-        /**
-         * InlineQueryResultGif constructor.
-         */
-        public function __construct()
-        {
-            $this->type = 'gif';
-        }
-
-        /**
-         * The Type of the result must be gif
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @return string
-         */
-        public function getId(): string
-        {
-            return $this->id;
-        }
-
-        /**
-         * Sets the value of the 'id' field.
-         * Unique identifier for this result, 1-64 bytes
-         *
-         * @param string $id
-         * @return $this
-         */
-        public function setId(string $id): InlineQueryResultGif
-        {
-            if(!Validate::length($id, 1, 64))
-            {
-                throw new InvalidArgumentException();
-            }
-
-            $this->id = $id;
-            return $this;
-        }
+        private ?array $caption_entities;
+        private ?InlineKeyboardMarkup $reply_markup;
+        private ?InputMessageContent $input_message_content;
 
         /**
          * A valid URL for the GIF file. File size must not exceed 1MB
@@ -276,9 +173,9 @@
         /**
          * Optional. MIME type of the thumbnail must be one of “image/jpeg,” “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
          *
-         * @return string|null
+         * @return ThumbnailMimeType|null
          */
-        public function getThumbnailMimeType(): ?string
+        public function getThumbnailMimeType(): ?ThumbnailMimeType
         {
             return $this->thumbnail_mime_type;
         }
@@ -287,15 +184,25 @@
          * Sets the value of the 'thumbnail_mime_type' field.
          * Optional. MIME type of the thumbnail must be one of “image/jpeg,” “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
          *
-         * @param string|null $thumbnail_mime_type
+         * @param string|ThumbnailMimeType|null $thumbnail_mime_type
          * @return $this
          */
-        public function setThumbnailMimeType(?string $thumbnail_mime_type): InlineQueryResultGif
+        public function setThumbnailMimeType(string|ThumbnailMimeType|null $thumbnail_mime_type): InlineQueryResultGif
         {
             if(is_null($thumbnail_mime_type))
             {
                 $this->thumbnail_mime_type = null;
                 return $this;
+            }
+
+            if(is_string($thumbnail_mime_type))
+            {
+                $thumbnail_mime_type = ThumbnailMimeType::tryFrom($thumbnail_mime_type);
+            }
+
+            if($thumbnail_mime_type === null)
+            {
+                throw new InvalidArgumentException('Unexpected type for ThumbnailMimeType');
             }
 
             $this->thumbnail_mime_type = $thumbnail_mime_type;
@@ -437,9 +344,9 @@
         /**
          * Optional. Content of the message to be sent instead of the GIF animation
          *
-         * @return InputContactMessageContent|InputInvoiceMessageContent|InputLocationMessageContent|InputTextMessageContent|InputVenueMessageContent|null
+         * @return InputMessageContent|null
          */
-        public function getInputMessageContent(): InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null
+        public function getInputMessageContent(): ?InputMessageContent
         {
             return $this->input_message_content;
         }
@@ -448,25 +355,22 @@
          * Sets the value of the 'input_message_content' field.
          * Optional. Content of the message to be sent instead of the GIF animation
          *
-         * @param InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content
+         * @param InputMessageContent|null $input_message_content
          * @return $this
          */
-        public function setInputMessageContent(InputVenueMessageContent|InputTextMessageContent|InputContactMessageContent|InputLocationMessageContent|InputInvoiceMessageContent|null $input_message_content): InlineQueryResultGif
+        public function setInputMessageContent(?InputMessageContent $input_message_content): InlineQueryResultGif
         {
             $this->input_message_content = $input_message_content;
             return $this;
         }
 
-
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type ?? null,
+                'type' => $this->type->value,
                 'id' => $this->id ?? null,
                 'gif_url' => $this->gif_url ?? null,
                 'gif_width' => $this->gif_width ?? null,
@@ -477,36 +381,19 @@
                 'title' => $this->title ?? null,
                 'caption' => $this->caption ?? null,
                 'parse_mode' => $this->parse_mode ?? null,
-                'caption_entities' => (static function (array $captionEntities)
-                {
-                    $result = [];
-                    foreach($captionEntities as $captionEntity)
-                    {
-                        $result[] = $captionEntity->toArray();
-                    }
-                    return $result;
-                })($this->caption_entities ?? []),
-                'reply_markup' => (static function (InlineKeyboardMarkup|null $replyMarkup) {
-                    return $replyMarkup?->toArray();
-                })($this->reply_markup ?? null),
-                'input_message_content' => (static function (ObjectTypeInterface|null $inputMessageContent) {
-                    return $inputMessageContent?->toArray();
-                })($this->input_message_content ?? null),
+                'caption_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities),
+                'reply_markup' => $this->reply_markup?->toArray(),
+                'input_message_content' => $this->input_message_content?->toArray()
             ];
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(array $data): InlineQueryResultGif
         {
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
+            $object->type = InlineQueryResultType::GIF;
             $object->id = $data['id'] ?? null;
             $object->gif_url = $data['gif_url'] ?? null;
             $object->gif_width = $data['gif_width'] ?? null;
@@ -517,37 +404,9 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-
-            $object->caption_entities = (static function (array $captionEntities)
-            {
-                $result = [];
-                foreach($captionEntities as $captionEntity)
-                {
-                    $result[] = MessageEntity::fromArray($captionEntity);
-                }
-
-                return $result;
-            })($data['caption_entities'] ?? []);
-
-            $object->reply_markup = (static function (array|null $replyMarkup)
-            {
-                if($replyMarkup !== null)
-                {
-                    return InlineKeyboardMarkup::fromArray($replyMarkup);
-                }
-
-                return null;
-            })($data['reply_markup'] ?? null);
-
-            $object->input_message_content = (static function (array|null $inputMessageContent)
-            {
-                if($inputMessageContent !== null)
-                {
-                    return InputVenueMessageContent::fromArray($inputMessageContent);
-                }
-
-                return null;
-            })($data['input_message_content'] ?? null);
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? array_map(fn(array $items) => InlineKeyboardMarkup::fromArray($items), $data['reply_markup']) : null;
+            $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
 
             return $object;
         }
