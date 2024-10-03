@@ -5,6 +5,8 @@
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Inline\ChosenInlineResult;
+    use TgBotLib\Objects\Inline\InlineQuery;
 
     class Update implements ObjectTypeInterface
     {
