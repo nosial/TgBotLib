@@ -5,10 +5,10 @@
     use InvalidArgumentException;
     use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InputMessageContent\InputInvoiceMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputLocationMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputTextMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputInvoiceMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputLocationMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputTextMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputVenueMessageContent;
 
     abstract class InputMessageContent implements ObjectTypeInterface
     {

@@ -10,7 +10,7 @@
     use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
     use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\Inline\InputMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputVenueMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
     class InlineQueryResultMpeg4Gif extends InlineQueryResult implements ObjectTypeInterface

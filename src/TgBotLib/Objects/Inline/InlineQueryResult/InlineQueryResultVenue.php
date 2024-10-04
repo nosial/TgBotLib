@@ -9,7 +9,7 @@
     use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
     use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\Inline\InputMessageContent;
-    use TgBotLib\Objects\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent\InputVenueMessageContent;
 
     class InlineQueryResultVenue extends InlineQueryResult implements ObjectTypeInterface
     {

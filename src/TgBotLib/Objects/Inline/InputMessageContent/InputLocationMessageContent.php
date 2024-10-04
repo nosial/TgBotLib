@@ -3,7 +3,7 @@
     /** @noinspection PhpUnused */
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\InputMessageContent;
+    namespace TgBotLib\Objects\Inline\InputMessageContent;
 
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
