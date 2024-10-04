@@ -8,50 +8,15 @@
 
     class Audio implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var int
-         */
-        private $duration;
-
-        /**
-         * @var string|null
-         */
-        private $performer;
-
-        /**
-         * @var string|null
-         */
-        private $title;
-
-        /**
-         * @var string|null
-         */
-        private $file_name;
-
-        /**
-         * @var string|null
-         */
-        private $mime_type;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
+        private string $file_id;
+        private string $file_unique_id;
+        private int $duration;
+        private ?string $performer;
+        private ?string $title;
+        private ?string $file_name;
+        private ?string $mime_type;
+        private ?int $file_size;
+        private ?PhotoSize $thumbnail;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -146,6 +111,9 @@
             return $this->thumbnail;
         }
 
+        /**
+         * @inheritDoc
+         */
         public function toArray(): array
         {
             return [
@@ -157,20 +125,21 @@
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null,
-                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
+                'thumbnail' => is_null($this->thumbnail) ? null : $this->thumbnail->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Audio
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Audio
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->file_id = $data['file_id'] ?? null;
             $object->file_unique_id = $data['file_unique_id'] ?? null;
             $object->duration = $data['duration'] ?? null;
@@ -179,7 +148,7 @@
             $object->file_name = $data['file_name'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->file_size = $data['file_size'] ?? null;
-            $object->thumbnail = ($data['thumbnail'] ?? null) ? PhotoSize::fromArray($data['thumbnail']) : null;
+            $object->thumbnail = isset($data['thumbnail']) ? PhotoSize::fromArray($data['thumbnail']) : null;
 
             return $object;
         }
