@@ -10,7 +10,7 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
     use TgBotLib\Objects\Inline\InlineQueryResult;
-    use TgBotLib\Objects\InputMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent;
     use TgBotLib\Objects\MessageEntity;
 
     class InlineQueryResultVoice extends InlineQueryResult implements ObjectTypeInterface

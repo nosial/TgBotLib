@@ -7,7 +7,7 @@
 
     use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InputMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent;
 
     class InputVenueMessageContent extends InputMessageContent implements ObjectTypeInterface
     {

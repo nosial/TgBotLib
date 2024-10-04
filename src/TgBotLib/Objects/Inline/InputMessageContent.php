@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Inline;
 
     use InvalidArgumentException;
     use TgBotLib\Enums\Types\InputMessageContentType;
@@ -32,8 +32,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InputMessageContent
+        public static function fromArray(?array $data): ?InputMessageContent
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             if(isset($data['message_text']))
             {
                 return InputTextMessageContent::fromArray($data);

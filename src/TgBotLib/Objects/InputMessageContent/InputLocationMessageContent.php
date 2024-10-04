@@ -9,7 +9,7 @@
     use TgBotLib\Classes\Validate;
     use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\InputMessageContent;
+    use TgBotLib\Objects\Inline\InputMessageContent;
 
     class InputLocationMessageContent extends InputMessageContent implements ObjectTypeInterface
     {
