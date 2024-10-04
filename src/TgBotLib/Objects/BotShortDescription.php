@@ -8,10 +8,7 @@
 
     class BotShortDescription implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $short_description;
+        private string $short_description;
 
         /**
          * The bot's short description
@@ -24,9 +21,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -36,12 +31,9 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotShortDescription
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): BotShortDescription
         {
             $object = new self();
 
