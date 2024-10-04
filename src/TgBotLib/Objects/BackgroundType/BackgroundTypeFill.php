@@ -49,7 +49,10 @@ class BackgroundTypeFill extends BackgroundType implements ObjectTypeInterface
      */
     public static function fromArray(?array $data): ?BackgroundTypeFill
     {
-        if()
+        if($data === null)
+        {
+            return null;
+        }
 
         $object = new self();
         $object->type = type::FILL;
