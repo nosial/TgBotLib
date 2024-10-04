@@ -9,10 +9,7 @@
 
     class SentWebAppMessage implements ObjectTypeInterface
     {
-        /**
-         * @var string|null
-         */
-        private $inline_message_id;
+        private ?string $inline_message_id;
 
         /**
          * @return string|null
@@ -23,11 +20,9 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return null[]|string[]
+         * @inheritDoc
          */
-        public function toArray(): array
+        public function toArray(): ?array
         {
             return [
                 'inline_message_id' => $this->inline_message_id,
@@ -35,10 +30,7 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array|null $data
-         * @return SentWebAppMessage|null
+         * @inheritDoc
          */
         public static function fromArray(?array $data): ?SentWebAppMessage
         {
