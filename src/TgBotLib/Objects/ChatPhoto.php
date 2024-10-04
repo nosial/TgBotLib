@@ -7,25 +7,10 @@
 
     class ChatPhoto implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $small_file_id;
-
-        /**
-         * @var string
-         */
-        private $small_file_unique_id;
-
-        /**
-         * @var string
-         */
-        private $big_file_id;
-
-        /**
-         * @var string
-         */
-        private $big_file_unique_id;
+        private string $small_file_id;
+        private string $small_file_unique_id;
+        private string $big_file_id;
+        private string $big_file_unique_id;
 
         /**
          * File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for
@@ -72,9 +57,7 @@
         }
 
         /**
-         * Returns an array representation of this object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -87,15 +70,16 @@
         }
 
         /**
-         * Constructs a new ChatPhoto object from an array representation
-         *
-         * @param array $data
-         * @return static
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChatPhoto
         {
-            $object = new ChatPhoto();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new ChatPhoto();
             $object->small_file_id = $data['small_file_id'] ?? null;
             $object->small_file_unique_id = $data['small_file_unique_id'] ?? null;
             $object->big_file_id = $data['big_file_id'] ?? null;
