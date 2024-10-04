@@ -7,35 +7,12 @@
 
     class Document implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
-
-        /**
-         * @var string|null
-         */
-        private $file_name;
-
-        /**
-         * @var string|null
-         */
-        private $mime_type;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
+        private string $file_id;
+        private string $file_unique_id;
+        private ?PhotoSize $thumbnail;
+        private ?string $file_name;
+        private ?string $mime_type;
+        private ?int $file_size;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -101,30 +78,30 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'file_id' => $this->file_id ?? null,
-                'file_unique_id' => $this->file_unique_id ?? null,
-                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
-                'file_name' => $this->file_name ?? null,
-                'mime_type' => $this->mime_type ?? null,
-                'file_size' => $this->file_size ?? null,
+                'file_id' => $this->file_id,
+                'file_unique_id' => $this->file_unique_id,
+                'thumbnail' => $this->thumbnail?->toArray(),
+                'file_name' => $this->file_name,
+                'mime_type' => $this->mime_type,
+                'file_size' => $this->file_size,
             ];
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return Document
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Document
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->file_id = $data['file_id'] ?? null;
             $object->file_unique_id = $data['file_unique_id'] ?? null;
