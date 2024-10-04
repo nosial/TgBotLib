@@ -4,84 +4,53 @@
 
     namespace TgBotLib\Objects;
 
+    use InvalidArgumentException;
+    use TgBotLib\Enums\Types\MenuButtonType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\MenuButton\MenuButtonCommands;
+    use TgBotLib\Objects\MenuButton\MenuButtonDefault;
+    use TgBotLib\Objects\MenuButton\MenuButtonWebApp;
 
-    class MenuButton implements ObjectTypeInterface
+    abstract class MenuButton implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string|null
-         */
-        private $text;
-
-        /**
-         * @var WebAppInfo|null
-         */
-        private $web_app;
+        protected MenuButtonType $type;
 
         /**
          * Type of the button, must be web_app
          *
-         * @return string
+         * @return MenuButtonType
          */
-        public function getType(): string
+        public function getType(): MenuButtonType
         {
             return $this->type;
         }
 
         /**
-         * Text on the button
-         *
-         * @return string|null
+         * @inheritDoc
          */
-        public function getText(): ?string
-        {
-            return $this->text;
-        }
+        public abstract function toArray(): array;
 
         /**
-         * Description of the Web App that will be launched when the user presses the button. The Web App will be able
-         * to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
-         *
-         * @return WebAppInfo|null
+         * @inheritDoc
          */
-        public function getWebApp(): ?WebAppInfo
+        public static function fromArray(?array $data): ?MenuButton
         {
-            return $this->web_app;
-        }
+            if($data === null)
+            {
+                return null;
+            }
 
-        /**
-         * Returns an array representation of the object
-         *
-         * @return array
-         */
-        public function toArray(): array
-        {
-            return [
-                'type' => $this->type,
-                'text' => $this->text,
-                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null
-            ];
-        }
+            if(!isset($data['type']))
+            {
+                throw new InvalidArgumentException('MenuButton expected property type');
+            }
 
-        /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return MenuButton
-         */
-        public static function fromArray(array $data): self
-        {
-            $object = new self();
-
-            $object->type = $data['type'] ?? null;
-            $object->text = $data['text'] ?? null;
-            $object->web_app = ($data['web_app'] ?? null) ? WebAppInfo::fromArray($data['web_app']) : null;
-
-            return $object;
+            return match(MenuButtonType::tryFrom($data['type']))
+            {
+                MenuButtonType::COMMANDS => MenuButtonCommands::fromArray($data),
+                MenuButtonType::DEFAULT => MenuButtonDefault::fromArray($data),
+                MenuButtonType::WEB_APP => MenuButtonWebApp::fromArray($data),
+                default => throw new InvalidArgumentException('Unexpected MenuButton Type')
+            };
         }
     }

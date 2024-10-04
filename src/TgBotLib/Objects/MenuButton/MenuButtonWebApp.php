@@ -8,32 +8,10 @@
     use TgBotLib\Objects\MenuButton;
     use TgBotLib\Objects\WebAppInfo;
 
-    class MenuButtonWebApp implements ObjectTypeInterface
+    class MenuButtonWebApp extends MenuButton implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $text;
-
-        /**
-         * @var WebAppInfo
-         */
-        private $web_app;
-
-        /**
-         * Type of the button, must be web_app
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
+        private string $text;
+        private WebAppInfo $web_app;
 
         /**
          * Text on the button
@@ -58,49 +36,26 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'text' => $this->text,
-                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null
+                'web_app' => $this->web_app?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return MenuButtonWebApp
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): MenuButtonWebApp
         {
             $object = new self();
-
             $object->type = $data['type'] ?? null;
             $object->text = $data['text'] ?? null;
-            $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from MenuButton
-         *
-         * @param MenuButton $menuButton
-         * @return MenuButtonWebApp
-         */
-        public static function fromMenuButton(MenuButton $menuButton): MenuButtonWebApp
-        {
-            $object = new self();
-
-            $object->type = $menuButton->getType();
-            $object->text = $menuButton->getText();
-            $object->web_app = $menuButton->getWebApp();
+            $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app'] ?? []) : null;
 
             return $object;
         }

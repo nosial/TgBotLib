@@ -4,65 +4,34 @@
 
     namespace TgBotLib\Objects\MenuButton;
 
+    use TgBotLib\Enums\Types\MenuButtonType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\MenuButton;
 
-    class MenuButtonDefault implements ObjectTypeInterface
+    class MenuButtonDefault extends MenuButton implements ObjectTypeInterface
     {
         /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * Type of the button, must be default
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
-
-        /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->getType(),
+                'type' => $this->type->value,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return MenuButtonDefault
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?MenuButtonDefault
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
-
-            $object->type = $data['type'] ?? null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from MenuButton
-         *
-         * @param MenuButton $menuButton
-         * @return MenuButtonDefault
-         */
-        public static function fromMenuButton(MenuButton $menuButton): MenuButtonDefault
-        {
-            $object = new self();
-
-            $object->type = $menuButton->getType();
-
+            $object->type = MenuButtonType::DEFAULT;
             return $object;
         }
     }
