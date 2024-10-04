@@ -9,7 +9,7 @@
          *
          * @return array
          */
-        public function toArray(): array;
+        public function toArray(): ?array;
 
         /**
          * Reconstruction of the object from an array
