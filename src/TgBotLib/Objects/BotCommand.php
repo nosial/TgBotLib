@@ -8,15 +8,8 @@
 
     class BotCommand implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $command;
-
-        /**
-         * @var string
-         */
-        private $description;
+        private string $command;
+        private string $description;
 
         /**
          * Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.
@@ -39,9 +32,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -52,15 +43,11 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotCommand
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): BotCommand
         {
             $object = new self();
-
             $object->command = $data['command'] ?? null;
             $object->description = $data['description'] ?? null;
 
