@@ -1,9 +1,10 @@
 <?php
 
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Payments;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\User;
 
     class ShippingQuery implements ObjectTypeInterface
     {

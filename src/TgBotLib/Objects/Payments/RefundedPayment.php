@@ -1,6 +1,6 @@
 <?php
 
-namespace TgBotLib\Objects;
+namespace TgBotLib\Objects\Payments;
 
 use TgBotLib\Interfaces\ObjectTypeInterface;
 

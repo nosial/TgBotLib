@@ -1,24 +1,35 @@
 <?php
 
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Payments;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\User;
 
-    class SuccessfulPayment implements ObjectTypeInterface
+    class PreCheckoutQuery implements ObjectTypeInterface
     {
+        /**
+         * @var string
+         */
+        private $id;
+
+        /**
+         * @var User
+         */
+        private $from;
+
         /**
          * @var string
          */
         private $currency;
 
         /**
-         * @var string
+         * @var int
          */
         private $total_amount;
 
         /**
-         * @var string
+         * @var int
          */
         private $invoice_payload;
 
@@ -33,14 +44,24 @@
         private $order_info;
 
         /**
-         * @var string
+         * Unique query identifier
+         *
+         * @return string
          */
-        private $telegram_payment_charge_id;
+        public function getId(): string
+        {
+            return $this->id;
+        }
 
         /**
-         * @var string
+         * User who sent the query
+         *
+         * @return User
          */
-        private $provider_payment_charge_id;
+        public function getFrom(): User
+        {
+            return $this->from;
+        }
 
         /**
          * Three-letter ISO 4217 currency code
@@ -58,10 +79,9 @@
          * US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the
          * decimal point for each currency (2 for the majority of currencies).
          *
-         * @see https://core.telegram.org/bots/payments/currencies.json
-         * @return string
+         * @return int
          */
-        public function getTotalAmount(): string
+        public function getTotalAmount(): int
         {
             return $this->total_amount;
         }
@@ -69,9 +89,9 @@
         /**
          * Bot specified invoice payload
          *
-         * @return string
+         * @return int
          */
-        public function getInvoicePayload(): string
+        public function getInvoicePayload(): int
         {
             return $this->invoice_payload;
         }
@@ -97,26 +117,6 @@
         }
 
         /**
-         * Telegram payment identifier
-         *
-         * @return string
-         */
-        public function getTelegramPaymentChargeId(): string
-        {
-            return $this->telegram_payment_charge_id;
-        }
-
-        /**
-         * Provider payment identifier
-         *
-         * @return string
-         */
-        public function getProviderPaymentChargeId(): string
-        {
-            return $this->provider_payment_charge_id;
-        }
-
-        /**
          * Returns an array representation of the object
          *
          * @return array
@@ -124,13 +124,13 @@
         public function toArray(): array
         {
             return [
+                'id' => $this->id,
+                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
                 'currency' => $this->currency,
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,
                 'shipping_option_id' => $this->shipping_option_id,
-                'order_info' => ($this->order_info instanceof ObjectTypeInterface) ? $this->order_info->toArray() : null,
-                'telegram_payment_charge_id' => $this->telegram_payment_charge_id,
-                'provider_payment_charge_id' => $this->provider_payment_charge_id,
+                'order_info' => ($this->order_info instanceof ObjectTypeInterface) ? $this->order_info->toArray() : null
             ];
         }
 
@@ -138,20 +138,18 @@
          * Constructs object from an array representation
          *
          * @param array $data
-         * @return SuccessfulPayment
+         * @return PreCheckoutQuery
          */
         public static function fromArray(array $data): self
         {
             $object = new self();
-
+            $object->id = $data['id'] ?? null;
+            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : null;
             $object->currency = $data['currency'] ?? null;
             $object->total_amount = $data['total_amount'] ?? null;
             $object->invoice_payload = $data['invoice_payload'] ?? null;
             $object->shipping_option_id = $data['shipping_option_id'] ?? null;
-            $object->order_info = isset($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
-            $object->telegram_payment_charge_id = $data['telegram_payment_charge_id'] ?? null;
-            $object->provider_payment_charge_id = $data['provider_payment_charge_id'] ?? null;
-
+            $object->order_info = isset($data['order_info']) && is_array($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
             return $object;
         }
     }

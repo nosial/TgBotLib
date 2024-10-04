@@ -4,6 +4,9 @@
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Payments\Invoice;
+    use TgBotLib\Objects\Payments\RefundedPayment;
+    use TgBotLib\Objects\Payments\SuccessfulPayment;
 
     class Message extends MaybeInaccessibleMessage implements ObjectTypeInterface
     {

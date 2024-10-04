@@ -9,7 +9,7 @@
     use TgBotLib\Enums\Types\InputMessageContentType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Inline\InputMessageContent;
-    use TgBotLib\Objects\LabeledPrice;
+    use TgBotLib\Objects\Payments\LabeledPrice;
 
     class InputInvoiceMessageContent extends InputMessageContent implements ObjectTypeInterface
     {

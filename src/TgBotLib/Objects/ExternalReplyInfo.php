@@ -3,6 +3,7 @@
 namespace TgBotLib\Objects;
 
 use TgBotLib\Interfaces\ObjectTypeInterface;
+use TgBotLib\Objects\Payments\Invoice;
 
 class ExternalReplyInfo implements ObjectTypeInterface
 {

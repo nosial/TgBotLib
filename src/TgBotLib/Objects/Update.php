@@ -6,6 +6,8 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Inline\ChosenInlineResult;
     use TgBotLib\Objects\Inline\InlineQuery;
+    use TgBotLib\Objects\Payments\PreCheckoutQuery;
+    use TgBotLib\Objects\Payments\ShippingQuery;
 
     class Update implements ObjectTypeInterface
     {
