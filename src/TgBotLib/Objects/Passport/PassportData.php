@@ -1,7 +1,7 @@
 <?php
 
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Passport;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
