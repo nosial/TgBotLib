@@ -58,10 +58,14 @@ class PaidMediaPreview extends PaidMedia implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): PaidMediaPreview
+    public static function fromArray(?array $data): ?PaidMediaPreview
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = PaidMediaType::PREVIEW;
         $object->width = $data['width'] ?? null;
         $object->height = $data['height'] ?? null;

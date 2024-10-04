@@ -48,10 +48,14 @@ class PaidMediaPhoto extends PaidMedia implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): PaidMediaPhoto
+    public static function fromArray(?array $data): ?PaidMediaPhoto
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = PaidMediaType::PHOTO;
         $object->photo = array_map(fn(array $photo) => PhotoSize::fromArray($photo), $data['photo']);
 

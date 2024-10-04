@@ -35,10 +35,14 @@ class PaidMediaVideo extends PaidMedia implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): PaidMediaVideo
+    public static function fromArray(?array $data): ?PaidMediaVideo
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = PaidMediaType::VIDEO;
         $object->video = Video::fromArray($data['video']);
 
