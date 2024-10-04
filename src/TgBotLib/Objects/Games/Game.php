@@ -10,35 +10,18 @@
 
     class Game implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         *
-         */
-        private $description;
-
+        private string $title;
+        private string $description;
         /**
          * @var PhotoSize[]
          */
-        private $photo;
-
-        /**
-         * @var string|null
-         */
-        private $text;
+        private array $photo;
+        private ?string $text;
         /**
          * @var MessageEntity[]|null
          */
-        private $text_entities;
-
-        /**
-         * @var Animation|null
-         */
-        private $animation;
+        private ?array $text_entities;
+        private ?Animation $animation;
 
         /**
          * Title of the game
@@ -106,46 +89,37 @@
         }
 
         /**
-         * Returns an array representation of this object.
-         *
-         * @return array
+         * @inheritDocll
          */
         public function toArray(): array
         {
             return [
                 'title' => $this->title,
                 'description' => $this->description,
-                'photo' => isset($this->photo) ? array_map(function ($photo) {
-                    return $photo->toArray();
-                }, $this->photo) : null,
+                'photo' => isset($this->photo) ? array_map(fn(PhotoSize $item) => $item->toArray(), $this->photo) : null,
                 'text' => $this->text,
-                'text_entities' => isset($this->text_entities) ? array_map(function ($text_entity) {
-                    return $text_entity->toArray();
-                }, $this->text_entities) : null,
-                'animation' => ($this->animation instanceof ObjectTypeInterface) ? $this->animation->toArray() : null,
+                'text_entities' => isset($this->text_entities) ? array_map(fn(MessageEntity $item) => $item->toArray(), $this->text_entities) : null,
+                'animation' => $this->animation?->toArray(),
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Game
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Game
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->description = $data['description'] ?? null;
             $object->title = $data['title'] ?? null;
-            $object->photo = isset($data['photo']) && is_array($data['photo']) ? array_map(function ($photo) {
-                return PhotoSize::fromArray($photo);
-            }, $data['photo']) : null;
+            $object->photo = isset($data['photo']) ? array_map(fn(array $items) => PhotoSize::fromArray($items), $data['photo'] ?? []) : null;
             $object->text = $data['text'] ?? null;
-            $object->text_entities = isset($data['text_entities']) && is_array($data['text_entities']) ? array_map(function ($text_entity) {
-                return MessageEntity::fromArray($text_entity);
-            }, $data['text_entities']) : null;
-            $object->animation = ($data['animation']) ? Animation::fromArray($data['animation']) : null;
+            $object->text_entities = ($data['text_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['text_entities']) : null;
+            $object->animation = isset($data['animation']) ? Animation::fromArray($data['animation']) : null;
 
             return $object;
         }
