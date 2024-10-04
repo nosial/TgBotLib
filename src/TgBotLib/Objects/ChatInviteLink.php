@@ -8,50 +8,17 @@
 
     class ChatInviteLink implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $invite_link;
-
-        /**
-         * @var User
-         */
-        private $creator;
-
-        /**
-         * @var bool
-         */
-        private $creates_join_request;
-
-        /**
-         * @var bool
-         */
-        private $is_primary;
-
-        /**
-         * @var bool
-         */
-        private $is_revoked;
-
-        /**
-         * @var string
-         */
-        private $name;
-
-        /**
-         * @var int|null
-         */
-        private $expire_date;
-
-        /**
-         * @var int|null
-         */
-        private $member_limit;
-
-        /**
-         * @var int|null
-         */
-        private $pending_join_request_count;
+        private string $invite_link;
+        private User $creator;
+        private bool $creates_join_request;
+        private bool $is_primary;
+        private bool $is_revoked;
+        private string $name;
+        private ?int $expire_date;
+        private ?int $member_limit;
+        private ?int $pending_join_request_count;
+        private ?int $subscription_period;
+        private ?int $subscription_price;
 
         /**
          * The invite link. If the link was created by another chat administrator, then the second part of the link
@@ -146,31 +113,50 @@
         }
 
         /**
-         * Returns an array representation of the object
+         * Optional. The number of seconds the subscription will be active for before the next payment
          *
-         * @return array
+         * @return int|null
+         */
+        public function getSubscriptionPeriod(): ?int
+        {
+            return $this->subscription_period;
+        }
+
+        /**
+         * Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription
+         * period to be a member of the chat using the link
+         *
+         * @return int|null
+         */
+        public function getSubscriptionPrice(): ?int
+        {
+            return $this->subscription_price;
+        }
+
+        /**
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'invite_link' => $this->invite_link,
-                'creator' => ($this->creator instanceof ObjectTypeInterface) ? $this->creator->toArray() : null,
+                'creator' => $this->creator?->toArray(),
                 'creates_join_request' => $this->creates_join_request ?? false,
                 'is_primary' => $this->is_primary ?? false,
                 'is_revoked' => $this->is_revoked ?? false,
                 'name' => $this->name,
                 'expire_date' => $this->expire_date,
-                'member_limit' => $this->member_limit, 'pending_join_request_count' => $this->pending_join_request_count
+                'member_limit' => $this->member_limit,
+                'pending_join_request_count' => $this->pending_join_request_count,
+                'subscription_period' => $this->subscription_period,
+                'subscription_price' => $this->subscription_price
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatInviteLink
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ChatInviteLink
         {
             $object = new self();
 
@@ -183,6 +169,8 @@
             $object->expire_date = $data['expire_date'] ?? null;
             $object->member_limit = $data['member_limit'] ?? null;
             $object->pending_join_request_count = $data['pending_join_request_count'] ?? null;
+            $object->subscription_period = $data['subscription_period'] ?? null;
+            $object->subscription_price = $data['subscription_price'] ?? null;
 
             return $object;
         }
