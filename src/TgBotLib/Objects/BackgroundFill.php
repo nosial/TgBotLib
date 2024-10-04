@@ -1,54 +1,54 @@
 <?php
 
-namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects;
 
-use InvalidArgumentException;
-use TgBotLib\Enums\Types\BackgroundFillType;
-use TgBotLib\Interfaces\ObjectTypeInterface;
-use TgBotLib\Objects\BackgroundFill\BackgroundFillFreeformGradient;
-use TgBotLib\Objects\BackgroundFill\BackgroundFillGradient;
-use TgBotLib\Objects\BackgroundFill\BackgroundFillSolid;
+    use InvalidArgumentException;
+    use TgBotLib\Enums\Types\BackgroundFillType;
+    use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\BackgroundFill\BackgroundFillFreeformGradient;
+    use TgBotLib\Objects\BackgroundFill\BackgroundFillGradient;
+    use TgBotLib\Objects\BackgroundFill\BackgroundFillSolid;
 
-abstract class BackgroundFill implements ObjectTypeInterface
-{
-    protected BackgroundFillType $type;
-
-    /**
-     * Type of the background fill
-     *
-     * @return BackgroundFillType
-     */
-    public function getType(): BackgroundFillType
+    abstract class BackgroundFill implements ObjectTypeInterface
     {
-        return $this->type;
-    }
+        protected BackgroundFillType $type;
 
-    /**
-     * @inheritDoc
-     */
-    public abstract function toArray(): array;
-
-    /**
-     * @inheritDoc
-     */
-    public static function fromArray(?array $data): ?BackgroundFill
-    {
-        if($data === null)
+        /**
+         * Type of the background fill
+         *
+         * @return BackgroundFillType
+         */
+        public function getType(): BackgroundFillType
         {
-            return null;
+            return $this->type;
         }
 
-        if(!isset($data['type']))
-        {
-            throw new InvalidArgumentException('BackgroundFill expected type');
-        }
+        /**
+         * @inheritDoc
+         */
+        public abstract function toArray(): array;
 
-        return match(BackgroundFillType::tryFrom($data['type']))
+        /**
+         * @inheritDoc
+         */
+        public static function fromArray(?array $data): ?BackgroundFill
         {
-            BackgroundFillType::SOLID => BackgroundFillSolid::fromArray($data),
-            BackgroundFillType::GRADIENT => BackgroundFillGradient::fromArray($data),
-            BackgroundFillType::FREEFORM_GRADIENT => BackgroundFillFreeformGradient::fromArray($data),
-            default => throw new InvalidArgumentException("Invalid BackgroundFill Type")
-        };
+            if($data === null)
+            {
+                return null;
+            }
+
+            if(!isset($data['type']))
+            {
+                throw new InvalidArgumentException('BackgroundFill expected type');
+            }
+
+            return match(BackgroundFillType::tryFrom($data['type']))
+            {
+                BackgroundFillType::SOLID => BackgroundFillSolid::fromArray($data),
+                BackgroundFillType::GRADIENT => BackgroundFillGradient::fromArray($data),
+                BackgroundFillType::FREEFORM_GRADIENT => BackgroundFillFreeformGradient::fromArray($data),
+                default => throw new InvalidArgumentException("Invalid BackgroundFill Type")
+            };
+        }
     }
-}
