@@ -7,30 +7,11 @@
 
     class Invoice implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $description;
-
-        /**
-         * @var string
-         */
-        private $start_parameter;
-
-        /**
-         * @var string
-         */
-        private $currency;
-
-        /**
-         * @var int
-         */
-        private $total_amount;
+        private string $title;
+        private string $description;
+        private string $start_parameter;
+        private string $currency;
+        private int $total_amount;
 
         /**
          * Product name
@@ -87,9 +68,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -103,15 +82,16 @@
         }
 
         /**
-         * Constructs an object from an array representation.
-         *
-         * @param array $data
-         * @return Invoice
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Invoice
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->title = $data['title'] ?? null;
             $object->description = $data['description'] ?? null;
             $object->start_parameter = $data['start_parameter'] ?? null;
