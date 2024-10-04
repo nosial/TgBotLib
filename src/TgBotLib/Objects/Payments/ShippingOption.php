@@ -7,20 +7,12 @@
 
     class ShippingOption implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $title;
-
+        private string $id;
+        private string $title;
         /**
          * @var LabeledPrice[]
          */
-        private $prices;
+        private array $prices;
 
         /**
          * Shipping option identifier
@@ -62,26 +54,24 @@
             return [
                 'id' => $this->id,
                 'title' => $this->title,
-                'prices' => array_map(function (LabeledPrice $price) {
-                    return $price->toArray();
-                }, $this->prices)
+                'prices' => array_map(fn(LabeledPrice $item) => $item->toArray(), $this->prices)
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ShippingOption
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ShippingOption
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->id = $data['id'];
             $object->title = $data['title'];
-            $object->prices = array_map(function (array $price) {
-                return LabeledPrice::fromArray($price);
-            }, $data['prices']);
+            $object->prices = array_map(fn($item) => LabeledPrice::fromArray($item), $data['prices']);
 
             return $object;
         }
