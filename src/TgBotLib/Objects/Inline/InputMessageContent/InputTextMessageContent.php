@@ -179,10 +179,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InputTextMessageContent
+        public static function fromArray(?array $data): ?InputTextMessageContent
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->type = InputMessageContentType::TEXT;
             $object->message_text = $data['message_text'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;

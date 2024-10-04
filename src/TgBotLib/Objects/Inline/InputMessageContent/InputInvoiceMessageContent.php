@@ -609,10 +609,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InputInvoiceMessageContent
+        public static function fromArray(?array $data): ?InputInvoiceMessageContent
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->type = InputMessageContentType::INVOICE;
             $object->title = $data['title'] ?? null;
             $object->description = $data['description'] ?? null;

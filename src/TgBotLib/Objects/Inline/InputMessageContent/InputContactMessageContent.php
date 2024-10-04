@@ -159,10 +159,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InputContactMessageContent
+        public static function fromArray(?array $data): ?InputContactMessageContent
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->type = InputMessageContentType::CONTACT;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->first_name = $data['first_name'] ?? null;

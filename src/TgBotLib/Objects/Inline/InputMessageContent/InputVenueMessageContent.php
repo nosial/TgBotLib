@@ -227,8 +227,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InputVenueMessageContent
+        public static function fromArray(?array $data): ?InputVenueMessageContent
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InputMessageContentType::VENUE;
             $object->latitude = (float)$data['latitude'] ?? null;
