@@ -7,60 +7,17 @@
 
     class Currency implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $code;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $symbol;
-
-        /**
-         * @var string
-         */
-        private $native;
-
-        /**
-         * @var string
-         */
-        private $thousands_sep;
-
-        /**
-         * @var string
-         */
-        private $decimal_sep;
-
-        /**
-         * @var bool
-         */
-        private $symbol_left;
-
-        /**
-         * @var bool
-         */
-        private $space_between;
-
-        /**
-         * @var int
-         */
-        private $exp;
-
-        /**
-         * @var string
-         */
-        private $min_amount;
-
-        /**
-         * @var string
-         */
-        private $max_amount;
+        private string $code;
+        private string $title;
+        private string $symbol;
+        private string $native;
+        private string $thousands_sep;
+        private string $decimal_sep;
+        private bool $symbol_left;
+        private bool $space_between;
+        private int $exp;
+        private string $min_amount;
+        private string $max_amount;
 
         /**
          * @return string
@@ -151,9 +108,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -173,15 +128,16 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return ObjectTypeInterface
+         * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(?array $data): ?Currency
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->code = $data['code'] ?? null;
             $object->title = $data['title'] ?? null;
             $object->symbol = $data['symbol'] ?? null;
