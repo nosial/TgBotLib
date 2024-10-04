@@ -9,10 +9,10 @@
     use TgBotLib\Classes\Validate;
     use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
     use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\Inline\InputMessageContent;
     use TgBotLib\Objects\Inline\InputMessageContent\InputVenueMessageContent;
+    use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\MessageEntity;
 
     class InlineQueryResultDocument extends InlineQueryResult implements ObjectTypeInterface

@@ -10,9 +10,9 @@
     use TgBotLib\Enums\Types\InlineQueryResultType;
     use TgBotLib\Enums\Types\ThumbnailMimeType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
     use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\Inline\InputMessageContent;
+    use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\MessageEntity;
 
     class InlineQueryResultGif extends InlineQueryResult implements ObjectTypeInterface

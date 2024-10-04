@@ -5,7 +5,6 @@
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\Inline\InlineKeyboardMarkup;
 
     class Message extends MaybeInaccessibleMessage implements ObjectTypeInterface
     {

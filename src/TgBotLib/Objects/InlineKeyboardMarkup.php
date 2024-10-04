@@ -2,7 +2,7 @@
 
     /** @noinspection PhpMissingFieldTypeInspection */
 
-    namespace TgBotLib\Objects\Inline;
+    namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
