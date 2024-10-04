@@ -1,10 +1,11 @@
 <?php
 
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Stickers;
 
     use TgBotLib\Enums\Types\StickerType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\PhotoSize;
 
     class StickerSet implements ObjectTypeInterface
     {

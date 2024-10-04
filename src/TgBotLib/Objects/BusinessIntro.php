@@ -3,6 +3,7 @@
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Stickers\Sticker;
 
     class BusinessIntro implements ObjectTypeInterface
     {

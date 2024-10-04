@@ -39,7 +39,7 @@
     use TgBotLib\Objects\MenuButton;
     use TgBotLib\Objects\Message;
     use TgBotLib\Objects\Poll;
-    use TgBotLib\Objects\Sticker;
+    use TgBotLib\Objects\Stickers\Sticker;
     use TgBotLib\Objects\Update;
     use TgBotLib\Objects\User;
     use TgBotLib\Objects\UserProfilePhotos;
