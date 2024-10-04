@@ -273,7 +273,7 @@
             $object->type = InlineQueryResultType::ARTICLE;
             $object->id = $data['id'] ?? null;
             $object->title = $data['title'] ?? null;
-            $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
+            $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content'] ?? null) : null;
             $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
             $object->url = $data['url'] ?? null;
             $object->hide_url = $data['hide_url'] ?? null;

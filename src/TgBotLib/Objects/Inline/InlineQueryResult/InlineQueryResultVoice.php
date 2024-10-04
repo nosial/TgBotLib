@@ -246,7 +246,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']);
+            $object->caption_entities = array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []);
             $object->voice_duration = $data['voice_duration'] ?? null;
             $object->reply_markup = InlineKeyboardMarkup::fromArray($data['reply_markup'] ?? []);
             $object->input_message_content = InputMessageContent::fromArray($data['input_message_content'] ?? []);

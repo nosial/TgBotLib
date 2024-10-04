@@ -326,7 +326,7 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $messageEntity) => MessageEntity::fromArray($messageEntity), $data['caption_entities']) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []) : null;
             $object->performer = $data['performer'] ?? null;
             $object->audio_duration = $data['audio_duration'] ?? null;
             $object->reply_markup = ($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;

@@ -8,47 +8,16 @@
     use TgBotLib\Objects\InputMedia;
     use TgBotLib\Objects\MessageEntity;
 
-    class InputMediaPhoto implements ObjectTypeInterface
+    class InputMediaPhoto extends InputMedia implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $media;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $media;
+        private ?string $caption;
+        private ?string $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var bool
-         */
-        private $has_spoiler;
-
-        /**
-         * Type of the result, must be photo
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
+        private ?array $caption_entities;
+        private bool $has_spoiler;
 
         /**
          * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP
@@ -116,56 +85,28 @@
                 'media' => $this->media,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parse_mode,
-                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
-                    if($item instanceof ObjectTypeInterface)
-                    {
-                        return $item->toArray();
-                    }
-                    return $item;
-                }, $this->caption_entities) : null,
+                'caption_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities),
                 'has_spoiler' => $this->has_spoiler,
             ];
         }
 
         /**
-         * Constructs the object from an array
-         *
-         * @param array $data
-         * @return InputMediaPhoto
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?InputMediaPhoto
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->type = $data['type'] ?? null;
             $object->media = $data['media'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
             $object->has_spoiler = $data['has_spoiler'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
-            {
-                return MessageEntity::fromArray($item);
-            }, $data['caption_entities']) : null;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from InputMedia
-         *
-         * @param InputMedia $inputMedia
-         * @return InputMediaPhoto
-         */
-        public static function fromInputMedia(InputMedia $inputMedia): InputMediaPhoto
-        {
-            $object = new self();
-
-            $object->type = $inputMedia->getType();
-            $object->media = $inputMedia->getMedia();
-            $object->caption = $inputMedia->getCaption();
-            $object->parse_mode = $inputMedia->getParseMode();
-            $object->has_spoiler = $inputMedia->hasSpoiler();
-            $object->caption_entities = $inputMedia->getCaptionEntities();
+            $object->caption_entities = array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []);
 
             return $object;
         }

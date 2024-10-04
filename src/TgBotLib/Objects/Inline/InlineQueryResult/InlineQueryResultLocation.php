@@ -356,7 +356,7 @@
             $object->live_period = $data['live_period'] ?? null;
             $object->heading = $data['heading'] ?? null;
             $object->proximity_alert_radius = $data['proximity_alert_radius'] ?? null;
-            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup'] ?? []) : null;
             $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
             $object->thumbnail_width = $data['thumbnail_width'] ?? null;
