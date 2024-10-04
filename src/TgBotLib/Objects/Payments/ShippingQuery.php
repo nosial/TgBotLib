@@ -8,25 +8,10 @@
 
     class ShippingQuery implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var string
-         */
-        private $invoice_payload;
-
-        /**
-         * @var ShippingAddress
-         */
-        private $shipping_address;
+        private string $id;
+        private User $from;
+        private string $invoice_payload;
+        private ShippingAddress $shipping_address;
 
         /**
          * Unique query identifier
@@ -69,34 +54,33 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof User) ? $this->from->toArray() : $this->from,
+                'from' => $this->from?->toArray(),
                 'invoice_payload' => $this->invoice_payload,
-                'shipping_address' => ($this->shipping_address instanceof ShippingAddress) ? $this->shipping_address->toArray() : $this->shipping_address,
+                'shipping_address' => $this->shipping_address?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ShippingQuery
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ShippingQuery
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->id = $data['id'] ?? null;
-            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : $data['from'];
+            $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->invoice_payload = $data['invoice_payload'] ?? null;
-            $object->shipping_address = isset($data['shipping_address']) && is_array($data['shipping_address']) ? ShippingAddress::fromArray($data['shipping_address']) : $data['shipping_address'];
+            $object->shipping_address = isset($data['shipping_address']) ? ShippingAddress::fromArray($data['shipping_address']) : null;
 
             return $object;
         }
