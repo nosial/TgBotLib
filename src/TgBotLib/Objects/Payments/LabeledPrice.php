@@ -7,15 +7,8 @@
 
     class LabeledPrice implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $label;
-
-        /**
-         * @var int
-         */
-        private $amount;
+        private string $label;
+        private int $amount;
 
         /**
          * Portion label
@@ -42,9 +35,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -55,15 +46,16 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return LabeledPrice
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?LabeledPrice
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->label = $data['label'] ?? null;
             $object->amount = $data['amount'] ?? null;
 
