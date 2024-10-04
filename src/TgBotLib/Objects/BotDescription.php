@@ -8,10 +8,7 @@
 
     class BotDescription implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $description;
+        private string $description;
 
         /**
          * The bot's short description
@@ -24,9 +21,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return string[]
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -36,15 +31,11 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotDescription
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): BotDescription
         {
             $object = new self();
-
             $object->description = $data['description'];
 
             return $object;
