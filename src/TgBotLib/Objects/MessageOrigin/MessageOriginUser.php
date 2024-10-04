@@ -27,8 +27,8 @@ class MessageOriginUser extends MessageOrigin implements ObjectTypeInterface
     public function toArray(): array
     {
         return [
-            'type' => $this->getType()->value,
-            'date' => $this->getDate(),
+            'type' => $this->type->value,
+            'date' => $this->date,
             'sender_user' => $this->sender_user->toArray()
         ];
     }
@@ -36,10 +36,14 @@ class MessageOriginUser extends MessageOrigin implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): MessageOrigin
+    public static function fromArray(?array $data): ?MessageOrigin
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = MessageOriginType::USER;
         $object->date = $data['date'];
         $object->sender_user = User::fromArray($data['sender_user']);

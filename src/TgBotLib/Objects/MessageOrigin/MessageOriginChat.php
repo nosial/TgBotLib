@@ -38,8 +38,8 @@ class MessageOriginChat extends MessageOrigin implements ObjectTypeInterface
     public function toArray(): array
     {
         return [
-            'type' => $this->getType()->value,
-            'date' => $this->getDate(),
+            'type' => $this->type->value,
+            'date' => $this->date,
             'sender_chat' => $this->sender_chat->toArray(),
             'author_signature' => $this->author_signature,
         ];
@@ -48,10 +48,14 @@ class MessageOriginChat extends MessageOrigin implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): MessageOrigin
+    public static function fromArray(?array $data): ?MessageOrigin
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = MessageOriginType::CHAT;
         $object->date = $data['date'];
         $object->sender_chat = Chat::fromArray($data['sender_chat']);

@@ -35,21 +35,20 @@ abstract class MessageOrigin implements ObjectTypeInterface
     }
 
     /**
-     * Converts the object to an array representation.
-     *
-     * @return array The array representation of the object.
+     * @inheritDoc
      */
     public abstract function toArray(): array;
 
     /**
-     * Converts an associative array to a MessageOrigin object.
-     *
-     * @param array $data The data representing the message origin.
-     * @return MessageOrigin The constructed MessageOrigin object.
-     * @throws InvalidArgumentException If the 'type' key is missing or an unknown type is provided.
+     * @inheritDoc
      */
-    public static function fromArray(array $data): MessageOrigin
+    public static function fromArray(?array $data): ?MessageOrigin
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         if(!isset($data['type']))
         {
             throw new InvalidArgumentException('Message origin type is required');
