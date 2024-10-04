@@ -7,30 +7,11 @@
 
     class Contact implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $phone_number;
-
-        /**
-         * @var string
-         */
-        private $first_name;
-
-        /**
-         * @var string|null
-         */
-        private $last_name;
-
-        /**
-         * @var int|null
-         */
-        private $user_id;
-
-        /**
-         * @var string|null
-         */
-        private $vcard;
+        private string $phone_number;
+        private string $first_name;
+        private ?string $last_name;
+        private ?int $user_id;
+        private ?string $vcard;
 
         /**
          * Contact's phone number
@@ -85,9 +66,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -101,15 +80,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Contact
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Contact
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->phone_number = $data['phone_number'] ?? null;
             $object->first_name = $data['first_name'] ?? null;
             $object->last_name = $data['last_name'] ?? null;
