@@ -5,71 +5,25 @@
     namespace TgBotLib\Objects\InputMedia;
 
     use TgBotLib\Enums\Types\InputMediaType;
+    use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\InputMedia;
     use TgBotLib\Objects\MessageEntity;
 
-    class InputMediaAnimation implements ObjectTypeInterface
+    class InputMediaAnimation extends InputMedia implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var string
-         */
-        private $media;
-
-        /**
-         * @var string|null
-         */
-        private $thumb;
-
-        /**
-         * @var string|null
-         */
-        private $caption;
-
-        /**
-         * @var string|null
-         */
-        private $parse_mode;
-
+        private string $media;
+        private ?string $thumb;
+        private ?string $caption;
+        private ?ParseMode $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
-        private $caption_entities;
-
-        /**
-         * @var int|null
-         */
-        private $width;
-
-        /**
-         * @var int|null
-         */
-        private $height;
-
-        /**
-         * @var int|null
-         */
-        private $duration;
-
-        /**
-         * @var bool
-         */
-        private $has_spoiler;
-
-        /**
-         * Type of the result, must be animation
-         *
-         * @return string
-         */
-        public function getType(): string
-        {
-            return $this->type;
-        }
+        private ?array $caption_entities;
+        private ?int $width;
+        private ?int $height;
+        private ?int $duration;
+        private bool $has_spoiler;
 
         /**
          * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP
@@ -114,9 +68,9 @@
          * Optional. Mode for parsing entities in the animation caption.
          *
          * @see https://core.telegram.org/bots/api#formatting-options
-         * @return string|null
+         * @return ParseMode|null
          */
-        public function getParseMode(): ?string
+        public function getParseMode(): ?ParseMode
         {
             return $this->parse_mode;
         }
@@ -172,25 +126,17 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'media' => $this->media,
                 'thumb' => $this->thumb,
                 'caption' => $this->caption,
-                'parse_mode' => $this->parse_mode,
-                'caption_entities' => is_array($this->caption_entities) ? array_map(function ($item) {
-                    if($item instanceof ObjectTypeInterface)
-                    {
-                        return $item->toArray();
-                    }
-                    return $item;
-                }, $this->caption_entities) : null,
+                'parse_mode' => $this->parse_mode->value,
+                'caption_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities),
                 'width' => $this->width,
                 'height' => $this->height,
                 'duration' => $this->duration,
@@ -199,53 +145,26 @@
         }
 
         /**
-         * Constructs object from an array representation.
-         *
-         * @param array $data
-         * @return InputMediaAnimation
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?InputMediaAnimation
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new static();
             $object->type = $data['type'] ?? InputMediaType::ANIMATION;
             $object->media = $data['media'] ?? null;
             $object->thumb = $data['thumb'] ?? null;
             $object->caption = $data['caption'] ?? null;
-            $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(function ($item)
-            {
-                return MessageEntity::fromArray($item);
-            }, $data['caption_entities']) : null;
+            $object->parse_mode = isset($data['parse_mode']) ? ParseMode::tryFrom($data['parse_mode']) ?? null : null;
+            $object->caption_entities = array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []);
             $object->width = $data['width'] ?? null;
             $object->height = $data['height'] ?? null;
             $object->duration = $data['duration'] ?? null;
             $object->has_spoiler = $data['has_spoiler'] ?? false;
-
-            return $object;
-        }
-
-        /**
-         * Constructs object from InputMedia
-         *
-         * @param InputMedia $inputMedia
-         * @return InputMediaAnimation
-         * @noinspection DuplicatedCode
-         */
-        public static function fromInputMedia(InputMedia $inputMedia): InputMediaAnimation
-        {
-            $object = new static();
-
-            $object->type = $inputMedia->getType();
-            $object->media = $inputMedia->getMedia();
-            $object->thumb = $inputMedia->getThumb();
-            $object->caption = $inputMedia->getCaption();
-            $object->parse_mode = $inputMedia->getParseMode();
-            $object->caption_entities = $inputMedia->getCaptionEntities();
-            $object->width = $inputMedia->getWidth();
-            $object->height = $inputMedia->getHeight();
-            $object->duration = $inputMedia->getDuration();
-            $object->has_spoiler = $inputMedia->hasSpoiler();
 
             return $object;
         }

@@ -4,6 +4,7 @@
 
     namespace TgBotLib\Objects\InputMedia;
 
+    use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\InputMedia;
     use TgBotLib\Objects\MessageEntity;
@@ -12,7 +13,7 @@
     {
         private string $media;
         private ?string $caption;
-        private ?string $parse_mode;
+        private ?ParseMode $parse_mode;
         /**
          * @var MessageEntity[]|null
          */
@@ -46,9 +47,9 @@
          * Optional. Mode for parsing entities in the photo caption.
          *
          * @see https://core.telegram.org/bots/api#formatting-options
-         * @return string|null
+         * @return ParseMode|null
          */
-        public function getParseMode(): ?string
+        public function getParseMode(): ?ParseMode
         {
             return $this->parse_mode;
         }
@@ -81,10 +82,10 @@
         public function toArray(): array
         {
             return [
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'media' => $this->media,
                 'caption' => $this->caption,
-                'parse_mode' => $this->parse_mode,
+                'parse_mode' => $this->parse_mode->value,
                 'caption_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->caption_entities),
                 'has_spoiler' => $this->has_spoiler,
             ];
@@ -104,7 +105,7 @@
             $object->type = $data['type'] ?? null;
             $object->media = $data['media'] ?? null;
             $object->caption = $data['caption'] ?? null;
-            $object->parse_mode = $data['parse_mode'] ?? null;
+            $object->parse_mode = isset($data['parse_mode']) ? ParseMode::tryFrom($data['parse_mode']) ?? null : null;
             $object->has_spoiler = $data['has_spoiler'] ?? null;
             $object->caption_entities = array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []);
 

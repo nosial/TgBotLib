@@ -15,17 +15,14 @@
 
     abstract class InputMedia implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        protected $type;
+        protected InputMediaType $type;
 
         /**
          * Type of the result, can be photo, video, animation, audio or document
          *
-         * @return string
+         * @return InputMediaType
          */
-        public function getType(): string
+        public function getType(): InputMediaType
         {
             return $this->type;
         }
