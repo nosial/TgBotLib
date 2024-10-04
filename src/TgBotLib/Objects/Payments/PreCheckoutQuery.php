@@ -8,40 +8,13 @@
 
     class PreCheckoutQuery implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var string
-         */
-        private $currency;
-
-        /**
-         * @var int
-         */
-        private $total_amount;
-
-        /**
-         * @var int
-         */
-        private $invoice_payload;
-
-        /**
-         * @var string|null
-         */
-        private $shipping_option_id;
-
-        /**
-         * @var OrderInfo|null
-         */
-        private $order_info;
+        private string $id;
+        private User $from;
+        private string $currency;
+        private int $total_amount;
+        private int $invoice_payload;
+        private ?string $shipping_option_id;
+        private ?OrderInfo $order_info;
 
         /**
          * Unique query identifier
@@ -117,15 +90,13 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
+                'from' => $this->from?->toArray(),
                 'currency' => $this->currency,
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,
@@ -135,21 +106,24 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return PreCheckoutQuery
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?PreCheckoutQuery
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->id = $data['id'] ?? null;
-            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : null;
+            $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->currency = $data['currency'] ?? null;
             $object->total_amount = $data['total_amount'] ?? null;
             $object->invoice_payload = $data['invoice_payload'] ?? null;
             $object->shipping_option_id = $data['shipping_option_id'] ?? null;
-            $object->order_info = isset($data['order_info']) && is_array($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
+            $object->order_info = isset($data['order_info']) ? OrderInfo::fromArray($data['order_info']) : null;
+
             return $object;
         }
     }
