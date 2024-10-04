@@ -7,7 +7,7 @@
         /**
          * Returns an array representation of the object
          *
-         * @return array
+         * @return array|null
          */
         public function toArray(): ?array;
 
