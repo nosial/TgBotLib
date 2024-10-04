@@ -7,40 +7,13 @@
 
     class ChatMemberUpdated implements ObjectTypeInterface
     {
-        /**
-         * @var Chat
-         */
-        private $chat;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var int
-         */
-        private $date;
-
-        /**
-         * @var ChatMember
-         */
-        private $old_chat_member;
-
-        /**
-         * @var ChatMember
-         */
-        private $new_chat_member;
-
-        /**
-         * @var ChatInviteLink|null
-         */
-        private $invite_link;
-
-        /**
-         * @var bool
-         */
-        private $via_chat_folder_invite_link;
+        private Chat $chat;
+        private User $from;
+        private int $date;
+        private ChatMember $old_chat_member;
+        private ChatMember $new_chat_member;
+        private ?ChatInviteLink $invite_link;
+        private bool $via_chat_folder_invite_link;
 
         /**
          * Chat the user belongs to
@@ -114,38 +87,37 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'chat' => ($this->chat instanceof ObjectTypeInterface) ? $this->chat->toArray() : $this->chat,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : $this->from,
+                'chat' => $this->chat?->toArray(),
+                'from' => $this->from?->toArray(),
                 'date' => $this->date,
-                'old_chat_member' => ($this->old_chat_member instanceof ObjectTypeInterface) ? $this->old_chat_member->toArray() : $this->old_chat_member,
-                'new_chat_member' => ($this->new_chat_member instanceof ObjectTypeInterface) ? $this->new_chat_member->toArray() : $this->new_chat_member,
-                'invite_link' => ($this->invite_link instanceof ObjectTypeInterface) ? $this->invite_link->toArray() : $this->invite_link,
+                'old_chat_member' => $this->old_chat_member?->toArray(),
+                'new_chat_member' => $this->new_chat_member?->toArray(),
+                'invite_link' => $this->invite_link?->toArray(),
                 'via_chat_folder_invite_link' => $this->via_chat_folder_invite_link,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatMemberUpdated
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChatMemberUpdated
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : new Chat();
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : new User();
             $object->date = $data['date'] ?? 0;
-            $object->old_chat_member = isset($data['old_chat_member']) ? ChatMember::fromArray($data['old_chat_member']) : new ChatMember();
-            $object->new_chat_member = isset($data['new_chat_member']) ? ChatMember::fromArray($data['new_chat_member']) : new ChatMember();
+            $object->old_chat_member = isset($data['old_chat_member']) ? ChatMember::fromArray($data['old_chat_member']) : null;
+            $object->new_chat_member = isset($data['new_chat_member']) ? ChatMember::fromArray($data['new_chat_member']) : null;
             $object->invite_link = isset($data['invite_link']) ? ChatInviteLink::fromArray($data['invite_link']) : null;
             $object->via_chat_folder_invite_link = $data['via_chat_folder_invite_link'] ?? false;
 
