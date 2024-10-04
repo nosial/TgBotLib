@@ -7,35 +7,12 @@
 
     class ShippingAddress implements ObjectTypeInterface
     {
-        /**
-         * @var string|null
-         */
-        private $country_code;
-
-        /**
-         * @var string|null
-         */
-        private $state;
-
-        /**
-         * @var string|null
-         */
-        private $city;
-
-        /**
-         * @var string|null
-         */
-        private $street_line1;
-
-        /**
-         * @var string|null
-         */
-        private $street_line2;
-
-        /**
-         * @var string|null
-         */
-        private $post_code;
+        private ?string $country_code;
+        private ?string $state;
+        private ?string $city;
+        private ?string $street_line1;
+        private ?string $street_line2;
+        private ?string $post_code;
 
         /**
          * Two-letter ISO 3166-1 alpha-2 country code
@@ -98,9 +75,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -115,15 +90,16 @@
         }
 
         /**
-         * Constructs object from an array representation.
-         *
-         * @param array $data
-         * @return ShippingAddress
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ShippingAddress
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->country_code = $data['country_code'] ?? null;
             $object->state = $data['state'] ?? null;
             $object->city = $data['city'] ?? null;
