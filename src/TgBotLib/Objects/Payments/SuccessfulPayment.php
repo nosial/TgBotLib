@@ -7,40 +7,13 @@
 
     class SuccessfulPayment implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $currency;
-
-        /**
-         * @var string
-         */
-        private $total_amount;
-
-        /**
-         * @var string
-         */
-        private $invoice_payload;
-
-        /**
-         * @var string|null
-         */
-        private $shipping_option_id;
-
-        /**
-         * @var OrderInfo|null
-         */
-        private $order_info;
-
-        /**
-         * @var string
-         */
-        private $telegram_payment_charge_id;
-
-        /**
-         * @var string
-         */
-        private $provider_payment_charge_id;
+        private string $currency;
+        private string $total_amount;
+        private string $invoice_payload;
+        private ?string $shipping_option_id;
+        private ?OrderInfo $order_info;
+        private string $telegram_payment_charge_id;
+        private string $provider_payment_charge_id;
 
         /**
          * Three-letter ISO 4217 currency code
@@ -117,9 +90,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -128,22 +99,23 @@
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,
                 'shipping_option_id' => $this->shipping_option_id,
-                'order_info' => ($this->order_info instanceof ObjectTypeInterface) ? $this->order_info->toArray() : null,
+                'order_info' => $this->order_info?->toArray(),
                 'telegram_payment_charge_id' => $this->telegram_payment_charge_id,
                 'provider_payment_charge_id' => $this->provider_payment_charge_id,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return SuccessfulPayment
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?SuccessfulPayment
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->currency = $data['currency'] ?? null;
             $object->total_amount = $data['total_amount'] ?? null;
             $object->invoice_payload = $data['invoice_payload'] ?? null;
