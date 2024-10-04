@@ -12,11 +12,11 @@
         private ?Chat $actor_chat;
         private int $date;
         /**
-         * @var ReactionType[]|null
+         * @var ReactionType[]
          */
         private array $old_reaction;
         /**
-         * @var ReactionType[]|null
+         * @var ReactionType[]
          */
         private array $new_reaction;
 
