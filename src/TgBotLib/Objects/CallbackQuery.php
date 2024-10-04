@@ -8,40 +8,13 @@
 
     class CallbackQuery implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var Message|null
-         */
-        private $message;
-
-        /**
-         * @var string|null
-         */
-        private $inline_message_id;
-
-        /**
-         * @var string
-         */
-        private $chat_instance;
-
-        /**
-         * @var string|null
-         */
-        private $data;
-
-        /**
-         * @var string|null
-         */
-        private $game_short_name;
+        private string $id;
+        private User $from;
+        private ?Message $message;
+        private ?string $inline_message_id;
+        private string $chat_instance;
+        private ?string $data;
+        private ?string $game_short_name;
 
         /**
          * Unique identifier for this query
@@ -119,16 +92,14 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : null,
-                'message' => ($this->message instanceof ObjectTypeInterface) ? $this->message->toArray() : null,
+                'from' => $this->from?->toArray(),
+                'message' => $this->message?->toArray(),
                 'inline_message_id' => $this->inline_message_id,
                 'chat_instance' => $this->chat_instance,
                 'data' => $this->data,
@@ -137,15 +108,16 @@
         }
 
         /**
-         * Constructs CallbackQuery object from an array representation
-         *
-         * @param array $data
-         * @return CallbackQuery
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?CallbackQuery
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->id = $data['id'] ?? null;
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->message = isset($data['message']) ? Message::fromArray($data['message']) : null;
