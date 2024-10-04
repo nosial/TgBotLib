@@ -9,9 +9,7 @@
         // Note: A placeholder, currently holds no information. Use BotFather to set up your game.
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -19,12 +17,9 @@
         }
 
         /**
-         * Constructs an object from an array representation.
-         *
-         * @param array $data
-         * @return CallbackGame
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?CallbackGame
         {
             return new self();
         }
