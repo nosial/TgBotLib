@@ -81,10 +81,14 @@ class RefundedPayment implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?RefundedPayment
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->currency = $data['currency'];
         $object->total_amount = $data['total_amount'];
         $object->invoice_payload = $data['invoice_payload'];
