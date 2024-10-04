@@ -10,30 +10,11 @@
 
     class ChosenInlineResult implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $result_id;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var Location|null
-         */
-        private $location;
-
-        /**
-         * @var string|null
-         */
-        private $inline_message_id;
-
-        /**
-         * @var string
-         */
-        private $query;
+        private string $result_id;
+        private User $from;
+        private ?Location $location;
+        private ?string $inline_message_id;
+        private string $query;
 
         /**
          * The unique identifier for the result that was chosen
@@ -90,26 +71,21 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'result_id' => $this->result_id,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : $this->from,
-                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
+                'from' => $this->from?->toArray(),
+                'location' => $this->location?->toArray(),
                 'inline_message_id' => $this->inline_message_id,
                 'query' => $this->query,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array|null $data
-         * @return ChosenInlineResult|null
+         * @inheritDoc
          */
         public static function fromArray(?array $data): ?ChosenInlineResult
         {
