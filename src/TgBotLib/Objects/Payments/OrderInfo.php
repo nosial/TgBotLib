@@ -7,25 +7,10 @@
 
     class OrderInfo implements ObjectTypeInterface
     {
-        /**
-         * @var string|null
-         */
-        private $name;
-
-        /**
-         * @var string|null
-         */
-        private $phone_number;
-
-        /**
-         * @var string|null
-         */
-        private $email;
-
-        /**
-         * @var ShippingAddress|null
-         */
-        private $shipping_address;
+        private ?string $name;
+        private ?string $phone_number;
+        private ?string $email;
+        private ?ShippingAddress $shipping_address;
 
         /**
          * Optional. User name
@@ -68,9 +53,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -78,24 +61,25 @@
                 'name' => $this->name,
                 'phone_number' => $this->phone_number,
                 'email' => $this->email,
-                'shipping_address' => ($this->shipping_address instanceof ShippingAddress) ? $this->shipping_address->toArray() : null,
+                'shipping_address' => $this->shipping_address?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return OrderInfo
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?OrderInfo
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->name = $data['name'] ?? null;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->email = $data['email'] ?? null;
-            $object->shipping_address = ($data['shipping_address'] ?? null) instanceof ShippingAddress ? $data['shipping_address'] : ShippingAddress::fromArray($data['shipping_address'] ?? []);
+            $object->shipping_address = isset($data['shipping_address']) ? ShippingAddress::fromArray($data['shipping_address']) : null;
 
             return $object;
         }
