@@ -7,15 +7,8 @@
 
     class ChatShared implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $request_id;
-
-        /**
-         * @var int
-         */
-        private $chat_id;
+        private int $request_id;
+        private int $chat_id;
 
         /**
          * Identifier of the request
@@ -42,9 +35,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -55,15 +46,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatShared
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChatShared
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->request_id = $data['request_id'] ?? null;
             $object->chat_id = $data['chat_id'] ?? null;
 
