@@ -37,8 +37,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ChatMemberMember
+        public static function fromArray(?array $data): ?ChatMemberMember
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->status = ChatMemberStatus::MEMBER;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;

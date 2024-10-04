@@ -23,8 +23,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): BotCommandScopeDefault
+        public static function fromArray(?array $data): ?BotCommandScopeDefault
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = BotCommandScopeType::DEFAULT;
 

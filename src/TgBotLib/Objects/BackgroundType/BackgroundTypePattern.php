@@ -85,10 +85,14 @@ class BackgroundTypePattern extends BackgroundType implements ObjectTypeInterfac
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundTypePattern
+    public static function fromArray(?array $data): ?BackgroundTypePattern
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = type::PATTERN;
         $object->document = Document::fromArray($data['document']);
         $object->fill = BackgroundFill::fromArray($data['fill']);

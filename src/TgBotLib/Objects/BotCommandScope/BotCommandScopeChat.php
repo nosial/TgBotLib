@@ -39,8 +39,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?BotCommandScopeChat
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = BotCommandScopeType::CHAT;
             $object->chat_id = $data['chat_id'] ?? null;

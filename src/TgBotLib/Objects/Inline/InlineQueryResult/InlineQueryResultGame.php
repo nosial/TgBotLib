@@ -89,8 +89,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultGame
+        public static function fromArray(?array $data): ?InlineQueryResultGame
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::GAME;
             $object->id = $data['id'] ?? null;

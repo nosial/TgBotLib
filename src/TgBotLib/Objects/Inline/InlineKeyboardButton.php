@@ -334,13 +334,17 @@
         /**
          * Constructs a new InlineKeyboardButton object from an array
          *
-         * @param array $data
-         * @return InlineKeyboardButton
+         * @param array|null $data
+         * @return InlineKeyboardButton|null
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?InlineKeyboardButton
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->text = $data['text'] ?? null;
             $object->url = $data['url'] ?? null;
             $object->callback_data = $data['callback_data'] ?? null;

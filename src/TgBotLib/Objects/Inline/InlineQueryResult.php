@@ -5,7 +5,6 @@
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
     use TgBotLib\Enums\Types\InlineQueryResultType;
-    use TgBotLib\Exceptions\NotImplementedException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Inline\InlineQueryResult\InlineQueryResultArticle;
     use TgBotLib\Objects\Inline\InlineQueryResult\InlineQueryResultAudio;
@@ -71,8 +70,33 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(?array $data): ?InlineQueryResult
         {
-            // TODO: Implement this
+            if($data === null)
+            {
+                return null;
+            }
+
+            if(!isset($data['type']))
+            {
+                throw new InvalidArgumentException('InlineQueryResult expected type');
+            }
+
+            return match(InlineQueryResultType::tryFrom($data['type']))
+            {
+                InlineQueryResultType::ARTICLE => InlineQueryResultArticle::fromArray($data),
+                InlineQueryResultType::AUDIO => InlineQueryResultAudio::fromArray($data),
+                InlineQueryResultType::CONTACT => InlineQueryResultContact::fromArray($data),
+                InlineQueryResultType::DOCUMENT => InlineQueryResultDocument::fromArray($data),
+                InlineQueryResultType::GAME => InlineQueryResultGame::fromArray($data),
+                InlineQueryResultType::GIF => InlineQueryResultGif::fromArray($data),
+                InlineQueryResultType::LOCATION => InlineQueryResultLocation::fromArray($data),
+                InlineQueryResultType::MPEG_4_GIF => InlineQueryResultMpeg4Gif::fromArray($data),
+                InlineQueryResultType::PHOTO => InlineQueryResultPhoto::fromArray($data),
+                InlineQueryResultType::VENUE => InlineQueryResultVenue::fromArray($data),
+                InlineQueryResultType::VIDEO => InlineQueryResultVideo::fromArray($data),
+                InlineQueryResultType::VOICE => InlineQueryResultVoice::fromArray($data),
+                default => throw new InvalidArgumentException('Unexpected type for InlineQueryResult')
+            };
         }
     }

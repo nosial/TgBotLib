@@ -61,8 +61,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ChatMemberOwner
+        public static function fromArray(?array $data): ?ChatMemberOwner
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new ChatMemberOwner();
             $object->status = ChatMemberStatus::CREATOR;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;

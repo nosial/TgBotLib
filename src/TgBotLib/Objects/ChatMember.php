@@ -39,8 +39,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ChatMember
+        public static function fromArray(?array $data): ?ChatMember
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             if(!isset($data['status']))
             {
                 throw new InvalidArgumentException('ChatMember expected status');

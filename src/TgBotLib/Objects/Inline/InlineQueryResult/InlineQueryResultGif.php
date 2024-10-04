@@ -390,8 +390,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultGif
+        public static function fromArray(?array $data): ?InlineQueryResultGif
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::GIF;
             $object->id = $data['id'] ?? null;

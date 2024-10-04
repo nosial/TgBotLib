@@ -356,8 +356,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(?array $data): ?InlineQueryResultVideo
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::VIDEO;
             $object->id = $data['id'] ?? null;

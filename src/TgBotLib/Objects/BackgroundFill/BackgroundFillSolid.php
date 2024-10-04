@@ -34,10 +34,14 @@ class BackgroundFillSolid extends BackgroundFill implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundFill
+    public static function fromArray(?array $data): ?BackgroundFillSolid
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = BackgroundFillType::SOLID;
         $object->color = $data['color'];
 

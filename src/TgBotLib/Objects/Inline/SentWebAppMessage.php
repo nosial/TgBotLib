@@ -37,13 +37,17 @@
         /**
          * Constructs object from an array representation
          *
-         * @param array $data
-         * @return SentWebAppMessage
+         * @param array|null $data
+         * @return SentWebAppMessage|null
          */
-        public static function fromArray(array $data): SentWebAppMessage
+        public static function fromArray(?array $data): ?SentWebAppMessage
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->inline_message_id = $data['inline_message_id'] ?? null;
 
             return $object;

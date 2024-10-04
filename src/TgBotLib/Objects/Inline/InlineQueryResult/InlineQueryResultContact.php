@@ -260,8 +260,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultContact
+        public static function fromArray(?array $data): ?InlineQueryResultContact
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::CONTACT;
             $object->id = $data['id'] ?? null;

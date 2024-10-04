@@ -339,8 +339,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultLocation
+        public static function fromArray(?array $data): ?InlineQueryResultLocation
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::LOCATION;
             $object->id = $data['id'] ?? null;

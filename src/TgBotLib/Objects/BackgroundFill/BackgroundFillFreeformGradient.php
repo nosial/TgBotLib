@@ -37,8 +37,13 @@ class BackgroundFillFreeformGradient extends BackgroundFill implements ObjectTyp
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundFill
+    public static function fromArray(?array $data): ?BackgroundFillFreeformGradient
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         $object = new self();
 
         $object->type = BackgroundFillType::FREEFORM_GRADIENT;

@@ -229,9 +229,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ChatMemberRestricted
+        public static function fromArray(?array $data): ?ChatMemberRestricted
         {
-            $object = new static();
+            if($data === null)
+            {
+                return null;
+            }
+
+            $object = new self();
             $object->status = ChatMemberStatus::RESTRICTED;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->is_member = $data['is_member'] ?? false;

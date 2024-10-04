@@ -23,8 +23,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): BotCommandScopeAllPrivateChats
+        public static function fromArray(?array $data): ?BotCommandScopeAllPrivateChats
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = BotCommandScopeType::ALL_PRIVATE_CHATS;
 

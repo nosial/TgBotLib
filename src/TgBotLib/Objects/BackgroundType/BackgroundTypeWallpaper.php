@@ -71,10 +71,14 @@ class BackgroundTypeWallpaper extends BackgroundType implements ObjectTypeInterf
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundTypeWallpaper
+    public static function fromArray(?array $data): ?BackgroundTypeWallpaper
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = type::WALLPAPER;
         $object->document = Document::fromArray($data['document']);
         $object->dark_theme_dimming = $data['dark_theme_dimming'];

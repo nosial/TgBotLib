@@ -47,10 +47,11 @@ class BackgroundTypeFill extends BackgroundType implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundTypeFill
+    public static function fromArray(?array $data): ?BackgroundTypeFill
     {
-        $object = new self();
+        if()
 
+        $object = new self();
         $object->type = type::FILL;
         $object->fill = BackgroundFill::fromArray($data['fill']);
         $object->dark_theme_dimming = $data['dark_theme_dimming'];

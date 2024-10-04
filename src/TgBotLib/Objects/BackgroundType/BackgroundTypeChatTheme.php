@@ -34,10 +34,14 @@ class BackgroundTypeChatTheme extends BackgroundType implements ObjectTypeInterf
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundTypeChatTheme
+    public static function fromArray(?array $data): ?BackgroundTypeChatTheme
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->type = type::CHAT_THEME;
         $object->theme_name = $data['theme_name'];
 

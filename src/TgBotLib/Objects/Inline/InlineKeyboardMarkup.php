@@ -72,13 +72,17 @@
         /**
          * Constructs the object from an array representation
          *
-         * @param array $data
-         * @return InlineKeyboardMarkup
+         * @param array|null $data
+         * @return InlineKeyboardMarkup|null
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?InlineKeyboardMarkup
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->inline_keyboard = [];
 
             foreach($data as $item)

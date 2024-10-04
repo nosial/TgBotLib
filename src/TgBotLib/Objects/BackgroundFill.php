@@ -31,8 +31,13 @@ abstract class BackgroundFill implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundFill
+    public static function fromArray(?array $data): ?BackgroundFill
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         if(!isset($data['type']))
         {
             throw new InvalidArgumentException('BackgroundFill expected type');

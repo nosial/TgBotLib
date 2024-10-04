@@ -303,8 +303,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultPhoto
+        public static function fromArray(?array $data): ?InlineQueryResultPhoto
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::PHOTO;
             $object->id = $data['id'] ?? null;

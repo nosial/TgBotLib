@@ -49,8 +49,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ChatMemberBanned
+        public static function fromArray(?array $data): ?ChatMemberBanned
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->status = ChatMemberStatus::KICKED;
             $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;

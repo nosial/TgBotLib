@@ -312,8 +312,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultAudio
+        public static function fromArray(?array $data): ?InlineQueryResultAudio
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::AUDIO;
             $object->id = $data['id'] ?? null;

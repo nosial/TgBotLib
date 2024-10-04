@@ -322,8 +322,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): InlineQueryResultMpeg4Gif
+        public static function fromArray(?array $data): ?InlineQueryResultMpeg4Gif
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = InlineQueryResultType::MPEG_4_GIF;
             $object->id = $data['id'] ?? null;

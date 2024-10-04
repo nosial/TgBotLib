@@ -7,6 +7,7 @@ use TgBotLib\Enums\Types\BackgroundType as type;
 use TgBotLib\Interfaces\ObjectTypeInterface;
 use TgBotLib\Objects\BackgroundType\BackgroundTypeChatTheme;
 use TgBotLib\Objects\BackgroundType\BackgroundTypeFill;
+use TgBotLib\Objects\BackgroundType\BackgroundTypePattern;
 use TgBotLib\Objects\BackgroundType\BackgroundTypeWallpaper;
 
 abstract class BackgroundType implements ObjectTypeInterface
@@ -31,8 +32,13 @@ abstract class BackgroundType implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundType
+    public static function fromArray(?array $data): ?BackgroundType
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         if (!isset($data['type']))
         {
             throw new InvalidArgumentException('BackgroundType expected type');
@@ -42,6 +48,7 @@ abstract class BackgroundType implements ObjectTypeInterface
         {
             type::WALLPAPER => BackgroundTypeWallpaper::fromArray($data),
             type::FILL => BackgroundTypeFill::fromArray($data),
+            type::PATTERN => BackgroundTypePattern::fromArray($data),
             type::CHAT_THEME => BackgroundTypeChatTheme::fromArray($data),
             default => throw new InvalidArgumentException("Invalid BackgroundType Type")
         };

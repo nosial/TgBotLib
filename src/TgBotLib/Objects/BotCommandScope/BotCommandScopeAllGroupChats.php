@@ -23,8 +23,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?BotCommandScopeAllGroupChats
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = BotCommandScopeType::ALL_CHAT_GROUPS;
 

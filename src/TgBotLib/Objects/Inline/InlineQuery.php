@@ -123,13 +123,17 @@
         /**
          * Constructs object from an array representation
          *
-         * @param array $data
-         * @return InlineQuery
+         * @param array|null $data
+         * @return InlineQuery|null
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?InlineQuery
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->id = $data['id'];
             $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : $data['from'];
             $object->query = $data['query'];

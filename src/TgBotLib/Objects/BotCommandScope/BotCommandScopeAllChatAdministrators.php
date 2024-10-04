@@ -26,9 +26,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -39,13 +37,15 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return BotCommandScopeAllChatAdministrators
+         * @inheritDoc
          */
-        public static function fromArray(array $data): BotCommandScopeAllChatAdministrators
+        public static function fromArray(?array $data): ?BotCommandScopeAllChatAdministrators
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->type = BotCommandScopeType::ALL_CHAT_ADMINISTRATORS;
             $object->chat_id = $data['chat_id'] ?? null;

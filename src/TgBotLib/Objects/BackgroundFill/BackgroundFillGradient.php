@@ -57,8 +57,13 @@ class BackgroundFillGradient extends BackgroundFill implements ObjectTypeInterfa
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): BackgroundFillGradient
+    public static function fromArray(?array $data): ?BackgroundFillGradient
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         $object = new self();
         $object->type = $data['type'] ?? null;
         $object->top_color = $data['top_color'] ?? 0;

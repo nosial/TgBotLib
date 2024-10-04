@@ -41,8 +41,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(?array $data): ?BotCommandScope
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             if(!isset($data['type']))
             {
                 throw new InvalidArgumentException('BotCommandScope expected type');

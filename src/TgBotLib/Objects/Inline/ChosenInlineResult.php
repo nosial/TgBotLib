@@ -108,13 +108,17 @@
         /**
          * Constructs object from an array representation
          *
-         * @param array $data
-         * @return ChosenInlineResult
+         * @param array|null $data
+         * @return ChosenInlineResult|null
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChosenInlineResult
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->result_id = $data['result_id'] ?? null;
             $object->from = $data['from'] ?? null;
             $object->location = $data['location'] ?? null;
