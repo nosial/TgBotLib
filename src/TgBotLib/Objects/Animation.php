@@ -8,50 +8,15 @@
 
     class Animation implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var int
-         */
-        private $width;
-
-        /**
-         * @var int
-         */
-        private $height;
-
-        /**
-         * @var int
-         */
-        private $duration;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
-
-        /**
-         * @var string|null
-         */
-        private $file_name;
-
-        /**
-         * @var string|null
-         */
-        private $mime_type;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
+        private string $file_id;
+        private string $file_unique_id;
+        private int $width;
+        private int $height;
+        private int $duration;
+        private ?PhotoSize $thumbnail;
+        private ?string $file_name;
+        private ?string $mime_type;
+        private ?int $file_size;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -147,9 +112,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -159,7 +122,7 @@
                 'width' => $this->width ?? null,
                 'height' => $this->height ?? null,
                 'duration' => $this->duration ?? null,
-                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : null,
+                'thumbnail' => $this->thumbnail?->toArray(),
                 'file_name' => $this->file_name ?? null,
                 'mime_type' => $this->mime_type ?? null,
                 'file_size' => $this->file_size ?? null
@@ -167,21 +130,22 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return Animation
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Animation
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->file_id = $data['file_id'] ?? null;
             $object->file_unique_id = $data['file_unique_id'] ?? null;
             $object->width = $data['width'] ?? null;
             $object->height = $data['height'] ?? null;
             $object->duration = $data['duration'] ?? null;
-            $object->thumbnail = ($data['thumbnail'] ?? null) ? PhotoSize::fromArray($data['thumbnail']) : null;
+            $object->thumbnail = isset($data['thumbnail']) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->file_name = $data['file_name'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->file_size = $data['file_size'] ?? null;
