@@ -17,9 +17,6 @@
 
     abstract class BotCommandScope implements ObjectTypeInterface
     {
-        /**
-         * @var BotCommandScopeType
-         */
         protected BotCommandScopeType $type;
 
         /**
