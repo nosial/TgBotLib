@@ -8,35 +8,12 @@
 
     class ChatJoinRequest implements ObjectTypeInterface
     {
-        /**
-         * @var Chat
-         */
-        private $chat;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var int
-         */
-        private $user_chat_id;
-
-        /**
-         * @var int
-         */
-        private $date;
-
-        /**
-         * @var string|null
-         */
-        private $bio;
-
-        /**
-         * @var ChatInviteLink|null
-         */
-        private $invite_link;
+        private Chat $chat;
+        private User $from;
+        private int $user_chat_id;
+        private int $date;
+        private ?string $bio;
+        private ?ChatInviteLink $invite_link;
 
         /**
          * Chat to which the request was sent
@@ -103,38 +80,37 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'chat' => ($this->chat instanceof ObjectTypeInterface) ? $this->chat->toArray() : $this->chat,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : $this->from,
+                'chat' => $this->chat?->toArray(),
+                'from' => $this->from?->toArray(),
                 'user_chat_id' => $this->user_chat_id,
                 'date' => $this->date,
                 'bio' => $this->bio,
-                'invite_link' => ($this->invite_link instanceof ObjectTypeInterface) ? $this->invite_link->toArray() : $this->invite_link,
+                'invite_link' => $this->invite_link?->toArray()
             ];
         }
 
         /**
-         * Constructs ChatJoinRequest object from an array representation
-         *
-         * @param array $data
-         * @return ChatJoinRequest
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChatJoinRequest
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
-            $object->chat = (isset($data['chat'])) ? Chat::fromArray($data['chat']) : null;
-            $object->from = (isset($data['from'])) ? User::fromArray($data['from']) : null;
-            $object->user_chat_id = (isset($data['user_chat_id'])) ? $data['user_chat_id'] : null;
-            $object->date = (isset($data['date'])) ? $data['date'] : null;
-            $object->bio = (isset($data['bio'])) ? $data['bio'] : null;
-            $object->invite_link = (isset($data['invite_link'])) ? ChatInviteLink::fromArray($data['invite_link']) : null;
+            $object = new self();
+            $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : null;
+            $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
+            $object->user_chat_id = $data['user_chat_id'];
+            $object->date = $data['date'];
+            $object->bio = $data['bio'] ?? null;
+            $object->invite_link = isset($data['invite_link']) ? ChatInviteLink::fromArray($data['invite_link']) : null;
 
             return $object;
         }
