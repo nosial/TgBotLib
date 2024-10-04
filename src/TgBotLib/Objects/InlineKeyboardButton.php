@@ -6,6 +6,7 @@
     use InvalidArgumentException;
     use TgBotLib\Classes\Validate;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Games\CallbackGame;
 
     class InlineKeyboardButton implements ObjectTypeInterface
     {

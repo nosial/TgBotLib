@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Games;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
 

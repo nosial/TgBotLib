@@ -1,9 +1,12 @@
 <?php
 
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects\Games;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Animation;
+    use TgBotLib\Objects\MessageEntity;
+    use TgBotLib\Objects\PhotoSize;
 
     class Game implements ObjectTypeInterface
     {
@@ -14,6 +17,7 @@
 
         /**
          * @var string
+         *
          */
         private $description;
 

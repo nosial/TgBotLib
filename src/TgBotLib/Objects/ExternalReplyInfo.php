@@ -3,6 +3,7 @@
 namespace TgBotLib\Objects;
 
 use TgBotLib\Interfaces\ObjectTypeInterface;
+use TgBotLib\Objects\Games\Game;
 use TgBotLib\Objects\Payments\Invoice;
 use TgBotLib\Objects\Stickers\Sticker;
 
