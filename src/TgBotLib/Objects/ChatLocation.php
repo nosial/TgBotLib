@@ -7,15 +7,8 @@
 
     class ChatLocation implements ObjectTypeInterface
     {
-        /**
-         * @var Location
-         */
-        private $location;
-
-        /**
-         * @var string
-         */
-        private $address;
+        private Location $location;
+        private string $address;
 
         /**
          * The location to which the supergroup is connected. Can't be a live location.
@@ -38,28 +31,22 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
+                'location' => $this->location?->toArray(),
                 'address' => $this->address,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatLocation
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ChatLocation
         {
             $object = new self();
-
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
             $object->address = $data['address'] ?? null;
 
