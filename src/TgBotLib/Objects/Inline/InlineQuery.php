@@ -4,41 +4,19 @@
 
     namespace TgBotLib\Objects\Inline;
 
+    use TgBotLib\Enums\Types\ChatType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Location;
     use TgBotLib\Objects\User;
 
     class InlineQuery implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var User
-         */
-        private $from;
-
-        /**
-         * @var string
-         */
-        private $query;
-
-        /**
-         * @var string
-         */
-        private $offset;
-
-        /**
-         * @var string|null
-         */
-        private $chat_type;
-
-        /**
-         * @var Location|null
-         */
-        private $location;
+        private string $id;
+        private User $from;
+        private string $query;
+        private string $offset;
+        private ?ChatType $chat_type;
+        private ?Location $location;
 
         /**
          * Unique identifier for this query
@@ -86,9 +64,9 @@
          * known for requests sent from official clients and most third-party clients, unless the request was sent from
          * a secret chat
          *
-         * @return string|null
+         * @return ChatType|null
          */
-        public function getChatType(): ?string
+        public function getChatType(): ?ChatType
         {
             return $this->chat_type;
         }
@@ -104,27 +82,22 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'id' => $this->id,
-                'from' => ($this->from instanceof ObjectTypeInterface) ? $this->from->toArray() : $this->from,
+                'from' => $this->from?->toArray(),
                 'query' => $this->query,
                 'offset' => $this->offset,
-                'chat_type' => $this->chat_type,
-                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
+                'chat_type' => $this->chat_type?->value,
+                'location' => $this->location?->toArray()
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array|null $data
-         * @return InlineQuery|null
+         * @inheritDoc
          */
         public static function fromArray(?array $data): ?InlineQuery
         {
@@ -135,11 +108,11 @@
 
             $object = new self();
             $object->id = $data['id'];
-            $object->from = isset($data['from']) && is_array($data['from']) ? User::fromArray($data['from']) : $data['from'];
+            $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;
             $object->query = $data['query'];
             $object->offset = $data['offset'];
             $object->chat_type = $data['chat_type'] ?? null;
-            $object->location = isset($data['location']) && is_array($data['location']) ? Location::fromArray($data['location']) : $data['location'];
+            $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
 
             return $object;
         }
