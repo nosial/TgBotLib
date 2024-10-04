@@ -7,25 +7,10 @@
 
     class PassportFile implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var int
-         */
-        private $file_size;
-
-        /**
-         * @var int
-         */
-        private $file_date;
+        private string $file_id;
+        private string $file_unique_id;
+        private int $file_size;
+        private int $file_date;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -69,9 +54,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -84,15 +67,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return PassportFile
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?PassportFile
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->file_id = $data['file_id'] ?? null;
             $object->file_unique_id = $data['file_unique_id'] ?? null;
             $object->file_size = $data['file_size'] ?? null;

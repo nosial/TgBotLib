@@ -10,12 +10,8 @@
         /**
          * @var EncryptedPassportElement[]
          */
-        private $data;
-
-        /**
-         * @var EncryptedCredentials
-         */
-        private $credentials;
+        private array $data;
+        private EncryptedCredentials $credentials;
 
         /**
          * Array with information about documents and other Telegram Passport elements that was shared with the bot
@@ -38,39 +34,29 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'data' => array_map(function ($element)
-                {
-                    if($element instanceof ObjectTypeInterface)
-                    {
-                        return $element->toArray();
-                    }
-                    return $element;
-                }, $this->data),
-                'credentials' => $this->credentials->toArray(),
+                'data' => is_null($this->data) ? null : array_map(fn(EncryptedPassportElement $item) => $item->toArray(), $this->data),
+                'credentials' => $this->credentials?->toArray(),
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return PassportData
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?PassportData
         {
-            $object = new self();
-            $object->data = array_map(function (array $element)
+            if($data === null)
             {
-                return EncryptedPassportElement::fromArray($element);
-            }, $data['data']);
-            $object->credentials = EncryptedCredentials::fromArray($data['credentials']);
+                return null;
+            }
+
+            $object = new self();
+            $object->data = isset($data['data']) ? array_map(fn(array $items) => EncryptedPassportElement::fromArray($items), $data['data'] ?? []) : null;
+            $object->credentials = isset($data['credentials']) ? EncryptedCredentials::fromArray($data['credentials']) : null;
 
             return $object;
         }

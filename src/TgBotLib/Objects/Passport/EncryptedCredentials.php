@@ -7,20 +7,9 @@
 
     class EncryptedCredentials implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $data;
-
-        /**
-         * @var string
-         */
-        private $hash;
-
-        /**
-         * @var string
-         */
-        private $secret;
+        private string $data;
+        private string $hash;
+        private string $secret;
 
         /**
          * Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets required
@@ -55,9 +44,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -69,15 +56,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return EncryptedCredentials
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?EncryptedCredentials
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->data = $data['data'] ?? null;
             $object->hash = $data['hash'] ?? null;
             $object->secret = $data['secret'] ?? null;
