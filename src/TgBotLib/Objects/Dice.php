@@ -7,15 +7,8 @@
 
     class Dice implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $emoji;
-
-        /**
-         * @var int
-         */
-        private $value;
+        private string $emoji;
+        private int $value;
 
         /**
          * @return string
@@ -34,9 +27,7 @@
         }
 
         /**
-         * Constructs object from array representation
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -47,15 +38,16 @@
         }
 
         /**
-         * Constructs object from array representation
-         *
-         * @param array $data
-         * @return Dice
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Dice
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->emoji = $data['emoji'] ?? null;
             $object->value = $data['value'] ?? null;
 
