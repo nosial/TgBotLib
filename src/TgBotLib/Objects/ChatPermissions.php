@@ -7,75 +7,20 @@
 
     class ChatPermissions implements ObjectTypeInterface
     {
-        /**
-         * @var bool
-         */
-        private $can_send_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_send_audios;
-
-        /**
-         * @var bool
-         */
-        private $can_send_documents;
-
-        /**
-         * @var bool
-         */
-        private $can_send_photos;
-
-        /**
-         * @var bool
-         */
-        private $can_send_videos;
-
-        /**
-         * @var bool
-         */
-        private $can_send_videos_notes;
-
-        /**
-         * @var bool
-         */
-        private $can_send_voice_notes;
-
-        /**
-         * @var bool
-         */
-        private $can_send_polls;
-
-        /**
-         * @var bool
-         */
-        private $can_send_other_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_add_web_page_previews;
-
-        /**
-         * @var bool
-         */
-        private $can_change_info;
-
-        /**
-         * @var bool
-         */
-        private $can_invite_users;
-
-        /**
-         * @var bool
-         */
-        private $can_pin_messages;
-
-        /**
-         * @var bool
-         */
-        private $can_manage_topics;
+        private bool $can_send_messages;
+        private bool $can_send_audios;
+        private bool $can_send_documents;
+        private bool $can_send_photos;
+        private bool $can_send_videos;
+        private bool $can_send_videos_notes;
+        private bool $can_send_voice_notes;
+        private bool $can_send_polls;
+        private bool $can_send_other_messages;
+        private bool $can_add_web_page_previews;
+        private bool $can_change_info;
+        private bool $can_invite_users;
+        private bool $can_pin_messages;
+        private bool $can_manage_topics;
 
         /**
          * Optional. True, if the user is allowed to send text messages, contacts, invoices, locations and venues
@@ -220,9 +165,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -245,16 +188,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ChatPermissions
-         * @noinspection DuplicatedCode
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ChatPermissions
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->can_send_messages = $data['can_send_messages'] ?? false;
             $object->can_send_audios = $data['can_send_audios'] ?? false;
             $object->can_send_documents = $data['can_send_documents'] ?? false;
