@@ -1,7 +1,5 @@
 <?php
 
-    /** @noinspection PhpMissingFieldTypeInspection */
-
     namespace TgBotLib\Objects;
 
     use InvalidArgumentException;

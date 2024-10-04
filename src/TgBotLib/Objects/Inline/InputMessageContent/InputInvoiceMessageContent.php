@@ -1,6 +1,5 @@
 <?php
 
-    /** @noinspection PhpMissingFieldTypeInspection */
     /** @noinspection PhpUnused */
 
     namespace TgBotLib\Objects\Inline\InputMessageContent;

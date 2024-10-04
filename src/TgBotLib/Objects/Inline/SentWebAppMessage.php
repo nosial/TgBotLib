@@ -1,7 +1,6 @@
 <?php
 
     /** @noinspection PhpUnused */
-    /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\Inline;
 

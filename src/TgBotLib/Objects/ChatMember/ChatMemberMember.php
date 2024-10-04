@@ -1,6 +1,5 @@
 <?php
 
-    /** @noinspection PhpMissingFieldTypeInspection */
 
     namespace TgBotLib\Objects\ChatMember;
 
