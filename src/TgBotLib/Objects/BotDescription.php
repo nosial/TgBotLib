@@ -33,8 +33,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(?array $data): BotDescription
+        public static function fromArray(?array $data): ?BotDescription
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->description = $data['description'];
 

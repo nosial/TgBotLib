@@ -45,8 +45,13 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(?array $data): BotCommand
+        public static function fromArray(?array $data): ?BotCommand
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->command = $data['command'] ?? null;
             $object->description = $data['description'] ?? null;

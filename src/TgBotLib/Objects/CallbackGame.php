@@ -21,6 +21,11 @@
          */
         public static function fromArray(?array $data): ?CallbackGame
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             return new self();
         }
     }
