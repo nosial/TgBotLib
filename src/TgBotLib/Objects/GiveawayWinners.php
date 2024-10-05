@@ -166,10 +166,14 @@ class GiveawayWinners implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?GiveawayWinners
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->chat = Chat::fromArray($data['chat']);
         $object->giveaway_message_id = $data['giveaway_message_id'];
         $object->winners_selection_date = $data['winners_selection_date'];
