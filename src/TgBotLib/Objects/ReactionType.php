@@ -2,6 +2,7 @@
 
     namespace TgBotLib\Objects;
 
+    use InvalidArgumentException;
     use TgBotLib\Enums\Types\ReactionTypes;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
@@ -26,7 +27,7 @@
 
             if(!isset($data['type']))
             {
-                throw new \InvalidArgumentException('Type is not provided');
+                throw new InvalidArgumentException('Type is not provided');
             }
 
             return match(ReactionTypes::tryFrom($data['type']))
@@ -34,7 +35,7 @@
                 ReactionTypes::EMOJI => ReactionType\ReactionTypeEmoji::fromArray($data),
                 ReactionTypes::CUSTOM_EMOJI => ReactionType\ReactionTypeCustomEmoji::fromArray($data),
                 ReactionTypes::PAID => ReactionType\ReactionTypePaid::fromArray($data),
-                default => throw new \InvalidArgumentException('Unknown type')
+                default => throw new InvalidArgumentException('Unknown type')
             };
         }
     }
