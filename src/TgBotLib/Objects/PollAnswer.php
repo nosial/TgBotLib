@@ -7,20 +7,12 @@
 
     class PollAnswer implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $poll_id;
-
-        /**
-         * @var User
-         */
-        private $user;
-
+        private string $poll_id;
+        private User $user;
         /**
          * @var int[]
          */
-        private $option_ids;
+        private array $option_ids;
 
         /**
          * Unique poll identifier
@@ -53,9 +45,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -67,17 +57,18 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return PollAnswer
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?PollAnswer
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->poll_id = $data['poll_id'] ?? null;
-            $object->user = isset($data['user']) && is_array($data['user']) ? User::fromArray($data['user']) : null;
+            $object->user = isset($data['user']) ? User::fromArray($data['user']) : null;
             $object->option_ids = $data['option_ids'];
 
             return $object;
