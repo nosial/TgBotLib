@@ -7,10 +7,7 @@
 
     class MessageAutoDeleteTimerChanged implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $message_auto_delete_time;
+        private int $message_auto_delete_time;
 
         /**
          * @return int
@@ -21,9 +18,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -33,15 +28,16 @@
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return MessageAutoDeleteTimerChanged
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?MessageAutoDeleteTimerChanged
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->message_auto_delete_time = $data['message_auto_delete_time'];
 
             return $object;
