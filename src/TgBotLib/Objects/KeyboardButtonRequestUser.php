@@ -7,20 +7,9 @@
 
     class KeyboardButtonRequestUser implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $request_id;
-
-        /**
-         * @var bool
-         */
-        private $user_is_bot;
-
-        /**
-         * @var bool
-         */
-        private $user_is_premium;
+        private int $request_id;
+        private bool $user_is_bot;
+        private bool $user_is_premium;
 
         /**
          * Signed 32-bit identifier of the request, which will be received back in the
@@ -57,9 +46,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -71,15 +58,16 @@
         }
 
         /**
-         * Constructs object from an array representation.
-         *
-         * @param array $data
-         * @return KeyboardButtonRequestUser
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?KeyboardButtonRequestUser
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->request_id = $data['request_id'] ?? null;
             $object->user_is_bot = $data['user_is_bot'] ?? false;
             $object->user_is_premium = $data['user_is_premium'] ?? false;
