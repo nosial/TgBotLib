@@ -82,10 +82,14 @@ class LinkPreviewOptions implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?LinkPreviewOptions
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->is_disabled = $data['is_disabled'] ?? false;
         $object->url = $data['url'] ?? null;
         $object->prefer_small_media = $data['prefer_small_media'] ?? false;
