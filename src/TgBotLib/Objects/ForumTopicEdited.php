@@ -7,15 +7,8 @@
 
     class ForumTopicEdited implements ObjectTypeInterface
     {
-        /**
-         * @var string|null
-         */
-        private $name;
-
-        /**
-         * @var string|null
-         */
-        private $icon_custom_emoji_id;
+        private ?string $name;
+        private ?string $icon_custom_emoji_id;
 
         /**
          * Optional. New name of the topic, if it was edited
@@ -39,9 +32,7 @@
         }
 
         /**
-         * Returns array representation of object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -52,15 +43,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ForumTopicEdited
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ForumTopicEdited
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->name = $data['name'] ?? null;
             $object->icon_custom_emoji_id = $data['icon_custom_emoji_id'] ?? null;
 
