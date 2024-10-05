@@ -60,8 +60,12 @@
          */
         public static function fromArray(?array $data): ?ForceReply
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->force_reply = $data['force_reply'] ?? false;
             $object->inline_field_placeholder = $data['inline_field_placeholder'] ?? null;
             $object->selective = $data['selective'] ?? false;
