@@ -7,20 +7,9 @@
 
     class ForceReply implements ObjectTypeInterface
     {
-        /**
-         * @var bool
-         */
-        private $force_reply;
-
-        /**
-         * @var string|null
-         */
-        private $inline_field_placeholder;
-
-        /**
-         * @var bool
-         */
-        private $selective;
+        private bool $force_reply;
+        private ?string $inline_field_placeholder;
+        private bool $selective;
 
         /**
          * Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
@@ -55,9 +44,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -69,12 +56,9 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return ForceReply
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ForceReply
         {
             $object = new self();
 
