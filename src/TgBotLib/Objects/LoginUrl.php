@@ -7,25 +7,10 @@
 
     class LoginUrl implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $url;
-
-        /**
-         * @var string|null
-         */
-        private $forward_text;
-
-        /**
-         * @var string|null
-         */
-        private $bot_username;
-
-        /**
-         * @var bool
-         */
-        private $request_write_access;
+        private string $url;
+        private ?string $forward_text;
+        private ?string $bot_username;
+        private bool $request_write_access;
 
         /**
          * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed.
@@ -75,9 +60,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -90,15 +73,16 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return LoginUrl
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): LoginUrl
         {
-            $object = new self();
+            if($data === null)
+            {
+                $data = [];
+            }
 
+            $object = new self();
             $object->url = $data['url'] ?? null;
             $object->forward_text = $data['forward_text'] ?? null;
             $object->bot_username = $data['bot_username'] ?? null;
