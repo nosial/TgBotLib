@@ -10,7 +10,7 @@
         /**
          * @var InlineKeyboardButton[][]
          */
-        private $inline_keyboard;
+        private array $inline_keyboard;
 
         /**
          * Array of button rows, each represented by an Array of InlineKeyboardButton objects
@@ -48,9 +48,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array[][]
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -69,10 +67,7 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array|null $data
-         * @return InlineKeyboardMarkup|null
+         * @inheritDoc
          */
         public static function fromArray(?array $data): ?InlineKeyboardMarkup
         {
