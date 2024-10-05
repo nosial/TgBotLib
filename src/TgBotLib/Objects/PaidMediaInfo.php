@@ -1,59 +1,63 @@
 <?php
 
-namespace TgBotLib\Objects;
+    namespace TgBotLib\Objects;
 
-use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Interfaces\ObjectTypeInterface;
 
-class PaidMediaInfo implements ObjectTypeInterface
-{
-    private int $star_count;
-
-    /**
-     * @var PaidMedia[]
-     */
-    private array $paid_media;
-
-    /**
-     * The number of Telegram Stars that must be paid to buy access to the media
-     *
-     * @return int
-     */
-    public function getStarCount(): int
+    class PaidMediaInfo implements ObjectTypeInterface
     {
-        return $this->star_count;
-    }
+        private int $star_count;
 
-    /**
-     * Information about the paid media
-     *
-     * @return PaidMedia[]
-     */
-    public function getPaidMedia(): array
-    {
-        return $this->paid_media;
-    }
+        /**
+         * @var PaidMedia[]
+         */
+        private array $paid_media;
 
-    /**
-     * @inheritDoc
-     */
-    public function toArray(): array
-    {
-        return [
-            'star_count' => $this->star_count,
-            'paid_media' => array_map(fn(PaidMedia $paid_media) => $paid_media->toArray(), $this->paid_media),
-        ];
-    }
+        /**
+         * The number of Telegram Stars that must be paid to buy access to the media
+         *
+         * @return int
+         */
+        public function getStarCount(): int
+        {
+            return $this->star_count;
+        }
 
-    /**
-     * @inheritDoc
-     */
-    public static function fromArray(array $data): PaidMediaInfo
-    {
-        $object = new self();
+        /**
+         * Information about the paid media
+         *
+         * @return PaidMedia[]
+         */
+        public function getPaidMedia(): array
+        {
+            return $this->paid_media;
+        }
 
-        $object->star_count = $data['star_count'];
-        $object->paid_media = array_map(fn(array $paid_media) => PaidMedia::fromArray($paid_media), $data['paid_media']);
+        /**
+         * @inheritDoc
+         */
+        public function toArray(): array
+        {
+            return [
+                'star_count' => $this->star_count,
+                'paid_media' => array_map(fn(PaidMedia $paid_media) => $paid_media->toArray(), $this->paid_media),
+            ];
+        }
 
-        return $object;
-    }
+        /**
+         * @inheritDoc
+         */
+        public static function fromArray(?array $data): ?PaidMediaInfo
+        {
+            if($data === null)
+            {
+                return null;
+            }
+
+            $object = new self();
+            $object->star_count = $data['star_count'];
+            $object->paid_media = array_map(fn(array $paid_media) => PaidMedia::fromArray($paid_media), $data['paid_media']);
+
+            return $object;
+        }
 }
