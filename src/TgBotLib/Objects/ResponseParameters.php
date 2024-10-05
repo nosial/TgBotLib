@@ -7,15 +7,8 @@
 
     class ResponseParameters implements ObjectTypeInterface
     {
-        /**
-         * @var int|null
-         */
-        private $migrate_to_chat_id;
-
-        /**
-         * @var int|null
-         */
-        private $retry_after;
+        private ?int $migrate_to_chat_id;
+        private ?int $retry_after;
 
         /**
          * Optional. The group has been migrated to a supergroup with the specified identifier. This number may have
@@ -42,9 +35,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -55,15 +46,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ResponseParameters
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ResponseParameters
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->migrate_to_chat_id = $data['migrate_to_chat_id'] ?? null;
             $object->retry_after = $data['retry_after'] ?? null;
 
