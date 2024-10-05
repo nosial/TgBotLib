@@ -8,6 +8,7 @@
     {
         private string $business_connection_id;
         private Chat $chat;
+
         /**
          * @var int[]
          */
