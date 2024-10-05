@@ -121,7 +121,7 @@ class Giveaway implements ObjectTypeInterface
     public function toArray(): array
     {
         return [
-            'chats' => array_map(fn(Chat $chat) => $chat->toArray(), $this->chats),
+            'chats' => is_null($this->chats) ? null : array_map(fn(Chat $chat) => $chat->toArray(), $this->chats),
             'winners_selection_date' => $this->winners_selection_date,
             'winner_count' => $this->winner_count,
             'only_new_members' => $this->only_new_members,
@@ -136,11 +136,15 @@ class Giveaway implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?Giveaway
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
-        $object->chats = array_map(fn(array $chat) => Chat::fromArray($chat), $data['chats']);
+        $object = new self();
+        $object->chats = isset($data['chats']) ? array_map(fn(array $chat) => Chat::fromArray($chat), $data['chats']) : null;
         $object->winners_selection_date = $data['winners_selection_date'];
         $object->winner_count = $data['winner_count'];
         $object->only_new_members = $data['only_new_members'] ?? false;
