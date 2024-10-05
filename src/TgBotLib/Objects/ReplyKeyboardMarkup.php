@@ -10,32 +10,12 @@
         /**
          * @var KeyboardButton[][]
          */
-        private $keyboard;
-
-        /**
-         * @var bool
-         */
-        private $is_persistent;
-
-        /**
-         * @var bool
-         */
-        private $resize_keyboard;
-
-        /**
-         * @var bool
-         */
-        private $one_time_keyboard;
-
-        /**
-         * @var string|null
-         */
-        private $input_field_placeholder;
-
-        /**
-         * @var bool
-         */
-        private $selective;
+        private array $keyboard;
+        private bool $is_persistent;
+        private bool $resize_keyboard;
+        private bool $one_time_keyboard;
+        private ?string $input_field_placeholder;
+        private bool $selective;
 
         /**
          * Array of button rows, each represented by an Array of KeyboardButton objects
@@ -108,9 +88,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -125,16 +103,17 @@
         }
 
         /**
-         * Constructs object from array representation.
-         *
-         * @param array $data
-         * @return ReplyKeyboardMarkup
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ReplyKeyboardMarkup
         {
             $object = new self();
 
-            $object->keyboard = $data['keyboard'] ?? null;
+            $object->keyboard = [];
+            foreach($data['keyboard'] as $keyboard)
+            {
+                $object->keyboard[] = KeyboardButton::fromArray($keyboard);
+            }
             $object->is_persistent = $data['is_persistent'] ?? null;
             $object->resize_keyboard = $data['resize_keyboard'] ?? null;
             $object->one_time_keyboard = $data['one_time_keyboard'] ?? null;
