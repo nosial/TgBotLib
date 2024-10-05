@@ -7,15 +7,8 @@
 
     class PollOption implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $text;
-
-        /**
-         * @var int
-         */
-        private $voter_count;
+        private string $text;
+        private int $voter_count;
 
         /**
          * Option text, 1-100 characters
@@ -38,9 +31,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -51,15 +42,16 @@
         }
 
         /**
-         * Constructs an object from an array representation
-         *
-         * @param array $data
-         * @return PollOption
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?PollOption
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->text = $data['text'] ?? null;
             $object->voter_count = $data['voter_count'] ?? null;
 
