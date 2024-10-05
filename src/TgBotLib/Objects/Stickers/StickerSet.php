@@ -9,40 +9,16 @@
 
     class StickerSet implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $name;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $sticker_type;
-
-        /**
-         * @var bool
-         */
-        private $is_animated;
-
-        /**
-         * @var bool
-         */
-        private $is_video;
-
+        private string $name;
+        private string $title;
+        private StickerType $sticker_type;
+        private bool $is_animated;
+        private bool $is_video;
         /**
          * @var Sticker[]
          */
-        private $stickers;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
+        private array $stickers;
+        private ?PhotoSize $thumbnail;
 
         /**
          * Sticker set name
@@ -67,10 +43,9 @@
         /**
          * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
          *
-         * @return string
-         * @see StickerType
+         * @return StickerType
          */
-        public function getStickerType(): string
+        public function getStickerType(): StickerType
         {
             return $this->sticker_type;
         }
@@ -125,12 +100,10 @@
             return [
                 'name' => $this->name,
                 'title' => $this->title,
-                'sticker_type' => $this->sticker_type,
+                'sticker_type' => $this->sticker_type->value,
                 'is_animated' => $this->is_animated,
                 'is_video' => $this->is_video,
-                'stickers' => array_map(function (Sticker $sticker) {
-                    return $sticker->toArray();
-                }, $this->stickers),
+                'stickers' => is_null($this->stickers) ? null : array_map(fn(Sticker $sticker) => $sticker->toArray(), $this->stickers),
                 'thumbnail' => ($this->thumbnail instanceof PhotoSize) ? $this->thumbnail->toArray() : null,
             ];
         }
@@ -138,18 +111,20 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): ObjectTypeInterface
+        public static function fromArray(?array $data): ?StickerSet
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->name = $data['name'];
             $object->title = $data['title'];
-            $object->sticker_type = $data['sticker_type'];
+            $object->sticker_type = StickerType::tryFrom($data['sticker_type']);
             $object->is_animated = $data['is_animated'];
             $object->is_video = $data['is_video'];
-            $object->stickers = array_map(function (array $sticker) {
-                return Sticker::fromArray($sticker);
-            }, $data['stickers']);
+            $object->stickers = isset($data['stickers']) ? array_map(fn(array $items) => Sticker::fromArray($items), $data['stickers']) : null;
             $object->thumbnail = ($data['thumbnail'] !== null) ? PhotoSize::fromArray($data['thumbnail']) : null;
 
             return $object;

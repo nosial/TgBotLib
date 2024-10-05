@@ -3,86 +3,28 @@
 
     namespace TgBotLib\Objects\Stickers;
 
+    use TgBotLib\Enums\Types\StickerType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\File;
     use TgBotLib\Objects\PhotoSize;
 
     class Sticker implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var int
-         */
-        private $width;
-
-        /**
-         * @var int
-         */
-        private $height;
-
-        /**
-         * @var bool
-         */
-        private $is_animated;
-
-        /**
-         * @var bool
-         */
-        private $is_video;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
-
-        /**
-         * @var string|null
-         */
-        private $emoji;
-
-        /**
-         * @var string|null
-         */
-        private $set_name;
-
-        /**
-         * @var File|null
-         */
-        private $premium_animation;
-
-        /**
-         * @var MaskPosition|null
-         */
-        private $mask_position;
-
-        /**
-         * @var string|null
-         */
-        private $custom_emoji_id;
-
-        /**
-         * @var bool
-         */
-        private $needs_repainting;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
+        private string $file_id;
+        private string $file_unique_id;
+        private StickerType $type;
+        private int $width;
+        private int $height;
+        private bool $is_animated;
+        private bool $is_video;
+        private ?PhotoSize $thumbnail;
+        private ?string $emoji;
+        private ?string $set_name;
+        private ?File $premium_animation;
+        private ?MaskPosition $mask_position;
+        private ?string $custom_emoji_id;
+        private bool $needs_repainting;
+        private ?int $file_size;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -109,9 +51,9 @@
          * Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is
          * independent of its format, which is determined by the fields is_animated and is_video.
          *
-         * @return string
+         * @return StickerType
          */
-        public function getType(): string
+        public function getType(): StickerType
         {
             return $this->type;
         }
@@ -240,16 +182,14 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
                 'file_id' => $this->file_id,
                 'file_unique_id' => $this->file_unique_id,
-                'type' => $this->type,
+                'type' => $this->type->value,
                 'width' => $this->width,
                 'height' => $this->height,
                 'is_animated' => $this->is_animated,
@@ -266,18 +206,19 @@
         }
 
         /**
-         * Constructs object from an array representation.
-         *
-         * @param array $data
-         * @return Sticker
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Sticker
         {
-            $object = new static();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new static();
             $object->file_id = $data['file_id'];
             $object->file_unique_id = $data['file_unique_id'];
-            $object->type = $data['type'];
+            $object->type = StickerType::tryFrom($data['type']);
             $object->width = $data['width'];
             $object->height = $data['height'];
             $object->is_animated = $data['is_animated'];

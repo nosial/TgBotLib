@@ -7,25 +7,10 @@
 
     class MaskPosition implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $point;
-
-        /**
-         * @var float|int
-         */
-        private $x_shift;
-
-        /**
-         * @var float|int
-         */
-        private $y_shift;
-
-        /**
-         * @var float|int
-         */
-        private $scale;
+        private string $point;
+        private int|float $x_shift;
+        private int|float $y_shift;
+        private int|float $scale;
 
         /**
          * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or
@@ -71,9 +56,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -86,15 +69,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return MaskPosition
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?MaskPosition
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->point = $data['point'] ?? null;
             $object->x_shift = $data['x_shift'] ?? null;
             $object->y_shift = $data['y_shift'] ?? null;
