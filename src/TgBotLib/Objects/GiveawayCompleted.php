@@ -67,8 +67,13 @@ class GiveawayCompleted implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?GiveawayCompleted
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         $object = new self();
         $object->winner_count = $data['winner_count'];
         $object->unclaimed_prize_count = $data['unclaimed_prize_count'] ?? null;
