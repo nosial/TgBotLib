@@ -20,13 +20,15 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ForumTopicReopened
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ForumTopicReopened
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             return new self();
         }
     }
