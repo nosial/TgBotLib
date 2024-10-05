@@ -7,35 +7,12 @@
 
     class Location implements ObjectTypeInterface
     {
-        /**
-         * @var float
-         */
-        private $longitude;
-
-        /**
-         * @var float
-         */
-        private $latitude;
-
-        /**
-         * @var float|int|null
-         */
-        private $horizontal_accuracy;
-
-        /**
-         * @var int|null
-         */
-        private $live_period;
-
-        /**
-         * @var int|null
-         */
-        private $heading;
-
-        /**
-         * @var int|null
-         */
-        private $proximity_alert_radius;
+        private float $longitude;
+        private float $latitude;
+        private int|null|float $horizontal_accuracy;
+        private ?int $live_period;
+        private ?int $heading;
+        private ?int $proximity_alert_radius;
 
         /**
          * Longitude as defined by sender
@@ -100,9 +77,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -117,15 +92,16 @@
         }
 
         /**
-         * Constructs an object from an array representation.
-         *
-         * @param array $data
-         * @return Location
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Location
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->longitude = $data['longitude'] ?? null;
             $object->latitude = $data['latitude'] ?? null;
             $object->horizontal_accuracy = $data['horizontal_accuracy'] ?? null;
