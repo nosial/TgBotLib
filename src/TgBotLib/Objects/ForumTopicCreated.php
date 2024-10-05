@@ -56,10 +56,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(?array $data): ForumTopicCreated
+        public static function fromArray(?array $data): ?ForumTopicCreated
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->name = $data['name'] ?? null;
             $object->icon_color = $data['icon_color'] ?? null;
             $object->icon_custom_emoji_id = $data['icon_custom_emoji_id'] ?? null;
