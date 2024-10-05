@@ -10,50 +10,15 @@
 
     class InlineKeyboardButton implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $text;
-
-        /**
-         * @var string|null
-         */
-        private $url;
-
-        /**
-         * @var string|null
-         */
-        private $callback_data;
-
-        /**
-         * @var WebAppInfo|null
-         */
-        private $web_app;
-
-        /**
-         * @var LoginUrl|null
-         */
-        private $login_url;
-
-        /**
-         * @var string|null
-         */
-        private $switch_inline_query;
-
-        /**
-         * @var string|null
-         */
-        private $switch_inline_query_current_chat;
-
-        /**
-         * @var CallbackGame|null
-         */
-        private $callback_game;
-
-        /**
-         * @var bool
-         */
-        private $pay;
+        private string $text;
+        private ?string $url;
+        private ?string $callback_data;
+        private ?WebAppInfo $web_app;
+        private ?LoginUrl $login_url;
+        private ?string $switch_inline_query;
+        private ?string $switch_inline_query_current_chat;
+        private ?CallbackGame $callback_game;
+        private bool $pay;
 
         /**
          * Label text on the button
@@ -309,9 +274,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -319,20 +282,17 @@
                 'text' => $this->text ?? null,
                 'url' => $this->url ?? null,
                 'callback_data' => $this->callback_data ?? null,
-                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null,
-                'login_url' => ($this->login_url instanceof ObjectTypeInterface) ? $this->login_url->toArray() : null,
+                'web_app' => $this->web_app?->toArray(),
+                'login_url' => $this->login_url?->toArray(),
                 'switch_inline_query' => $this->switch_inline_query ?? null,
                 'switch_inline_query_current_chat' => $this->switch_inline_query_current_chat ?? null,
-                'callback_game' => ($this->callback_game instanceof ObjectTypeInterface) ? $this->callback_game->toArray() : null,
+                'callback_game' => $this->callback_game?->toArray(),
                 'pay' => $this->pay ?? null
             ];
         }
 
         /**
-         * Constructs a new InlineKeyboardButton object from an array
-         *
-         * @param array|null $data
-         * @return InlineKeyboardButton|null
+         * @inheritDoc
          */
         public static function fromArray(?array $data): ?InlineKeyboardButton
         {
