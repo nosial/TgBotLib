@@ -33,7 +33,7 @@
          *
          * @return bool
          */
-        public function isIsPersistent(): bool
+        public function isPersistent(): bool
         {
             return $this->is_persistent;
         }
