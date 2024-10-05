@@ -6,40 +6,13 @@
 
     class MessageEntity implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var int
-         */
-        private $offset;
-
-        /**
-         * @var int
-         */
-        private $length;
-
-        /**
-         * @var string|null
-         */
-        private $url;
-
-        /**
-         * @var User|null
-         */
-        private $user;
-
-        /**
-         * @var string|null
-         */
-        private $language;
-
-        /**
-         * @var string|null
-         */
-        private $custom_emoji_id;
+        private string $type;
+        private int $offset;
+        private int $length;
+        private ?string $url;
+        private ?User $user;
+        private ?string $language;
+        private ?string $custom_emoji_id;
 
         /**
          * Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD),
@@ -121,9 +94,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -132,22 +103,23 @@
                 'offset' => $this->offset,
                 'length' => $this->length,
                 'url' => $this->url,
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : null,
+                'user' => $this->user?->toArray(),
                 'language' => $this->language,
                 'custom_emoji_id' => $this->custom_emoji_id
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return MessageEntity
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?MessageEntity
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->type = $data['type'] ?? null;
             $object->offset = $data['offset'] ?? null;
             $object->length = $data['length'] ?? null;
