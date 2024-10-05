@@ -44,10 +44,14 @@ class InaccessibleMessage extends MaybeInaccessibleMessage implements ObjectType
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): InaccessibleMessage
+    public static function fromArray(?array $data): ?InaccessibleMessage
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->chat = isset($data['chat']) ? Chat::fromArray($data['chat']) : null;
         $object->message_id = $data['message_id'];
         $object->date = $data['data'];

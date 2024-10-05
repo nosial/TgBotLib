@@ -1088,10 +1088,14 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(array $data): Message
+        public static function fromArray(?array $data): ?Message
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->message_id = $data['message_id'];
             $object->message_thread_id = $data['message_thread_id'] ?? null;
             $object->from = isset($data['from']) ? User::fromArray($data['from']) : null;

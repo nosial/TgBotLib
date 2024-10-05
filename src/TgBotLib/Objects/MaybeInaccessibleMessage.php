@@ -27,8 +27,13 @@ abstract class MaybeInaccessibleMessage implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): MaybeInaccessibleMessage
+    public static function fromArray(?array $data): ?MaybeInaccessibleMessage
     {
+        if($data === null)
+        {
+            return null;
+        }
+
         if(!isset($data['date']))
         {
             throw new InvalidArgumentException('Expected date in message');
