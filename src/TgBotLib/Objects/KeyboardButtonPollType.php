@@ -3,31 +3,27 @@
 
     namespace TgBotLib\Objects;
 
+    use TgBotLib\Enums\Types\KeyboardButtonPollType as type;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class KeyboardButtonPollType implements ObjectTypeInterface
     {
-        /**
-         * @var string|null
-         */
-        private $type;
+        private ?type $type;
 
         /**
          * Optional. If quiz is passed, the user will be allowed to create only polls in the quiz mode.
          * If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed
          * to create a poll of any type.
          *
-         * @return string|null
+         * @return type|null
          */
-        public function getType(): ?string
+        public function getType(): ?type
         {
             return $this->type;
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return null[]|string[]
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -37,16 +33,17 @@
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return KeyboardButtonPollType
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?KeyboardButtonPollType
         {
-            $object = new self();
+            if ($data === null)
+            {
+                return null;
+            }
 
-            $object->type = $data['type'] ?? null;
+            $object = new self();
+            $object->type = type::tryFrom($data['type']);
 
             return $object;
         }
