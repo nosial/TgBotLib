@@ -7,45 +7,14 @@
 
     class KeyboardButtonRequestChat implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $request_id;
-
-        /**
-         * @var bool
-         */
-        private $chat_is_channel;
-
-        /**
-         * @var bool
-         */
-        private $chat_is_forum;
-
-        /**
-         * @var bool
-         */
-        private $chat_has_username;
-
-        /**
-         * @var bool
-         */
-        private $chat_is_created;
-
-        /**
-         * @var ChatAdministratorRights|null
-         */
-        private $user_administrator_rights;
-
-        /**
-         * @var ChatAdministratorRights|null
-         */
-        private $bot_administrator_rights;
-
-        /**
-         * @var bool
-         */
-        private $bot_is_member;
+        private int $request_id;
+        private bool $chat_is_channel;
+        private bool $chat_is_forum;
+        private bool $chat_has_username;
+        private bool $chat_is_created;
+        private ?ChatAdministratorRights $user_administrator_rights;
+        private ?ChatAdministratorRights $bot_administrator_rights;
+        private bool $bot_is_member;
 
         /**
          * Signed 32-bit identifier of the request, which will be received back in the ChatShared object.
@@ -137,9 +106,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -149,22 +116,23 @@
                 'chat_is_forum' => $this->chat_is_forum,
                 'chat_has_username' => $this->chat_has_username,
                 'chat_is_created' => $this->chat_is_created,
-                'user_administrator_rights' => ($this->user_administrator_rights instanceof ObjectTypeInterface) ? $this->user_administrator_rights->toArray() : null,
-                'bot_administrator_rights' => ($this->bot_administrator_rights instanceof ObjectTypeInterface) ? $this->bot_administrator_rights->toArray() : null,
+                'user_administrator_rights' => $this->user_administrator_rights?->toArray(),
+                'bot_administrator_rights' => $this->bot_administrator_rights?->toArray(),
                 'bot_is_member' => $this->bot_is_member,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return KeyboardButtonRequestChat
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?KeyboardButtonRequestChat
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->request_id = $data['request_id'] ?? null;
             $object->chat_is_channel = $data['chat_is_channel'] ?? false;
             $object->chat_is_forum = $data['chat_is_forum'] ?? false;
