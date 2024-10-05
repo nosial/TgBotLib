@@ -51,7 +51,7 @@
         {
             return [
                 'poll_id' => $this->poll_id,
-                'user' => ($this->user instanceof ObjectTypeInterface) ? $this->user->toArray() : null,
+                'user' => $this->user?->toArray(),
                 'option_ids' => $this->option_ids,
             ];
         }
