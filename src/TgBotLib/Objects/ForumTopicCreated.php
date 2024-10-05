@@ -7,22 +7,11 @@
 
     class ForumTopicCreated implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $name;
+        private string $name;
+        private int $icon_color;
+        private ?string $icon_custom_emoji_id;
 
         /**
-         * @var int
-         */
-        private $icon_color;
-
-        /**
-         * @var string|null
-         */
-        private $icon_custom_emoji_id;
-
-        /**   
          * Name of the topic
          *
          * @return string
@@ -53,9 +42,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoch
          */
         public function toArray(): array
         {
@@ -67,12 +54,9 @@
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return ForumTopicCreated
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ForumTopicCreated
         {
             $object = new self();
 
