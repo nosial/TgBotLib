@@ -2,6 +2,7 @@
 
 namespace TgBotLib\Objects;
 
+use SebastianBergmann\CodeCoverage\Report\Text;
 use TgBotLib\Interfaces\ObjectTypeInterface;
 
 class TextQuote implements ObjectTypeInterface
@@ -69,10 +70,14 @@ class TextQuote implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?TextQuote
     {
-        $object = new self();
+        if($data === null)
+        {
+            return null;
+        }
 
+        $object = new self();
         $object->text = $data['text'];
         $object->entities = $data['entities'] ?? null;
         $object->position = $data['position'] ?? null;
