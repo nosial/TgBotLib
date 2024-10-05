@@ -31,8 +31,13 @@ class GiveawayCreated implements ObjectTypeInterface
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?GiveawayCreated
     {
+        if(!$data)
+        {
+            return null;
+        }
+
         $object = new self();
         $object->prize_star_count = $data['prize_star_count'];
         return $object;
