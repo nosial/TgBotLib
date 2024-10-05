@@ -10,9 +10,7 @@
         // Currently, holds no information.
 
         /**
-         * Returns array representation of object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -20,13 +18,15 @@
         }
 
         /**
-         * Returns object from array
-         *
-         * @param array $data
-         * @return ForumTopicClosed
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ForumTopicClosed
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             return new self();
         }
     }
