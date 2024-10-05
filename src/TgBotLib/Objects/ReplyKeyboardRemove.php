@@ -7,15 +7,8 @@
 
     class ReplyKeyboardRemove implements ObjectTypeInterface
     {
-        /**
-         * @var bool
-         */
-        private $remove_keyboard;
-
-        /**
-         * @var bool
-         */
-        private $selective;
+        private bool $remove_keyboard;
+        private bool $selective;
 
         /**
          * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want
@@ -44,9 +37,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -57,16 +48,19 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return ReplyKeyboardRemove
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ReplyKeyboardRemove
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->remove_keyboard = $data['remove_keyboard'] ?? false;
             $object->selective = $data['selective'] ?? false;
+
             return $object;
         }
     }
