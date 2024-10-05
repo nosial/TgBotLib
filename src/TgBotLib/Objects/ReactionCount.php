@@ -44,7 +44,7 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(?array $data): ?ObjectTypeInterface
+        public static function fromArray(?array $data): ?ReactionCount
         {
             if($data === null)
             {
