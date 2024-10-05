@@ -7,20 +7,9 @@
 
     class ProximityAlertTriggered implements ObjectTypeInterface
     {
-        /**
-         * @var User
-         */
-        private $traveler;
-
-        /**
-         * @var User
-         */
-        private $watcher;
-
-        /**
-         * @var int
-         */
-        private $distance;
+        private User $traveler;
+        private User $watcher;
+        private int $distance;
 
         /**
          * User that triggered the alert
@@ -53,30 +42,30 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'traveler' => ($this->traveler instanceof ObjectTypeInterface) ? $this->traveler->toArray() : $this->traveler,
-                'watcher' => ($this->watcher instanceof ObjectTypeInterface) ? $this->watcher->toArray() : $this->watcher,
+                'traveler' => $this->traveler?->toArray(),
+                'watcher' => $this->watcher?->toArray(),
                 'distance' => $this->distance,
             ];
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return ProximityAlertTriggered
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?ProximityAlertTriggered
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
-            $object->traveler = isset($data['traveler']) && is_array($data['traveler']) ? User::fromArray($data['traveler']) : $data['traveler'];
-            $object->watcher = isset($data['watcher']) && is_array($data['watcher']) ? User::fromArray($data['watcher']) : $data['watcher'];
+            $object->traveler = isset($data['traveler'])  ? User::fromArray($data['traveler']) : $data['traveler'];
+            $object->watcher = isset($data['watcher']) ? User::fromArray($data['watcher']) : $data['watcher'];
             $object->distance = $data['distance'];
 
             return $object;
