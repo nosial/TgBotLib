@@ -7,40 +7,13 @@
 
     class KeyboardButton implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $text;
-
-        /**
-         * @var KeyboardButtonRequestUser|null
-         */
-        private $request_user;
-
-        /**
-         * @var KeyboardButtonRequestChat|null
-         */
-        private $request_chat;
-
-        /**
-         * @var bool
-         */
-        private $request_contact;
-
-        /**
-         * @var bool
-         */
-        private $request_location;
-
-        /**
-         * @var KeyboardButtonPollType|null
-         */
-        private $request_poll;
-
-        /**
-         * @var WebAppInfo|null
-         */
-        private $web_app;
+        private string $text;
+        private ?KeyboardButtonRequestUser $request_user;
+        private ?KeyboardButtonRequestChat $request_chat;
+        private bool $request_contact;
+        private bool $request_location;
+        private ?KeyboardButtonPollType $request_poll;
+        private ?WebAppInfo $web_app;
 
         /**
          * Text of the button. If none of the optional fields are used, it will be sent as a message when the
@@ -129,25 +102,26 @@
         {
             return [
                 'text' => $this->text,
-                'request_user' => ($this->request_user instanceof ObjectTypeInterface) ? $this->request_user->toArray() : null,
-                'request_chat' => ($this->request_chat instanceof ObjectTypeInterface) ? $this->request_chat->toArray() : null,
+                'request_user' => $this->request_user?->toArray(),
+                'request_chat' => $this->request_chat?->toArray(),
                 'request_contact' => $this->request_contact,
                 'request_location' => $this->request_location,
-                'request_poll' => ($this->request_poll instanceof ObjectTypeInterface) ? $this->request_poll->toArray() : null,
-                'web_app' => ($this->web_app instanceof ObjectTypeInterface) ? $this->web_app->toArray() : null,
+                'request_poll' => $this->request_poll?->toArray(),
+                'web_app' => $this->web_app?->toArray(),
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return KeyboardButton
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?KeyboardButton
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->text = $data['text'] ?? null;
             $object->request_user = isset($data['request_user']) ? KeyboardButtonRequestUser::fromArray($data['request_user']) : null;
             $object->request_chat = isset($data['request_chat']) ? KeyboardButtonRequestChat::fromArray($data['request_chat']) : null;
