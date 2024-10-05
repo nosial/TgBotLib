@@ -7,70 +7,25 @@
 
     class Poll implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $id;
-
-        /**
-         * @var string
-         */
-        private $question;
-
+        private string $id;
+        private string $question;
         /**
          * @var PollOption[]
          */
-        private $options;
-
-        /**
-         * @var int
-         */
-        private $total_voter_count;
-
-        /**
-         * @var bool
-         */
-        private $is_closed;
-
-        /**
-         * @var bool
-         */
-        private $is_anonymous;
-
-        /**
-         * @var string
-         */
-        private $type;
-
-        /**
-         * @var bool
-         */
-        private $allow_multiple_answers;
-
-        /**
-         * @var int|null
-         */
-        private $correct_option_id;
-
-        /**
-         * @var string
-         */
-        private $explanation;
-
+        private array $options;
+        private int $total_voter_count;
+        private bool $is_closed;
+        private bool $is_anonymous;
+        private string $type;
+        private bool $allow_multiple_answers;
+        private ?int $correct_option_id;
+        private string $explanation;
         /**
          * @var MessageEntity[]|null
          */
-        private $explanation_entities;
-
-        /**
-         * @var int|null
-         */
-        private $open_period;
-
-        /**
-         * @var int|null
-         */
-        private $close_date;
+        private ?array $explanation_entities;
+        private ?int $open_period;
+        private ?int $close_date;
 
         /**
          * Unique poll identifier
@@ -205,9 +160,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -235,15 +188,16 @@
         }
 
         /**
-         * Constructs object from array representation
-         *
-         * @param array $data
-         * @return Poll
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Poll
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->id = $data['id'] ?? null;
             $object->question = $data['question'] ?? null;
             $object->total_voter_count = $data['total_voter_count'] ?? null;
@@ -255,26 +209,8 @@
             $object->explanation = $data['explanation'] ?? null;
             $object->open_period = $data['open_period'] ?? null;
             $object->close_date = $data['close_date'] ?? null;
-
-            $object->explanation_entities = null;
-            if(isset($data['explanation_entities']) && is_array($data['explanation_entities']))
-            {
-                $object->explanation_entities = [];
-                foreach($data['explanation_entities'] as $explanation_entity)
-                {
-                    $object->explanation_entities[] = MessageEntity::fromArray($explanation_entity);
-                }
-            }
-
-            $object->options = null;
-            if(isset($data['options']) && is_array($data['options']))
-            {
-                $object->options = [];
-                foreach($data['options'] as $option)
-                {
-                    $object->options[] = PollOption::fromArray($option);
-                }
-            }
+            $object->explanation_entities = isset($data['explanation_entities']) ? array_map(fn($explanation_entity) => MessageEntity::fromArray($explanation_entity), $data['explanation_entities']) : null;
+            $object->options = isset($data['options']) ? array_map(fn($option) => PollOption::fromArray($option), $data['options']) : null;
 
             return $object;
         }
