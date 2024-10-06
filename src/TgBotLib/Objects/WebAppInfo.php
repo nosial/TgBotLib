@@ -11,7 +11,7 @@
         /**
          * @var string
          */
-        private $url;
+        private string $url;
 
         /**
          * An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps
@@ -33,16 +33,16 @@
         public function setUrl(string $url): self
         {
             if(!Validate::url($url))
+            {
                 throw new InvalidArgumentException('Invalid url format');
+            }
 
             $this->url = $url;
             return $this;
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -52,15 +52,18 @@
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return WebAppInfo
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?WebAppInfo
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->url = $data['url'];
+
             return $object;
         }
     }
