@@ -2,7 +2,6 @@
 
 namespace TgBotLib\Objects;
 
-use SebastianBergmann\CodeCoverage\Report\Text;
 use TgBotLib\Interfaces\ObjectTypeInterface;
 
 class TextQuote implements ObjectTypeInterface

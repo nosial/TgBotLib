@@ -12,7 +12,6 @@
     use InvalidArgumentException;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Exceptions\TelegramException;
-    use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class Bot
     {
