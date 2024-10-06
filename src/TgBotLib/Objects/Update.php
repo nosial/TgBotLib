@@ -6,85 +6,36 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Inline\ChosenInlineResult;
     use TgBotLib\Objects\Inline\InlineQuery;
+    use TgBotLib\Objects\Payments\PaidMediaPurchased;
     use TgBotLib\Objects\Payments\PreCheckoutQuery;
     use TgBotLib\Objects\Payments\ShippingQuery;
 
     class Update implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $update_id;
-
-        /**
-         * @var Message|null
-         */
-        private $message;
-
-        /**
-         * @var Message|null
-         */
-        private $edited_message;
-
-        /**
-         * @var Message|null
-         */
-        private $channel_post;
-
-        /**
-         * @var Message|null
-         */
-        private $edited_channel_post;
-
-        /**
-         * @var InlineQuery|null
-         */
-        private $inline_query;
-
-        /**
-         * @var ChosenInlineResult|null
-         */
-        private $chosen_inline_result;
-
-        /**
-         * @var CallbackQuery|null
-         */
-        private $callback_query;
-
-        /**
-         * @var ShippingQuery|null
-         */
-        private $shipping_query;
-
-        /**
-         * @var PreCheckoutQuery|null
-         */
-        private $pre_checkout_query;
-
-        /**
-         * @var Poll|null
-         */
-        private $poll;
-
-        /**
-         * @var PollAnswer|null
-         */
-        private $poll_answer;
-
-        /**
-         * @var ChatMemberUpdated|null
-         */
-        private $my_chat_member;
-
-        /**
-         * @var ChatMemberUpdated|null
-         */
-        private $chat_member;
-
-        /**
-         * @var ChatJoinRequest|null
-         */
-        private $chat_join_request;
+        private int $update_id;
+        private ?Message $message;
+        private ?Message $edited_message;
+        private ?Message $channel_post;
+        private ?Message $edited_channel_post;
+        private ?BusinessConnection $business_connection;
+        private ?Message $business_message;
+        private ?Message $edited_business_message;
+        private ?BusinessMessagesDeleted $deleted_business_messages;
+        private ?MessageReactionUpdated $message_reaction;
+        private ?MessageReactionCountUpdated $message_reaction_count;
+        private ?InlineQuery $inline_query;
+        private ?ChosenInlineResult $chosen_inline_result;
+        private ?CallbackQuery $callback_query;
+        private ?ShippingQuery $shipping_query;
+        private ?PreCheckoutQuery $pre_checkout_query;
+        private ?PaidMediaPurchased $purchased_paid_media;
+        private ?Poll $poll;
+        private ?PollAnswer $poll_answer;
+        private ?ChatMemberUpdated $my_chat_member;
+        private ?ChatMemberUpdated $chat_member;
+        private ?ChatJoinRequest $chat_join_request;
+        private ?ChatBoostAdded $chat_boost;
+        private ?ChatBoostRemoved $removed_chat_boost;
 
         /**
          * The update's unique identifier. Update identifiers start from a certain positive number and increase
@@ -137,6 +88,71 @@
         public function getEditedChannelPost(): ?Message
         {
             return $this->edited_channel_post;
+        }
+
+        /**
+         * Optional. New message from a connected business account
+         *
+         * @return Message|null
+         */
+        public function getBusinessMessage(): ?Message
+        {
+            return $this->business_message;
+        }
+
+        /**
+         * Optional. New version of a message from a connected business account
+         *
+         * @return Message|null
+         */
+        public function getEditedBusinessMessage(): ?Message
+        {
+            return $this->edited_business_message;
+        }
+
+        /**
+         * Optional. Messages were deleted from a connected business account
+         *
+         * @return BusinessMessagesDeleted|null
+         */
+        public function getDeletedBusinessMessages(): ?BusinessMessagesDeleted
+        {
+            return $this->deleted_business_messages;
+        }
+
+        /**
+         * Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and
+         * must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates.
+         * The update isn't received for reactions set by bots.
+         *
+         * @return MessageReactionUpdated|null
+         */
+        public function getMessageReaction(): ?MessageReactionUpdated
+        {
+            return $this->message_reaction;
+        }
+
+        /**
+         * Optional. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in
+         * the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these
+         * updates. The updates are grouped and can be sent with delay up to a few minutes.
+         *
+         * @return MessageReactionCountUpdated|null
+         */
+        public function getMessageReactionCount(): ?MessageReactionCountUpdated
+        {
+            return $this->message_reaction_count;
+        }
+
+        /**
+         * Optional. The bot was connected to or disconnected from a business account, or a user
+         * edited an existing connection with the bot
+         *
+         * @return BusinessConnection|null
+         */
+        public function getBusinessConnection(): ?BusinessConnection
+        {
+            return $this->business_connection;
         }
 
         /**
@@ -194,6 +210,16 @@
         }
 
         /**
+         * Optional. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat
+         *
+         * @return PaidMediaPurchased|null
+         */
+        public function getPurchasedPaidMedia(): ?PaidMediaPurchased
+        {
+            return $this->purchased_paid_media;
+        }
+
+        /**
          * Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
          *
          * @return Poll|null
@@ -248,9 +274,29 @@
         }
 
         /**
-         * Returns an array representation of the object.
+         * Optional. A chat boost was added or changed.
+         * The bot must be an administrator in the chat to receive these updates.
          *
-         * @return array
+         * @return ChatBoostAdded|null
+         */
+        public function getChatBoost(): ?ChatBoostAdded
+        {
+            return $this->chat_boost;
+        }
+
+        /**
+         * Optional. A boost was removed from a chat.
+         * The bot must be an administrator in the chat to receive these updates.
+         *
+         * @return ChatBoostRemoved|null
+         */
+        public function getRemovedChatBoost(): ?ChatBoostRemoved
+        {
+            return $this->removed_chat_boost;
+        }
+
+        /**
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -260,44 +306,63 @@
                 'edited_message' => ($this->edited_message instanceof ObjectTypeInterface) ? $this->edited_message->toArray() : null,
                 'channel_post' => ($this->channel_post instanceof ObjectTypeInterface) ? $this->channel_post->toArray() : null,
                 'edited_channel_post' => ($this->edited_channel_post instanceof ObjectTypeInterface) ? $this->edited_channel_post->toArray() : null,
+                'business_connection' => ($this->business_connection instanceof ObjectTypeInterface) ? $this->business_connection->toArray() : null,
+                'business_message' => ($this->business_message instanceof ObjectTypeInterface) ? $this->business_message->toArray() : null,
+                'edited_business_message' => ($this->edited_business_message instanceof ObjectTypeInterface) ? $this->edited_business_message->toArray() : null,
+                'deleted_business_messages' => ($this->deleted_business_messages instanceof ObjectTypeInterface) ? $this->deleted_business_messages->toArray() : null,
+                'message_reaction' => ($this->message_reaction instanceof ObjectTypeInterface) ? $this->message_reaction->toArray() : null,
+                'message_reaction_count' => ($this->message_reaction_count instanceof ObjectTypeInterface) ? $this->message_reaction_count->toArray() : null,
                 'inline_query' => ($this->inline_query instanceof ObjectTypeInterface) ? $this->inline_query->toArray() : null,
                 'chosen_inline_result' => ($this->chosen_inline_result instanceof ObjectTypeInterface) ? $this->chosen_inline_result->toArray() : null,
                 'callback_query' => ($this->callback_query instanceof ObjectTypeInterface) ? $this->callback_query->toArray() : null,
                 'shipping_query' => ($this->shipping_query instanceof ObjectTypeInterface) ? $this->shipping_query->toArray() : null,
                 'pre_checkout_query' => ($this->pre_checkout_query instanceof ObjectTypeInterface) ? $this->pre_checkout_query->toArray() : null,
+                'purchased_paid_media' => ($this->purchased_paid_media instanceof ObjectTypeInterface) ? $this->purchased_paid_media->toArray() : null,
                 'poll' => ($this->poll instanceof ObjectTypeInterface) ? $this->poll->toArray() : null,
                 'poll_answer' => ($this->poll_answer instanceof ObjectTypeInterface) ? $this->poll_answer->toArray() : null,
                 'my_chat_member' => ($this->my_chat_member instanceof ObjectTypeInterface) ? $this->my_chat_member->toArray() : null,
                 'chat_member' => ($this->chat_member instanceof ObjectTypeInterface) ? $this->chat_member->toArray() : null,
-                'chat_join_request' => ($this->chat_join_request instanceof ObjectTypeInterface) ? $this->chat_join_request->toArray() : null
+                'chat_join_request' => ($this->chat_join_request instanceof ObjectTypeInterface) ? $this->chat_join_request->toArray() : null,
+                'chat_boost' => ($this->chat_boost instanceof ObjectTypeInterface) ? $this->chat_boost->toArray() : null,
+                'removed_chat_boost' => ($this->removed_chat_boost instanceof ObjectTypeInterface) ? $this->removed_chat_boost->toArray() : null,
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Update
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Update
         {
-            $object = new static();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new static();
             $object->update_id = $data['update_id'] ?? null;
             $object->message = isset($data['message']) ? Message::fromArray($data['message']) : null;
             $object->edited_message = isset($data['edited_message']) ? Message::fromArray($data['edited_message']) : null;
             $object->channel_post = isset($data['channel_post']) ? Message::fromArray($data['channel_post']) : null;
             $object->edited_channel_post = isset($data['edited_channel_post']) ? Message::fromArray($data['edited_channel_post']) : null;
+            $object->business_connection = isset($data['business_connection']) ? BusinessConnection::fromArray($data['business_connection']) : null;
+            $object->business_message = isset($data['business_message']) ? Message::fromArray($data['business_message']) : null;
+            $object->edited_business_message = isset($data['edited_business_message']) ? Message::fromArray($data['edited_business_message']) : null;
+            $object->deleted_business_messages = isset($data['deleted_business_messages']) ? BusinessMessagesDeleted::fromArray($data['deleted_business_messages']) : null;
+            $object->message_reaction = isset($data['message_reaction']) ? MessageReactionUpdated::fromArray($data['message_reaction']) : null;
+            $object->message_reaction_count = isset($data['message_reaction_count']) ? MessageReactionCountUpdated::fromArray($data['message_reaction_count']) : null;
             $object->inline_query = isset($data['inline_query']) ? InlineQuery::fromArray($data['inline_query']) : null;
             $object->chosen_inline_result = isset($data['chosen_inline_result']) ? ChosenInlineResult::fromArray($data['chosen_inline_result']) : null;
             $object->callback_query = isset($data['callback_query']) ? CallbackQuery::fromArray($data['callback_query']) : null;
             $object->shipping_query = isset($data['shipping_query']) ? ShippingQuery::fromArray($data['shipping_query']) : null;
             $object->pre_checkout_query = isset($data['pre_checkout_query']) ? PreCheckoutQuery::fromArray($data['pre_checkout_query']) : null;
+            $object->purchased_paid_media = isset($data['purchased_paid_media']) ? PaidMediaPurchased::fromArray($data['purchased_paid_media']) : null;
             $object->poll = isset($data['poll']) ? Poll::fromArray($data['poll']) : null;
             $object->poll_answer = isset($data['poll_answer']) ? PollAnswer::fromArray($data['poll_answer']) : null;
             $object->my_chat_member = isset($data['my_chat_member']) ? ChatMemberUpdated::fromArray($data['my_chat_member']) : null;
             $object->chat_member = isset($data['chat_member']) ? ChatMemberUpdated::fromArray($data['chat_member']) : null;
             $object->chat_join_request = isset($data['chat_join_request']) ? ChatJoinRequest::fromArray($data['chat_join_request']) : null;
+            $object->chat_boost = isset($data['chat_boost']) ? ChatBoostAdded::fromArray($data['chat_boost']) : null;
+            $object->removed_chat_boost = isset($data['removed_chat_boost']) ? ChatBoostRemoved::fromArray($data['removed_chat_boost']) : null;
 
             return $object;
         }
