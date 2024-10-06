@@ -1,10 +1,10 @@
 <?php
 
-namespace TgBotLib\Enums\Types;
+    namespace TgBotLib\Enums\Types;
 
-enum PaidMediaType : string
-{
-    case PREVIEW = 'preview';
-    case PHOTO = 'photo';
-    case VIDEO = 'video';
-}
+    enum PaidMediaType : string
+    {
+        case PREVIEW = 'preview';
+        case PHOTO = 'photo';
+        case VIDEO = 'video';
+    }

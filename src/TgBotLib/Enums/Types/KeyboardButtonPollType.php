@@ -1,9 +1,9 @@
 <?php
 
-namespace TgBotLib\Enums\Types;
+    namespace TgBotLib\Enums\Types;
 
-enum KeyboardButtonPollType : string
-{
-    case QUIZ = 'quiz';
-    case REGULAR = 'regular';
-}
+    enum KeyboardButtonPollType : string
+    {
+        case QUIZ = 'quiz';
+        case REGULAR = 'regular';
+    }
