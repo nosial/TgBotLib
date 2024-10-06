@@ -10,9 +10,7 @@
         // Currently, holds no information.
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -20,13 +18,15 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return VideoChatStarted
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?VideoChatStarted
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             return new self();
         }
     }
