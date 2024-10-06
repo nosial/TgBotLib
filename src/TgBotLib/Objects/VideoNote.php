@@ -6,35 +6,12 @@
 
     class VideoNote implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var int
-         */
-        private $length;
-
-        /**
-         * @var int
-         */
-        private $duration;
-
-        /**
-         * @var PhotoSize|null
-         */
-        private $thumbnail;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
+        private string $file_id;
+        private string $file_unique_id;
+        private int $length;
+        private int $duration;
+        private ?PhotoSize $thumbnail;
+        private ?int $file_size;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -98,9 +75,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -109,26 +84,27 @@
                 'file_unique_id' => $this->file_unique_id,
                 'length' => $this->length,
                 'duration' => $this->duration,
-                'thumbnail' => ($this->thumbnail instanceof ObjectTypeInterface) ? $this->thumbnail->toArray() : $this->thumbnail,
+                'thumbnail' => $this->thumbnail?->toArray(),
                 'file_size' => $this->file_size,
             ];
         }
 
         /**
-         * Constructs the object from an array representation
-         *
-         * @param array $data
-         * @return VideoNote
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?VideoNote
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->file_id = $data['file_id'];
             $object->file_unique_id = $data['file_unique_id'];
             $object->length = $data['length'];
             $object->duration = $data['duration'];
-            $object->thumbnail = (isset($data['thumbnail'])) ? PhotoSize::fromArray($data['thumbnail']) : null;
+            $object->thumbnail = isset($data['thumbnail']) ? PhotoSize::fromArray($data['thumbnail']) : null;
             $object->file_size = $data['file_size'];
 
             return $object;
