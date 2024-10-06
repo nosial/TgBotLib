@@ -1,15 +1,15 @@
 <?php
 
-namespace TgBotLib\Methods;
+    namespace TgBotLib\Methods;
 
-use TgBotLib\Abstracts\Method;
-use TgBotLib\Bot;
-use TgBotLib\Enums\Methods;
+    use TgBotLib\Abstracts\Method;
+    use TgBotLib\Bot;
+    use TgBotLib\Enums\Methods;
 
-class Logout extends Method
-{
-    public static function execute(Bot $bot, array $parameters=[]): bool
+    class Logout extends Method
     {
-        return (bool) self::executeCurl(self::buildPost($bot, Methods::LOGOUT->value));
+        public static function execute(Bot $bot, array $parameters=[]): bool
+        {
+            return (bool) self::executeCurl(self::buildPost($bot, Methods::LOGOUT->value));
+        }
     }
-}
