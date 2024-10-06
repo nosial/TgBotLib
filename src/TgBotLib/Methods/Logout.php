@@ -8,6 +8,9 @@
 
     class Logout extends Method
     {
+        /**
+         * @inheritDoc
+         */
         public static function execute(Bot $bot, array $parameters=[]): bool
         {
             return (bool) self::executeCurl(self::buildPost($bot, Methods::LOGOUT->value));
