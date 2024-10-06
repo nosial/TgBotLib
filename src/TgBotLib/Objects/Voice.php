@@ -7,30 +7,11 @@
 
     class Voice implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $file_id;
-
-        /**
-         * @var string
-         */
-        private $file_unique_id;
-
-        /**
-         * @var int
-         */
-        private $duration;
-
-        /**
-         * @var string|null
-         */
-        private $mime_type;
-
-        /**
-         * @var int|null
-         */
-        private $file_size;
+        private string $file_id;
+        private string $file_unique_id;
+        private int $duration;
+        private ?string $mime_type;
+        private ?int $file_size;
 
         /**
          * Identifier for this file, which can be used to download or reuse the file
@@ -75,7 +56,8 @@
 
         /**
          * Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have
-         * difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+         * difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit
+         * integer or double-precision float type are safe for storing this value.
          *
          * @return int|null
          */
@@ -85,9 +67,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -101,15 +81,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Voice
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Voice
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->file_id = $data['file_id'];
             $object->file_unique_id = $data['file_unique_id'];
             $object->duration = $data['duration'];
