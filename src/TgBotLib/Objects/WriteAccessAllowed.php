@@ -10,9 +10,7 @@
         // write messages. Currently, holds no information.
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -20,13 +18,15 @@
         }
 
         /**
-         * Convert object from an array representation
-         *
-         * @param array $data
-         * @return WriteAccessAllowed
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?WriteAccessAllowed
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             return new self();
         }
     }
