@@ -7,15 +7,8 @@
 
     class UserProfilePhotos implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $total_count;
-
-        /**
-         * @var PhotoSize[][]
-         */
-        private $photos;
+        private int $total_count;
+        private array $photos;
 
         /**
          * Total number of profile pictures the target user has
@@ -38,9 +31,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -57,13 +48,15 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return UserProfilePhotos
+         * @inheritDoc
          */
-        public static function fromArray(array $data): UserProfilePhotos
+        public static function fromArray(?array $data): ?UserProfilePhotos
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->total_count = $data['total_count'];
             $object->photos = array_map(function (array $photo)
@@ -73,6 +66,7 @@
                     return PhotoSize::fromArray($photoSize);
                 }, $photo);
             }, $data['photos']);
+
             return $object;
         }
     }
