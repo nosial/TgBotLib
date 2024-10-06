@@ -6,15 +6,8 @@
 
     class UsersShared implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $request_id;
-
-        /**
-         * @var int
-         */
-        private $user_id;
+        private int $request_id;
+        private int $user_id;
 
         /**
          * Identifier of the request
@@ -41,9 +34,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @Inh
          */
         public function toArray(): array
         {
@@ -54,15 +45,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return UsersShared
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?UsersShared
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->request_id = $data['request_id'];
             $object->user_id = $data['user_id'];
 
