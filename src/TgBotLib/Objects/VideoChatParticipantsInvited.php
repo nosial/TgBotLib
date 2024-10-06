@@ -10,34 +10,47 @@
         /**
          * @var User[]
          */
-        private $users;
+        private array $users;
 
         /**
-         * Returns an array representation of the object
+         * New members that were invited to the video chat
          *
-         * @return array
+         * @return User[]
+         */
+        public function getUsers(): array
+        {
+            return $this->users;
+        }
+
+        /**
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'users' => array_map(function (User $user) {
+                'users' => array_map(function (User $user)
+                {
                     return $user->toArray();
                 }, $this->users),
             ];
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return VideoChatParticipantsInvited
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?VideoChatParticipantsInvited
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
-            $object->users = array_map(function (array $user) {
+            $object->users = array_map(function (array $user)
+            {
                 return User::fromArray($user);
             }, $data['users']);
+
             return $object;
         }
     }
