@@ -7,10 +7,7 @@
 
     class VideoChatScheduled implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $start_date;
+        private int $start_date;
 
         /**
          * Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
@@ -23,9 +20,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -35,15 +30,18 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return VideoChatScheduled
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?VideoChatScheduled
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->start_date = $data['start_date'];
+
             return $object;
         }
     }
