@@ -6,10 +6,7 @@
 
     class VideoChatEnded implements ObjectTypeInterface
     {
-        /**
-         * @var int
-         */
-        private $duration;
+        private int $duration;
 
         /**
          * Video chat duration in seconds
@@ -22,9 +19,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -34,15 +29,18 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return VideoChatEnded
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?VideoChatEnded
         {
+            if($data === null)
+            {
+                return null;
+            }
+
             $object = new self();
             $object->duration = $data['duration'];
+
             return $object;
         }
 
