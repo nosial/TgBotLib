@@ -6,15 +6,8 @@
 
     class WebAppData implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $data;
-
-        /**
-         * @var string
-         */
-        private $button_text;
+        private string $data;
+        private string $button_text;
 
         /**
          * The data. Be aware that a bad client can send arbitrary data in this field.
@@ -38,9 +31,7 @@
         }
 
         /**
-         * Returns an array representation of the object.
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -51,15 +42,16 @@
         }
 
         /**
-         * Constructs the object from an array representation.
-         *
-         * @param array $data
-         * @return WebAppData
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?WebAppData
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->data = $data['data'] ?: '';
             $object->button_text = $data['button_text'] ?: '';
 
