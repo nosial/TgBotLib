@@ -6,40 +6,13 @@
 
     class Venue implements ObjectTypeInterface
     {
-        /**
-         * @var Location
-         */
-        private $location;
-
-        /**
-         * @var string
-         */
-        private $title;
-
-        /**
-         * @var string
-         */
-        private $address;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_id;
-
-        /**
-         * @var string|null
-         */
-        private $foursquare_type;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_id;
-
-        /**
-         * @var string|null
-         */
-        private $google_place_type;
+        private Location $location;
+        private string $title;
+        private string $address;
+        private ?string $foursquare_id;
+        private ?string $foursquare_type;
+        private ?string $google_place_id;
+        private ?string $google_place_type;
 
         /**
          * Venue location. Can't be a live location
@@ -114,14 +87,12 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
             return [
-                'location' => ($this->location instanceof ObjectTypeInterface) ? $this->location->toArray() : $this->location,
+                'location' => $this->location?->toArray(),
                 'title' => $this->title,
                 'address' => $this->address,
                 'foursquare_id' => $this->foursquare_id,
@@ -132,15 +103,16 @@
         }
 
         /**
-         * Constructs object from an array representation
-         *
-         * @param array $data
-         * @return Venue
+         * @inheritDoc
          */
-        public static function fromArray(array $data): self
+        public static function fromArray(?array $data): ?Venue
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
             $object->title = $data['title'];
             $object->address = $data['address'];
