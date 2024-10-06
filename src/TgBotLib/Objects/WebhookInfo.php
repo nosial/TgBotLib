@@ -7,50 +7,15 @@
 
     class WebhookInfo implements ObjectTypeInterface
     {
-        /**
-         * @var string
-         */
-        private $url;
-
-        /**
-         * @var bool
-         */
-        private $has_custom_certificate;
-
-        /**
-         * @var int
-         */
-        private $pending_update_count;
-
-        /**
-         * @var string|null
-         */
-        private $ip_address;
-
-        /**
-         * @var int|null
-         */
-        private $last_error_date;
-
-        /**
-         * @var string|null
-         */
-        private $last_error_message;
-
-        /**
-         * @var int|null
-         */
-        private $last_synchronization_error_date;
-
-        /**
-         * @var int|null
-         */
-        private $max_connections;
-
-        /**
-         * @var string[]|null
-         */
-        private $allowed_updates;
+        private string $url;
+        private bool $has_custom_certificate;
+        private int $pending_update_count;
+        private ?string $ip_address;
+        private ?int $last_error_date;
+        private ?string $last_error_message;
+        private ?int $last_synchronization_error_date;
+        private ?int $max_connections;
+        private ?array $allowed_updates;
 
         /**
          * Webhook URL, may be empty if webhook is not set up
@@ -145,9 +110,7 @@
         }
 
         /**
-         * Returns an array representation of the object
-         *
-         * @return array
+         * @inheritDoc
          */
         public function toArray(): array
         {
@@ -165,15 +128,16 @@
         }
 
         /**
-         * Constructs the object from an array
-         *
-         * @param array $data
-         * @return WebhookInfo
+         * @inheritDoc
          */
-        public static function fromArray(array $data): WebhookInfo
+        public static function fromArray(?array $data): ?WebhookInfo
         {
-            $object = new self();
+            if($data === null)
+            {
+                return null;
+            }
 
+            $object = new self();
             $object->url = $data['url'] ?? null;
             $object->has_custom_certificate = $data['has_custom_certificate'] ?? false;
             $object->pending_update_count = $data['pending_update_count'] ?? false;
