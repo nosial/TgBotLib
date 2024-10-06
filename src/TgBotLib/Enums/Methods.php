@@ -4,6 +4,7 @@
 
     use TgBotLib\Bot;
     use TgBotLib\Exceptions\TelegramException;
+    use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
@@ -21,7 +22,7 @@
          *
          * @param Bot $bot The bot instance on which the command will be executed.
          * @param array $parameters Optional parameters for the command.
-         * @return mixed The result of the command execution, varies based on the command.
+         * @return ObjectTypeInterface|mixed The result of the command execution, varies based on the command.
          * @throws TelegramException if the command execution fails.
          */
         public function execute(Bot $bot, array $parameters=[]): mixed
