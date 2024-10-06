@@ -9,6 +9,11 @@
 
     namespace TgBotLib;
 
+    use InvalidArgumentException;
+    use TgBotLib\Enums\Methods;
+    use TgBotLib\Exceptions\TelegramException;
+    use TgBotLib\Interfaces\ObjectTypeInterface;
+
     class Bot
     {
         private string $token;
@@ -74,8 +79,22 @@
             return $this->endpoint;
         }
 
-        public function sendRequest(string $method, array $parameters=[]): array
+        /**
+         * Sends a request by executing the specified method with the given parameters.
+         *
+         * @param string $method The name of the method to execute.
+         * @param array $parameters Optional parameters to pass to the method.
+         * @return mixed The result of the executed method.
+         * @throws TelegramException if the method execution fails.
+         */
+        public function sendRequest(string $method, array $parameters=[]): mixed
         {
+            $method = Methods::tryFrom($method);
+            if($method === null)
+            {
+                throw new InvalidArgumentException('Invalid method name');
+            }
 
+            return $method->execute($this, $parameters);
         }
     }
