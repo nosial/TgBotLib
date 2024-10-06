@@ -9,7 +9,6 @@ use TgBotLib\Objects\User;
 class GetMeTest extends TestCase
 {
     private $bot;
-
     protected function setUp(): void
     {
         $this->bot = new Bot(BOT_TOKEN);
