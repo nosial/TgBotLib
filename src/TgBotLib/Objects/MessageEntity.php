@@ -23,7 +23,7 @@
          * (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames),
          * “custom_emoji” (for inline custom emoji stickers)
          *
-         * @return string
+         * @return MessageEntityType
          */
         public function getType(): MessageEntityType
         {
