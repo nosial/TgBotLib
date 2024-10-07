@@ -18,6 +18,19 @@
         private bool $selective;
 
         /**
+         * ReplyKeyboardMarkup constructor.
+         */
+        public function __construct()
+        {
+            $this->keyboard = [];
+            $this->is_persistent = false;
+            $this->resize_keyboard = false;
+            $this->one_time_keyboard = false;
+            $this->input_field_placeholder = null;
+            $this->selective = false;
+        }
+
+        /**
          * Array of button rows, each represented by an Array of KeyboardButton objects
          *
          * @return KeyboardButton[][]
@@ -25,6 +38,75 @@
         public function getKeyboard(): array
         {
             return $this->keyboard;
+        }
+
+        /**
+         * Adds a new row of KeyboardButton objects to the keyboard.
+         *
+         * @param KeyboardButton ...$buttons The buttons to add as a new row.
+         * @return ReplyKeyboardMarkup
+         */
+        public function addRow(KeyboardButton ...$buttons): ReplyKeyboardMarkup
+        {
+            $this->keyboard[] = $buttons;
+            return $this;
+        }
+
+        /**
+         * Adds multiple rows to the existing structure, where each row is an array.
+         *
+         * @param array $rows Array of rows, each row being an array of elements to add.
+         *
+         * @return ReplyKeyboardMarkup
+         */
+        public function addRows(array $rows): ReplyKeyboardMarkup
+        {
+            foreach($rows as $row)
+            {
+                $this->addRow(...$row);
+            }
+
+            return $this;
+        }
+
+        /**
+         * Removes a row from the keyboard at the specified index.
+         *
+         * @param int $index The index of the row to remove.
+         * @return ReplyKeyboardMarkup
+         */
+        public function removeRow(int $index): ReplyKeyboardMarkup
+        {
+            unset($this->keyboard[$index]);
+            return $this;
+        }
+
+        /**
+         * Removes rows from the collection based on the given indexes.
+         *
+         * @param int ...$indexes The indexes of the rows to be removed.
+         *
+         * @return ReplyKeyboardMarkup
+         */
+        public function removeRows(int ...$indexes): ReplyKeyboardMarkup
+        {
+            foreach($indexes as $index)
+            {
+                $this->removeRow($index);
+            }
+
+            return $this;
+        }
+
+        /**
+         * Clears all rows in the keyboard by setting it to an empty array.
+         *
+         * @return ReplyKeyboardMarkup
+         */
+        public function clearRows(): ReplyKeyboardMarkup
+        {
+            $this->keyboard = [];
+            return $this;
         }
 
         /**
@@ -36,6 +118,18 @@
         public function isPersistent(): bool
         {
             return $this->is_persistent;
+        }
+
+        /**
+         * Sets the persistence state for the keyboard markup.
+         *
+         * @param bool $is_persistent Whether the keyboard should be persistent.
+         * @return ReplyKeyboardMarkup
+         */
+        public function setPersistent(bool $is_persistent): ReplyKeyboardMarkup
+        {
+            $this->is_persistent = $is_persistent;
+            return $this;
         }
 
         /**
@@ -51,6 +145,18 @@
         }
 
         /**
+         * Sets the resize_keyboard property for the reply markup.
+         *
+         * @param bool $resize_keyboard Specify whether the keyboard should resize to fit the text content.
+         * @return ReplyKeyboardMarkup The current instance with updated resize_keyboard property.
+         */
+        public function setResizeKeyboard(bool $resize_keyboard): ReplyKeyboardMarkup
+        {
+            $this->resize_keyboard = $resize_keyboard;
+            return $this;
+        }
+
+        /**
          * Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be
          * available, but clients will automatically display the usual letter-keyboard in the chat - the user can
          * press a special button in the input field to see the custom keyboard again. Defaults to false.
@@ -63,6 +169,19 @@
         }
 
         /**
+         * Sets the keyboard to be one-time use, meaning it will hide itself
+         * after a button is pressed.
+         *
+         * @param bool $one_time_keyboard Whether the keyboard should be one-time use
+         * @return ReplyKeyboardMarkup This instance for method chaining
+         */
+        public function setOneTimeKeyboard(bool $one_time_keyboard): ReplyKeyboardMarkup
+        {
+            $this->one_time_keyboard = $one_time_keyboard;
+            return $this;
+        }
+
+        /**
          * Optional. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
          *
          * @return string|null
@@ -70,6 +189,18 @@
         public function getInputFieldPlaceholder(): ?string
         {
             return $this->input_field_placeholder;
+        }
+
+        /**
+         * Sets the placeholder text for the input field
+         *
+         * @param string $input_field_placeholder The placeholder text to be displayed in the input field
+         * @return ReplyKeyboardMarkup
+         */
+        public function setInputFieldPlaceholder(string $input_field_placeholder): ReplyKeyboardMarkup
+        {
+            $this->input_field_placeholder = $input_field_placeholder;
+            return $this;
         }
 
         /**
@@ -88,18 +219,36 @@
         }
 
         /**
+         * Sets whether to show the keyboard to specific users only.
+         *
+         * @param bool $selective Indicate whether the keyboard is selective
+         * @return ReplyKeyboardMarkup Instance of the current ReplyKeyboardMarkup for method chaining
+         */
+        public function setSelective(bool $selective): ReplyKeyboardMarkup
+        {
+            $this->selective = $selective;
+            return $this;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
         {
-            return [
+            $array = [
                 'keyboard' => $this->keyboard,
                 'is_persistent' => $this->is_persistent,
                 'resize_keyboard' => $this->resize_keyboard,
                 'one_time_keyboard' => $this->one_time_keyboard,
-                'input_field_placeholder' => $this->input_field_placeholder,
-                'selective' => $this->selective,
+                'selective' => $this->selective
             ];
+
+            if($this->input_field_placeholder !== null)
+            {
+                $array['input_field_placeholder'] = $this->input_field_placeholder;
+            }
+
+            return $array;
         }
 
         /**
@@ -114,11 +263,11 @@
             {
                 $object->keyboard[] = KeyboardButton::fromArray($keyboard);
             }
-            $object->is_persistent = $data['is_persistent'] ?? null;
-            $object->resize_keyboard = $data['resize_keyboard'] ?? null;
-            $object->one_time_keyboard = $data['one_time_keyboard'] ?? null;
+            $object->is_persistent = $data['is_persistent'] ?? false;
+            $object->resize_keyboard = $data['resize_keyboard'] ?? false;
+            $object->one_time_keyboard = $data['one_time_keyboard'] ?? false;
             $object->input_field_placeholder = $data['input_field_placeholder'] ?? null;
-            $object->selective = $data['selective'] ?? null;
+            $object->selective = $data['selective'] ?? false;
 
             return $object;
         }
