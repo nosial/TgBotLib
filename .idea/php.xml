@@ -12,10 +12,8 @@
   <component name="PhpAnalysisConfiguration" call_tree_analysis_depth="3" />
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="/var/ncc/packages/net.nosial.loglib=1.1.0" />
       <path value="/usr/share/php" />
-      <path value="/etc/ncc" />
-      <path value="/var/ncc/packages/net.nosial.tamerlib=2.1.5" />
-      <path value="/var/ncc/packages/net.nosial.loglib=1.0.2" />
       <path value="/var/ncc/packages/net.nosial.tempfile=1.1.0" />
     </include_path>
   </component>
