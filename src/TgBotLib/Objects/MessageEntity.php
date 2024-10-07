@@ -98,6 +98,12 @@
             return $this->url;
         }
 
+        /**
+         * Sets the URL that will be opened after user taps on the text
+         *
+         * @param string|null $url
+         * @return MessageEntity
+         */
         public function setUrl(?string $url): MessageEntity
         {
             $this->url = $url;
