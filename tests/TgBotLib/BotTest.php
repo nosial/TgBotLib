@@ -20,7 +20,6 @@ class BotTest extends TestCase
     public function getMeTest(): void
     {
         $result = $this->bot->getMe();
-
         $this->assertIsArray($result);
     }
 
