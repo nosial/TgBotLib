@@ -2,6 +2,7 @@
 
 namespace TgBotLib;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class BotTest extends TestCase
@@ -16,13 +17,9 @@ class BotTest extends TestCase
      * Test sendRequest method of Bot class
      * for valid method and parameters.
      */
-    public function testSendRequestValid(): void
+    public function getMeTest(): void
     {
-        $method = 'getMe';
-        $parameters = ['text' => 'test message'];
-
-        // assuming that sendMessage method is properly working
-        $result = $this->bot->sendRequest($method, $parameters);
+        $result = $this->bot->getMe();
 
         $this->assertIsArray($result);
     }
