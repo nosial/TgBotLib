@@ -22,6 +22,18 @@
         }
 
         /**
+         * Sets the force reply
+         *
+         * @param bool $force_reply
+         * @return ForceReply
+         */
+        public function setForceReply(bool $force_reply): ForceReply
+        {
+            $this->force_reply = $force_reply;
+            return $this;
+        }
+
+        /**
          * Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters
          *
          * @return string|null
@@ -29,6 +41,18 @@
         public function getInlineFieldPlaceholder(): ?string
         {
             return $this->inline_field_placeholder;
+        }
+
+        /**
+         * Sets the placeholder to be shown in the input field when the reply is active; 1-64 characters
+         *
+         * @param string|null $inline_field_placeholder
+         * @return ForceReply
+         */
+        public function setInlineFieldPlaceholder(?string $inline_field_placeholder): ForceReply
+        {
+            $this->inline_field_placeholder = $inline_field_placeholder;
+            return $this;
         }
 
         /**
@@ -44,15 +68,33 @@
         }
 
         /**
+         * Sets the selective
+         *
+         * @param bool $selective
+         * @return ForceReply
+         */
+        public function setSelective(bool $selective): ForceReply
+        {
+            $this->selective = $selective;
+            return $this;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
         {
-            return [
+            $array = [
                 'force_reply' => $this->force_reply,
-                'inline_field_placeholder' => $this->inline_field_placeholder,
                 'selective' => $this->selective,
             ];
+
+            if($this->inline_field_placeholder !== null)
+            {
+                $array['inline_field_placeholder'] = $this->inline_field_placeholder;
+            }
+
+            return $array;
         }
 
         /**
