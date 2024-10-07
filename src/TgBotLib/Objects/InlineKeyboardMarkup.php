@@ -13,6 +13,14 @@
         private array $inline_keyboard;
 
         /**
+         * InlineKeyboardMarkup constructor.
+         */
+        public function __construct()
+        {
+            $this->inline_keyboard = [];
+        }
+
+        /**
          * Array of button rows, each represented by an Array of InlineKeyboardButton objects
          *
          * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
