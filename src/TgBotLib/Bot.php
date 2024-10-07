@@ -11,17 +11,24 @@
 
     use InvalidArgumentException;
     use ReflectionClass;
-    use ReflectionMethod;
-    use ReflectionParameter;
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Enums\Methods;
+    use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Exceptions\TelegramException;
+    use TgBotLib\Objects\ForceReply;
+    use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\LinkPreviewOptions;
+    use TgBotLib\Objects\Message;
+    use TgBotLib\Objects\ReplyKeyboardMarkup;
+    use TgBotLib\Objects\ReplyKeyboardRemove;
+    use TgBotLib\Objects\ReplyParameters;
+    use TgBotLib\Objects\User;
 
     /**
-     * @method getMe() Get information about the bot.
-     * @method logOut() Log out from the cloud Bot API server.
-     * @method close() Close the bot instance before moving it from one local server to another.
-     * @method sendMessage(string $chat_id, string $text, ?int $message_thread_id=null) Send a message to a chat.
+     * @method User getMe() A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
+     * @method bool logOut() Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters.
+     * @method bool close() Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.
+     * @method Message sendMessage(string|int $chat_id, string $text, ?string $business_connection_id=null, ?int $message_thread_id=null, string|ParseMode|null $parse_mode=null, ?array $entities=null, ?LinkPreviewOptions $link_preview_options=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?string $message_effect_id=null, ?ReplyParameters $reply_parameters=null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup=null) Use this method to send text messages. On success, the sent Message is returned.
      */
     class Bot
     {
@@ -151,14 +158,19 @@
                 throw new InvalidArgumentException("$methodClass is not a valid Method class");
             }
 
-            $requiredParameters = $methodClass::getRequiredParameters();
-            $optionalParameters = $methodClass::getOptionalParameters();
+            $requiredParameters = $methodClass::getRequiredParameters() ?? [];
+            $optionalParameters = $methodClass::getOptionalParameters() ?? [];
+
+            // Convert null to an empty array for seamless handling
+            $requiredParameters = is_null($requiredParameters) ? [] : $requiredParameters;
+            $optionalParameters = is_null($optionalParameters) ? [] : $optionalParameters;
+
             $parameters = [];
 
-            // Support named arguments as associative array
-            if (count($arguments) === 1 && is_array($arguments[0]))
+            // If arguments are provided as an associative array (named arguments)
+            if (is_array($arguments) && array_keys($arguments) !== range(0, count($arguments) - 1))
             {
-                $parameters = $arguments[0];
+                $parameters = $arguments;
             }
             else
             {
@@ -174,7 +186,7 @@
             }
 
             // Validate required parameters
-            foreach ($requiredParameters as $param => $type)
+            foreach ($requiredParameters as $param)
             {
                 if (!isset($parameters[$param]))
                 {
