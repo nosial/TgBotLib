@@ -23,6 +23,20 @@
         public abstract static function execute(Bot $bot, array $parameters=[]): mixed;
 
         /**
+         * Retrieves a list of required parameters for a specific operation.
+         *
+         * @return array|null An array of required parameters.
+         */
+        public abstract static function getRequiredParameters(): ?array;
+
+        /**
+         * Retrieves the optional parameters for a request.
+         *
+         * @return array|null An array of optional parameters.
+         */
+        public abstract static function getOptionalParameters(): ?array;
+
+        /**
          * Builds a cURL handle for making a POST request to a bot's endpoint.
          *
          * @param Bot $bot The bot object containing the endpoint information.

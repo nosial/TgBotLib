@@ -15,4 +15,20 @@
         {
             return (bool) self::executeCurl(self::buildPost($bot, Methods::CLOSE->value));
         }
+
+        /**
+         * @inheritDoc
+         */
+        public static function getRequiredParameters(): ?array
+        {
+            return null;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public static function getOptionalParameters(): ?array
+        {
+            return null;
+        }
     }

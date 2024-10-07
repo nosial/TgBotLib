@@ -27,4 +27,20 @@
 
             return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::SEND_MESSAGE->value, $parameters)));
         }
+
+        public static function getRequiredParameters(): ?array
+        {
+            return [
+                'chat_id',
+                'text'
+            ];
+        }
+
+        public static function getOptionalParameters(): ?array
+        {
+            return [
+                'business_connection_id',
+                'parse_mode',
+            ];
+        }
     }

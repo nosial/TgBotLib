@@ -16,4 +16,20 @@
         {
             return User::fromArray(self::executeCurl(self::buildPost($bot, Methods::GET_ME->value)));
         }
+
+        /**
+         * @inheritDoc
+         */
+        public static function getRequiredParameters(): ?array
+        {
+            return null;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public static function getOptionalParameters(): ?array
+        {
+            return null;
+        }
     }
