@@ -10,9 +10,19 @@
     namespace TgBotLib;
 
     use InvalidArgumentException;
+    use ReflectionClass;
+    use ReflectionMethod;
+    use ReflectionParameter;
+    use TgBotLib\Abstracts\Method;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Exceptions\TelegramException;
 
+    /**
+     * @method getMe() Get information about the bot.
+     * @method logOut() Log out from the cloud Bot API server.
+     * @method close() Close the bot instance before moving it from one local server to another.
+     * @method sendMessage(string $chat_id, string $text, ?int $message_thread_id=null) Send a message to a chat.
+     */
     class Bot
     {
         private string $token;
@@ -95,5 +105,83 @@
             }
 
             return $method->execute($this, $parameters);
+        }
+
+        /**
+         * Handles all undefined method calls.
+         *
+         * @param string $name The method name being called.
+         * @param array $arguments The arguments passed to the method.
+         * @return mixed The result of the executed method.
+         * @throws TelegramException if the method execution fails.
+         */
+        public function __call(string $name, array $arguments): mixed
+        {
+            if (!Methods::tryFrom($name))
+            {
+                throw new InvalidArgumentException("Undefined method {$name}");
+            }
+
+            // Support named and positional arguments
+            $parameters = $this->parseArguments($name, $arguments);
+            return $this->sendRequest($name, $parameters);
+        }
+
+        /**
+         * Parses arguments to handle both named and positional arguments.
+         *
+         * @param string $methodName The method name being called.
+         * @param array $arguments The arguments passed to the method.
+         * @return array The associative array of parameters.
+         * @throws InvalidArgumentException
+         */
+        private function parseArguments(string $methodName, array $arguments): array
+        {
+            $methodClass = "TgBotLib\\Methods\\" . ucfirst($methodName);
+
+            if (!class_exists($methodClass))
+            {
+                throw new InvalidArgumentException("Method class $methodClass does not exist");
+            }
+
+            // Instantiate the method class
+            $reflectionClass = new ReflectionClass($methodClass);
+            if (!$reflectionClass->isSubclassOf(Method::class))
+            {
+                throw new InvalidArgumentException("$methodClass is not a valid Method class");
+            }
+
+            $requiredParameters = $methodClass::getRequiredParameters();
+            $optionalParameters = $methodClass::getOptionalParameters();
+            $parameters = [];
+
+            // Support named arguments as associative array
+            if (count($arguments) === 1 && is_array($arguments[0]))
+            {
+                $parameters = $arguments[0];
+            }
+            else
+            {
+                // Handle positional arguments
+                $paramKeys = array_merge(array_keys($requiredParameters), array_keys($optionalParameters));
+                foreach ($arguments as $index => $arg)
+                {
+                    if (isset($paramKeys[$index]))
+                    {
+                        $parameters[$paramKeys[$index]] = $arg;
+                    }
+                }
+            }
+
+            // Validate required parameters
+            foreach ($requiredParameters as $param => $type)
+            {
+                if (!isset($parameters[$param]))
+                {
+                    throw new InvalidArgumentException("Required parameter '{$param}' is missing");
+                }
+            }
+
+            return $parameters;
         }
     }
