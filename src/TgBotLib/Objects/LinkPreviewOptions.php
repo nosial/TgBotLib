@@ -13,6 +13,18 @@ class LinkPreviewOptions implements ObjectTypeInterface
     private bool $show_above_text;
 
     /**
+     * LinkPreviewOptions constructor.
+     */
+    public function __construct()
+    {
+        $this->is_disabled = false;
+        $this->url = null;
+        $this->prefer_small_media = false;
+        $this->prefer_large_media = false;
+        $this->show_above_text = false;
+    }
+
+    /**
      * Optional. True, if the link preview is disabled
      *
      * @return bool
@@ -26,10 +38,12 @@ class LinkPreviewOptions implements ObjectTypeInterface
      * Sets the value of is_disabled
      *
      * @param bool $is_disabled
+     * @return LinkPreviewOptions
      */
-    public function setIsDisabled(bool $is_disabled): void
+    public function setDisabled(bool $is_disabled): LinkPreviewOptions
     {
         $this->is_disabled = $is_disabled;
+        return $this;
     }
 
     /**
@@ -46,10 +60,12 @@ class LinkPreviewOptions implements ObjectTypeInterface
      * Sets the value of url
      *
      * @param string|null $url
+     * @return LinkPreviewOptions
      */
-    public function setUrl(?string $url): void
+    public function setUrl(?string $url): LinkPreviewOptions
     {
         $this->url = $url;
+        return $this;
     }
 
     /**
@@ -67,10 +83,12 @@ class LinkPreviewOptions implements ObjectTypeInterface
      * Sets the value of prefer_small_media
      *
      * @param bool $prefer_small_media
+     * @return LinkPreviewOptions
      */
-    public function setPreferSmallMedia(bool $prefer_small_media): void
+    public function setPreferSmallMedia(bool $prefer_small_media): LinkPreviewOptions
     {
         $this->prefer_small_media = $prefer_small_media;
+        return $this;
     }
 
     /**
@@ -88,10 +106,12 @@ class LinkPreviewOptions implements ObjectTypeInterface
      * Sets the value of prefer_large_media
      *
      * @param bool $prefer_large_media
+     * @return LinkPreviewOptions
      */
-    public function setPreferLargeMedia(bool $prefer_large_media): void
+    public function setPreferLargeMedia(bool $prefer_large_media): LinkPreviewOptions
     {
         $this->prefer_large_media = $prefer_large_media;
+        return $this;
     }
 
     /**
@@ -109,10 +129,12 @@ class LinkPreviewOptions implements ObjectTypeInterface
      * Sets the value of show_above_text
      *
      * @param bool $show_above_text
+     * @return LinkPreviewOptions
      */
-    public function setShowAboveText(bool $show_above_text): void
+    public function setShowAboveText(bool $show_above_text): LinkPreviewOptions
     {
         $this->show_above_text = $show_above_text;
+        return $this;
     }
 
     /**
@@ -120,13 +142,19 @@ class LinkPreviewOptions implements ObjectTypeInterface
      */
     public function toArray(): array
     {
-        return [
+        $array = [
             'is_disabled' => $this->is_disabled,
-            'url' => $this->url,
             'prefer_small_media' => $this->prefer_small_media,
             'prefer_large_media' => $this->prefer_large_media,
             'show_above_text' => $this->show_above_text,
         ];
+
+        if($this->url !== null)
+        {
+            $array['url'] = $this->url;
+        }
+
+        return $array;
     }
 
     /**
