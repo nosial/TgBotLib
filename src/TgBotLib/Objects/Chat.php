@@ -9,7 +9,7 @@
     class Chat implements ObjectTypeInterface
     {
         private int $id;
-        private ChatType $type;
+        private ?ChatType $type;
         private ?string $title;
         private ?string $username;
         private ?string $first_name;
@@ -123,7 +123,7 @@
             $object->username = $data['username'] ?? null;
             $object->first_name = $data['first_name'] ?? null;
             $object->last_name = $data['last_name'] ?? null;
-            $object->is_forum = $data['is_forum'] ?? null;
+            $object->is_forum = $data['is_forum'] ?? false;
 
             return $object;
         }
