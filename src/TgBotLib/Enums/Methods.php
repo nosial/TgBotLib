@@ -6,6 +6,7 @@
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Methods\Close;
+    use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendMessage;
@@ -16,6 +17,7 @@
         case LOGOUT = 'logOut';
         case CLOSE = 'close';
         case SEND_MESSAGE = 'sendMessage';
+        case FORWARD_MESSAGE = 'forwardMessage';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -33,6 +35,7 @@
                 self::LOGOUT => LogOut::execute($bot, $parameters),
                 self::CLOSE => Close::execute($bot, $parameters),
                 self::SEND_MESSAGE => SendMessage::execute($bot, $parameters),
+                self::FORWARD_MESSAGE => ForwardMessage::execute($bot, $parameters),
             };
         }
     }
