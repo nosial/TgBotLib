@@ -19,6 +19,20 @@
         private ?int $quote_position;
 
         /**
+         * ReplyParameters constructor.
+         */
+        public function __construct()
+        {
+            $this->message_id = 0;
+            $this->chat_id = null;
+            $this->allow_sending_without_reply = false;
+            $this->quote = null;
+            $this->quote_parse_mode = null;
+            $this->quote_entities = null;
+            $this->quote_position = null;
+        }
+
+        /**
          * Identifier of the message that will be replied to in the current chat,
          * or in the chat chat_id if it is specified
          *
@@ -27,6 +41,19 @@
         public function getMessageId(): int
         {
             return $this->message_id;
+        }
+
+        /**
+         * Sets the message id.
+         *
+         * @param int $messageId The unique identifier for the message.
+         *
+         * @return ReplyParameters Returns the current instance of the ReplyParameters class.
+         */
+        public function setMessageId(int $messageId): ReplyParameters
+        {
+            $this->message_id = $messageId;
+            return $this;
         }
 
         /**
@@ -42,15 +69,41 @@
         }
 
         /**
+         * Sets the chat id.
+         *
+         * @param int|string|null $chatId The unique identifier for the chat.
+         * It can be an integer or string (which may be a username) or null.
+         *
+         * @return ?ReplyParameters Returns the current instance of the ReplyParameters class.
+         */
+        public function setChatId(int|string|null $chatId): ?ReplyParameters
+        {
+            $this->chat_id = $chatId;
+            return $this;
+        }
+
+        /**
          * Optional. Pass True if the message should be sent even if the specified message to be replied to is
          * not found. Always False for replies in another chat or forum topic. Always True for messages sent on
          * behalf of a business account.
          *
          * @return bool
          */
-        public function isAllowSendingWithoutReply(): bool
+        public function allowSendingWithoutReply(): bool
         {
             return $this->allow_sending_without_reply;
+        }
+
+        /**
+         * Sets the value of allow_sending_without_reply
+         *
+         * @param bool $allow_sending_without_reply
+         * @return ReplyParameters
+         */
+        public function setAllowSendingWithoutReply(bool $allow_sending_without_reply): ReplyParameters
+        {
+            $this->allow_sending_without_reply = $allow_sending_without_reply;
+            return $this;
         }
 
         /**
@@ -67,6 +120,18 @@
         }
 
         /**
+         * Sets the value of quote
+         *
+         * @param string|null $quote
+         * @return ReplyParameters
+         */
+        public function setQuote(?string $quote): ReplyParameters
+        {
+            $this->quote = $quote;
+            return $this;
+        }
+
+        /**
          * Optional. Mode for parsing entities in the quote. See formatting options for more details.
          *
          * @return ParseMode|null
@@ -74,6 +139,18 @@
         public function getQuoteParseMode(): ?ParseMode
         {
             return $this->quote_parse_mode;
+        }
+
+        /**
+         * Sets the value of quote_parse_mode
+         *
+         * @param ParseMode|null $quote_parse_mode
+         * @return ReplyParameters
+         */
+        public function setQuoteParseMode(?ParseMode $quote_parse_mode): ReplyParameters
+        {
+            $this->quote_parse_mode = $quote_parse_mode;
+            return $this;
         }
 
         /**
@@ -88,6 +165,18 @@
         }
 
         /**
+         * Sets the value of quote_entities
+         *
+         * @param MessageEntity[]|null $quote_entities
+         * @return ReplyParameters
+         */
+        public function setQuoteEntities(?array $quote_entities): ReplyParameters
+        {
+            $this->quote_entities = $quote_entities;
+            return $this;
+        }
+
+        /**
          * Optional. Position of the quote in the original message in UTF-16 code units
          *
          * @return int|null
@@ -98,19 +187,53 @@
         }
 
         /**
+         * Sets the value of quote_position
+         *
+         * @param int|null $quote_position
+         * @return ReplyParameters
+         */
+        public function setQuotePosition(?int $quote_position): ReplyParameters
+        {
+            $this->quote_position = $quote_position;
+            return $this;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): ?array
         {
-            return [
+            $array = [
                 'message_id' => $this->message_id,
-                'chat_id' => $this->chat_id,
                 'allow_sending_without_reply' => $this->allow_sending_without_reply,
-                'quote' => $this->quote,
-                'quote_parse_mode' => $this->quote_parse_mode?->value,
-                'quote_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->quote_entities),
-                'quote_position' => $this->quote_position,
             ];
+
+            if($this->chat_id !== null)
+            {
+                $array['chat_id'] = $this->chat_id;
+            }
+
+            if($this->quote !== null)
+            {
+                $array['quote'] = $this->quote;
+            }
+
+            if($this->quote_parse_mode !== null)
+            {
+                $array['quote_parse_mode'] = $this->quote_parse_mode->value;
+            }
+
+            if($this->quote_entities !== null)
+            {
+                $array['quote_entities'] = array_map(fn(MessageEntity $item) => $item->toArray(), $this->quote_entities);
+            }
+
+            if($this->quote_position !== null)
+            {
+                $array['quote_position'] = $this->quote_position;
+            }
+
+            return $array;
         }
 
         /**
@@ -124,7 +247,6 @@
             }
 
             $object = new self;
-
             $object->message_id = $data['message_id'];
             $object->chat_id = $data['chat_id'];
             $object->allow_sending_without_reply = $data['allow_sending_without_reply'];
