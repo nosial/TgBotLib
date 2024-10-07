@@ -32,6 +32,20 @@
         }
 
         /**
+         * Sets the unique identifier for this user or bot. This number may have more than 32 significant bits and some
+         * programming languages may have difficulty/silent defects in interpreting it. But it has at most 52
+         * significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+         *
+         * @param int $id
+         * @return $this
+         */
+        public function setId(int $id): User
+        {
+            $this->id = $id;
+            return $this;
+        }
+
+        /**
          * True, if this user is a bot
          *
          * @return bool
