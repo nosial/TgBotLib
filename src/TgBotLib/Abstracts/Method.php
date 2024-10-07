@@ -75,7 +75,6 @@
         protected static function buildUpload(Bot $bot, string $method, string $file_param, string $file_path, array $parameters): CurlHandle
         {
             $curl = curl_init(sprintf('%s/%s?%s', $bot->getEndpoint(), $method, http_build_query($parameters)));
-
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data']);
@@ -89,7 +88,6 @@
         protected static function buildMultiUpload(Bot $bot, string $method, array $files, array $parameters): CurlHandle
         {
             $curl = curl_init(sprintf('%s/%s?%s', $bot->getEndpoint(), $method, http_build_query($parameters)));
-
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data']);
