@@ -2,11 +2,12 @@
 
     namespace TgBotLib\Objects;
 
+    use TgBotLib\Enums\Types\MessageEntityType;
     use TgBotLib\Interfaces\ObjectTypeInterface;
 
     class MessageEntity implements ObjectTypeInterface
     {
-        private string $type;
+        private MessageEntityType $type;
         private int $offset;
         private int $length;
         private ?string $url;
@@ -24,9 +25,21 @@
          *
          * @return string
          */
-        public function getType(): string
+        public function getType(): MessageEntityType
         {
             return $this->type;
+        }
+
+        /**
+         * Sets the type of the entity
+         *
+         * @param MessageEntityType $type
+         * @return MessageEntity
+         */
+        public function setType(MessageEntityType $type): MessageEntity
+        {
+            $this->type = $type;
+            return $this;
         }
 
         /**
@@ -41,6 +54,18 @@
         }
 
         /**
+         * Sets the offset of the entity
+         *
+         * @param int $offset
+         * @return MessageEntity
+         */
+        public function setOffset(int $offset): MessageEntity
+        {
+            $this->offset = $offset;
+            return $this;
+        }
+
+        /**
          * Offset in UTF-16 code units to the start of the entity
          *
          * @see https://core.telegram.org/api/entities#entity-length
@@ -52,6 +77,18 @@
         }
 
         /**
+         * Sets the length of the entity
+         *
+         * @param int $length
+         * @return MessageEntity
+         */
+        public function setLength(int $length): MessageEntity
+        {
+            $this->length = $length;
+            return $this;
+        }
+
+        /**
          * Optional. For “text_link” only, URL that will be opened after user taps on the text
          *
          * @return string|null
@@ -59,6 +96,12 @@
         public function getUrl(): ?string
         {
             return $this->url;
+        }
+
+        public function setUrl(?string $url): MessageEntity
+        {
+            $this->url = $url;
+            return $this;
         }
 
         /**
@@ -72,6 +115,18 @@
         }
 
         /**
+         * Sets the mentioned user
+         *
+         * @param User|null $user
+         * @return MessageEntity
+         */
+        public function setUser(?User $user): MessageEntity
+        {
+            $this->user = $user;
+            return $this;
+        }
+
+        /**
          * Optional. For “pre” only, the programming language of the entity text
          *
          * @return string|null
@@ -79,6 +134,18 @@
         public function getLanguage(): ?string
         {
             return $this->language;
+        }
+
+        /**
+         * Sets the language of the entity text
+         *
+         * @param string|null $language
+         * @return MessageEntity
+         */
+        public function setLanguage(?string $language): MessageEntity
+        {
+            $this->language = $language;
+            return $this;
         }
 
         /**
@@ -94,19 +161,49 @@
         }
 
         /**
+         * Set the custom emoji id
+         *
+         * @param string|null $custom_emoji_id
+         * @return MessageEntity
+         */
+        public function setCustomEmojiId(?string $custom_emoji_id): MessageEntity
+        {
+            $this->custom_emoji_id = $custom_emoji_id;
+            return $this;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
         {
-            return [
-                'type' => $this->type,
+            $array = [
+                'type' => $this->type->value,
                 'offset' => $this->offset,
-                'length' => $this->length,
-                'url' => $this->url,
-                'user' => $this->user?->toArray(),
-                'language' => $this->language,
-                'custom_emoji_id' => $this->custom_emoji_id
+                'length' => $this->length
             ];
+
+            if($this->url !== null)
+            {
+                $array['url'] = $this->url;
+            }
+
+            if($this->user !== null)
+            {
+                $array['user'] = $this->user->toArray();
+            }
+
+            if($this->language !== null)
+            {
+                $array['language'] = $this->language;
+            }
+
+            if($this->custom_emoji_id !== null)
+            {
+                $array['custom_emoji_id'] = $this->custom_emoji_id;
+            }
+
+            return $array;
         }
 
         /**
@@ -120,7 +217,7 @@
             }
 
             $object = new self();
-            $object->type = $data['type'] ?? null;
+            $object->type = MessageEntityType::tryFrom($data['type']);
             $object->offset = $data['offset'] ?? null;
             $object->length = $data['length'] ?? null;
             $object->url = $data['url'] ?? null;
