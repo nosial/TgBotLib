@@ -130,6 +130,9 @@ jobs:
         run: |
           ncc package install --package="TgBotLib_build/net.nosial.tgbotlib.ncc" --build-source --reinstall -y --log-level debug
 
+      - name: Create token.txt
+        run: echo "${{ secrets.TELEGRAM_TEST_TOKEN }}" > token.txt
+
       - name: Run PHPUnit tests
         run: |
           wget https://phar.phpunit.de/phpunit-11.3.phar
