@@ -22,6 +22,18 @@
         }
 
         /**
+         * Sets the remove keyboard
+         *
+         * @param bool $remove_keyboard
+         * @return ReplyKeyboardRemove
+         */
+        public function setRemoveKeyboard(bool $remove_keyboard): ReplyKeyboardRemove
+        {
+            $this->remove_keyboard = $remove_keyboard;
+            return $this;
+        }
+
+        /**
          * Optional. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users
          * that are @mentioned in the text of the Message object; 2) if the bot's message is a reply
          * (has reply_to_message_id), sender of the original message.
@@ -34,6 +46,18 @@
         public function isSelective(): bool
         {
             return $this->selective;
+        }
+
+        /**
+         * Sets the selective
+         *
+         * @param bool $selective
+         * @return ReplyKeyboardRemove
+         */
+        public function setSelective(bool $selective): ReplyKeyboardRemove
+        {
+            $this->selective = $selective;
+            return $this;
         }
 
         /**
