@@ -17,9 +17,19 @@ class LinkPreviewOptions implements ObjectTypeInterface
      *
      * @return bool
      */
-    public function getIsDisabled(): bool
+    public function isDisabled(): bool
     {
         return $this->is_disabled;
+    }
+
+    /**
+     * Sets the value of is_disabled
+     *
+     * @param bool $is_disabled
+     */
+    public function setIsDisabled(bool $is_disabled): void
+    {
+        $this->is_disabled = $is_disabled;
     }
 
     /**
@@ -30,6 +40,16 @@ class LinkPreviewOptions implements ObjectTypeInterface
     public function getUrl(): ?string
     {
         return $this->url;
+    }
+
+    /**
+     * Sets the value of url
+     *
+     * @param string|null $url
+     */
+    public function setUrl(?string $url): void
+    {
+        $this->url = $url;
     }
 
     /**
@@ -44,6 +64,16 @@ class LinkPreviewOptions implements ObjectTypeInterface
     }
 
     /**
+     * Sets the value of prefer_small_media
+     *
+     * @param bool $prefer_small_media
+     */
+    public function setPreferSmallMedia(bool $prefer_small_media): void
+    {
+        $this->prefer_small_media = $prefer_small_media;
+    }
+
+    /**
      * Optional. True, if the media in the link preview is supposed to be enlarged;
      * ignored if the URL isn't explicitly specified or media size change isn't supported for the preview
      *
@@ -55,6 +85,16 @@ class LinkPreviewOptions implements ObjectTypeInterface
     }
 
     /**
+     * Sets the value of prefer_large_media
+     *
+     * @param bool $prefer_large_media
+     */
+    public function setPreferLargeMedia(bool $prefer_large_media): void
+    {
+        $this->prefer_large_media = $prefer_large_media;
+    }
+
+    /**
      * Optional. True, if the link preview must be shown above the message text; otherwise,
      * the link preview will be shown below the message text
      *
@@ -63,6 +103,16 @@ class LinkPreviewOptions implements ObjectTypeInterface
     public function getShowAboveText(): bool
     {
         return $this->show_above_text;
+    }
+
+    /**
+     * Sets the value of show_above_text
+     *
+     * @param bool $show_above_text
+     */
+    public function setShowAboveText(bool $show_above_text): void
+    {
+        $this->show_above_text = $show_above_text;
     }
 
     /**
