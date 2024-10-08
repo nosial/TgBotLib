@@ -30,6 +30,7 @@
         case SEND_PHOTO = 'sendPhoto';
         case SEND_AUDIO = 'sendAudio';
         case SEND_DOCUMENT = 'sendDocument';
+        case SEND_VIDEO = 'sendVideo';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -54,6 +55,7 @@
                 self::SEND_PHOTO => SendPhoto::execute($bot, $parameters),
                 self::SEND_AUDIO => SendAudio::execute($bot, $parameters),
                 self::SEND_DOCUMENT => SendDocument::execute($bot, $parameters),
+                self::SEND_VIDEO => SendVideo::execute($bot, $parameters),
             };
         }
     }
