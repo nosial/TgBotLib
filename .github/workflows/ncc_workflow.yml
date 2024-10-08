@@ -85,7 +85,7 @@ jobs:
       - name: Check for phpdoc.dist.xml
         id: check
         run: |
-          if [ -f phpdoc.xml ]; then
+          if [ -f phpdoc.dist.xml ]; then
             echo "phpdoc-exists=true" >> $GITHUB_OUTPUT
           else
             echo "phpdoc-exists=false" >> $GITHUB_OUTPUT
