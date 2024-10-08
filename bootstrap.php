@@ -9,5 +9,6 @@
     }
 
     define('BOT_TOKEN', trim(file_get_contents($token_path)));
+    const TEST_CHAT_ID = -1001301191379;
 
     import('net.nosial.tgbotlib');

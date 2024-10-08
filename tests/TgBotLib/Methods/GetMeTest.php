@@ -8,7 +8,6 @@ use TgBotLib\Objects\User;
 
 class GetMeTest extends TestCase
 {
-    const int TEST_CHAT_ID = -1001301191379;
     private static Bot $bot;
 
     /**

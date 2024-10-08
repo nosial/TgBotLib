@@ -11,7 +11,6 @@ use TgBotLib\Objects\MessageId;
 
 class ForwardMessagesTest extends TestCase
 {
-    const int TEST_CHAT_ID = -1001301191379;
     private static Bot $bot;
 
     /**
@@ -30,18 +29,18 @@ class ForwardMessagesTest extends TestCase
     public function testForwardMessage(): void
     {
         $message1 = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'This is a test message.'
         );
 
         $message2 = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'This is another test message.'
         );
 
         $result = self::$bot->forwardMessages(
-            chat_id: self::TEST_CHAT_ID,
-            from_chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
+            from_chat_id: TEST_CHAT_ID,
             message_ids: [$message1->getMessageId(), $message2->getMessageId()]
         );
 

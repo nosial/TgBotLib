@@ -10,7 +10,6 @@ use TgBotLib\Objects\Message;
 
 class SendMessageTest extends TestCase
 {
-    const int TEST_CHAT_ID = -1001301191379;
     const string TEST_WEB_PREVIEW_URL = "https://www.youtube.com/watch?v=tDacjrSCeq4";
     private static Bot $bot;
 
@@ -30,12 +29,12 @@ class SendMessageTest extends TestCase
     public function testSendMessage(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testSendMessage'
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
         $this->assertEquals('Test Unit: testSendMessage', $result->getText());
     }
 
@@ -50,7 +49,7 @@ class SendMessageTest extends TestCase
     public function testSendParseMarkdown2Test(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testSendParseMarkdown2Test' . PHP_EOL . PHP_EOL .
                 ' *bold* _italic_ [link](https://example.com)' . PHP_EOL .
                 ' `inline code` ```block code```' . PHP_EOL .
@@ -61,7 +60,7 @@ class SendMessageTest extends TestCase
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -76,7 +75,7 @@ class SendMessageTest extends TestCase
     public function testSendParseMarkdownTest(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testSendParseMarkdownTest' . PHP_EOL . PHP_EOL .
                 ' *bold* _italic_ [link](https://example.com)' . PHP_EOL .
                 ' `inline code` ```block code```' . PHP_EOL .
@@ -87,7 +86,7 @@ class SendMessageTest extends TestCase
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -101,7 +100,7 @@ class SendMessageTest extends TestCase
     public function testSendParseHTMLTest(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testSendParseHTMLTest' . PHP_EOL . PHP_EOL .
                 ' <b>bold</b> <i>italic</i> <a href="https://example.com">link</a>' . PHP_EOL .
                 ' <code>inline code</code> <pre>block code</pre>' . PHP_EOL .
@@ -112,7 +111,7 @@ class SendMessageTest extends TestCase
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -126,14 +125,14 @@ class SendMessageTest extends TestCase
     public function testWebPagePreviewDisabled(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testWebPagePreview' . PHP_EOL . self::TEST_WEB_PREVIEW_URL . PHP_EOL . PHP_EOL . 'Disabled link preview',
             link_preview_options: (new LinkPreviewOptions())
                 ->setDisabled(true)
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -147,14 +146,14 @@ class SendMessageTest extends TestCase
     public function testWebPagePreviewPreferSmallMedia(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testWebPagePreview' . PHP_EOL . self::TEST_WEB_PREVIEW_URL . PHP_EOL . PHP_EOL . 'Prefer small media',
             link_preview_options: (new LinkPreviewOptions())
                 ->setPreferSmallMedia(true)
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -167,14 +166,14 @@ class SendMessageTest extends TestCase
     public function testWebPagePreviewPreferLargeMedia(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testWebPagePreview' . PHP_EOL . self::TEST_WEB_PREVIEW_URL . PHP_EOL . PHP_EOL . 'Prefer large media',
             link_preview_options: (new LinkPreviewOptions())
                 ->setPreferLargeMedia(true)
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 
     /**
@@ -187,13 +186,13 @@ class SendMessageTest extends TestCase
     public function testWebPagePreviewShowAboveText(): void
     {
         $result = self::$bot->sendMessage(
-            chat_id: self::TEST_CHAT_ID,
+            chat_id: TEST_CHAT_ID,
             text: 'Test Unit: testWebPagePreview' . PHP_EOL . self::TEST_WEB_PREVIEW_URL . PHP_EOL . PHP_EOL . 'Show above text',
             link_preview_options: (new LinkPreviewOptions())
                 ->setShowAboveText(true)
         );
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(self::TEST_CHAT_ID, $result->getChat()->getId());
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
     }
 }
