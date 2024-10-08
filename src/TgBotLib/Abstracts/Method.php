@@ -87,6 +87,39 @@
         }
 
         /**
+         * Builds a cURL handle for a multi-part file upload request to a bot API.
+         *
+         * @param Bot $bot The bot instance to configure the request for.
+         * @param string $method The API method to call.
+         * @param array $files An associative array of parameter names and file paths to upload.
+         * @param array $parameters An associative array of additional parameters for the request.
+         * @return CurlHandle The configured cURL handle.
+         */
+        protected static function buildMultiUpload(Bot $bot, string $method, array $files, array $parameters): CurlHandle
+        {
+            $curl = curl_init(sprintf('%s/bot%s/%s', $bot->getEndpoint(), $bot->getToken(), $method));
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data']);
+
+            $postFields = [];
+
+            foreach ($files as $param => $file)
+            {
+                $postFields[$param] = new CURLFile($file);
+            }
+
+            foreach ($parameters as $key => $value)
+            {
+                $postFields[$key] = $value;
+            }
+
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $postFields);
+
+            return $curl;
+        }
+
+        /**
          * Executes a cURL request and processes the response.
          *
          * @param CurlHandle $curl The cURL handle to be executed.

@@ -12,6 +12,7 @@
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
+    use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendMessage;
     use TgBotLib\Methods\SendPhoto;
 
@@ -26,6 +27,7 @@
         case COPY_MESSAGE = 'copyMessage';
         case COPY_MESSAGES = 'copyMessages';
         case SEND_PHOTO = 'sendPhoto';
+        case SEND_AUDIO = 'sendAudio';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -48,6 +50,7 @@
                 self::COPY_MESSAGE => CopyMessage::execute($bot, $parameters),
                 self::COPY_MESSAGES => CopyMessages::execute($bot, $parameters),
                 self::SEND_PHOTO => SendPhoto::execute($bot, $parameters),
+                self::SEND_AUDIO => SendAudio::execute($bot, $parameters),
             };
         }
     }
