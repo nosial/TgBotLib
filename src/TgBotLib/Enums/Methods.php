@@ -13,6 +13,7 @@
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendMessage;
+    use TgBotLib\Methods\SendPhoto;
 
     enum Methods : string
     {
@@ -24,6 +25,7 @@
         case FORWARD_MESSAGES = 'forwardMessages';
         case COPY_MESSAGE = 'copyMessage';
         case COPY_MESSAGES = 'copyMessages';
+        case SEND_PHOTO = 'sendPhoto';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -44,7 +46,8 @@
                 self::FORWARD_MESSAGE => ForwardMessage::execute($bot, $parameters),
                 self::FORWARD_MESSAGES => ForwardMessages::execute($bot, $parameters),
                 self::COPY_MESSAGE => CopyMessage::execute($bot, $parameters),
-                self::COPY_MESSAGES => CopyMessages::execute($bot, $parameters)
+                self::COPY_MESSAGES => CopyMessages::execute($bot, $parameters),
+                self::SEND_PHOTO => SendPhoto::execute($bot, $parameters),
             };
         }
     }

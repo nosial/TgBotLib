@@ -48,9 +48,12 @@
             $curl = curl_init(sprintf('%s/bot%s/%s', $bot->getEndpoint(), $bot->getToken(), $method));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            if ($parameters === null) {
+            if ($parameters === null)
+            {
                 curl_setopt($curl, CURLOPT_POST, false);
-            } else {
+            }
+            else
+            {
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($parameters));
@@ -70,31 +73,16 @@
          */
         protected static function buildUpload(Bot $bot, string $method, string $file_param, string $file_path, array $parameters): CurlHandle
         {
-            $curl = curl_init(sprintf('%s/%s?%s', $bot->getEndpoint(), $method, http_build_query($parameters)));
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data']);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, [
-                $file_param => new CURLFile($file_path)
-            ]);
-
-            return $curl;
-        }
-
-        protected static function buildMultiUpload(Bot $bot, string $method, array $files, array $parameters): CurlHandle
-        {
-            $curl = curl_init(sprintf('%s/%s?%s', $bot->getEndpoint(), $method, http_build_query($parameters)));
+            $curl = curl_init(sprintf('%s/bot%s/%s', $bot->getEndpoint(), $bot->getToken(), $method));
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data']);
 
-            $post_fields = [];
-            foreach($files as $file_param => $file_path)
-            {
-                $post_fields[$file_param] = new CURLFile($file_path);
-            }
+            // Merge file with other parameters
+            $parameters[$file_param] = new CURLFile($file_path);
 
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $post_fields);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
+
             return $curl;
         }
 
