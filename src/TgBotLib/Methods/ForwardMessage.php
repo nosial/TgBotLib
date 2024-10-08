@@ -6,12 +6,19 @@ use InvalidArgumentException;
 use TgBotLib\Abstracts\Method;
 use TgBotLib\Bot;
 use TgBotLib\Enums\Methods;
+use TgBotLib\Exceptions\TelegramException;
 use TgBotLib\Objects\Message;
 
 class ForwardMessage extends Method
 {
     /**
-     * @inheritDoc
+     * Use this method to forward messages of any kind. Service messages and messages with protected content can't be
+     * forwarded. On success, the sent Message is returned.
+     *
+     * @param Bot $bot
+     * @param array $parameters
+     * @return Message
+     * @throws TelegramException
      */
     public static function execute(Bot $bot, array $parameters = []): Message
     {

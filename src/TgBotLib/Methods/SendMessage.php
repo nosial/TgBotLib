@@ -7,6 +7,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ParseMode;
+    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\LinkPreviewOptions;
     use TgBotLib\Objects\Message;
@@ -16,7 +17,12 @@
     class SendMessage extends Method
     {
         /**
-         * @inheritDoc
+         * Use this method to send text messages. On success, the sent Message is returned.
+         *
+         * @param Bot $bot
+         * @param array $parameters
+         * @return Message
+         * @throws TelegramException
          */
         public static function execute(Bot $bot, array $parameters=[]): Message
         {

@@ -5,12 +5,19 @@
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
+    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\User;
 
     class GetMe extends Method
     {
         /**
-         * @inheritDoc
+         * A simple method for testing your bot's authentication token. Requires no parameters.
+         * Returns basic information about the bot in form of a User object.
+         *
+         * @param Bot $bot
+         * @param array $parameters
+         * @return User
+         * @throws TelegramException
          */
         public static function execute(Bot $bot, array $parameters=[]): User
         {
