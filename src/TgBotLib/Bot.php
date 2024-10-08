@@ -19,6 +19,7 @@
     use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\LinkPreviewOptions;
     use TgBotLib\Objects\Message;
+    use TgBotLib\Objects\MessageEntity;
     use TgBotLib\Objects\MessageId;
     use TgBotLib\Objects\ReplyKeyboardMarkup;
     use TgBotLib\Objects\ReplyKeyboardRemove;
@@ -32,6 +33,7 @@
      * @method Message sendMessage(string|int $chat_id, string $text, ?string $business_connection_id=null, ?int $message_thread_id=null, string|ParseMode|null $parse_mode=null, ?array $entities=null, ?LinkPreviewOptions $link_preview_options=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?string $message_effect_id=null, ?ReplyParameters $reply_parameters=null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup=null) Use this method to send text messages. On success, the sent Message is returned.
      * @method Message forwardMessage(string|int $chat_id, string|int $from_chat_id, int $message_id, ?int $message_thread_id=null, ?bool $disable_notification=null, ?bool $protect_content=null) Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      * @method MessageId[] forwardMessages(string|int $chat_id, string|int $from_chat_id, int[] $message_ids, ?int $message_thread_id=null, ?bool $disable_notification=null, ?bool $protect_content=null) Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     * @method MessageId copyMessage(string|int $chat_id, string|int $from_chat_id, int $message_id, ?int $message_thread_id=null, ?string $caption=null, ?string|ParseMode $parse_mode=null, ?MessageEntity[] $caption_entities=null, ?bool $show_caption_above_media=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?ReplyParameters $reply_parameters=null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup=null) Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      */
     class Bot
     {
