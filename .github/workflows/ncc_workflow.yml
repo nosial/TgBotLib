@@ -82,7 +82,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Check for phpdoc.xml
+      - name: Check for phpdoc.dist.xml
         id: check
         run: |
           if [ -f phpdoc.xml ]; then
