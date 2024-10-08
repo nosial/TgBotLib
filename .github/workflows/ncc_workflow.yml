@@ -75,6 +75,48 @@ jobs:
             echo "phpunit-exists=false" >> $GITHUB_OUTPUT
           fi
 
+  check-phpdoc:
+    runs-on: ubuntu-latest
+    outputs:
+      phpdoc-exists: ${{ steps.check.outputs.phpdoc-exists }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check for phpdoc.xml
+        id: check
+        run: |
+          if [ -f phpdoc.xml ]; then
+            echo "phpdoc-exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "phpdoc-exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  generate_phpdoc:
+    needs: [build, check-phpdoc]
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+    if: needs.check-phpdoc.outputs.phpdoc-exists == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download PHPDocumentor
+        run: |
+          wget https://phpdoc.org/phpDocumentor.phar
+          chmod +x phpDocumentor.phar
+
+      - name: Generate PHPDoc
+        run: |
+          php phpDocumentor.phar -d src -t docs
+
+      - name: Upload PHPDoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpdoc
+          path: docs
+
   test:
     needs: [build, check-phpunit]
     runs-on: ubuntu-latest
