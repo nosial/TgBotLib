@@ -19,6 +19,7 @@
     use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\LinkPreviewOptions;
     use TgBotLib\Objects\Message;
+    use TgBotLib\Objects\MessageId;
     use TgBotLib\Objects\ReplyKeyboardMarkup;
     use TgBotLib\Objects\ReplyKeyboardRemove;
     use TgBotLib\Objects\ReplyParameters;
@@ -30,6 +31,7 @@
      * @method bool close() Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.
      * @method Message sendMessage(string|int $chat_id, string $text, ?string $business_connection_id=null, ?int $message_thread_id=null, string|ParseMode|null $parse_mode=null, ?array $entities=null, ?LinkPreviewOptions $link_preview_options=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?string $message_effect_id=null, ?ReplyParameters $reply_parameters=null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup=null) Use this method to send text messages. On success, the sent Message is returned.
      * @method Message forwardMessage(string|int $chat_id, string|int $from_chat_id, int $message_id, ?int $message_thread_id=null, ?bool $disable_notification=null, ?bool $protect_content=null) Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
+     * @method MessageId[] forwardMessages(string|int $chat_id, string|int $from_chat_id, int[] $message_ids, ?int $message_thread_id=null, ?bool $disable_notification=null, ?bool $protect_content=null) Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
      */
     class Bot
     {

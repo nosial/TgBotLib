@@ -7,6 +7,7 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\ForwardMessage;
+    use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendMessage;
@@ -18,6 +19,7 @@
         case CLOSE = 'close';
         case SEND_MESSAGE = 'sendMessage';
         case FORWARD_MESSAGE = 'forwardMessage';
+        case FORWARD_MESSAGES = 'forwardMessages';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -36,6 +38,7 @@
                 self::CLOSE => Close::execute($bot, $parameters),
                 self::SEND_MESSAGE => SendMessage::execute($bot, $parameters),
                 self::FORWARD_MESSAGE => ForwardMessage::execute($bot, $parameters),
+                self::FORWARD_MESSAGES => ForwardMessages::execute($bot, $parameters),
             };
         }
     }

@@ -44,17 +44,13 @@
          * @param array|null $parameters An array of parameters to be sent in the POST request.
          * @return CurlHandle The configured cURL handle ready for execution.
          */
-        protected static function buildPost(Bot $bot, string $method, ?array $parameters=null): CurlHandle
-        {
+        protected static function buildPost(Bot $bot, string $method, ?array $parameters = null): CurlHandle {
             $curl = curl_init(sprintf('%s/bot%s/%s', $bot->getEndpoint(), $bot->getToken(), $method));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            if($parameters === null)
-            {
+            if ($parameters === null) {
                 curl_setopt($curl, CURLOPT_POST, false);
-            }
-            else
-            {
+            } else {
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($parameters));
