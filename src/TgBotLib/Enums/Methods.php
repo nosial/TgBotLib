@@ -7,6 +7,7 @@
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\CopyMessage;
+    use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
@@ -22,6 +23,7 @@
         case FORWARD_MESSAGE = 'forwardMessage';
         case FORWARD_MESSAGES = 'forwardMessages';
         case COPY_MESSAGE = 'copyMessage';
+        case COPY_MESSAGES = 'copyMessages';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -42,6 +44,7 @@
                 self::FORWARD_MESSAGE => ForwardMessage::execute($bot, $parameters),
                 self::FORWARD_MESSAGES => ForwardMessages::execute($bot, $parameters),
                 self::COPY_MESSAGE => CopyMessage::execute($bot, $parameters),
+                self::COPY_MESSAGES => CopyMessages::execute($bot, $parameters)
             };
         }
     }
