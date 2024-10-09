@@ -18,6 +18,7 @@
     use TgBotLib\Methods\SendMessage;
     use TgBotLib\Methods\SendPhoto;
     use TgBotLib\Methods\SendVideo;
+    use TgBotLib\Methods\SendVoice;
 
     enum Methods : string
     {
@@ -34,6 +35,7 @@
         case SEND_DOCUMENT = 'sendDocument';
         case SEND_VIDEO = 'sendVideo';
         case SEND_ANIMATION = 'sendAnimation';
+        case SEND_VOICE = 'sendVoice';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -60,6 +62,7 @@
                 self::SEND_DOCUMENT => SendDocument::execute($bot, $parameters),
                 self::SEND_VIDEO => SendVideo::execute($bot, $parameters),
                 self::SEND_ANIMATION => SendAnimation::execute($bot, $parameters),
+                self::SEND_VOICE => SendVoice::execute($bot, $parameters),
             };
         }
     }
