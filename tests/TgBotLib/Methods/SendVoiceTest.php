@@ -59,7 +59,7 @@ class SendVoiceTest extends TestCase
 
         $result = self::$bot->sendVoice(
             chat_id: TEST_CHAT_ID,
-            voice: 'https://example.com/voice.ogg',
+            voice: __DIR__ . DIRECTORY_SEPARATOR . 'sample' . DIRECTORY_SEPARATOR . 'ted.ogg',
             caption: 'This is a test',
             caption_entities: $captionEntities
         );
