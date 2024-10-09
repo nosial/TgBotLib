@@ -20,6 +20,19 @@
         private ?CallbackGame $callback_game;
         private bool $pay;
 
+        public function __construct()
+        {
+            $this->text = (string)null;
+            $this->url = null;
+            $this->callback_data = null;
+            $this->web_app = null;
+            $this->login_url = null;
+            $this->switch_inline_query = null;
+            $this->switch_inline_query_current_chat = null;
+            $this->callback_game = null;
+            $this->pay = false;
+        }
+
         /**
          * Label text on the button
          *
@@ -278,17 +291,49 @@
          */
         public function toArray(): array
         {
-            return [
-                'text' => $this->text ?? null,
-                'url' => $this->url ?? null,
-                'callback_data' => $this->callback_data ?? null,
-                'web_app' => $this->web_app?->toArray(),
-                'login_url' => $this->login_url?->toArray(),
-                'switch_inline_query' => $this->switch_inline_query ?? null,
-                'switch_inline_query_current_chat' => $this->switch_inline_query_current_chat ?? null,
-                'callback_game' => $this->callback_game?->toArray(),
-                'pay' => $this->pay ?? null
-            ];
+            $array = ['text' => $this->text];
+
+            if ($this->url !== null)
+            {
+                $array['url'] = $this->url;
+            }
+
+            if ($this->callback_data !== null)
+            {
+                $array['callback_data'] = $this->callback_data;
+            }
+
+            if ($this->web_app !== null)
+            {
+                $array['web_app'] = $this->web_app->toArray();
+            }
+
+            if ($this->login_url !== null)
+            {
+                $array['login_url'] = $this->login_url->toArray();
+            }
+
+            if ($this->switch_inline_query !== null)
+            {
+                $array['switch_inline_query'] = $this->switch_inline_query;
+            }
+
+            if ($this->switch_inline_query_current_chat !== null)
+            {
+                $array['switch_inline_query_current_chat'] = $this->switch_inline_query_current_chat;
+            }
+
+            if ($this->callback_game !== null)
+            {
+                $array['callback_game'] = $this->callback_game->toArray();
+            }
+
+            if ($this->pay)
+            {
+                $array['pay'] = true;
+            }
+
+            return $array;
         }
 
         /**
@@ -310,7 +355,7 @@
             $object->switch_inline_query = $data['switch_inline_query'] ?? null;
             $object->switch_inline_query_current_chat = $data['switch_inline_query_current_chat'] ?? null;
             $object->callback_game = isset($data['callback_game']) && is_array($data['callback_game']) ? CallbackGame::fromArray($data['callback_game']) : null;
-            $object->pay = $data['pay'] ?? null;
+            $object->pay = $data['pay'] ?? false;
 
             return $object;
         }

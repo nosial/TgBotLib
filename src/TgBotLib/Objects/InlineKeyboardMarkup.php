@@ -1,6 +1,5 @@
 <?php
 
-
     namespace TgBotLib\Objects;
 
     use TgBotLib\Interfaces\ObjectTypeInterface;
@@ -60,18 +59,19 @@
          */
         public function toArray(): array
         {
-            $data = [];
-
-            if ($this->inline_keyboard !== null)
+            $keyboard = [];
+            foreach ($this->inline_keyboard as $row)
             {
-                /** @var InlineKeyboardButton $item */
-                foreach ($this->inline_keyboard as $item)
+                $buttonRow = [];
+                foreach ($row as $button)
                 {
-                    $data[][] = $item->toArray();
+                    $buttonRow[] = $button->toArray();
                 }
+
+                $keyboard[] = $buttonRow;
             }
 
-            return $data;
+            return ['inline_keyboard' => $keyboard];
         }
 
         /**
@@ -79,20 +79,24 @@
          */
         public static function fromArray(?array $data): ?InlineKeyboardMarkup
         {
-            if($data === null)
+            if ($data === null || !isset($data['inline_keyboard']))
             {
                 return null;
             }
 
             $object = new self();
-            $object->inline_keyboard = [];
 
-            foreach($data as $item)
+            foreach ($data['inline_keyboard'] as $row)
             {
-                $object->inline_keyboard[] = InlineKeyboardButton::fromArray($item);
+                $buttons = [];
+                foreach ($row as $buttonData)
+                {
+                    $buttons[] = InlineKeyboardButton::fromArray($buttonData);
+                }
+
+                $object->addRow(...$buttons);
             }
 
             return $object;
         }
-
     }
