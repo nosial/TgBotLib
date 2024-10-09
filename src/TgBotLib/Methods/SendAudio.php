@@ -56,9 +56,16 @@
                 $parameters['reply_parameters'] = $parameters['reply_parameters']->toArray();
             }
 
-            if(isset($parameters['reply_markup']) && $parameters['reply_markup'] instanceof ObjectTypeInterface)
+            if (isset($parameters['reply_markup']))
             {
-                $parameters['reply_markup'] = $parameters['reply_markup']->toArray();
+                if ($parameters['reply_markup'] instanceof ObjectTypeInterface)
+                {
+                    $parameters['reply_markup'] = json_encode($parameters['reply_markup']->toArray());
+                }
+                elseif (is_array($parameters['reply_markup']))
+                {
+                    $parameters['reply_markup'] = json_encode($parameters['reply_markup']);
+                }
             }
 
             // Handle file uploads
