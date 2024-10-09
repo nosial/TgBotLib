@@ -70,7 +70,7 @@
             }
 
             // If no local files to upload, use regular POST method
-            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::SEND_VIDEO->value, $parameters)));
+            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::SEND_VIDEO_NOTE->value, $parameters)));
         }
 
         /**
