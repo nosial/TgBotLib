@@ -19,6 +19,7 @@ class SendMessageTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         self::$bot = new Bot(BOT_TOKEN);
+        self::$bot->setAutoRetry(true);
     }
 
     /**

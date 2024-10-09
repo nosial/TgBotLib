@@ -22,6 +22,7 @@ class SendVoiceTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         self::$bot = new Bot(BOT_TOKEN);
+        self::$bot->setAutoRetry(true);
     }
 
     /**
@@ -71,8 +72,8 @@ class SendVoiceTest extends TestCase
     public function testSendVoiceWithCaptionEntities(): void
     {
         $captionEntities = [
-            new MessageEntity(type: 'bold', offset: 0, length: 4),
-            new MessageEntity(type: 'italic', offset: 5, length: 5)
+            MessageEntity::fromArray(['type' => 'bold', 'offset' => 5, 'length' => 4]),
+            MessageEntity::fromArray(['type' => 'italic', 'offset' => 10, 'length' => 4])
         ];
 
         $result = self::$bot->sendVoice(
