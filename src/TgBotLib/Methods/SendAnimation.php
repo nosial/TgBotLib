@@ -5,6 +5,7 @@
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
+    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Message;
     use TgBotLib\Objects\MessageEntity;
@@ -13,7 +14,14 @@
     class SendAnimation extends Method
     {
         /**
-         * @inheritDoc
+         * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success,
+         * the sent Message is returned. Bots can currently send animation files of up to 50 MB in size,
+         * this limit may be changed in the future.
+         *
+         * @param Bot $bot
+         * @param array $parameters
+         * @return Message
+         * @throws TelegramException
          */
         public static function execute(Bot $bot, array $parameters = []): Message
         {
