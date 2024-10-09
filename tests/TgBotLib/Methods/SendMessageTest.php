@@ -5,8 +5,14 @@ namespace TgBotLib\Methods;
 use PHPUnit\Framework\TestCase;
 use TgBotLib\Bot;
 use TgBotLib\Enums\Types\ParseMode;
+use TgBotLib\Objects\ForceReply;
+use TgBotLib\Objects\InlineKeyboardButton;
+use TgBotLib\Objects\InlineKeyboardMarkup;
+use TgBotLib\Objects\KeyboardButton;
 use TgBotLib\Objects\LinkPreviewOptions;
 use TgBotLib\Objects\Message;
+use TgBotLib\Objects\ReplyKeyboardMarkup;
+use TgBotLib\Objects\ReplyKeyboardRemove;
 
 class SendMessageTest extends TestCase
 {
@@ -191,6 +197,84 @@ class SendMessageTest extends TestCase
             text: 'Test Unit: testWebPagePreview' . PHP_EOL . self::TEST_WEB_PREVIEW_URL . PHP_EOL . PHP_EOL . 'Show above text',
             link_preview_options: (new LinkPreviewOptions())
                 ->setShowAboveText(true)
+        );
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
+    }
+
+    public function testKeyboardMarkup(): void
+    {
+        $replyMarkup = new InlineKeyboardMarkup();
+        $replyMarkup->addRow(
+            (new InlineKeyboardButton())->setText('Button 1')->setCallbackData('button1'),
+            (new InlineKeyboardButton())->setText('Button 2')->setCallbackData('button2')
+        );
+
+        $result = self::$bot->sendMessage(
+            chat_id: TEST_CHAT_ID,
+            text: 'Test Unit: testKeyboardMarkup',
+            reply_markup: $replyMarkup
+        );
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
+    }
+
+    /**
+     * Tests the `sendMessage` functionality of the bot with a reply markup.
+     * The message includes a reply markup with two buttons, and a placeholder text for the input field.
+     *
+     * @return void
+     */
+    public function testReplyMarkup(): void
+    {
+        $result = self::$bot->sendMessage(
+            chat_id: TEST_CHAT_ID,
+            text: 'Test Unit: testReplyMarkup',
+            reply_markup: (new ReplyKeyboardMarkup())->addRow(
+                (new KeyboardButton())->setText('Button 1'),
+                (new KeyboardButton())->setText('Button 2')
+            )->setInputFieldPlaceholder('Placeholder')
+        );
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
+
+        // Remove
+        $result = self::$bot->sendMessage(
+            chat_id: TEST_CHAT_ID,
+            text: 'Test Unit: testReplyMarkup',
+            reply_markup: (new ReplyKeyboardRemove())->setRemoveKeyboard(true)
+        );
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
+    }
+
+    /**
+     * Tests the `sendMessage` functionality of the bot with a force reply.
+     *
+     * The message includes a force reply option that requires a reply from the user.
+     *
+     * @return void
+     */
+    public function testForceReply(): void
+    {
+        $result = self::$bot->sendMessage(
+            chat_id: TEST_CHAT_ID,
+            text: 'Test Unit: testForceReply',
+            reply_markup: (new ForceReply())->setForceReply(true)
+        );
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
+
+        // Clear
+        $result = self::$bot->sendMessage(
+            chat_id: TEST_CHAT_ID,
+            text: 'Test Unit: testForceReply',
+            reply_markup: (new ForceReply())->setForceReply(false)
         );
 
         $this->assertInstanceOf(Message::class, $result);

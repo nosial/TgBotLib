@@ -16,6 +16,20 @@
         private ?WebAppInfo $web_app;
 
         /**
+         * KeyboardButton constructor.
+         */
+        public function __construct()
+        {
+            $this->text = (string) null;
+            $this->request_user = null;
+            $this->request_chat = null;
+            $this->request_contact = false;
+            $this->request_location = false;
+            $this->request_poll = null;
+            $this->web_app = null;
+        }
+
+        /**
          * Text of the button. If none of the optional fields are used, it will be sent as a message when the
          * button is pressed
          *
@@ -24,6 +38,18 @@
         public function getText(): string
         {
             return $this->text;
+        }
+
+        /**
+         * Set the text of the button
+         *
+         * @param string $text
+         * @return KeyboardButton
+         */
+        public function setText(string $text): KeyboardButton
+        {
+            $this->text = $text;
+            return $this;
         }
 
         /**
@@ -38,6 +64,18 @@
         }
 
         /**
+         * Set the request user
+         *
+         * @param KeyboardButtonRequestUser $request_user
+         * @return KeyboardButton
+         */
+        public function setRequestUser(KeyboardButtonRequestUser $request_user): KeyboardButton
+        {
+            $this->request_user = $request_user;
+            return $this;
+        }
+
+        /**
          * Optional. If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send
          * its identifier to the bot in a “chat_shared” service message. Available in private chats only.
          *
@@ -46,6 +84,18 @@
         public function getRequestChat(): ?KeyboardButtonRequestChat
         {
             return $this->request_chat;
+        }
+
+        /**
+         * Set the request chat
+         *
+         * @param KeyboardButtonRequestChat $request_chat
+         * @return KeyboardButton
+         */
+        public function setRequestChat(KeyboardButtonRequestChat $request_chat): KeyboardButton
+        {
+            $this->request_chat = $request_chat;
+            return $this;
         }
 
         /**
@@ -60,6 +110,18 @@
         }
 
         /**
+         * Set the request contact
+         *
+         * @param bool $request_contact
+         * @return KeyboardButton
+         */
+        public function setRequestContact(bool $request_contact): KeyboardButton
+        {
+            $this->request_contact = $request_contact;
+            return $this;
+        }
+
+        /**
          * Optional. If True, the user's current location will be sent when the button is pressed.
          * Available in private chats only.
          *
@@ -71,6 +133,18 @@
         }
 
         /**
+         * Set the request location
+         *
+         * @param bool $request_location
+         * @return KeyboardButton
+         */
+        public function setRequestLocation(bool $request_location): KeyboardButton
+        {
+            $this->request_location = $request_location;
+            return $this;
+        }
+
+        /**
          * Optional. If specified, the user will be asked to create a poll and send it to the bot when the button
          * is pressed. Available in private chats only.
          *
@@ -79,6 +153,18 @@
         public function getRequestPoll(): ?KeyboardButtonPollType
         {
             return $this->request_poll;
+        }
+
+        /**
+         * Set the request poll
+         *
+         * @param KeyboardButtonPollType $request_poll
+         * @return KeyboardButton
+         */
+        public function setRequestPoll(KeyboardButtonPollType $request_poll): KeyboardButton
+        {
+            $this->request_poll = $request_poll;
+            return $this;
         }
 
         /**
@@ -94,21 +180,59 @@
         }
 
         /**
+         * Set the web app
+         *
+         * @param WebAppInfo $web_app
+         * @return KeyboardButton
+         */
+        public function setWebApp(WebAppInfo $web_app): KeyboardButton
+        {
+            $this->web_app = $web_app;
+            return $this;
+        }
+
+        /**
          * Returns an array representation of the object
          *
          * @return array
          */
         public function toArray(): array
         {
-            return [
+            $array = [
                 'text' => $this->text,
-                'request_user' => $this->request_user?->toArray(),
-                'request_chat' => $this->request_chat?->toArray(),
-                'request_contact' => $this->request_contact,
-                'request_location' => $this->request_location,
-                'request_poll' => $this->request_poll?->toArray(),
-                'web_app' => $this->web_app?->toArray(),
             ];
+
+            if($this->request_user !== null)
+            {
+                $array['request_user'] = $this->request_user->toArray();
+            }
+
+            if($this->request_chat !== null)
+            {
+                $array['request_chat'] = $this->request_chat->toArray();
+            }
+
+            if($this->request_contact !== false)
+            {
+                $array['request_contact'] = $this->request_contact;
+            }
+
+            if($this->request_location !== false)
+            {
+                $array['request_location'] = $this->request_location;
+            }
+
+            if($this->request_poll !== null)
+            {
+                $array['request_poll'] = $this->request_poll->toArray();
+            }
+
+            if($this->web_app !== null)
+            {
+                $array['web_app'] = $this->web_app->toArray();
+            }
+
+            return $array;
         }
 
         /**
@@ -125,8 +249,8 @@
             $object->text = $data['text'] ?? null;
             $object->request_user = isset($data['request_user']) ? KeyboardButtonRequestUser::fromArray($data['request_user']) : null;
             $object->request_chat = isset($data['request_chat']) ? KeyboardButtonRequestChat::fromArray($data['request_chat']) : null;
-            $object->request_contact = $data['request_contact'] ?? null;
-            $object->request_location = $data['request_location'] ?? null;
+            $object->request_contact = $data['request_contact'] ?? false;
+            $object->request_location = $data['request_location'] ?? false;
             $object->request_poll = isset($data['request_poll']) ? KeyboardButtonPollType::fromArray($data['request_poll']) : null;
             $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
 

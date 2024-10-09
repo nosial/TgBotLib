@@ -236,18 +236,26 @@
         public function toArray(): array
         {
             $array = [
-                'keyboard' => $this->keyboard,
                 'is_persistent' => $this->is_persistent,
                 'resize_keyboard' => $this->resize_keyboard,
                 'one_time_keyboard' => $this->one_time_keyboard,
+                'input_field_placeholder' => $this->input_field_placeholder,
                 'selective' => $this->selective
             ];
 
-            if($this->input_field_placeholder !== null)
+            $keyboard = [];
+            foreach($this->keyboard as $row)
             {
-                $array['input_field_placeholder'] = $this->input_field_placeholder;
+                $buttonRow = [];
+                foreach($row as $button)
+                {
+                    $buttonRow[] = $button->toArray();
+                }
+
+                $keyboard[] = $buttonRow;
             }
 
+            $array['keyboard'] = $keyboard;
             return $array;
         }
 
@@ -261,8 +269,15 @@
             $object->keyboard = [];
             foreach($data['keyboard'] as $keyboard)
             {
-                $object->keyboard[] = KeyboardButton::fromArray($keyboard);
+                $buttons = [];
+                foreach($keyboard as $button)
+                {
+                    $buttons[] = KeyboardButton::fromArray($button);
+                }
+
+                $object->addRow(...$buttons);
             }
+
             $object->is_persistent = $data['is_persistent'] ?? false;
             $object->resize_keyboard = $data['resize_keyboard'] ?? false;
             $object->one_time_keyboard = $data['one_time_keyboard'] ?? false;

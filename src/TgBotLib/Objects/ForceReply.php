@@ -12,6 +12,16 @@
         private bool $selective;
 
         /**
+         * ForceReply constructor.
+         */
+        public function __construct()
+        {
+            $this->force_reply = false;
+            $this->inline_field_placeholder = null;
+            $this->selective = false;
+        }
+
+        /**
          * Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
          *
          * @return bool
