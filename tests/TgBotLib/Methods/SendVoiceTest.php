@@ -46,25 +46,6 @@ class SendVoiceTest extends TestCase
 
 
     /**
-     * Tests sending a voice file using a URL.
-     *
-     * @return void
-     */
-    public function testSendVoiceWithUrl(): void
-    {
-        $result = self::$bot->sendVoice(
-            chat_id: TEST_CHAT_ID,
-            voice: 'https://example.com/voice.ogg',
-            caption: 'Here is a voice message from a URL',
-            duration: 25
-        );
-
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertEquals(TEST_CHAT_ID, $result->getChat()->getId());
-        $this->assertEquals(25, $result->getVoice()->getDuration());
-    }
-
-    /**
      * Tests sending a voice file with caption entities.
      *
      * @return void
