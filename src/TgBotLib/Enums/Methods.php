@@ -12,10 +12,12 @@
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\Logout;
+    use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendDocument;
     use TgBotLib\Methods\SendMessage;
     use TgBotLib\Methods\SendPhoto;
+    use TgBotLib\Methods\SendVideo;
 
     enum Methods : string
     {
@@ -31,6 +33,7 @@
         case SEND_AUDIO = 'sendAudio';
         case SEND_DOCUMENT = 'sendDocument';
         case SEND_VIDEO = 'sendVideo';
+        case SEND_ANIMATION = 'sendAnimation';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -56,6 +59,7 @@
                 self::SEND_AUDIO => SendAudio::execute($bot, $parameters),
                 self::SEND_DOCUMENT => SendDocument::execute($bot, $parameters),
                 self::SEND_VIDEO => SendVideo::execute($bot, $parameters),
+                self::SEND_ANIMATION => SendAnimation::execute($bot, $parameters),
             };
         }
     }
