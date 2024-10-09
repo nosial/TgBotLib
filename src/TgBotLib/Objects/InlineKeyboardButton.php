@@ -20,6 +20,9 @@
         private ?CallbackGame $callback_game;
         private bool $pay;
 
+        /**
+         * InlineKeyboardButton constructor.
+         */
         public function __construct()
         {
             $this->text = (string)null;
@@ -76,7 +79,9 @@
         public function setUrl(?string $url): self
         {
             if(!Validate::url($url))
+            {
                 throw new InvalidArgumentException(sprintf('Invalid url: %s', $url));
+            }
 
             $this->url = $url;
             return $this;
@@ -108,7 +113,9 @@
             }
 
             if(!Validate::length($callbackData, 1, 64))
+            {
                 throw new InvalidArgumentException(sprintf('Invalid callback data length: %s', $callbackData));
+            }
 
             $this->callback_data = $callbackData;
             return $this;
@@ -161,10 +168,14 @@
         public function setLoginUrl(?LoginUrl $loginUrl): self
         {
             if(!Validate::url($loginUrl->getUrl()))
+            {
                 throw new InvalidArgumentException(sprintf('Invalid login url: %s', $loginUrl->getUrl()));
+            }
 
             if(!Validate::isHttps($loginUrl->getUrl()))
+            {
                 throw new InvalidArgumentException(sprintf('The login url must be https: %s', $loginUrl->getUrl()));
+            }
 
             $this->login_url = $loginUrl;
             return $this;
