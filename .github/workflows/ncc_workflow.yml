@@ -339,7 +339,7 @@ jobs:
           wget https://phar.phpunit.de/phpunit-11.3.phar
           php phpunit-11.3.phar --configuration phpunit.xml
 
-  release:
+  upload-release-artifacts:
     needs: [release, release-compressed, release-executable, test]
     permissions: write-all
     runs-on: ubuntu-latest
