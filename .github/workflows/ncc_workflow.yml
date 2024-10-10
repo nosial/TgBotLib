@@ -103,7 +103,7 @@ jobs:
 
       - name: Compile Project
         run: |
-          ncc build --config release --log-level debug
+          ncc build --config release-compressed --log-level debug
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
