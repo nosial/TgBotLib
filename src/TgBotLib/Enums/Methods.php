@@ -20,6 +20,7 @@
     use TgBotLib\Methods\SendMessage;
     use TgBotLib\Methods\SendPaidMedia;
     use TgBotLib\Methods\SendPhoto;
+    use TgBotLib\Methods\SendVenue;
     use TgBotLib\Methods\SendVideo;
     use TgBotLib\Methods\SendVideoNote;
     use TgBotLib\Methods\SendVoice;
@@ -44,6 +45,7 @@
         case SEND_PAID_MEDIA = 'sendPaidMedia';
         case SEND_MEDIA_GROUP = 'sendMediaGroup';
         case SEND_LOCATION = 'sendLocation';
+        case SEND_VENUE = 'sendVenue';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -75,6 +77,7 @@
                 self::SEND_PAID_MEDIA => SendPaidMedia::execute($bot, $parameters),
                 self::SEND_MEDIA_GROUP => SendMediaGroup::execute($bot, $parameters),
                 self::SEND_LOCATION => SendLocation::execute($bot, $parameters),
+                self::SEND_VENUE => SendVenue::execute($bot, $parameters),
             };
         }
     }
