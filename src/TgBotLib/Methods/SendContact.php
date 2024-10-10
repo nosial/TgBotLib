@@ -34,10 +34,7 @@
             }
 
             // Make request
-            $curl = self::buildPost($bot, Methods::SEND_CONTACT->value, $parameters);
-            $result = self::executeCurl($curl);
-
-            return Message::fromArray($result);
+            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::SEND_CONTACT->value, $parameters)));
         }
 
         /**
