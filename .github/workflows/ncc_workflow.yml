@@ -189,8 +189,8 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: TgBotLib_build
-          path: TgBotLib_build  # Adjust this to download the artifact directly under 'TgBotLib_build'
+          name: release
+          path: release
 
       - name: Install dependencies
         run: |
