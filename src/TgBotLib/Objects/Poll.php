@@ -19,7 +19,7 @@
         private string $type;
         private bool $allow_multiple_answers;
         private ?int $correct_option_id;
-        private string $explanation;
+        private ?string $explanation;
         /**
          * @var MessageEntity[]|null
          */
@@ -122,9 +122,9 @@
          * Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in
          * a quiz-style poll, 0-200 characters
          *
-         * @return string
+         * @return string|null
          */
-        public function getExplanation(): string
+        public function getExplanation(): ?string
         {
             return $this->explanation;
         }
@@ -201,10 +201,10 @@
             $object->id = $data['id'] ?? null;
             $object->question = $data['question'] ?? null;
             $object->total_voter_count = $data['total_voter_count'] ?? null;
-            $object->is_closed = $data['is_closed'] ?? null;
-            $object->is_anonymous = $data['is_anonymous'] ?? null;
+            $object->is_closed = $data['is_closed'] ?? false;
+            $object->is_anonymous = $data['is_anonymous'] ?? false;
             $object->type = $data['type'] ?? null;
-            $object->allow_multiple_answers = $data['allow_multiple_answers'] ?? null;
+            $object->allow_multiple_answers = $data['allow_multiple_answers'] ?? false;
             $object->correct_option_id = $data['correct_option_id'] ?? null;
             $object->explanation = $data['explanation'] ?? null;
             $object->open_period = $data['open_period'] ?? null;

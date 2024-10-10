@@ -14,6 +14,17 @@
          */
         private ?array $text_entities;
 
+
+        /**
+         * InputPollOption constructor.
+         */
+        public function __construct()
+        {
+            $this->text = (string)null;
+            $this->text_parse_mode = null;
+            $this->text_entities = null;
+        }
+
         /**
          * Option text, 1-100 characters
          *
@@ -22,6 +33,16 @@
         public function getText(): string
         {
             return $this->text;
+        }
+
+        /**
+         * @param string $text
+         * @return InputPollOption
+         */
+        public function setText(string $text): InputPollOption
+        {
+            $this->text = $text;
+            return $this;
         }
 
         /**
@@ -36,6 +57,16 @@
         }
 
         /**
+         * @param ParseMode|null $text_parse_mode
+         * @return InputPollOption
+         */
+        public function setTextParseMode(?ParseMode $text_parse_mode): InputPollOption
+        {
+            $this->text_parse_mode = $text_parse_mode;
+            return $this;
+        }
+
+        /**
          * Optional. A JSON-serialized list of special entities that appear in the poll option text.
          * It can be specified instead of text_parse_mode
          *
@@ -47,15 +78,35 @@
         }
 
         /**
+         * @param MessageEntity[]|null $text_entities
+         * @return InputPollOption
+         */
+        public function setTextEntities(?array $text_entities): InputPollOption
+        {
+            $this->text_entities = $text_entities;
+            return $this;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): ?array
         {
-            return [
-                'text' => $this->text,
-                'text_parse_mode' => $this->text_parse_mode?->value,
-                'text_entities' => array_map(fn(MessageEntity $item) => $item->toArray(), $this->text_entities)
+            $array = [
+                'text' => $this->text
             ];
+
+            if($this->text_parse_mode !== null)
+            {
+                $array['text_parse_mode'] = $this->text_parse_mode->value;
+            }
+
+            if($this->text_entities !== null)
+            {
+                $array['text_entities'] = array_map(fn($item) => $item->toArray(), $this->text_entities);
+            }
+
+            return $array;
         }
 
         /**

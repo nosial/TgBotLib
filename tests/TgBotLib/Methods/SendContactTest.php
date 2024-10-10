@@ -4,7 +4,6 @@
 
     use PHPUnit\Framework\TestCase;
     use TgBotLib\Bot;
-    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\Message;
 
     class SendContactTest extends TestCase
