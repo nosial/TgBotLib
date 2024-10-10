@@ -111,6 +111,55 @@ jobs:
           name: release-compressed
           path: build/release/net.nosial.tgbotlib.gz.ncc
 
+  build-release-executable:
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt update -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg gcc -yqq
+
+      - name: Install phive
+        run: |
+          wget -O phive.phar https://phar.io/releases/phive.phar
+          wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc
+          gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x9D8A98B29B2D5D79
+          gpg --verify phive.phar.asc phive.phar
+          chmod +x phive.phar
+          mv phive.phar /usr/local/bin/phive
+
+      - name: Install phab
+        run: |
+          phive install phpab --global --trust-gpg-keys 0x2A8299CE842DD38C
+
+      - name: Install latest version of NCC
+        run: |
+          git clone https://git.n64.cc/nosial/ncc.git
+          cd ncc
+          make redist
+          NCC_DIR=$(find build/ -type d -name "ncc_*" | head -n 1)
+          if [ -z "$NCC_DIR" ]; then
+            echo "NCC build directory not found"
+            exit 1
+          fi
+          php "$NCC_DIR/INSTALL" --auto
+          cd .. && rm -rf ncc
+
+      - name: Compile Project
+        run: |
+          ncc build --config release-executable --log-level debug
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-executable
+          path: build/release/TgBotLib
 
   check-phpunit:
     runs-on: ubuntu-latest
@@ -145,7 +194,7 @@ jobs:
           fi
 
   generate_phpdoc:
-    needs: [build-release, build-release-compressed, check-phpdoc]
+    needs: [build-release, build-release-compressed, build-release-executable, check-phpdoc]
     runs-on: ubuntu-latest
     container:
       image: php:8.3
@@ -176,7 +225,7 @@ jobs:
           path: docs
 
   test:
-    needs: [build-release, build-release-compressed, check-phpunit]
+    needs: [build-release, build-release-compressed, build-release-executable, check-phpunit]
     runs-on: ubuntu-latest
     container:
       image: php:8.3
@@ -239,7 +288,7 @@ jobs:
           php phpunit-11.3.phar --configuration phpunit.xml
 
   release:
-    needs: [build-release, build-release-compressed, test]
+    needs: [build-release, build-release-compressed, build-release-executable, test]
     permissions: write-all
     runs-on: ubuntu-latest
     container:
