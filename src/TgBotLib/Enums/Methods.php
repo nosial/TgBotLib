@@ -14,6 +14,7 @@
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
+    use TgBotLib\Methods\SendContact;
     use TgBotLib\Methods\SendDocument;
     use TgBotLib\Methods\SendLocation;
     use TgBotLib\Methods\SendMediaGroup;
@@ -46,6 +47,7 @@
         case SEND_MEDIA_GROUP = 'sendMediaGroup';
         case SEND_LOCATION = 'sendLocation';
         case SEND_VENUE = 'sendVenue';
+        case SEND_CONTACT = 'sendContact';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -78,6 +80,7 @@
                 self::SEND_MEDIA_GROUP => SendMediaGroup::execute($bot, $parameters),
                 self::SEND_LOCATION => SendLocation::execute($bot, $parameters),
                 self::SEND_VENUE => SendVenue::execute($bot, $parameters),
+                self::SEND_CONTACT => SendContact::execute($bot, $parameters),
             };
         }
     }
