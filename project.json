@@ -57,7 +57,7 @@
             {
                 "name": "release-executable-compressed",
                 "build_type": "executable",
-                "output": "build/release/%ASSEMBLY.NAME%.gz",
+                "output": "build/release/%ASSEMBLY.NAME%_gz",
                 "options": {
                     "ncc_configuration": "release-compressed"
                 }
