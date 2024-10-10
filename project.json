@@ -39,11 +39,46 @@
                 "output": "build/release/%ASSEMBLY.PACKAGE%.ncc"
             },
             {
+                "name": "release-compressed",
+                "build_type": "ncc",
+                "output": "build/release/%ASSEMBLY.PACKAGE%.gz.ncc",
+                "options": {
+                    "compression": "high"
+                }
+            },
+            {
+                "name": "release-executable",
+                "build_type": "executable",
+                "output": "build/release/%ASSEMBLY.NAME%",
+                "options": {
+                    "ncc_configuration": "release"
+                }
+            },
+            {
+                "name": "release-executable-compressed",
+                "build_type": "executable",
+                "output": "build/release/%ASSEMBLY.NAME%.gz",
+                "options": {
+                    "ncc_configuration": "release-compressed"
+                }
+            },
+            {
                 "name": "debug",
                 "build_type": "ncc",
                 "output": "build/debug/%ASSEMBLY.PACKAGE%.ncc",
                 "define_constants": {
                     "DEBUG": "1"
+                }
+            },
+            {
+                "name": "debug-compressed",
+                "build_type": "ncc",
+                "output": "build/debug/%ASSEMBLY.PACKAGE%.gz.ncc",
+                "define_constants": {
+                    "DEBUG": "1"
+                },
+                "options": {
+                    "compression": "high"
                 }
             }
         ]
