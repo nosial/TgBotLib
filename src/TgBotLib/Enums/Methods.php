@@ -15,6 +15,7 @@
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendDocument;
+    use TgBotLib\Methods\SendMediaGroup;
     use TgBotLib\Methods\SendMessage;
     use TgBotLib\Methods\SendPaidMedia;
     use TgBotLib\Methods\SendPhoto;
@@ -40,6 +41,7 @@
         case SEND_VOICE = 'sendVoice';
         case SEND_VIDEO_NOTE = 'sendVideoNote';
         case SEND_PAID_MEDIA = 'sendPaidMedia';
+        case SEND_MEDIA_GROUP = 'sendMediaGroup';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -69,6 +71,7 @@
                 self::SEND_VOICE => SendVoice::execute($bot, $parameters),
                 self::SEND_VIDEO_NOTE => SendVideoNote::execute($bot, $parameters),
                 self::SEND_PAID_MEDIA => SendPaidMedia::execute($bot, $parameters),
+                self::SEND_MEDIA_GROUP => SendMediaGroup::execute($bot, $parameters),
             };
         }
     }
