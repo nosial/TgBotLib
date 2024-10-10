@@ -3,6 +3,7 @@
 
     namespace TgBotLib\Objects\InputMedia;
 
+    use TgBotLib\Enums\Types\InputMediaType;
     use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\InputMedia;
@@ -10,7 +11,6 @@
 
     class InputMediaPhoto extends InputMedia implements ObjectTypeInterface
     {
-        private string $media;
         private ?string $caption;
         private ?ParseMode $parse_mode;
         /**
@@ -24,6 +24,7 @@
          */
         public function __construct()
         {
+            $this->type = InputMediaType::PHOTO;
             $this->media = '';
             $this->caption = null;
             $this->parse_mode = null;

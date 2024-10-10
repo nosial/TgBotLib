@@ -10,7 +10,6 @@
 
     class InputMediaDocument extends InputMedia implements ObjectTypeInterface
     {
-        private string $media;
         private ?string $thumb;
         private ?string $caption;
         private ?ParseMode $parse_mode;
@@ -25,7 +24,6 @@
          */
         public function __construct()
         {
-            $this->media = (string)null;
             $this->thumb = null;
             $this->caption = null;
             $this->parse_mode = null;

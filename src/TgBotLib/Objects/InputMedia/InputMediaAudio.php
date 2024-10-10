@@ -10,7 +10,6 @@
 
     class InputMediaAudio extends InputMedia implements ObjectTypeInterface
     {
-        private string $media;
         private ?string $thumb;
         private ?string $caption;
         private ?ParseMode $parse_mode;

@@ -15,6 +15,7 @@
     abstract class InputMedia implements ObjectTypeInterface
     {
         protected InputMediaType $type;
+        protected string $media;
 
         /**
          * Type of the result, can be photo, video, animation, audio or document
@@ -24,6 +25,30 @@
         public function getType(): InputMediaType
         {
             return $this->type;
+        }
+
+        /**
+         * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended),
+         * pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to
+         * upload a new one using multipart/form-data under <file_attach_name> name.
+         *
+         * @return string
+         */
+        public function getMedia(): string
+        {
+            return $this->media;
+        }
+
+        /**
+         * Sets the media content to upload
+         *
+         * @param string $media
+         * @return $this
+         */
+        public function setMedia(string $media): self
+        {
+            $this->media = $media;
+            return $this;
         }
 
         /**
@@ -44,6 +69,11 @@
             if(!isset($data['type']))
             {
                 throw new InvalidArgumentException('type is not provided');
+            }
+
+            if(!isset($data['media']))
+            {
+                throw new InvalidArgumentException('media is not provided');
             }
 
             return match (InputMediaType::tryFrom($data['type']))
