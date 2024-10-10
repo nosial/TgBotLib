@@ -277,7 +277,7 @@ jobs:
           path: docs
 
   test:
-    needs: [release, release-compressed, release-executable, check-phpunit]
+    needs: [release, check-phpunit]
     runs-on: ubuntu-latest
     container:
       image: php:8.3
