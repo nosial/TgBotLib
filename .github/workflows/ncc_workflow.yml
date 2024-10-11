@@ -421,7 +421,7 @@ jobs:
 
       - name: Install NCC packages
         run: |
-          ncc package install --package="build/release/net.nosial.tgbotlib.ncc" --build-source --reinstall -y --log-level debug
+          ncc package install --package="release/net.nosial.tgbotlib.ncc" --build-source --reinstall -y --log-level debug
 
       - name: Run PHPUnit tests
         run: |
