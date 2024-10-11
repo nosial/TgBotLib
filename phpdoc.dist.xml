@@ -9,7 +9,7 @@
             <source dsn=".">
                 <path>src/TgBotLib</path>
             </source>
-            <default-package-name>net.nosial.tgbotlib</default-package-name>
+            <default-package-name>TgBotLib</default-package-name>
         </api>
     </version>
 </phpdocumentor>

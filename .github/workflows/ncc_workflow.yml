@@ -9,8 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
-
   release:
     runs-on: ubuntu-latest
     container:
@@ -23,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update -yqq
-          apt install git libpq-dev libzip-dev zip make wget gnupg gcc -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
 
       - name: Install phive
         run: |
@@ -51,16 +49,15 @@ jobs:
           php "$NCC_DIR/INSTALL" --auto
           cd .. && rm -rf ncc
 
-      - name: Compile Project
+      - name: Build project
         run: |
           ncc build --config release --log-level debug
 
-      - name: Upload build artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: release
           path: build/release/net.nosial.tgbotlib.ncc
-
   release-compressed:
     runs-on: ubuntu-latest
     container:
@@ -73,7 +70,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update -yqq
-          apt install git libpq-dev libzip-dev zip make wget gnupg gcc -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
 
       - name: Install phive
         run: |
@@ -101,16 +98,15 @@ jobs:
           php "$NCC_DIR/INSTALL" --auto
           cd .. && rm -rf ncc
 
-      - name: Compile Project
+      - name: Build project
         run: |
           ncc build --config release-compressed --log-level debug
 
-      - name: Upload build artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-compressed
           path: build/release/net.nosial.tgbotlib.gz.ncc
-
   release-executable:
     runs-on: ubuntu-latest
     container:
@@ -123,7 +119,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update -yqq
-          apt install git libpq-dev libzip-dev zip make wget gnupg gcc -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
 
       - name: Install phive
         run: |
@@ -151,16 +147,15 @@ jobs:
           php "$NCC_DIR/INSTALL" --auto
           cd .. && rm -rf ncc
 
-      - name: Compile Project
+      - name: Build project
         run: |
           ncc build --config release-executable --log-level debug
 
-      - name: Upload build artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-executable
           path: build/release/TgBotLib
-
   release-executable-compressed:
     runs-on: ubuntu-latest
     container:
@@ -173,7 +168,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update -yqq
-          apt install git libpq-dev libzip-dev zip make wget gnupg gcc -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
 
       - name: Install phive
         run: |
@@ -201,18 +196,116 @@ jobs:
           php "$NCC_DIR/INSTALL" --auto
           cd .. && rm -rf ncc
 
-      - name: Compile Project
+      - name: Build project
         run: |
           ncc build --config release-executable-compressed --log-level debug
 
-      - name: Upload build artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-executable-compressed
           path: build/release/TgBotLib_gz
+  debug:
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt update -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
+
+      - name: Install phive
+        run: |
+          wget -O phive.phar https://phar.io/releases/phive.phar
+          wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc
+          gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x9D8A98B29B2D5D79
+          gpg --verify phive.phar.asc phive.phar
+          chmod +x phive.phar
+          mv phive.phar /usr/local/bin/phive
+
+      - name: Install phab
+        run: |
+          phive install phpab --global --trust-gpg-keys 0x2A8299CE842DD38C
+
+      - name: Install latest version of NCC
+        run: |
+          git clone https://git.n64.cc/nosial/ncc.git
+          cd ncc
+          make redist
+          NCC_DIR=$(find build/ -type d -name "ncc_*" | head -n 1)
+          if [ -z "$NCC_DIR" ]; then
+            echo "NCC build directory not found"
+            exit 1
+          fi
+          php "$NCC_DIR/INSTALL" --auto
+          cd .. && rm -rf ncc
+
+      - name: Build project
+        run: |
+          ncc build --config debug --log-level debug
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug
+          path: build/debug/net.nosial.tgbotlib.ncc
+  debug-compressed:
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt update -yqq
+          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
+
+      - name: Install phive
+        run: |
+          wget -O phive.phar https://phar.io/releases/phive.phar
+          wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc
+          gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x9D8A98B29B2D5D79
+          gpg --verify phive.phar.asc phive.phar
+          chmod +x phive.phar
+          mv phive.phar /usr/local/bin/phive
+
+      - name: Install phab
+        run: |
+          phive install phpab --global --trust-gpg-keys 0x2A8299CE842DD38C
+
+      - name: Install latest version of NCC
+        run: |
+          git clone https://git.n64.cc/nosial/ncc.git
+          cd ncc
+          make redist
+          NCC_DIR=$(find build/ -type d -name "ncc_*" | head -n 1)
+          if [ -z "$NCC_DIR" ]; then
+            echo "NCC build directory not found"
+            exit 1
+          fi
+          php "$NCC_DIR/INSTALL" --auto
+          cd .. && rm -rf ncc
+
+      - name: Build project
+        run: |
+          ncc build --config debug-compressed --log-level debug
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-compressed
+          path: build/debug/net.nosial.tgbotlib.gz.ncc
 
 
-
+  # Checking for phpunit.xml
   check-phpunit:
     runs-on: ubuntu-latest
     outputs:
@@ -228,7 +321,7 @@ jobs:
           else
             echo "phpunit-exists=false" >> $GITHUB_OUTPUT
           fi
-
+  # Checking for phpdoc.dist.xml
   check-phpdoc:
     runs-on: ubuntu-latest
     outputs:
@@ -245,39 +338,8 @@ jobs:
             echo "phpdoc-exists=false" >> $GITHUB_OUTPUT
           fi
 
-  generate_phpdoc:
-    needs: [release, release-compressed, release-executable, check-phpdoc]
-    runs-on: ubuntu-latest
-    container:
-      image: php:8.3
-    if: needs.check-phpdoc.outputs.phpdoc-exists == 'true'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: |
-          apt update -yqq
-          apt install git libpq-dev libzip-dev zip make wget gnupg -yqq
-
-      - name: Download PHPDocumentor
-        run: |
-          wget https://phpdoc.org/phpDocumentor.phar
-          chmod +x phpDocumentor.phar
-
-      - name: Generate PHPDoc
-        run: |
-          php phpDocumentor.phar -d src -t docs
-
-      - name: Upload PHPDoc
-        uses: actions/upload-artifact@v4
-        with:
-          name: documentation
-          path: docs
-
   test:
-    needs: [release, check-phpunit]
+    needs: [release, release-compressed, release-executable, release-executable-compressed, debug, debug-compressed, check-phpunit]
     runs-on: ubuntu-latest
     container:
       image: php:8.3
@@ -329,44 +391,9 @@ jobs:
 
       - name: Install NCC packages
         run: |
-          ncc package install --package="release/net.nosial.tgbotlib.ncc" --source --reinstall -y --log-level debug
-
-      - name: Create token.txt
-        run: echo "${{ secrets.TELEGRAM_TEST_TOKEN }}" > tests/token.txt
+          ncc package install --package="build/release/net.nosial.tgbotlib.ncc" --build-source --reinstall -y --log-level debug
 
       - name: Run PHPUnit tests
         run: |
           wget https://phar.phpunit.de/phpunit-11.3.phar
           php phpunit-11.3.phar --configuration phpunit.xml
-
-  upload-release-artifacts:
-    needs: [release, release-compressed, release-executable, test]
-    permissions: write-all
-    runs-on: ubuntu-latest
-    container:
-      image: php:8.3
-    if: github.event_name == 'release'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download release artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: release
-          path: release
-
-      - name: Download release-compressed artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: release-compressed
-
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            release/net.nosial.tgbotlib.ncc
-            release-compressed/net.nosial.tgbotlib.gz.ncc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
