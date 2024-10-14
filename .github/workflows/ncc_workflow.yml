@@ -234,6 +234,7 @@ jobs:
 
       - name: Install latest version of NCC
         run: |
+          
           git clone https://git.n64.cc/nosial/ncc.git
           cd ncc
           make redist
@@ -427,3 +428,61 @@ jobs:
         run: |
           wget https://phar.phpunit.de/phpunit-11.3.phar
           php phpunit-11.3.phar --configuration phpunit.xml
+
+  upload-artifacts:
+    needs: [release, release-compressed, release-executable, release-executable-compressed, debug, debug-compressed, test]
+    permissions: write-all
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+    if: github.event_name == 'release'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release
+          path: release
+      - name: Download release-compressed artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-compressed
+          path: release-compressed
+      - name: Download release-executable artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-executable
+          path: release-executable
+      - name: Download release-executable-compressed artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-executable-compressed
+          path: release-executable-compressed
+      - name: Download debug artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: debug
+          path: debug
+      - name: Download debug-compressed artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: debug-compressed
+          path: debug-compressed
+
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/net.nosial.tgbotlib.ncc
+            release-compressed/net.nosial.tgbotlib.gz.ncc
+            release-executable/TgBotLib
+            release-executable-compressed/TgBotLib_gz
+            debug/net.nosial.tgbotlib.ncc
+            debug-compressed/net.nosial.tgbotlib.gz.ncc
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

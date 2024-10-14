@@ -4,3 +4,4 @@ tests/token.txt
 /.idea/php-test-framework.xml
 /.idea/gbrowser_project.xml
 /.phpdoc/
+!/.github/workflows/ncc_workflow.yml
