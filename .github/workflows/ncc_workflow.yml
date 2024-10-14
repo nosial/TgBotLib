@@ -51,7 +51,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config release --log-level debug
+          ncc build --config release --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -100,7 +100,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config release-compressed --log-level debug
+          ncc build --config release-compressed --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -149,7 +149,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config release-executable --log-level debug
+          ncc build --config release-executable --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -198,7 +198,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config release-executable-compressed --log-level debug
+          ncc build --config release-executable-compressed --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -234,7 +234,6 @@ jobs:
 
       - name: Install latest version of NCC
         run: |
-          
           git clone https://git.n64.cc/nosial/ncc.git
           cd ncc
           make redist
@@ -248,7 +247,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config debug --log-level debug
+          ncc build --config debug --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -297,7 +296,7 @@ jobs:
 
       - name: Build project
         run: |
-          ncc build --config debug-compressed --log-level debug
+          ncc build --config debug-compressed --build-source --log-level debug
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -363,11 +362,15 @@ jobs:
         run: |
           php phpDocumentor.phar -d src -t docs
 
+      - name: Archive PHPDoc
+        run: |
+          zip -r docs.zip docs
+
       - name: Upload PHPDoc
         uses: actions/upload-artifact@v4
         with:
           name: documentation
-          path: docs
+          path: docs.zip
 
   test:
     needs: [release, release-compressed, release-executable, release-executable-compressed, debug, debug-compressed, check-phpunit]
@@ -424,16 +427,47 @@ jobs:
         run: |
           ncc package install --package="release/net.nosial.tgbotlib.ncc" --build-source --reinstall -y --log-level debug
 
-      - name: Export token.txt
-        run: echo "${{ secrets.TELEGRAM_TEST_TOKEN }}" > tests/token.txt
-
       - name: Run PHPUnit tests
         run: |
           wget https://phar.phpunit.de/phpunit-11.3.phar
-          php phpunit-11.3.phar --configuration phpunit.xml
+          php phpunit-11.3.phar --configuration phpunit.xml --log-junit reports/junit.xml --log-teamcity reports/teamcity --testdox-html reports/testdox.html --testdox-text reports/testdox.txt
 
-  upload-artifacts:
-    needs: [release, release-compressed, release-executable, release-executable-compressed, debug, debug-compressed, test]
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports
+
+
+  release-documentation:
+    needs: generate-phpdoc
+    permissions: write-all
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.3
+    if: github.event_name == 'release'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download documentation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation
+          path: documentation
+
+      - name: Upload documentation artifact
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                documentation/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  release-artifacts:
+    needs: [release, release-compressed, release-executable, release-executable-compressed, debug, debug-compressed]
     permissions: write-all
     runs-on: ubuntu-latest
     container:
@@ -449,43 +483,70 @@ jobs:
         with:
           name: release
           path: release
+      - name: Upload release artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                release/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download release-compressed artifact
         uses: actions/download-artifact@v4
         with:
           name: release-compressed
           path: release-compressed
+      - name: Upload release-compressed artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                release-compressed/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download release-executable artifact
         uses: actions/download-artifact@v4
         with:
           name: release-executable
           path: release-executable
+      - name: Upload release-executable artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                release-executable/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download release-executable-compressed artifact
         uses: actions/download-artifact@v4
         with:
           name: release-executable-compressed
           path: release-executable-compressed
+      - name: Upload release-executable-compressed artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                release-executable-compressed/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download debug artifact
         uses: actions/download-artifact@v4
         with:
           name: debug
           path: debug
+      - name: Upload debug artifact to release
+        uses: softprops/action-gh-release@v1
+        with:
+            files: |
+                debug/*
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download debug-compressed artifact
         uses: actions/download-artifact@v4
         with:
           name: debug-compressed
           path: debug-compressed
-
-
-      - name: Upload to GitHub Release
+      - name: Upload debug-compressed artifact to release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            release/net.nosial.tgbotlib.ncc
-            release-compressed/net.nosial.tgbotlib.gz.ncc
-            release-executable/TgBotLib
-            release-executable-compressed/TgBotLib_gz
-            debug/net.nosial.tgbotlib.ncc
-            debug-compressed/net.nosial.tgbotlib.gz.ncc
-
+            files: |
+                debug-compressed/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
