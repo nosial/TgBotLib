@@ -15,6 +15,7 @@
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendContact;
+    use TgBotLib\Methods\SendDice;
     use TgBotLib\Methods\SendDocument;
     use TgBotLib\Methods\SendLocation;
     use TgBotLib\Methods\SendMediaGroup;
@@ -50,6 +51,7 @@
         case SEND_VENUE = 'sendVenue';
         case SEND_CONTACT = 'sendContact';
         case SEND_POLL = 'sendPoll';
+        case SEND_DICE = 'sendDice';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -84,6 +86,7 @@
                 self::SEND_VENUE => SendVenue::execute($bot, $parameters),
                 self::SEND_CONTACT => SendContact::execute($bot, $parameters),
                 self::SEND_POLL => SendPoll::execute($bot, $parameters),
+                self::SEND_DICE => SendDice::execute($bot, $parameters),
             };
         }
     }
