@@ -14,6 +14,7 @@
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
+    use TgBotLib\Methods\SendChatAction;
     use TgBotLib\Methods\SendContact;
     use TgBotLib\Methods\SendDice;
     use TgBotLib\Methods\SendDocument;
@@ -52,6 +53,7 @@
         case SEND_CONTACT = 'sendContact';
         case SEND_POLL = 'sendPoll';
         case SEND_DICE = 'sendDice';
+        case SEND_CHAT_ACTION = 'sendChatAction';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -87,6 +89,7 @@
                 self::SEND_CONTACT => SendContact::execute($bot, $parameters),
                 self::SEND_POLL => SendPoll::execute($bot, $parameters),
                 self::SEND_DICE => SendDice::execute($bot, $parameters),
+                self::SEND_CHAT_ACTION => SendChatAction::execute($bot, $parameters)
             };
         }
     }
