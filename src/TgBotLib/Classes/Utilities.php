@@ -81,6 +81,11 @@
                 return UpdateEventType::CHAT_MEMBER_UPDATED;
             }
 
+            if($update->getMyChatMember() !== null)
+            {
+                return UpdateEventType::MY_CHAT_MEMBER_UPDATED;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
