@@ -86,6 +86,11 @@
                 return UpdateEventType::MY_CHAT_MEMBER_UPDATED;
             }
 
+            if($update->getPollAnswer() !== null)
+            {
+                return UpdateEventType::POLL_ANSWER;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
