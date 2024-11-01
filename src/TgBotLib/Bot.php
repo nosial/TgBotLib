@@ -12,7 +12,9 @@
     use InvalidArgumentException;
     use ReflectionClass;
     use TgBotLib\Abstracts\Method;
+    use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Logger;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
@@ -139,6 +141,7 @@
         private string $token;
         private string $endpoint;
         private bool $auto_retry;
+        private array $eventHandlers;
 
         /**
          * Constructs a new Bot instance
@@ -151,6 +154,7 @@
             $this->token = $token;
             $this->endpoint = $endpoint;
             $this->auto_retry = true;
+            $this->eventHandlers = [];
         }
 
         /**
@@ -223,6 +227,104 @@
         public function getAutoRetry(): bool
         {
             return $this->auto_retry;
+        }
+
+        /**
+         * Retrieves the list of event handlers.
+         *
+         * @return array The array of event handlers.
+         */
+        public function getEventHandlers(): array
+        {
+            return $this->eventHandlers;
+        }
+
+        /**
+         * Registers an event handler class for processing events.
+         *
+         * @param string $className The fully qualified class name of the event handler to add.
+         *
+         * @return void
+         *
+         * @throws InvalidArgumentException if the class does not exist or does not extend UpdateEvent.
+         */
+        public function addEventHandler(string $className): void
+        {
+            if(in_array($className, $this->eventHandlers))
+            {
+                return;
+            }
+
+            if(!class_exists($className))
+            {
+                throw new InvalidArgumentException(sprintf('The given className %s does not exist', $className));
+            }
+
+            if(!is_subclass_of($className, UpdateEvent::class))
+            {
+                throw new InvalidArgumentException(sprintf('The given className %s must extend UpdateEvent', $className));
+            }
+
+            $this->eventHandlers[] = $className;
+        }
+
+        /**
+         * Retrieves all event handlers that match a specified event type.
+         *
+         * @param EventType $type The event type to filter handlers by.
+         * @return array An array of event handlers that handle the specified event type.
+         */
+        public function getEventHandlersByType(EventType $type): array
+        {
+            $results = [];
+            /** @var UpdateEvent $eventHandler */
+            foreach($this->eventHandlers as $eventHandler)
+            {
+                if($eventHandler::getEventType() === $type)
+                {
+                    $results[] = $eventHandler;
+                }
+            }
+
+            return $results;
+        }
+
+        /**
+         * Removes all event handlers.
+         *
+         * @return void
+         */
+        public function clearEventHandlers(): void
+        {
+            $this->eventHandlers = [];
+        }
+
+        /**
+         * Removes all event handlers of a specified type.
+         *
+         * @param EventType $type The event type to filter handlers by.
+         * @return void
+         */
+        public function removeEventHandlersByType(EventType $type): void
+        {
+            $this->eventHandlers = array_filter($this->eventHandlers, function($eventHandler) use ($type)
+            {
+                return $eventHandler::getEventType() !== $type;
+            });
+        }
+
+        /**
+         * Removes an event handler by its class name if it exists.
+         *
+         * @param string $className The fully qualified class name of the event handler to remove.
+         * @return void
+         */
+        public function removeEventHandlerByName(string $className): void
+        {
+            $this->eventHandlers = array_filter($this->eventHandlers, function($eventHandler) use ($className)
+            {
+                return $eventHandler !== $className;
+            });
         }
 
         /**
