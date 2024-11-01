@@ -29,10 +29,12 @@
     use TgBotLib\Methods\SendVideo;
     use TgBotLib\Methods\SendVideoNote;
     use TgBotLib\Methods\SendVoice;
+    use TgBotLib\Methods\SetWebhook;
 
     enum Methods : string
     {
         case GET_UPDATES = 'getUpdates';
+        case SET_WEBHOOK = 'setWebhook';
         case GET_ME = 'getMe';
         case LOGOUT = 'logOut';
         case CLOSE = 'close';
@@ -70,6 +72,7 @@
             return match($this)
             {
                 self::GET_UPDATES => GetUpdates::execute($bot, $parameters),
+                self::SET_WEBHOOK => SetWebhook::execute($bot, $parameters),
                 self::GET_ME => GetMe::execute($bot, $parameters),
                 self::LOGOUT => LogOut::execute($bot, $parameters),
                 self::CLOSE => Close::execute($bot, $parameters),
