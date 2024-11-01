@@ -17,7 +17,7 @@ class GetUpdates extends Method
     {
         return array_map(
             fn($update) => Update::fromArray($update),
-            self::executeCurl(self::buildPost($bot, Methods::GET_UPDATES->value, $parameters))['result']
+            self::executeCurl(self::buildPost($bot, Methods::GET_UPDATES->value, $parameters))
         );
     }
 
@@ -26,7 +26,7 @@ class GetUpdates extends Method
      */
     public static function getRequiredParameters(): ?array
     {
-        // TODO: Implement getRequiredParameters() method.
+        return null;
     }
 
     /**
@@ -34,6 +34,11 @@ class GetUpdates extends Method
      */
     public static function getOptionalParameters(): ?array
     {
-        // TODO: Implement getOptionalParameters() method.
+        return [
+            'offset',
+            'limit',
+            'timeout',
+            'allowed_updates',
+        ];
     }
 }

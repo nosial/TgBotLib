@@ -187,15 +187,10 @@
          */
         public static function fromArray(?array $data): ?User
         {
-            if($data === null)
-            {
-                return null;
-            }
-
             $object = new self();
-            $object->id = $data['id'] ?? null;
+            $object->id = $data['id'];
             $object->is_bot = $data['is_bot'] ?? false;
-            $object->first_name = $data['first_name'] ?? null;
+            $object->first_name = $data['first_name'];
             $object->last_name = $data['last_name'] ?? null;
             $object->username = $data['username'] ?? null;
             $object->language_code = $data['language_code'] ?? null;

@@ -1142,7 +1142,7 @@
             $object->poll = isset($data['poll']) ? Poll::fromArray($data['poll']) : null;
             $object->venue = isset($data['venue']) ? Venue::fromArray($data['venue']) : null;
             $object->location = isset($data['location']) ? Location::fromArray($data['location']) : null;
-            $object->new_chat_members = isset($data['new_chat_members']) ? array_map(fn($item) => User::fromArray($data), $data['new_chat_members']) : null;
+            $object->new_chat_members = isset($data['new_chat_members']) ? array_map(fn($item) => User::fromArray($item), $data['new_chat_members']) : null;
             $object->left_chat_member = isset($data['left_chat_member']) ? User::fromArray($data['left_chat_member']) : null;
             $object->new_chat_title = $data['new_chat_title'] ?? null;
             $object->new_chat_photo = isset($data['new_chat_photo']) ? array_map(fn($item) => PhotoSize::fromArray($data), $data['new_chat_photo']): null;

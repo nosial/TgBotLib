@@ -43,11 +43,13 @@
     use TgBotLib\Objects\ReplyKeyboardRemove;
     use TgBotLib\Objects\ReplyParameters;
     use TgBotLib\Objects\Stickers\Sticker;
+    use TgBotLib\Objects\Update;
     use TgBotLib\Objects\User;
     use TgBotLib\Objects\UserChatBoosts;
     use TgBotLib\Objects\UserProfilePhotos;
 
     /**
+     * @method Update[] getUpdates(?int $offset=null, ?int $limit=null, ?int $timeout=null, ?string $allowed_updates=null) Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
      * @method User getMe() A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
      * @method bool logOut() Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters.
      * @method bool close() Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.

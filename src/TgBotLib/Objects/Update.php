@@ -331,7 +331,8 @@
         /**
          * @inheritDoc
          */
-        public static function fromArray(?array $data): ?Update
+        public static function
+        fromArray(?array $data): ?Update
         {
             if($data === null)
             {
