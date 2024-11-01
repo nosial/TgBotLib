@@ -89,10 +89,26 @@
                     $this->offset = $update->getUpdateId() + 1;
                 }
 
-                /** @var UpdateEvent $eventHandler */
-                foreach($this->getEventHandlersByType(Utilities::determineEventType($update)) as $eventHandler)
+                $updateByType = $this->getEventHandlersByType(Utilities::determineEventType($update));
+
+                if(count($updateByType) === 0)
                 {
-                    (new $eventHandler($update))->handle($this);
+                    // If no event handlers are found appropriate for the update type, use the generic update event handler
+                    // So that we don't miss any updates
+                    /** @var UpdateEvent $eventHandler */
+                    foreach($this->getEventHandlersByType(UpdateEventType::UPDATE_EVENT) as $eventHandler)
+                    {
+                        (new $eventHandler($update))->handle($this);
+                    }
+                }
+                else
+                {
+                    // Otherwise, use the appropriate event handler for the update type
+                    /** @var UpdateEvent $eventHandler */
+                    foreach($this->getEventHandlersByType(Utilities::determineEventType($update)) as $eventHandler)
+                    {
+                        (new $eventHandler($update))->handle($this);
+                    }
                 }
             }
         }
