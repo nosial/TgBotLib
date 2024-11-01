@@ -8,6 +8,7 @@
     use TgBotLib\Events\ChatMemberUpdatedEvent;
     use TgBotLib\Events\MyChatMemberUpdatedEvent;
     use TgBotLib\Events\PollAnswerEvent;
+    use TgBotLib\Events\PollEvent;
     use TgBotLib\Events\RemovedChatBoostEvent;
 
     enum UpdateEventType : string
@@ -19,4 +20,5 @@
         case CHAT_MEMBER_UPDATED = ChatMemberUpdatedEvent::class;
         case MY_CHAT_MEMBER_UPDATED = MyChatMemberUpdatedEvent::class;
         case POLL_ANSWER = PollAnswerEvent::class;
+        case POLL = PollEvent::class;
     }

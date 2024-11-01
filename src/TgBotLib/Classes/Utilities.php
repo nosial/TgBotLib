@@ -91,6 +91,11 @@
                 return UpdateEventType::POLL_ANSWER;
             }
 
+            if($update->getPoll() !== null)
+            {
+                return UpdateEventType::POLL;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
