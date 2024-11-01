@@ -16,6 +16,9 @@
             return EventType::CHAT_BOOST_EVENT;
         }
 
+        /**
+         * @return ChatBoostUpdated The updated chat boost information.
+         */
         protected function getChatBoost(): ChatBoostUpdated
         {
             return $this->update->getChatBoost();

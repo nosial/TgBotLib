@@ -14,6 +14,11 @@
             return EventType::CHAT_JOIN_REQUEST_EVENT;
         }
 
+        /**
+         * Retrieves the chat join request from the update.
+         *
+         * @return ChatJoinRequest The chat join request data.
+         */
         protected function getChatJoinRequest(): ChatJoinRequest
         {
             return $this->update->getChatJoinRequest();

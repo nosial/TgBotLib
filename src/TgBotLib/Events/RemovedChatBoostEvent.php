@@ -17,7 +17,9 @@
         }
 
         /**
-         * @return ChatBoostRemoved The object representing the removed chat boost.
+         * Retrieves the removed chat boost from the update.
+         *
+         * @return ChatBoostRemoved The chat boost that was removed.
          */
         protected function getChatBoostRemoved(): ChatBoostRemoved
         {
