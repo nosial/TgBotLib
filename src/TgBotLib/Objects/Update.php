@@ -34,7 +34,7 @@
         private ?ChatMemberUpdated $my_chat_member;
         private ?ChatMemberUpdated $chat_member;
         private ?ChatJoinRequest $chat_join_request;
-        private ?ChatBoostAdded $chat_boost;
+        private ?ChatBoostUpdated $chat_boost;
         private ?ChatBoostRemoved $removed_chat_boost;
 
         /**
@@ -277,9 +277,9 @@
          * Optional. A chat boost was added or changed.
          * The bot must be an administrator in the chat to receive these updates.
          *
-         * @return ChatBoostAdded|null
+         * @return ChatBoostUpdated|null
          */
-        public function getChatBoost(): ?ChatBoostAdded
+        public function getChatBoost(): ?ChatBoostUpdated
         {
             return $this->chat_boost;
         }
@@ -362,7 +362,7 @@
             $object->my_chat_member = isset($data['my_chat_member']) ? ChatMemberUpdated::fromArray($data['my_chat_member']) : null;
             $object->chat_member = isset($data['chat_member']) ? ChatMemberUpdated::fromArray($data['chat_member']) : null;
             $object->chat_join_request = isset($data['chat_join_request']) ? ChatJoinRequest::fromArray($data['chat_join_request']) : null;
-            $object->chat_boost = isset($data['chat_boost']) ? ChatBoostAdded::fromArray($data['chat_boost']) : null;
+            $object->chat_boost = isset($data['chat_boost']) ? ChatBoostUpdated::fromArray($data['chat_boost']) : null;
             $object->removed_chat_boost = isset($data['removed_chat_boost']) ? ChatBoostRemoved::fromArray($data['removed_chat_boost']) : null;
 
             return $object;
