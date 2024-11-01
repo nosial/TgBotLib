@@ -3,7 +3,7 @@
     namespace TgBotLib\Abstracts;
 
     use TgBotLib\Bot;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\Update;
 
     abstract class UpdateEvent
@@ -23,11 +23,11 @@
 
         /**
          * Retrieves the event type.
-         * @return EventType The event type of the current instance.
+         * @return UpdateEventType The event type of the current instance.
          */
-        public static function getEventType(): EventType
+        public static function getEventType(): UpdateEventType
         {
-            return EventType::UPDATE_EVENT;
+            return UpdateEventType::UPDATE_EVENT;
         }
 
         public abstract function handle(Bot $bot): void;

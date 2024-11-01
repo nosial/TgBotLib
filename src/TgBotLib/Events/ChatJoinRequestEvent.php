@@ -4,14 +4,14 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\ChatJoinRequest;
 
     abstract class ChatJoinRequestEvent extends UpdateEvent
     {
-        public static function getEventType(): EventType
+        public static function getEventType(): UpdateEventType
         {
-            return EventType::CHAT_JOIN_REQUEST_EVENT;
+            return UpdateEventType::CHAT_JOIN_REQUEST_EVENT;
         }
 
         /**

@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Utilities;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\Update;
 
     class PollingBot extends Bot

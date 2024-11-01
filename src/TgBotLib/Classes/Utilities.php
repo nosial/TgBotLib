@@ -5,7 +5,7 @@
 
     use Exception;
     use LogLib\Log;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\Currency;
     use TgBotLib\Objects\Update;
 
@@ -57,30 +57,30 @@
          * Determines the type of event based on the provided update object.
          *
          * @param Update $update The update object containing event information.
-         * @return EventType The determined type of the event.
+         * @return UpdateEventType The determined type of the event.
          */
-        public static function determineEventType(Update $update): EventType
+        public static function determineEventType(Update $update): UpdateEventType
         {
             if($update->getRemovedChatBoost() !== null)
             {
-                return EventType::REMOVED_CHAT_BOOST_EVENT;
+                return UpdateEventType::REMOVED_CHAT_BOOST_EVENT;
             }
 
             if($update->getChatBoost() !== null)
             {
-                return EventType::CHAT_BOOST_EVENT;
+                return UpdateEventType::CHAT_BOOST_EVENT;
             }
 
             if($update->getChatJoinRequest() !== null)
             {
-                return EventType::CHAT_JOIN_REQUEST_EVENT;
+                return UpdateEventType::CHAT_JOIN_REQUEST_EVENT;
             }
 
             if($update->getChatMember() !== null)
             {
-                return EventType::CHAT_MEMBER_UPDATED;
+                return UpdateEventType::CHAT_MEMBER_UPDATED;
             }
 
-            return EventType::UPDATE_EVENT;
+            return UpdateEventType::UPDATE_EVENT;
         }
     }

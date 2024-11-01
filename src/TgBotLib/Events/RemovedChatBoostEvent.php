@@ -3,7 +3,7 @@
     namespace TgBotLib\Events;
 
     use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\ChatBoostRemoved;
 
     abstract class RemovedChatBoostEvent extends UpdateEvent
@@ -11,9 +11,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): EventType
+        public static function getEventType(): UpdateEventType
         {
-            return EventType::REMOVED_CHAT_BOOST_EVENT;
+            return UpdateEventType::REMOVED_CHAT_BOOST_EVENT;
         }
 
         /**

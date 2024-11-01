@@ -14,7 +14,7 @@
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Logger;
-    use TgBotLib\Enums\EventType;
+    use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
@@ -271,10 +271,10 @@
         /**
          * Retrieves all event handlers that match a specified event type.
          *
-         * @param EventType $type The event type to filter handlers by.
+         * @param UpdateEventType $type The event type to filter handlers by.
          * @return array An array of event handlers that handle the specified event type.
          */
-        public function getEventHandlersByType(EventType $type): array
+        public function getEventHandlersByType(UpdateEventType $type): array
         {
             $results = [];
             /** @var UpdateEvent $eventHandler */
@@ -302,10 +302,10 @@
         /**
          * Removes all event handlers of a specified type.
          *
-         * @param EventType $type The event type to filter handlers by.
+         * @param UpdateEventType $type The event type to filter handlers by.
          * @return void
          */
-        public function removeEventHandlersByType(EventType $type): void
+        public function removeEventHandlersByType(UpdateEventType $type): void
         {
             $this->eventHandlers = array_filter($this->eventHandlers, function($eventHandler) use ($type)
             {
