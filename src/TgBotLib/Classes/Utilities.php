@@ -76,6 +76,11 @@
                 return EventType::CHAT_JOIN_REQUEST_EVENT;
             }
 
+            if($update->getChatMember() !== null)
+            {
+                return EventType::CHAT_MEMBER_UPDATED;
+            }
+
             return EventType::UPDATE_EVENT;
         }
     }

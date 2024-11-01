@@ -5,6 +5,7 @@
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Events\ChatBoostEvent;
     use TgBotLib\Events\ChatJoinRequestEvent;
+    use TgBotLib\Events\ChatMemberUpdatedEvent;
     use TgBotLib\Events\RemovedChatBoostEvent;
 
     enum EventType : string
@@ -13,4 +14,5 @@
         case REMOVED_CHAT_BOOST_EVENT = RemovedChatBoostEvent::class;
         case CHAT_BOOST_EVENT = ChatBoostEvent::class;
         case CHAT_JOIN_REQUEST_EVENT = ChatJoinRequestEvent::class;
+        case CHAT_MEMBER_UPDATED = ChatMemberUpdatedEvent::class;
     }
