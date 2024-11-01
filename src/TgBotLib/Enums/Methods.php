@@ -11,6 +11,7 @@
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
+    use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
@@ -31,6 +32,7 @@
 
     enum Methods : string
     {
+        case GET_UPDATES = 'getUpdates';
         case GET_ME = 'getMe';
         case LOGOUT = 'logOut';
         case CLOSE = 'close';
@@ -67,6 +69,7 @@
         {
             return match($this)
             {
+                self::GET_UPDATES => GetUpdates::execute($bot, $parameters),
                 self::GET_ME => GetMe::execute($bot, $parameters),
                 self::LOGOUT => LogOut::execute($bot, $parameters),
                 self::CLOSE => Close::execute($bot, $parameters),
