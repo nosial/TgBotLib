@@ -3,6 +3,7 @@
     namespace TgBotLib\Enums;
 
     use TgBotLib\Abstracts\UpdateEvent;
+    use TgBotLib\Events\CallbackQueryEvent;
     use TgBotLib\Events\ChatBoostEvent;
     use TgBotLib\Events\ChatJoinRequestEvent;
     use TgBotLib\Events\ChatMemberUpdatedEvent;
@@ -27,4 +28,5 @@
         case PAID_MEDIA_PURCHASED = PaidMediaPurchasedEvent::class;
         case PRE_CHECKOUT_QUERY = PreCheckoutQueryEvent::class;
         case SHIPPING_QUERY = ShippingQueryEvent::class;
+        case CALLBACK_QUERY = CallbackQueryEvent::class;
     }

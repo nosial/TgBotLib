@@ -111,6 +111,11 @@
                 return UpdateEventType::PRE_CHECKOUT_QUERY;
             }
 
+            if($update->getCallbackQuery() !== null)
+            {
+                return UpdateEventType::CALLBACK_QUERY;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
