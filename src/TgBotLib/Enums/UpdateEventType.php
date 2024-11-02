@@ -8,6 +8,7 @@
     use TgBotLib\Events\ChatJoinRequestEvent;
     use TgBotLib\Events\ChatMemberUpdatedEvent;
     use TgBotLib\Events\ChosenInlineResultEvent;
+    use TgBotLib\Events\InlineQueryEvent;
     use TgBotLib\Events\MyChatMemberUpdatedEvent;
     use TgBotLib\Events\PollAnswerEvent;
     use TgBotLib\Events\PollEvent;
@@ -32,4 +33,5 @@
         case SHIPPING_QUERY = ShippingQueryEvent::class;
         case CALLBACK_QUERY = CallbackQueryEvent::class;
         case CHOSEN_INLINE_RESULT = ChosenInlineResultEvent::class;
+        case INLINE_QUERY = InlineQueryEvent::class;
     }

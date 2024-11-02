@@ -121,6 +121,11 @@
                 return UpdateEventType::CHOSEN_INLINE_RESULT;
             }
 
+            if($update->getInlineQuery() !== null)
+            {
+                return UpdateEventType::INLINE_QUERY;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
