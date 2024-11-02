@@ -131,6 +131,11 @@
                 return UpdateEventType::MESSAGE_REACTION_COUNT;
             }
 
+            if($update->getMessageReaction() !== null)
+            {
+                return UpdateEventType::MESSAGE_REACTION;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
