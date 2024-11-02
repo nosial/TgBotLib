@@ -96,6 +96,11 @@
                 return UpdateEventType::POLL;
             }
 
+            if($update->getPurchasedPaidMedia() !== null)
+            {
+                return UpdateEventType::PAID_MEDIA_PURCHASED;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
