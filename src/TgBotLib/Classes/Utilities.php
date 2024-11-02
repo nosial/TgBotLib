@@ -141,6 +141,11 @@
                 return UpdateEventType::DELETED_BUSINESS_MESSAGES;
             }
 
+            if($update->getEditedBusinessMessage() !== null)
+            {
+                return UpdateEventType::EDITED_BUSINESS_MESSAGE;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
