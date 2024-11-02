@@ -8,6 +8,7 @@
     use TgBotLib\Events\ChatJoinRequestEvent;
     use TgBotLib\Events\ChatMemberUpdatedEvent;
     use TgBotLib\Events\ChosenInlineResultEvent;
+    use TgBotLib\Events\DeletedBusinessMessagesEvent;
     use TgBotLib\Events\InlineQueryEvent;
     use TgBotLib\Events\MessageReactionCountEvent;
     use TgBotLib\Events\MessageReactionEvent;
@@ -38,4 +39,5 @@
         case INLINE_QUERY = InlineQueryEvent::class;
         case MESSAGE_REACTION_COUNT = MessageReactionCountEvent::class;
         case MESSAGE_REACTION = MessageReactionEvent::class;
+        case DELETED_BUSINESS_MESSAGES = DeletedBusinessMessagesEvent::class;
     }

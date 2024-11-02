@@ -136,6 +136,11 @@
                 return UpdateEventType::MESSAGE_REACTION;
             }
 
+            if($update->getDeletedBusinessMessages() !== null)
+            {
+                return UpdateEventType::DELETED_BUSINESS_MESSAGES;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
