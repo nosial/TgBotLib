@@ -116,6 +116,11 @@
                 return UpdateEventType::CALLBACK_QUERY;
             }
 
+            if($update->getChosenInlineResult() !== null)
+            {
+                return UpdateEventType::CHOSEN_INLINE_RESULT;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
