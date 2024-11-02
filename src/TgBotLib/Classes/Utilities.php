@@ -126,6 +126,11 @@
                 return UpdateEventType::INLINE_QUERY;
             }
 
+            if($update->getMessageReactionCount() !== null)
+            {
+                return UpdateEventType::MESSAGE_REACTION_COUNT;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
