@@ -106,6 +106,11 @@
                 return UpdateEventType::PRE_CHECKOUT_QUERY;
             }
 
+            if($update->getPreCheckoutQuery() !== null)
+            {
+                return UpdateEventType::PRE_CHECKOUT_QUERY;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }

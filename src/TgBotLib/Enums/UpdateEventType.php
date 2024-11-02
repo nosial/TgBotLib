@@ -12,6 +12,7 @@
     use TgBotLib\Events\PaidMediaPurchasedEvent;
     use TgBotLib\Events\PreCheckoutQueryEvent;
     use TgBotLib\Events\RemovedChatBoostEvent;
+    use TgBotLib\Events\ShippingQueryEvent;
 
     enum UpdateEventType : string
     {
@@ -25,4 +26,5 @@
         case POLL = PollEvent::class;
         case PAID_MEDIA_PURCHASED = PaidMediaPurchasedEvent::class;
         case PRE_CHECKOUT_QUERY = PreCheckoutQueryEvent::class;
+        case SHIPPING_QUERY = ShippingQueryEvent::class;
     }
