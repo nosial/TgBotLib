@@ -156,6 +156,11 @@
                 return UpdateEventType::BUSINESS_CONNECTION;
             }
 
+            if($update->getEditedChannelPost() !== null)
+            {
+                return UpdateEventType::EDITED_CHANNEL_POST;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
