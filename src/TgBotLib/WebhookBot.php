@@ -5,7 +5,6 @@
     use InvalidArgumentException;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\Update;
-    use function PHPUnit\Framework\isEmpty;
 
     class WebhookBot extends Bot
     {
@@ -52,7 +51,7 @@
                 return;
             }
 
-            if(isEmpty($secretToken))
+            if(empty($secretToken))
             {
                 throw new InvalidArgumentException('Secret token cannot be empty.');
             }
