@@ -151,6 +151,11 @@
                 return UpdateEventType::BUSINESS_MESSAGE;
             }
 
+            if($update->getBusinessConnection() !== null)
+            {
+                return UpdateEventType::BUSINESS_CONNECTION;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }

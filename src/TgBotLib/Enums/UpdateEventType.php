@@ -3,6 +3,7 @@
     namespace TgBotLib\Enums;
 
     use TgBotLib\Abstracts\UpdateEvent;
+    use TgBotLib\Events\BusinessConnectionEvent;
     use TgBotLib\Events\BusinessMessageEvent;
     use TgBotLib\Events\CallbackQueryEvent;
     use TgBotLib\Events\ChatBoostEvent;
@@ -43,4 +44,5 @@
         case DELETED_BUSINESS_MESSAGES = DeletedBusinessMessagesEvent::class;
         case EDITED_BUSINESS_MESSAGE = EditedBusinessMessageEvent::class;
         case BUSINESS_MESSAGE = BusinessMessageEvent::class;
+        case BUSINESS_CONNECTION = BusinessConnectionEvent::class;
     }
