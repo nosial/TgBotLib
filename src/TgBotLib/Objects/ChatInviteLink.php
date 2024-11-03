@@ -139,7 +139,7 @@
         {
             return [
                 'invite_link' => $this->invite_link,
-                'creator' => $this->creator?->toArray(),
+                'creator' => $this->creator->toArray(),
                 'creates_join_request' => $this->creates_join_request ?? false,
                 'is_primary' => $this->is_primary ?? false,
                 'is_revoked' => $this->is_revoked ?? false,

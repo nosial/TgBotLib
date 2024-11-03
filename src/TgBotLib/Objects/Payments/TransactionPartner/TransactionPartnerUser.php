@@ -65,7 +65,7 @@
         {
             return [
                 'type' => $this->type->value,
-                'user' => $this->user?->toArray(),
+                'user' => $this->user->toArray(),
                 'invoice_payload' => $this->invoice_payload,
                 'paid_media' => is_null($this->paid_media) ? null : array_map(fn(PaidMedia $item) => $item->toArray(), $this->paid_media),
                 'paid_media_payload' => $this->paid_media_payload,

@@ -52,7 +52,7 @@
         {
             return [
                 'business_connection_id' => $this->business_connection_id,
-                'chat' => $this->chat?->toArray(),
+                'chat' => $this->chat->toArray(),
                 'message_ids' => $this->message_ids
             ];
         }

@@ -189,11 +189,11 @@
             $object->data = $data['data'] ?? null;
             $object->phone_number = $data['phone_number'] ?? null;
             $object->email = $data['email'] ?? null;
-            $object->files = isset($data['files']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['files'] ?? []) : null;
-            $object->front_side = isset($data['front_side']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['front_side'] ?? []) : null;
-            $object->reverse_side = isset($data['reverse_side']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['reverse_side'] ?? []) : null;
-            $object->selfie = isset($data['selfie']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['selfie'] ?? []) : null;
-            $object->translation = isset($data['translation']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['translation'] ?? []) : null;
+            $object->files = isset($data['files']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['files']) : null;
+            $object->front_side = isset($data['front_side']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['front_side']) : null;
+            $object->reverse_side = isset($data['reverse_side']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['reverse_side']) : null;
+            $object->selfie = isset($data['selfie']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['selfie']) : null;
+            $object->translation = isset($data['translation']) ? array_map(fn(array $items) => PassportFile::fromArray($items), $data['translation']) : null;
             $object->hash = $data['hash'];
 
             return $object;

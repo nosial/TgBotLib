@@ -96,7 +96,7 @@
         {
             return [
                 'id' => $this->id,
-                'from' => $this->from?->toArray(),
+                'from' => $this->from->toArray(),
                 'currency' => $this->currency,
                 'total_amount' => $this->total_amount,
                 'invoice_payload' => $this->invoice_payload,

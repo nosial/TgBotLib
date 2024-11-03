@@ -286,7 +286,7 @@ class ExternalReplyInfo implements ObjectTypeInterface
     public function toArray(): array
     {
         return [
-            'origin' => $this->origin?->toArray(),
+            'origin' => $this->origin->toArray(),
             'chat' => $this->chat?->toArray(),
             'message_id' => $this->message_id,
             'link_preview_options' => $this->link_preview_options?->toArray(),

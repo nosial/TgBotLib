@@ -335,7 +335,7 @@
             $object->thumb = $data['thumb'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->width = $data['width'] ?? null;
             $object->height = $data['height'] ?? null;
             $object->duration = $data['duration'] ?? null;

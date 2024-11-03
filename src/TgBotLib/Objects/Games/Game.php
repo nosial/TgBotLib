@@ -116,7 +116,7 @@
             $object = new self();
             $object->description = $data['description'] ?? null;
             $object->title = $data['title'] ?? null;
-            $object->photo = isset($data['photo']) ? array_map(fn(array $items) => PhotoSize::fromArray($items), $data['photo'] ?? []) : null;
+            $object->photo = isset($data['photo']) ? array_map(fn(array $items) => PhotoSize::fromArray($items), $data['photo']) : null;
             $object->text = $data['text'] ?? null;
             $object->text_entities = ($data['text_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['text_entities']) : null;
             $object->animation = isset($data['animation']) ? Animation::fromArray($data['animation']) : null;

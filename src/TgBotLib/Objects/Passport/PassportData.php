@@ -39,8 +39,8 @@
         public function toArray(): array
         {
             return [
-                'data' => is_null($this->data) ? null : array_map(fn(EncryptedPassportElement $item) => $item->toArray(), $this->data),
-                'credentials' => $this->credentials?->toArray(),
+                'data' => array_map(fn(EncryptedPassportElement $item) => $item->toArray(), $this->data),
+                'credentials' => $this->credentials->toArray(),
             ];
         }
 
@@ -55,7 +55,7 @@
             }
 
             $object = new self();
-            $object->data = isset($data['data']) ? array_map(fn(array $items) => EncryptedPassportElement::fromArray($items), $data['data'] ?? []) : null;
+            $object->data = isset($data['data']) ? array_map(fn(array $items) => EncryptedPassportElement::fromArray($items), $data['data']) : null;
             $object->credentials = isset($data['credentials']) ? EncryptedCredentials::fromArray($data['credentials']) : null;
 
             return $object;

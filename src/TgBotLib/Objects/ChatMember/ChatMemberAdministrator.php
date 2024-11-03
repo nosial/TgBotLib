@@ -189,7 +189,7 @@
         {
             return [
                 'status' => $this->status->value,
-                'user' => $this->user?->toArray(),
+                'user' => $this->user->toArray(),
                 'can_be_edited' => $this->can_be_edited,
                 'is_anonymous' => $this->is_anonymous,
                 'can_manage_chat' => $this->can_manage_chat,

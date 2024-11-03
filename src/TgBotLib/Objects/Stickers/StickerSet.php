@@ -103,7 +103,7 @@
                 'sticker_type' => $this->sticker_type->value,
                 'is_animated' => $this->is_animated,
                 'is_video' => $this->is_video,
-                'stickers' => is_null($this->stickers) ? null : array_map(fn(Sticker $sticker) => $sticker->toArray(), $this->stickers),
+                'stickers' => array_map(fn(Sticker $sticker) => $sticker->toArray(), $this->stickers),
                 'thumbnail' => ($this->thumbnail instanceof PhotoSize) ? $this->thumbnail->toArray() : null,
             ];
         }

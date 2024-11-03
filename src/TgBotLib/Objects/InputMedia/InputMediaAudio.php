@@ -234,7 +234,7 @@
         public function toArray(): array
         {
             $array = [
-                'type' => $this->type?->value,
+                'type' => $this->type->value,
                 'media' => $this->media,
             ];
 
@@ -292,7 +292,7 @@
             $object->thumb = $data['thumb'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = isset($data['parse_mode']) ? ParseMode::tryFrom($data['parse_mode']) ?? null : null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->duration = $data['duration'] ?? null;
             $object->performer = $data['performer'] ?? null;
             $object->title = $data['title'] ?? null;

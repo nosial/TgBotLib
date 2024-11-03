@@ -87,7 +87,7 @@
         {
             return [
                 'id' => $this->id,
-                'from' => $this->from?->toArray(),
+                'from' => $this->from->toArray(),
                 'query' => $this->query,
                 'offset' => $this->offset,
                 'chat_type' => $this->chat_type?->value,

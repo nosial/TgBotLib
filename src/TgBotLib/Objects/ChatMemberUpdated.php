@@ -92,11 +92,11 @@
         public function toArray(): array
         {
             return [
-                'chat' => $this->chat?->toArray(),
-                'from' => $this->from?->toArray(),
+                'chat' => $this->chat->toArray(),
+                'from' => $this->from->toArray(),
                 'date' => $this->date,
-                'old_chat_member' => $this->old_chat_member?->toArray(),
-                'new_chat_member' => $this->new_chat_member?->toArray(),
+                'old_chat_member' => $this->old_chat_member->toArray(),
+                'new_chat_member' => $this->new_chat_member->toArray(),
                 'invite_link' => $this->invite_link?->toArray(),
                 'via_chat_folder_invite_link' => $this->via_chat_folder_invite_link,
             ];

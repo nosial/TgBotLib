@@ -60,9 +60,9 @@
         {
             return [
                 'id' => $this->id,
-                'from' => $this->from?->toArray(),
+                'from' => $this->from->toArray(),
                 'invoice_payload' => $this->invoice_payload,
-                'shipping_address' => $this->shipping_address?->toArray()
+                'shipping_address' => $this->shipping_address->toArray()
             ];
         }
 

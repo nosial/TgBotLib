@@ -36,7 +36,7 @@
         public function toArray(): array
         {
             return [
-                'location' => $this->location?->toArray(),
+                'location' => $this->location->toArray(),
                 'address' => $this->address,
             ];
         }

@@ -51,7 +51,7 @@
         {
             return [
                 'status' => $this->status->value,
-                'user' => $this->user?->toArray(),
+                'user' => $this->user->toArray(),
                 'is_anonymous' => $this->is_anonymous,
                 'custom_title' => $this->custom_title
             ];

@@ -92,7 +92,7 @@
         public function toArray(): array
         {
             return [
-                'location' => $this->location?->toArray(),
+                'location' => $this->location->toArray(),
                 'title' => $this->title,
                 'address' => $this->address,
                 'foursquare_id' => $this->foursquare_id,

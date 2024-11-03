@@ -40,7 +40,7 @@
         {
             return [
                 'status' => $this->status->value,
-                'user' => $this->user?->toArray(),
+                'user' => $this->user->toArray(),
                 'until_date' => $this->until_date
             ];
         }

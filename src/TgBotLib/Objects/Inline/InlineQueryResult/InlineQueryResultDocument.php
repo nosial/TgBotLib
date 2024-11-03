@@ -393,12 +393,12 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
             $object->document_url = $data['document_url'] ?? null;
             $object->mime_type = $data['mime_type'] ?? null;
             $object->description = $data['description'] ?? null;
             $object->reply_markup = isset($data['reply_markup']) ? InlineKeyboardMarkup::fromArray($data['reply_markup']) : null;
-            $object->input_message_content = isset($data['input_message_content']) ? InputVenueMessageContent::fromArray($data['input_message_content'] ?? []) : null;
+            $object->input_message_content = isset($data['input_message_content']) ? InputVenueMessageContent::fromArray($data['input_message_content']) : null;
             $object->thumbnail_url = $data['thumbnail_url'] ?? null;
             $object->thumbnail_width = $data['thumbnail_width'] ?? null;
             $object->thumbnail_height = $data['thumbnail_height'] ?? null;

@@ -121,7 +121,7 @@ class Giveaway implements ObjectTypeInterface
     public function toArray(): array
     {
         return [
-            'chats' => is_null($this->chats) ? null : array_map(fn(Chat $chat) => $chat->toArray(), $this->chats),
+            'chats' => array_map(fn(Chat $chat) => $chat->toArray(), $this->chats),
             'winners_selection_date' => $this->winners_selection_date,
             'winner_count' => $this->winner_count,
             'only_new_members' => $this->only_new_members,

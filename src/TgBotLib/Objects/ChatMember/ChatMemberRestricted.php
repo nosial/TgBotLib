@@ -205,7 +205,7 @@
         {
             return [
                 'status' => $this->status->value,
-                'user' => $this->user?->toArray(),
+                'user' => $this->user->toArray(),
                 'is_member' => $this->is_member,
                 'can_send_messages' => $this->can_send_messages,
                 'can_send_audios' => $this->can_send_audios,

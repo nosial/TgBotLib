@@ -76,7 +76,7 @@
         {
             return [
                 'result_id' => $this->result_id,
-                'from' => $this->from?->toArray(),
+                'from' => $this->from->toArray(),
                 'location' => $this->location?->toArray(),
                 'inline_message_id' => $this->inline_message_id,
                 'query' => $this->query,

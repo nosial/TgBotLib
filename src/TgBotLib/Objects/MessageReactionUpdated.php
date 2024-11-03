@@ -97,7 +97,7 @@
         public function toArray(): ?array
         {
             return [
-                'chat' => $this->chat?->toArray(),
+                'chat' => $this->chat->toArray(),
                 'message_id' => $this->message_id,
                 'user' => $this->user?->toArray(),
                 'actor_chat' => $this->actor_chat?->toArray(),

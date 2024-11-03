@@ -408,8 +408,8 @@
             $object->title = $data['title'] ?? null;
             $object->caption = $data['caption'] ?? null;
             $object->parse_mode = $data['parse_mode'] ?? null;
-            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities'] ?? []) : null;
-            $object->reply_markup = isset($data['reply_markup']) ? array_map(fn(array $items) => InlineKeyboardMarkup::fromArray($items), $data['reply_markup'] ?? []) : null;
+            $object->caption_entities = isset($data['caption_entities']) ? array_map(fn(array $items) => MessageEntity::fromArray($items), $data['caption_entities']) : null;
+            $object->reply_markup = isset($data['reply_markup']) ? array_map(fn(array $items) => InlineKeyboardMarkup::fromArray($items), $data['reply_markup']) : null;
             $object->input_message_content = isset($data['input_message_content']) ? InputMessageContent::fromArray($data['input_message_content']) : null;
 
             return $object;

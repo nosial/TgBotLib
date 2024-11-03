@@ -47,8 +47,8 @@
         public function toArray(): array
         {
             return [
-                'traveler' => $this->traveler?->toArray(),
-                'watcher' => $this->watcher?->toArray(),
+                'traveler' => $this->traveler->toArray(),
+                'watcher' => $this->watcher->toArray(),
                 'distance' => $this->distance,
             ];
         }

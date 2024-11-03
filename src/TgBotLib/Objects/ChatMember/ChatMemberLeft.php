@@ -29,7 +29,7 @@
         {
             return [
                 'status' => $this->status->value,
-                'user' => $this->user?->toArray()
+                'user' => $this->user->toArray()
             ];
         }
 

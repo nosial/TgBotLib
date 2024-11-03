@@ -97,7 +97,7 @@
         {
             return [
                 'id' => $this->id,
-                'from' => $this->from?->toArray(),
+                'from' => $this->from->toArray(),
                 'message' => $this->message?->toArray(),
                 'inline_message_id' => $this->inline_message_id,
                 'chat_instance' => $this->chat_instance,

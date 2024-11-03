@@ -57,10 +57,10 @@
         public function toArray(): array
         {
             return [
-                'chat' => $this->chat?->toArray(),
+                'chat' => $this->chat->toArray(),
                 'boost_id' => $this->boost_id,
                 'remove_date' => $this->remove_date,
-                'source' => $this->source?->toArray(),
+                'source' => $this->source->toArray(),
             ];
         }
 

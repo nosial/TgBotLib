@@ -28,7 +28,7 @@
         {
             return [
                 'source' => $this->source->value,
-                'user' => $this->user?->toArray()
+                'user' => $this->user->toArray()
             ];
         }
 

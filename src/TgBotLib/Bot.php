@@ -426,7 +426,7 @@
             $parameters = [];
 
             // If arguments are provided as an associative array (named arguments)
-            if (is_array($arguments) && array_keys($arguments) !== range(0, count($arguments) - 1))
+            if (array_keys($arguments) !== range(0, count($arguments) - 1))
             {
                 $parameters = $arguments;
             }

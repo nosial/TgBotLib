@@ -84,8 +84,8 @@
         public function toArray(): array
         {
             return [
-                'chat' => $this->chat?->toArray(),
-                'from' => $this->from?->toArray(),
+                'chat' => $this->chat->toArray(),
+                'from' => $this->from->toArray(),
                 'user_chat_id' => $this->user_chat_id,
                 'date' => $this->date,
                 'bio' => $this->bio,

@@ -42,7 +42,7 @@
             return [
                 'type' => $this->type->value,
                 'text' => $this->text,
-                'web_app' => $this->web_app?->toArray()
+                'web_app' => $this->web_app->toArray()
             ];
         }
 
@@ -54,7 +54,7 @@
             $object = new self();
             $object->type = $data['type'] ?? null;
             $object->text = $data['text'] ?? null;
-            $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app'] ?? []) : null;
+            $object->web_app = isset($data['web_app']) ? WebAppInfo::fromArray($data['web_app']) : null;
 
             return $object;
         }
