@@ -21,7 +21,6 @@
     use TgBotLib\Events\PreCheckoutQueryEvent;
     use TgBotLib\Events\RemovedChatBoostEvent;
     use TgBotLib\Events\ShippingQueryEvent;
-    use TgBotLib\Objects\Inline\ChosenInlineResult;
 
     enum UpdateEventType : string
     {
