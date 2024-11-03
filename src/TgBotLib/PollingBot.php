@@ -136,7 +136,7 @@
                     $this->offset = $update->getUpdateId() + 1;
                 }
 
-                $updateByType = $this->getEventHandlersByType(Utilities::determineEventType($update));
+                $updateByType = $this->getEventHandlersByType(UpdateEventType::determineEventType($update));
 
                 if(count($updateByType) === 0)
                 {
@@ -152,7 +152,7 @@
                 {
                     // Otherwise, use the appropriate event handler for the update type
                     /** @var UpdateEvent $eventHandler */
-                    foreach($this->getEventHandlersByType(Utilities::determineEventType($update)) as $eventHandler)
+                    foreach($this->getEventHandlersByType(UpdateEventType::determineEventType($update)) as $eventHandler)
                     {
                         (new $eventHandler($update))->handle($this);
                     }
