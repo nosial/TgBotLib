@@ -14,6 +14,7 @@
     use TgBotLib\Events\DeletedBusinessMessagesEvent;
     use TgBotLib\Events\EditedBusinessMessageEvent;
     use TgBotLib\Events\EditedChannelPostEvent;
+    use TgBotLib\Events\EditedMessageEvent;
     use TgBotLib\Events\InlineQueryEvent;
     use TgBotLib\Events\MessageReactionCountEvent;
     use TgBotLib\Events\MessageReactionEvent;
@@ -49,4 +50,5 @@
         case BUSINESS_CONNECTION = BusinessConnectionEvent::class;
         case EDITED_CHANNEL_POST = EditedChannelPostEvent::class;
         case CHANNEL_POST = ChannelPostEvent::class;
+        case EDITED_MESSAGE = EditedMessageEvent::class;
     }

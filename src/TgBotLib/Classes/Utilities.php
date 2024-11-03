@@ -166,6 +166,11 @@
                 return UpdateEventType::CHANNEL_POST;
             }
 
+            if($update->getEditedMessage() !== null)
+            {
+                return UpdateEventType::EDITED_MESSAGE;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
