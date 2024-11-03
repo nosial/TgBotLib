@@ -5,7 +5,7 @@
 
     use Exception;
     use LogLib\Log;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Currency;
     use TgBotLib\Objects\Update;
 

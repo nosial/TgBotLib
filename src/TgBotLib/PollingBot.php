@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Utilities;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
 
     /**
      * PollingBot class that extends Bot for handling updates using polling.
@@ -136,14 +136,14 @@
                     $this->offset = $update->getUpdateId() + 1;
                 }
 
-                $updateByType = $this->getEventHandlersByType(UpdateEventType::determineEventType($update));
+                $updateByType = $this->getEventHandlersByType(EventType::determineEventType($update));
 
                 if(count($updateByType) === 0)
                 {
                     // If no event handlers are found appropriate for the update type, use the generic update event handler
                     // So that we don't miss any updates
                     /** @var UpdateEvent $eventHandler */
-                    foreach($this->getEventHandlersByType(UpdateEventType::UPDATE_EVENT) as $eventHandler)
+                    foreach($this->getEventHandlersByType(EventType::UPDATE_EVENT) as $eventHandler)
                     {
                         (new $eventHandler($update))->handle($this);
                     }
@@ -152,7 +152,7 @@
                 {
                     // Otherwise, use the appropriate event handler for the update type
                     /** @var UpdateEvent $eventHandler */
-                    foreach($this->getEventHandlersByType(UpdateEventType::determineEventType($update)) as $eventHandler)
+                    foreach($this->getEventHandlersByType(EventType::determineEventType($update)) as $eventHandler)
                     {
                         (new $eventHandler($update))->handle($this);
                     }

@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Inline\ChosenInlineResult;
 
     abstract class ChosenInlineResultEvent extends UpdateEvent
@@ -12,9 +12,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateeventType::CHOSEN_INLINE_RESULT;
+            return EventType::CHOSEN_INLINE_RESULT;
         }
 
         /**

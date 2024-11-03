@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\PollAnswer;
 
     abstract class PollAnswerEvent extends UpdateEvent
@@ -12,9 +12,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateEventType::POLL_ANSWER;
+            return EventType::POLL_ANSWER;
         }
 
         /**

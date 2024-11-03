@@ -28,7 +28,7 @@
     use TgBotLib\Events\ShippingQueryEvent;
     use TgBotLib\Objects\Update;
 
-    enum UpdateEventType : string
+    enum EventType : string
     {
         case UPDATE_EVENT = UpdateEvent::class;
         case REMOVED_CHAT_BOOST_EVENT = RemovedChatBoostEvent::class;
@@ -59,125 +59,125 @@
          * Determines the type of event based on the provided Update object.
          *
          * @param Update $update The update object containing event details.
-         * @return UpdateEventType The type of event detected from the update.
+         * @return EventType The type of event detected from the update.
          */
-        public static function determineEventType(Update $update): UpdateEventType
+        public static function determineEventType(Update $update): EventType
         {
             if($update->getRemovedChatBoost() !== null)
             {
-                return UpdateEventType::REMOVED_CHAT_BOOST_EVENT;
+                return EventType::REMOVED_CHAT_BOOST_EVENT;
             }
 
             if($update->getChatBoost() !== null)
             {
-                return UpdateEventType::CHAT_BOOST_EVENT;
+                return EventType::CHAT_BOOST_EVENT;
             }
 
             if($update->getChatJoinRequest() !== null)
             {
-                return UpdateEventType::CHAT_JOIN_REQUEST_EVENT;
+                return EventType::CHAT_JOIN_REQUEST_EVENT;
             }
 
             if($update->getChatMember() !== null)
             {
-                return UpdateEventType::CHAT_MEMBER_UPDATED;
+                return EventType::CHAT_MEMBER_UPDATED;
             }
 
             if($update->getMyChatMember() !== null)
             {
-                return UpdateEventType::MY_CHAT_MEMBER_UPDATED;
+                return EventType::MY_CHAT_MEMBER_UPDATED;
             }
 
             if($update->getPollAnswer() !== null)
             {
-                return UpdateEventType::POLL_ANSWER;
+                return EventType::POLL_ANSWER;
             }
 
             if($update->getPoll() !== null)
             {
-                return UpdateEventType::POLL;
+                return EventType::POLL;
             }
 
             if($update->getPurchasedPaidMedia() !== null)
             {
-                return UpdateEventType::PAID_MEDIA_PURCHASED;
+                return EventType::PAID_MEDIA_PURCHASED;
             }
 
             if($update->getPreCheckoutQuery() !== null)
             {
-                return UpdateEventType::PRE_CHECKOUT_QUERY;
+                return EventType::PRE_CHECKOUT_QUERY;
             }
 
             if($update->getShippingQuery() !== null)
             {
-                return UpdateEventType::SHIPPING_QUERY;
+                return EventType::SHIPPING_QUERY;
             }
 
             if($update->getCallbackQuery() !== null)
             {
-                return UpdateEventType::CALLBACK_QUERY;
+                return EventType::CALLBACK_QUERY;
             }
 
             if($update->getChosenInlineResult() !== null)
             {
-                return UpdateEventType::CHOSEN_INLINE_RESULT;
+                return EventType::CHOSEN_INLINE_RESULT;
             }
 
             if($update->getInlineQuery() !== null)
             {
-                return UpdateEventType::INLINE_QUERY;
+                return EventType::INLINE_QUERY;
             }
 
             if($update->getMessageReactionCount() !== null)
             {
-                return UpdateEventType::MESSAGE_REACTION_COUNT;
+                return EventType::MESSAGE_REACTION_COUNT;
             }
 
             if($update->getMessageReaction() !== null)
             {
-                return UpdateEventType::MESSAGE_REACTION;
+                return EventType::MESSAGE_REACTION;
             }
 
             if($update->getDeletedBusinessMessages() !== null)
             {
-                return UpdateEventType::DELETED_BUSINESS_MESSAGES;
+                return EventType::DELETED_BUSINESS_MESSAGES;
             }
 
             if($update->getEditedBusinessMessage() !== null)
             {
-                return UpdateEventType::EDITED_BUSINESS_MESSAGE;
+                return EventType::EDITED_BUSINESS_MESSAGE;
             }
 
             if($update->getBusinessMessage() !== null)
             {
-                return UpdateEventType::BUSINESS_MESSAGE;
+                return EventType::BUSINESS_MESSAGE;
             }
 
             if($update->getBusinessConnection() !== null)
             {
-                return UpdateEventType::BUSINESS_CONNECTION;
+                return EventType::BUSINESS_CONNECTION;
             }
 
             if($update->getEditedChannelPost() !== null)
             {
-                return UpdateEventType::EDITED_CHANNEL_POST;
+                return EventType::EDITED_CHANNEL_POST;
             }
 
             if($update->getChannelPost() !== null)
             {
-                return UpdateEventType::CHANNEL_POST;
+                return EventType::CHANNEL_POST;
             }
 
             if($update->getEditedMessage() !== null)
             {
-                return UpdateEventType::EDITED_MESSAGE;
+                return EventType::EDITED_MESSAGE;
             }
 
             if($update->getMessage() !== null)
             {
-                return UpdateEventType::MESSAGE;
+                return EventType::MESSAGE;
             }
 
-            return UpdateEventType::UPDATE_EVENT;
+            return EventType::UPDATE_EVENT;
         }
     }

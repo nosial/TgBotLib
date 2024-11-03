@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\BusinessMessagesDeleted;
 
     abstract class DeletedBusinessMessagesEvent extends UpdateEvent
@@ -12,9 +12,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateEventType::DELETED_BUSINESS_MESSAGES;
+            return EventType::DELETED_BUSINESS_MESSAGES;
         }
 
         /**

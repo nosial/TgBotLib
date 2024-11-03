@@ -4,7 +4,7 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\ChatMemberUpdated;
 
     abstract class ChatMemberUpdatedEvent extends UpdateEvent
@@ -12,9 +12,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateEventType::CHAT_MEMBER_UPDATED;
+            return EventType::CHAT_MEMBER_UPDATED;
         }
 
         /**

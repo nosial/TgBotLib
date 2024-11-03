@@ -3,7 +3,7 @@
     namespace TgBotLib\Events;
 
     use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Message;
 
     abstract class EditedBusinessMessageEvent extends UpdateEvent
@@ -11,9 +11,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateEventType::EDITED_BUSINESS_MESSAGE;
+            return EventType::EDITED_BUSINESS_MESSAGE;
         }
 
         /**

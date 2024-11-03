@@ -3,7 +3,7 @@
     namespace TgBotLib\Events;
 
     use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Enums\UpdateEventType;
+    use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\CallbackQuery;
 
     abstract class CallbackQueryEvent extends UpdateEvent
@@ -11,9 +11,9 @@
         /**
          * @inheritDoc
          */
-        public static function getEventType(): UpdateEventType
+        public static function getEventType(): EventType
         {
-            return UpdateEventType::CALLBACK_QUERY;
+            return EventType::CALLBACK_QUERY;
         }
 
         /**
