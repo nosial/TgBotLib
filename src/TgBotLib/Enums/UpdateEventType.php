@@ -108,9 +108,9 @@
                 return UpdateEventType::PRE_CHECKOUT_QUERY;
             }
 
-            if($update->getPreCheckoutQuery() !== null)
+            if($update->getShippingQuery() !== null)
             {
-                return UpdateEventType::PRE_CHECKOUT_QUERY;
+                return UpdateEventType::SHIPPING_QUERY;
             }
 
             if($update->getCallbackQuery() !== null)
