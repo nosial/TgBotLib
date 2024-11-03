@@ -13,6 +13,7 @@
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
+    use TgBotLib\Methods\GetWebhookInfo;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
@@ -60,6 +61,7 @@
         case SEND_DICE = 'sendDice';
         case SEND_CHAT_ACTION = 'sendChatAction';
         case DELETE_WEBHOOK = 'deleteWebhook';
+        case GET_WEBHOOK_INFO = 'getWebhookInfo';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -75,6 +77,8 @@
             {
                 self::GET_UPDATES => GetUpdates::execute($bot, $parameters),
                 self::SET_WEBHOOK => SetWebhook::execute($bot, $parameters),
+                self::DELETE_WEBHOOK => DeleteWebhook::execute($bot, $parameters),
+                self::GET_WEBHOOK_INFO => GetWebhookInfo::execute($bot, $parameters),
                 self::GET_ME => GetMe::execute($bot, $parameters),
                 self::LOGOUT => LogOut::execute($bot, $parameters),
                 self::CLOSE => Close::execute($bot, $parameters),
@@ -98,7 +102,6 @@
                 self::SEND_POLL => SendPoll::execute($bot, $parameters),
                 self::SEND_DICE => SendDice::execute($bot, $parameters),
                 self::SEND_CHAT_ACTION => SendChatAction::execute($bot, $parameters),
-                self::DELETE_WEBHOOK => DeleteWebhook::execute($bot, $parameters),
             };
         }
     }
