@@ -31,6 +31,7 @@
     use TgBotLib\Methods\SendVideo;
     use TgBotLib\Methods\SendVideoNote;
     use TgBotLib\Methods\SendVoice;
+    use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
 
     enum Methods : string
@@ -62,6 +63,7 @@
         case SEND_CHAT_ACTION = 'sendChatAction';
         case DELETE_WEBHOOK = 'deleteWebhook';
         case GET_WEBHOOK_INFO = 'getWebhookInfo';
+        case SET_MESSAGE_REACTION = 'setMessageReaction';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -102,6 +104,7 @@
                 self::SEND_POLL => SendPoll::execute($bot, $parameters),
                 self::SEND_DICE => SendDice::execute($bot, $parameters),
                 self::SEND_CHAT_ACTION => SendChatAction::execute($bot, $parameters),
+                self::SET_MESSAGE_REACTION => SetMessageReaction::execute($bot, $parameters),
             };
         }
     }
