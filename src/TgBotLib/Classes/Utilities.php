@@ -146,6 +146,11 @@
                 return UpdateEventType::EDITED_BUSINESS_MESSAGE;
             }
 
+            if($update->getBusinessMessage() !== null)
+            {
+                return UpdateEventType::BUSINESS_MESSAGE;
+            }
+
             return UpdateEventType::UPDATE_EVENT;
         }
     }
