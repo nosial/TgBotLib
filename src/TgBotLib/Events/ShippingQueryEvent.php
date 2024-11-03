@@ -4,7 +4,6 @@
 
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Bot;
-    use TgBotLib\Enums\Types\EventType;
     use TgBotLib\Enums\UpdateEventType;
     use TgBotLib\Objects\Payments\ShippingQuery;
 
