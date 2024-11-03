@@ -6,6 +6,7 @@
     use TgBotLib\Events\BusinessConnectionEvent;
     use TgBotLib\Events\BusinessMessageEvent;
     use TgBotLib\Events\CallbackQueryEvent;
+    use TgBotLib\Events\ChannelPostEvent;
     use TgBotLib\Events\ChatBoostEvent;
     use TgBotLib\Events\ChatJoinRequestEvent;
     use TgBotLib\Events\ChatMemberUpdatedEvent;
@@ -47,4 +48,5 @@
         case BUSINESS_MESSAGE = BusinessMessageEvent::class;
         case BUSINESS_CONNECTION = BusinessConnectionEvent::class;
         case EDITED_CHANNEL_POST = EditedChannelPostEvent::class;
+        case CHANNEL_POST = ChannelPostEvent::class;
     }
