@@ -11,7 +11,7 @@
         /**
          * @inheritDoc
          */
-        public static function execute(Bot $bot, array $parameters = []): mixed
+        public static function execute(Bot $bot, array $parameters = []): bool
         {
             return self::executeCurl(self::buildPost($bot, Methods::DELETE_WEBHOOK->value, $parameters));
         }
