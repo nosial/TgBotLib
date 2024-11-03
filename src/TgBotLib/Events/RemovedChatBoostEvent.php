@@ -17,7 +17,7 @@
         }
 
         /**
-         * Retrieves the removed chat boost from the update.
+         * A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
          *
          * @return ChatBoostRemoved The chat boost that was removed.
          */

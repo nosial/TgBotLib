@@ -17,7 +17,7 @@
             return UpdateEventType::INLINE_QUERY;
         }
 
-        /**
+        /**C
          * New incoming inline query
          *
          * @return InlineQuery

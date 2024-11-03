@@ -18,7 +18,7 @@
         }
 
         /**
-         * Retrieves the chosen inline result from the current update.
+         * The result of an inline query that was chosen by a user and sent to their chat partner.
          *
          * @return ChosenInlineResult The chosen inline result associated with the current update.
          */

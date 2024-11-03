@@ -9,13 +9,17 @@
 
     abstract class ChatJoinRequestEvent extends UpdateEvent
     {
+        /**
+         * @inheritDoc
+         */
         public static function getEventType(): UpdateEventType
         {
             return UpdateEventType::CHAT_JOIN_REQUEST_EVENT;
         }
 
         /**
-         * Retrieves the chat join request from the update.
+         * A request to join the chat has been sent. The bot must have the can_invite_users
+         * administrator right in the chat to receive these updates.
          *
          * @return ChatJoinRequest The chat join request data.
          */

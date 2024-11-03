@@ -18,9 +18,10 @@
         }
 
         /**
-         * New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot
+         * A user changed their answer in a non-anonymous poll.
+         * Bots receive new votes only in polls that were sent by the bot itself.
          *
-         * @return Poll
+         * @return Poll The poll.
          */
         protected function getPoll(): Poll
         {

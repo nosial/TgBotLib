@@ -17,6 +17,8 @@
         }
 
         /**
+         * A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
+         *
          * @return ChatBoostUpdated The updated chat boost information.
          */
         protected function getChatBoost(): ChatBoostUpdated
