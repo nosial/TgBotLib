@@ -5,8 +5,6 @@ namespace TgBotLib\Methods;
 use PHPUnit\Framework\TestCase;
 use TgBotLib\Bot;
 use TgBotLib\Enums\Types\ChatActionType;
-use TgBotLib\Exceptions\TelegramException;
-use TgBotLib\Objects\Message;
 
 class SendChatActionTest extends TestCase
 {

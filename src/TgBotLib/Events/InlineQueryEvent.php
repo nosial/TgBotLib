@@ -3,7 +3,6 @@
     namespace TgBotLib\Events;
 
     use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Bot;
     use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Inline\InlineQuery;
 

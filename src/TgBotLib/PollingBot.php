@@ -3,7 +3,6 @@
     namespace TgBotLib;
 
     use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Classes\Utilities;
     use TgBotLib\Enums\EventType;
 
     /**

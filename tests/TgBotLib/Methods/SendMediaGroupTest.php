@@ -4,9 +4,7 @@ namespace TgBotLib\Methods;
 
 use PHPUnit\Framework\TestCase;
 use TgBotLib\Bot;
-use TgBotLib\Enums\Types\ParseMode;
 use TgBotLib\Objects\InputMedia\InputMediaPhoto;
-use TgBotLib\Objects\LinkPreviewOptions;
 use TgBotLib\Objects\Message;
 
 class SendMediaGroupTest extends TestCase

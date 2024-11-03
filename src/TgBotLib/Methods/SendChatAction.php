@@ -6,7 +6,6 @@
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
-    use TgBotLib\Objects\Message;
 
     class SendChatAction extends Method
     {

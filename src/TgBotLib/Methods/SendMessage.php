@@ -2,7 +2,6 @@
 
     namespace TgBotLib\Methods;
 
-    use InvalidArgumentException;
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;

@@ -5,12 +5,8 @@
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
-    use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Exceptions\TelegramException;
-    use TgBotLib\Interfaces\ObjectTypeInterface;
-    use TgBotLib\Objects\MessageEntity;
     use TgBotLib\Objects\MessageId;
-    use TgBotLib\Objects\ReplyParameters;
 
     class CopyMessages extends Method
     {

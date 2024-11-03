@@ -4,9 +4,6 @@ namespace TgBotLib\Methods;
 
 use PHPUnit\Framework\TestCase;
 use TgBotLib\Bot;
-use TgBotLib\Enums\Types\ParseMode;
-use TgBotLib\Objects\LinkPreviewOptions;
-use TgBotLib\Objects\Message;
 use TgBotLib\Objects\MessageId;
 
 class ForwardMessagesTest extends TestCase
