@@ -290,6 +290,27 @@
         }
 
         /**
+         * Retrieves an array of event handlers that correspond to the specified command.
+         *
+         * @param string $command The command to filter the event handlers by.
+         * @return array The array of event handlers that match the specified command.
+         */
+        public function getEventHandlersByCommand(string $command): array
+        {
+            $results = [];
+            /** @var UpdateEvent $eventHandler */
+            foreach($this->eventHandlers as $eventHandler)
+            {
+                if(strtolower($eventHandler::getCommand()) === strtolower($command))
+                {
+                    $results[] = $eventHandler;
+                }
+            }
+
+            return $results;
+        }
+
+        /**
          * Removes all event handlers.
          *
          * @return void
