@@ -240,13 +240,10 @@
                     $commandHandlers = $this->getEventHandlersByCommand($command);
                     foreach ($commandHandlers as $commandHandler)
                     {
-                        /** @var CommandEvent $commandHandler */
-                        if ($commandHandler::getCommand() === $command)
-                        {
-                            (new $commandHandler($update))->handle($this);
-                            continue 2;
-                        }
+                        (new $commandHandler($update))->handle($this);
                     }
+
+                    continue;
                 }
 
                 // Check if the update contains a callback query
