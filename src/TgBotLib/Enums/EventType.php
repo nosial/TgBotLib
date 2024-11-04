@@ -11,6 +11,7 @@
     use TgBotLib\Events\ChatJoinRequestEvent;
     use TgBotLib\Events\ChatMemberUpdatedEvent;
     use TgBotLib\Events\ChosenInlineResultEvent;
+    use TgBotLib\Events\CommandEvent;
     use TgBotLib\Events\DeletedBusinessMessagesEvent;
     use TgBotLib\Events\EditedBusinessMessageEvent;
     use TgBotLib\Events\EditedChannelPostEvent;
@@ -54,6 +55,7 @@
         case CHANNEL_POST = ChannelPostEvent::class;
         case EDITED_MESSAGE = EditedMessageEvent::class;
         case MESSAGE = MessageEvent::class;
+        case COMMAND = CommandEvent::class;
 
         /**
          * Determines the type of event based on the provided Update object.
