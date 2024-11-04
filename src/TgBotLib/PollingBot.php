@@ -3,12 +3,6 @@
     namespace TgBotLib;
 
     use RuntimeException;
-    use TgBotLib\Abstracts\UpdateEvent;
-    use TgBotLib\Classes\Logger;
-    use TgBotLib\Enums\EventType;
-    use TgBotLib\Events\CommandEvent;
-    use TgBotLib\Objects\Update;
-    use Throwable;
 
     /**
      * PollingBot class that extends Bot for handling updates using polling.
@@ -181,7 +175,10 @@
             }
             else
             {
-                $this->processUpdates($updates);
+                foreach($updates as $update)
+                {
+                    $this->handleUpdate($update);
+                }
             }
         }
 
@@ -209,67 +206,12 @@
             else
             {
                 // Child process
-                try
+                foreach($updates as $update)
                 {
-                    $this->processUpdates($updates);
-                    exit(0);
-                }
-                catch (Throwable $e)
-                {
-                    Logger::getLogger()->error("Error in forked process: " . $e->getMessage());
-                    exit(1);
-                }
-            }
-        }
-
-        /**
-         * Processes a batch of updates with appropriate event handlers
-         *
-         * @param array $updates
-         * @return void
-         */
-        private function processUpdates(array $updates): void
-        {
-            /** @var Update $update */
-            foreach ($updates as $update)
-            {
-                // Check if the update contains a command
-                $command = $update?->getAnyMessage()?->getCommand();
-                $commandExecuted = false;
-                if ($command !== null)
-                {
-                    foreach ($this->getEventHandlersByCommand($command) as $commandHandler)
-                    {
-                        (new $commandHandler($update))->handle($this);
-                        $commandExecuted = true;
-                    }
-
-                    if($commandExecuted)
-                    {
-                        continue;
-                    }
+                    $this->handleUpdate($update);
                 }
 
-                // Check if the update contains a callback query
-                $updateByType = $this->getEventHandlersByType(EventType::determineEventType($update));
-                if (count($updateByType) === 0)
-                {
-                    // If no event handlers are found appropriate for the update type, use the generic update event handler
-                    foreach ($this->getEventHandlersByType(EventType::UPDATE_EVENT) as $eventHandler)
-                    {
-                        /** @var UpdateEvent $eventHandler */
-                        (new $eventHandler($update))->handle($this);
-                    }
-                }
-                else
-                {
-                    // Otherwise, use the appropriate event handler for the update type
-                    foreach ($updateByType as $eventHandler)
-                    {
-                        /** @var UpdateEvent $eventHandler */
-                        (new $eventHandler($update))->handle($this);
-                    }
-                }
+                exit(0);
             }
         }
 

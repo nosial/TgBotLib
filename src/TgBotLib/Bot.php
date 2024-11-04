@@ -18,6 +18,7 @@
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
+    use TgBotLib\Events\CommandEvent;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\BotCommand;
     use TgBotLib\Objects\BotCommandScope;
@@ -90,7 +91,7 @@
      * @method string exportChatInviteLink(string|int $chat_id) Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as String on success.
      * @method ChatInviteLink createChatInviteLink(string|int $chat_id, ?string $name=null, ?int $expire_date=null, ?int $member_limit=null, ?bool $creates_join_request=null) Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
      * @method ChatInviteLink editChatInviteLink(string|int $chat_id, string $invite_link, ?string $name=null, ?int $expire_date=null, ?int $member_limit=null, ?bool $creates_join_request=null) Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
-     * @method ChatInviteLink createChatSubscriptionInviteLink(string|int $chat_id, int $subscription_period, int $subscription_price, ?string $name=null,) Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
+     * @method ChatInviteLink createChatSubscriptionInviteLink(string|int $chat_id, int $subscription_period, int $subscription_price, ?string $name=null) Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
      * @method ChatInviteLink editChatSubscriptionInviteLink(string|int $chat_id, string $invite_link, ?string $name=null) Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.
      * @method ChatInviteLink revokeChatInviteLink(string|int $chat_id, string $invite_link) Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      * @method bool approveChatJoinRequest(string|int $chat_id, int $user_id) Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
@@ -346,6 +347,59 @@
             {
                 return $eventHandler !== $className;
             });
+        }
+
+        /**
+         * Handles an incoming update. It first checks if there is a command within the update and
+         * processes it with appropriate event handlers. If no command is present, it determines the
+         * type of the update and processes it with corresponding event handlers. If no specific event
+         * handlers are found for the update type, it falls back to a generic update event handler.
+         *
+         * @param Update $update The update object to be handled.
+         * @return void
+         */
+        public function handleUpdate(Update $update): void
+        {
+            $command = $update?->getAnyMessage()?->getCommand();
+            if($command !== null)
+            {
+                $commandExecuted = false;
+
+                /** @var CommandEvent $eventHandler */
+                foreach($this->getEventHandlersByCommand($command) as $eventHandler)
+                {
+                    (new $eventHandler($update))->handle($this);
+                    $commandExecuted = true;
+                }
+
+                if($commandExecuted)
+                {
+                    return;
+                }
+            }
+
+            // Get event handlers by type, determine the type of the update
+            $eventHandlers = $this->getEventHandlersByType(EventType::determineEventType($update));
+
+            // If there are no appropriate event handlers for the update type, use the generic update event handler
+            if(empty($eventHandlers))
+            {
+                foreach ($this->getEventHandlersByType(EventType::UPDATE_EVENT) as $eventHandler)
+                {
+                    /** @var UpdateEvent $eventHandler */
+                    (new $eventHandler($update))->handle($this);
+                }
+
+                // We return early here to avoid executing the generic update event handler twice
+                return;
+            }
+
+            // Execute all event handlers that match the update type
+            /** @var UpdateEvent $eventHandler */
+            foreach($eventHandlers as $eventHandler)
+            {
+                (new $eventHandler($update))->handle($this);
+            }
         }
 
         /**

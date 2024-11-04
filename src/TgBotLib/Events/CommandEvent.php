@@ -34,7 +34,7 @@
          */
         protected function getMessage(): Message
         {
-            return $this->update->getMessage();
+            return $this->update->getAnyMessage();
         }
 
         /**
@@ -44,12 +44,12 @@
          */
         protected function getArguments(): string
         {
-            if(strlen($this->getMessage()->getText()) <= strlen(static::getCommand()) + 1)
+            if(strlen($this->getMessage()->getCommand()) <= strlen(static::getCommand()) + 1)
             {
                 return '';
             }
 
-            return substr($this->getMessage()->getText(), strlen(static::getCommand()) + 1);
+            return substr($this->getMessage()->getCommand(), strlen(static::getCommand()) + 1);
         }
 
         /**

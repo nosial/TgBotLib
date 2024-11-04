@@ -1008,20 +1008,24 @@
          */
         public function getCommand(): ?string
         {
-            if ($this->text === null)
+            if ($this->getAnyText() === null)
             {
                 return null;
             }
 
-            $text = trim($this->text);
+            $text = trim($this->getAnyText());
 
             if (!str_starts_with($text, '/'))
             {
                 return null;
             }
 
-            $parts = explode(' ', $text);
-            return ltrim($parts[0], '/');
+            if (preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $text, $matches))
+            {
+                return $matches[1];
+            }
+
+            return null;
         }
 
         /**
