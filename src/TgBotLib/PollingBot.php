@@ -234,7 +234,7 @@
             foreach ($updates as $update)
             {
                 // Check if the update contains a command
-                $command = $update->getAnyMessage()->getCommand();
+                $command = $update?->getAnyMessage()?->getCommand();
                 if ($command !== null)
                 {
                     $commandHandlers = $this->getEventHandlersByCommand($command);
