@@ -30,5 +30,11 @@
             return EventType::UPDATE_EVENT;
         }
 
+        /**
+         * Abstract method to handle the bot instance.
+         *
+         * @param Bot $bot The bot instance to be handled.
+         * @return void
+         */
         public abstract function handle(Bot $bot): void;
     }
