@@ -235,14 +235,19 @@
             {
                 // Check if the update contains a command
                 $command = $update?->getAnyMessage()?->getCommand();
+                $commandExecuted = false;
                 if ($command !== null)
                 {
                     foreach ($this->getEventHandlersByCommand($command) as $commandHandler)
                     {
                         (new $commandHandler($update))->handle($this);
+                        $commandExecuted = true;
                     }
 
-                    continue;
+                    if($commandExecuted)
+                    {
+                        continue;
+                    }
                 }
 
                 // Check if the update contains a callback query
