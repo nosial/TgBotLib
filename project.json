@@ -30,6 +30,12 @@
                 "version": "latest",
                 "source_type": "remote",
                 "source": "nosial/libs.tempfile=latest@n64"
+            },
+            {
+                "name": "net.nosial.optslib",
+                "version": "latest",
+                "source_type": "remote",
+                "source": "nosial/libs.opts=latest@n64"
             }
         ],
         "configurations": [

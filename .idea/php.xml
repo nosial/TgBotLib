@@ -12,6 +12,7 @@
   <component name="PhpAnalysisConfiguration" call_tree_analysis_depth="3" />
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="/var/ncc/packages/net.nosial.optslib=1.1.2" />
       <path value="/var/ncc/packages/net.nosial.loglib=2.0.2" />
       <path value="/usr/share/php" />
     </include_path>
