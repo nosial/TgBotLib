@@ -6,6 +6,8 @@
     use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Logger;
     use TgBotLib\Enums\EventType;
+    use TgBotLib\Events\CommandEvent;
+    use TgBotLib\Objects\Update;
     use Throwable;
 
     /**
@@ -228,10 +230,27 @@
          */
         private function processUpdates(array $updates): void
         {
+            /** @var Update $update */
             foreach ($updates as $update)
             {
-                $updateByType = $this->getEventHandlersByType(EventType::determineEventType($update));
+                // Check if the update contains a command
+                $command = $update->getAnyMessage()->getCommand();
+                if ($command !== null)
+                {
+                    $commandHandlers = $this->getEventHandlersByCommand($command);
+                    foreach ($commandHandlers as $commandHandler)
+                    {
+                        /** @var CommandEvent $commandHandler */
+                        if ($commandHandler::getCommand() === $command)
+                        {
+                            (new $commandHandler($update))->handle($this);
+                            continue 2;
+                        }
+                    }
+                }
 
+                // Check if the update contains a callback query
+                $updateByType = $this->getEventHandlersByType(EventType::determineEventType($update));
                 if (count($updateByType) === 0)
                 {
                     // If no event handlers are found appropriate for the update type, use the generic update event handler
