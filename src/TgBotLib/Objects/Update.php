@@ -296,6 +296,24 @@
         }
 
         /**
+         * Retrieves any type of message that is currently available. This method checks for the presence of a standard message,
+         * an edited message, a channel post, an edited channel post, a business message, or an edited business message,
+         * and returns the first one found.
+         *
+         * @return Message|null
+         */
+        public function getAnyMessage(): ?Message
+        {
+            return
+                $this->message ??
+                $this->edited_message ??
+                $this->channel_post ??
+                $this->edited_channel_post ??
+                $this->business_message ??
+                $this->edited_business_message;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
