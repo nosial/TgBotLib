@@ -992,6 +992,39 @@
         }
 
         /**
+         * Retrieves any available text, prioritizing 'text' over 'caption'.
+         *
+         * @return string|null
+         */
+        public function getAnyText(): ?string
+        {
+            return $this->text ?? $this->caption;
+        }
+
+        /**
+         * Retrieves the command from the text if it exists.
+         *
+         * @return string|null
+         */
+        public function getCommand(): ?string
+        {
+            if ($this->text === null)
+            {
+                return null;
+            }
+
+            $text = trim($this->text);
+
+            if (!str_starts_with($text, '/'))
+            {
+                return null;
+            }
+
+            $parts = explode(' ', $text);
+            return ltrim($parts[0], '/');
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
