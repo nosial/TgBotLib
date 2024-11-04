@@ -237,8 +237,7 @@
                 $command = $update?->getAnyMessage()?->getCommand();
                 if ($command !== null)
                 {
-                    $commandHandlers = $this->getEventHandlersByCommand($command);
-                    foreach ($commandHandlers as $commandHandler)
+                    foreach ($this->getEventHandlersByCommand($command) as $commandHandler)
                     {
                         (new $commandHandler($update))->handle($this);
                     }
