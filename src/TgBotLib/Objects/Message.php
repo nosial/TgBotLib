@@ -1026,11 +1026,12 @@
         /**
          * Retrieves any available text, prioritizing 'text' over 'caption'.
          *
+         * @param bool $includeCommand
          * @return string|null
          */
-        public function getAnyText(): ?string
+        public function getAnyText(bool $includeCommand=false): ?string
         {
-            return $this->text ?? $this->caption;
+            return $this->getText($includeCommand) ?? $this->getCaption($includeCommand);
         }
 
         /**
