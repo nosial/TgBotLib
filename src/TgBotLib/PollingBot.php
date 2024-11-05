@@ -3,6 +3,7 @@
     namespace TgBotLib;
 
     use RuntimeException;
+    use function RuntimeException;
 
     /**
      * PollingBot class that extends Bot for handling updates using polling.
@@ -14,6 +15,7 @@
         private int $timeout;
         private array $allowedUpdates;
         private bool $fork;
+        private array $childPids;
 
         /**
          * Constructor for the class, initializing with a Bot instance.
@@ -29,6 +31,13 @@
             $this->timeout = 0;
             $this->allowedUpdates = [];
             $this->fork = false;
+            $this->childPids = [];
+
+            // Register signal handler for child processes
+            if (function_exists('pcntl_signal'))
+            {
+                pcntl_signal(SIGCHLD, [$this, 'signalHandler']);
+            }
         }
 
         /**
@@ -128,9 +137,9 @@
         }
 
         /**
-         * Sets whether updates should be processed in a forked process
+         * Sets the fork value.
          *
-         * @param bool $fork
+         * @param bool $fork The fork value to set.
          * @return void
          */
         public function setFork(bool $fork): void
@@ -139,13 +148,29 @@
         }
 
         /**
-         * Gets the current fork setting
+         * Retrieves the current fork setting.
          *
-         * @return bool
+         * @return bool The configured fork value.
          */
         public function getFork(): bool
         {
             return $this->fork;
+        }
+
+        private function signalHandler(int $signal): void
+        {
+            if ($signal === SIGCHLD)
+            {
+                $i = -1;
+                while (($pid = pcntl_wait($i, WNOHANG)) > 0)
+                {
+                    $key = array_search($pid, $this->childPids);
+                    if ($key !== false)
+                    {
+                        unset($this->childPids[$key]);
+                    }
+                }
+            }
         }
 
         /**
@@ -155,6 +180,12 @@
          */
         public function handleUpdates(): void
         {
+            // Install signal handler
+            if ($this->fork && function_exists('pcntl_signal_dispatch'))
+            {
+                pcntl_signal_dispatch();
+            }
+
             $updates = $this->getUpdates(offset: ($this->offset ?: 0), limit: $this->limit, timeout: $this->timeout, allowed_updates: $this->retrieveAllowedUpdates());
 
             if (empty($updates))
@@ -162,56 +193,87 @@
                 return;
             }
 
-            // Update the offset based on the last update ID
-            $lastUpdate = end($updates);
-            if ($lastUpdate->getUpdateId() > ($this->offset ?? 0))
+            // Track the highest update ID we've seen
+            $maxUpdateId = null;
+
+            foreach ($updates as $update)
             {
-                $this->offset = $lastUpdate->getUpdateId() + 1;
+                // Update the maximum update ID as we go
+                if ($maxUpdateId === null || $update->getUpdateId() > $maxUpdateId)
+                {
+                    $maxUpdateId = $update->getUpdateId();
+                }
+
+                if ($this->fork)
+                {
+                    // Clean up any finished processes
+                    if (function_exists('pcntl_signal_dispatch'))
+                    {
+                        pcntl_signal_dispatch();
+                    }
+
+                    $pid = pcntl_fork();
+
+                    if ($pid == -1)
+                    {
+                        // Fork failed
+                        throw new RuntimeException('Failed to fork process for update handling');
+                    }
+                    elseif ($pid)
+                    {
+                        // Parent process
+                        $this->childPids[] = $pid;
+
+                        // If we have too many child processes, wait for some to finish
+                        $maxChildren = 32; // Adjust this value based on your system's capabilities
+                        while (count($this->childPids) >= $maxChildren)
+                        {
+                            if (function_exists('pcntl_signal_dispatch'))
+                            {
+                                pcntl_signal_dispatch();
+                            }
+
+                            usleep(10000); // Sleep for 10ms to prevent CPU hogging
+                        }
+                    }
+                    else
+                    {
+                        // Child process
+                        try
+                        {
+                            $this->handleUpdate($update);
+                        }
+                        finally
+                        {
+                            exit(0);
+                        }
+                    }
+                }
+                else
+                {
+                    $this->handleUpdate($update);
+                }
             }
 
+            // Update the offset based on the highest update ID we've seen
+            if ($maxUpdateId !== null)
+            {
+                $this->offset = $maxUpdateId + 1;
+            }
+
+            // If forking is enabled, ensure we clean up any remaining child processes
             if ($this->fork)
             {
-                $this->handleUpdatesInFork($updates);
-            }
-            else
-            {
-                foreach($updates as $update)
+                // Wait for remaining child processes to finish
+                while (!empty($this->childPids))
                 {
-                    $this->handleUpdate($update);
+                    if (function_exists('pcntl_signal_dispatch'))
+                    {
+                        pcntl_signal_dispatch();
+                    }
+
+                    usleep(10000); // Sleep for 10ms to prevent CPU hogging
                 }
-            }
-        }
-
-        /**
-         * Handles updates in a forked child process
-         *
-         * @param array $updates
-         * @return void
-         */
-        private function handleUpdatesInFork(array $updates): void
-        {
-            $pid = pcntl_fork();
-
-            if ($pid == -1)
-            {
-                // Fork failed
-                throw new RuntimeException('Failed to fork process for update handling');
-            }
-            elseif ($pid)
-            {
-                // Parent process
-                // Wait for child to finish to prevent zombie processes
-                pcntl_wait($status);
-            }
-            else
-            {
-                // Child process
-                foreach($updates as $update)
-                {
-                    $this->handleUpdate($update);
-                }
-
-                exit(0);
             }
         }
 

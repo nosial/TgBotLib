@@ -360,6 +360,8 @@
          */
         public function handleUpdate(Update $update): void
         {
+            Logger::getLogger()->debug(sprintf('Handling update %s', $update->getUpdateId()));
+
             $command = $update?->getAnyMessage()?->getCommand();
             if($command !== null)
             {
@@ -368,6 +370,7 @@
                 /** @var CommandEvent $eventHandler */
                 foreach($this->getEventHandlersByCommand($command) as $eventHandler)
                 {
+                    Logger::getLogger()->debug(sprintf('Executing command %s for update %s', $command, $update->getUpdateId()));
                     (new $eventHandler($update))->handle($this);
                     $commandExecuted = true;
                 }
@@ -386,6 +389,7 @@
             {
                 foreach ($this->getEventHandlersByType(EventType::UPDATE_EVENT) as $eventHandler)
                 {
+                    Logger::getLogger()->debug(sprintf('Executing generic update event handler for update %s', $update->getUpdateId()));
                     /** @var UpdateEvent $eventHandler */
                     (new $eventHandler($update))->handle($this);
                 }
@@ -398,6 +402,7 @@
             /** @var UpdateEvent $eventHandler */
             foreach($eventHandlers as $eventHandler)
             {
+                Logger::getLogger()->debug(sprintf('Executing event handler for type %s for update %s', $eventHandler::getEventType()->value, $update->getUpdateId()));
                 (new $eventHandler($update))->handle($this);
             }
         }
@@ -462,6 +467,7 @@
             }
 
             // Support named and positional arguments
+            Logger::getLogger()->debug(sprintf('Calling method %s with arguments %s', $name, json_encode($arguments)));
             $parameters = $this->parseArguments($name, $arguments);
             return $this->sendRequest($name, $parameters);
         }
