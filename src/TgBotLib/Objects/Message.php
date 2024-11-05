@@ -338,10 +338,26 @@
         /**
          * Optional. For text messages, the actual UTF-8 text of the message
          *
+         * @param bool $includeCommand
          * @return string|null
          */
-        public function getText(): ?string
+        public function getText(bool $includeCommand=true): ?string
         {
+            if($includeCommand)
+            {
+                return $this->text;
+            }
+
+            if($this->text === null)
+            {
+                return null;
+            }
+
+            if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->text, $matches))
+            {
+                return str_replace($matches[0], '', $this->text);
+            }
+
             return $this->text;
         }
 
@@ -481,10 +497,26 @@
         /**
          * Optional. Caption for the animation, audio, document, paid media, photo, video or voice
          *
+         * @param bool $includeCommand
          * @return string|null
          */
-        public function getCaption(): ?string
+        public function getCaption(bool $includeCommand=false): ?string
         {
+            if($includeCommand)
+            {
+                return $this->caption;
+            }
+
+            if($this->caption === null)
+            {
+                return null;
+            }
+
+            if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->caption, $matches))
+            {
+                return str_replace($matches[0], '', $this->caption);
+            }
+
             return $this->caption;
         }
 
