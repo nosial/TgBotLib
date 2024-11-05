@@ -38,6 +38,8 @@
     {
         case GET_UPDATES = 'getUpdates';
         case SET_WEBHOOK = 'setWebhook';
+        case DELETE_WEBHOOK = 'deleteWebhook';
+        case GET_WEBHOOK_INFO = 'getWebhookInfo';
         case GET_ME = 'getMe';
         case LOGOUT = 'logOut';
         case CLOSE = 'close';
@@ -61,8 +63,6 @@
         case SEND_POLL = 'sendPoll';
         case SEND_DICE = 'sendDice';
         case SEND_CHAT_ACTION = 'sendChatAction';
-        case DELETE_WEBHOOK = 'deleteWebhook';
-        case GET_WEBHOOK_INFO = 'getWebhookInfo';
         case SET_MESSAGE_REACTION = 'setMessageReaction';
 
         /**
