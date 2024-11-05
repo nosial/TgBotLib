@@ -341,16 +341,16 @@
          * @param bool $includeCommand
          * @return string|null
          */
-        public function getText(bool $includeCommand=true): ?string
+        public function getText(bool $includeCommand=false): ?string
         {
-            if($includeCommand)
-            {
-                return $this->text;
-            }
-
             if($this->text === null)
             {
                 return null;
+            }
+
+            if($includeCommand)
+            {
+                return $this->text;
             }
 
             if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->text, $matches))
@@ -502,14 +502,14 @@
          */
         public function getCaption(bool $includeCommand=false): ?string
         {
-            if($includeCommand)
-            {
-                return $this->caption;
-            }
-
             if($this->caption === null)
             {
                 return null;
+            }
+
+            if($includeCommand)
+            {
+                return $this->caption;
             }
 
             if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->caption, $matches))
