@@ -341,21 +341,21 @@
          * @param bool $includeCommand
          * @return string|null
          */
-        public function getText(bool $includeCommand=false): ?string
+        public function getText(bool $includeCommand = false): ?string
         {
-            if($this->text === null)
+            if ($this->text === null)
             {
                 return null;
             }
 
-            if($includeCommand)
+            if ($includeCommand)
             {
                 return $this->text;
             }
 
-            if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->text, $matches))
+            if (preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?\s?/', $this->text, $matches))
             {
-                return str_replace($matches[0], '', $this->text);
+                return ltrim(substr($this->text, strlen($matches[0])));
             }
 
             return $this->text;
@@ -514,7 +514,7 @@
 
             if(preg_match('/^\/([a-zA-Z0-9_]+)(?:@[a-zA-Z0-9_]+)?/', $this->caption, $matches))
             {
-                return str_replace($matches[0], '', $this->caption);
+                return ltrim(substr($this->caption, strlen($matches[0])));
             }
 
             return $this->caption;
@@ -1041,12 +1041,12 @@
          */
         public function getCommand(): ?string
         {
-            if ($this->getAnyText() === null)
+            if ($this->getAnyText(true) === null)
             {
                 return null;
             }
 
-            $text = trim($this->getAnyText());
+            $text = trim($this->getAnyText(true));
 
             if (!str_starts_with($text, '/'))
             {

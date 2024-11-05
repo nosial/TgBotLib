@@ -4,6 +4,7 @@
 
     use TgBotLib\Bot;
     use TgBotLib\Enums\EventType;
+    use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\Update;
 
     abstract class UpdateEvent
@@ -35,6 +36,7 @@
          *
          * @param Bot $bot The bot instance to be handled.
          * @return void
+         * @throws TelegramException
          */
         public abstract function handle(Bot $bot): void;
     }

@@ -9,6 +9,7 @@
 
     namespace TgBotLib;
 
+    use Exception;
     use InvalidArgumentException;
     use ReflectionClass;
     use TgBotLib\Abstracts\Method;
@@ -366,13 +367,24 @@
             if($command !== null)
             {
                 $commandExecuted = false;
+                Logger::getLogger()->debug(sprintf('Executing command %s for update %s', $command, $update->getUpdateId()));
 
                 /** @var CommandEvent $eventHandler */
                 foreach($this->getEventHandlersByCommand($command) as $eventHandler)
                 {
-                    Logger::getLogger()->debug(sprintf('Executing command %s for update %s', $command, $update->getUpdateId()));
-                    (new $eventHandler($update))->handle($this);
-                    $commandExecuted = true;
+                    try
+                    {
+                        (new $eventHandler($update))->handle($this);
+                        $commandExecuted = true;
+                    }
+                    catch(TelegramException $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Telegram exception occurred: %s', $e->getMessage()), $e);
+                    }
+                    catch(Exception $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Exception occurred: %s', $e->getMessage()), $e);
+                    }
                 }
 
                 if($commandExecuted)
@@ -387,11 +399,22 @@
             // If there are no appropriate event handlers for the update type, use the generic update event handler
             if(empty($eventHandlers))
             {
+                Logger::getLogger()->debug(sprintf('Executing generic update event handler for update %s', $update->getUpdateId()));
                 foreach ($this->getEventHandlersByType(EventType::UPDATE_EVENT) as $eventHandler)
                 {
-                    Logger::getLogger()->debug(sprintf('Executing generic update event handler for update %s', $update->getUpdateId()));
-                    /** @var UpdateEvent $eventHandler */
-                    (new $eventHandler($update))->handle($this);
+                    try
+                    {
+                        /** @var UpdateEvent $eventHandler */
+                        (new $eventHandler($update))->handle($this);
+                    }
+                    catch(TelegramException $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Telegram exception occurred: %s', $e->getMessage()), $e);
+                    }
+                    catch(Exception $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Exception occurred: %s', $e->getMessage()), $e);
+                    }
                 }
 
                 // We return early here to avoid executing the generic update event handler twice
@@ -400,10 +423,21 @@
 
             // Execute all event handlers that match the update type
             /** @var UpdateEvent $eventHandler */
+            Logger::getLogger()->debug(sprintf('Executing event handler for type %s for update %s', $eventHandler::getEventType()->value, $update->getUpdateId()));
             foreach($eventHandlers as $eventHandler)
             {
-                Logger::getLogger()->debug(sprintf('Executing event handler for type %s for update %s', $eventHandler::getEventType()->value, $update->getUpdateId()));
-                (new $eventHandler($update))->handle($this);
+                try
+                {
+                    (new $eventHandler($update))->handle($this);
+                }
+                catch(TelegramException $e)
+                {
+                    Logger::getLogger()->error(sprintf('Telegram exception occurred: %s', $e->getMessage()), $e);
+                }
+                catch(Exception $e)
+                {
+                    Logger::getLogger()->error(sprintf('Exception occurred: %s', $e->getMessage()), $e);
+                }
             }
         }
 
@@ -467,7 +501,6 @@
             }
 
             // Support named and positional arguments
-            Logger::getLogger()->debug(sprintf('Calling method %s with arguments %s', $name, json_encode($arguments)));
             $parameters = $this->parseArguments($name, $arguments);
             return $this->sendRequest($name, $parameters);
         }
