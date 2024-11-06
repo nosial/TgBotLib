@@ -36,6 +36,7 @@
     use TgBotLib\Methods\SendVideo;
     use TgBotLib\Methods\SendVideoNote;
     use TgBotLib\Methods\SendVoice;
+    use TgBotLib\Methods\SetChatAdministratorCustomTitle;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
@@ -76,6 +77,7 @@
         case UNBAN_CHAT_MEMBER = 'unbanChatMember';
         case RESTRICT_CHAT_MEMBER = 'restrictChatMember';
         case PROMOTE_CHAT_MEMBER = 'promoteChatMember';
+        case SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE = 'setChatAdministratorCustomTitle';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -123,6 +125,7 @@
                 self::UNBAN_CHAT_MEMBER => UnbanChatMember::execute($bot, $parameters),
                 self::RESTRICT_CHAT_MEMBER => RestrictChatMember::execute($bot, $parameters),
                 self::PROMOTE_CHAT_MEMBER => PromoteChatMember::execute($bot, $parameters),
+                self::SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE => SetChatAdministratorCustomTitle::execute($bot, $parameters),
             };
         }
     }
