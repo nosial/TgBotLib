@@ -47,6 +47,7 @@
     use TgBotLib\Methods\SendVideoNote;
     use TgBotLib\Methods\SendVoice;
     use TgBotLib\Methods\SetChatAdministratorCustomTitle;
+    use TgBotLib\Methods\SetChatDescription;
     use TgBotLib\Methods\SetChatPermissions;
     use TgBotLib\Methods\SetChatPhoto;
     use TgBotLib\Methods\SetChatTitle;
@@ -106,6 +107,7 @@
         case SET_CHAT_PHOTO = 'setChatPhoto';
         case DELETE_CHAT_PHOTO = 'deleteChatPhoto';
         case SET_CHAT_TITLE = 'setChatTitle';
+        case SET_CHAT_DESCRIPTION = 'setChatDescription';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -168,6 +170,7 @@
                 self::SET_CHAT_PHOTO => SetChatPhoto::execute($bot, $parameters),
                 self::DELETE_CHAT_PHOTO => DeleteChatPhoto::execute($bot, $parameters),
                 self::SET_CHAT_TITLE => SetChatTitle::execute($bot, $parameters),
+                self::SET_CHAT_DESCRIPTION => SetChatDescription::execute($bot, $parameters),
             };
         }
     }
