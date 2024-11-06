@@ -18,6 +18,7 @@
     use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
     use TgBotLib\Methods\Logout;
+    use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendChatAction;
@@ -72,6 +73,7 @@
         case GET_FILE = 'getFile';
         case BAN_CHAT_MEMBER = 'banChatMember';
         case UNBAN_CHAT_MEMBER = 'unbanChatMember';
+        case RESTRICT_CHAT_MEMBER = 'restrictChatMember';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -117,6 +119,7 @@
                 self::GET_FILE => GetFile::execute($bot, $parameters),
                 self::BAN_CHAT_MEMBER => BanChatMember::execute($bot, $parameters),
                 self::UNBAN_CHAT_MEMBER => UnbanChatMember::execute($bot, $parameters),
+                self::RESTRICT_CHAT_MEMBER => RestrictChatMember::execute($bot, $parameters),
             };
         }
     }
