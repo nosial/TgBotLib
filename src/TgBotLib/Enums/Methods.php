@@ -5,6 +5,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Methods\ApproveChatJoinRequest;
     use TgBotLib\Methods\BanChatMember;
     use TgBotLib\Methods\BanChatSenderChat;
     use TgBotLib\Methods\Close;
@@ -96,6 +97,7 @@
         case CREATE_CHAT_SUBSCRIPTION_INVITE_LINK = 'createChatSubscriptionInviteLink';
         case EDIT_CHAT_SUBSCRIPTION_INVITE_LINK = 'editChatSubscriptionInviteLink';
         case REVOKE_CHAT_INVITE_LINK = 'revokeChatInviteLink';
+        case APPROVE_CHAT_JOIN_REQUEST = 'approveChatJoinRequest';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -153,6 +155,7 @@
                 self::CREATE_CHAT_SUBSCRIPTION_INVITE_LINK => CreateChatSubscriptionInviteLink::execute($bot, $parameters),
                 self::EDIT_CHAT_SUBSCRIPTION_INVITE_LINK => EditChatSubscriptionInviteLink::execute($bot, $parameters),
                 self::REVOKE_CHAT_INVITE_LINK => RevokeChatInviteLink::execute($bot, $parameters),
+                self::APPROVE_CHAT_JOIN_REQUEST => ApproveChatJoinRequest::execute($bot, $parameters),
             };
         }
     }
