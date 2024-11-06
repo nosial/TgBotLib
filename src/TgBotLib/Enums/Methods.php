@@ -11,6 +11,7 @@
     use TgBotLib\Methods\CopyMessage;
     use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\DeleteWebhook;
+    use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetFile;
@@ -84,6 +85,7 @@
         case BAN_CHAT_SENDER_CHAT = 'banChatSenderChat';
         case UNBAN_CHAT_SENDER_CHAT = 'unbanChatSenderChat';
         case SET_CHAT_PERMISSIONS = 'setChatPermissions';
+        case EXPORT_CHAT_INVITE_LINK = 'exportChatInviteLink';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -135,6 +137,7 @@
                 self::BAN_CHAT_SENDER_CHAT => BanChatSenderChat::execute($bot, $parameters),
                 self::UNBAN_CHAT_SENDER_CHAT => UnbanChatSenderChat::execute($bot, $parameters),
                 self::SET_CHAT_PERMISSIONS => SetChatPermissions::execute($bot, $parameters),
+                self::EXPORT_CHAT_INVITE_LINK => ExportChatInviteLink::execute($bot, $parameters),
             };
         }
     }
