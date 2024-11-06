@@ -36,6 +36,7 @@
     use TgBotLib\Methods\SendVoice;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
+    use TgBotLib\Methods\UnbanChatMember;
 
     enum Methods : string
     {
@@ -70,6 +71,7 @@
         case GET_USER_PROFILE_PHOTOS = 'getUserProfilePhotos';
         case GET_FILE = 'getFile';
         case BAN_CHAT_MEMBER = 'banChatMember';
+        case UNBAN_CHAT_MEMBER = 'unbanChatMember';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -114,6 +116,7 @@
                 self::GET_USER_PROFILE_PHOTOS => GetUserProfilePhotos::execute($bot, $parameters),
                 self::GET_FILE => GetFile::execute($bot, $parameters),
                 self::BAN_CHAT_MEMBER => BanChatMember::execute($bot, $parameters),
+                self::UNBAN_CHAT_MEMBER => UnbanChatMember::execute($bot, $parameters),
             };
         }
     }
