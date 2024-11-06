@@ -14,6 +14,7 @@
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
+    use TgBotLib\Methods\EditChatSubscriptionInviteLink;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
@@ -92,6 +93,7 @@
         case CREATE_CHAT_INVITE_LINK = 'createChatInviteLink';
         case EDIT_CHAT_INVITE_LINK = 'editChatInviteLink';
         case CREATE_CHAT_SUBSCRIPTION_INVITE_LINK = 'createChatSubscriptionInviteLink';
+        case EDIT_CHAT_SUBSCRIPTION_INVITE_LINK = 'editChatSubscriptionInviteLink';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -147,6 +149,7 @@
                 self::CREATE_CHAT_INVITE_LINK => CreateChatInviteLink::execute($bot, $parameters),
                 self::EDIT_CHAT_INVITE_LINK => EditChatInviteLink::execute($bot, $parameters),
                 self::CREATE_CHAT_SUBSCRIPTION_INVITE_LINK => CreateChatSubscriptionInviteLink::execute($bot, $parameters),
+                self::EDIT_CHAT_SUBSCRIPTION_INVITE_LINK => EditChatSubscriptionInviteLink::execute($bot, $parameters),
             };
         }
     }
