@@ -56,6 +56,7 @@
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
+    use TgBotLib\Methods\UnpinAllChatMessages;
     use TgBotLib\Methods\UnpinChatMessage;
 
     enum Methods : string
@@ -112,6 +113,7 @@
         case SET_CHAT_DESCRIPTION = 'setChatDescription';
         case PIN_CHAT_MESSAGE = 'pinChatMessage';
         case UNPIN_CHAT_MESSAGE = 'unpinChatMessage';
+        case UNPIN_ALL_CHAT_MESSAGES = 'unpinAllChatMessages';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -177,6 +179,7 @@
                 self::SET_CHAT_DESCRIPTION => SetChatDescription::execute($bot, $parameters),
                 self::PIN_CHAT_MESSAGE => PinChatMessage::execute($bot, $parameters),
                 self::UNPIN_CHAT_MESSAGE => UnpinChatMessage::execute($bot, $parameters),
+                self::UNPIN_ALL_CHAT_MESSAGES => UnpinAllChatMessages::execute($bot, $parameters),
             };
         }
     }
