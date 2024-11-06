@@ -13,6 +13,7 @@
     use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\CreateChatInviteLink;
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
+    use TgBotLib\Methods\DeclineChatJoinRequest;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -98,6 +99,7 @@
         case EDIT_CHAT_SUBSCRIPTION_INVITE_LINK = 'editChatSubscriptionInviteLink';
         case REVOKE_CHAT_INVITE_LINK = 'revokeChatInviteLink';
         case APPROVE_CHAT_JOIN_REQUEST = 'approveChatJoinRequest';
+        case DECLINE_CHAT_JOIN_REQUEST = 'declineChatJoinRequest';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -156,6 +158,7 @@
                 self::EDIT_CHAT_SUBSCRIPTION_INVITE_LINK => EditChatSubscriptionInviteLink::execute($bot, $parameters),
                 self::REVOKE_CHAT_INVITE_LINK => RevokeChatInviteLink::execute($bot, $parameters),
                 self::APPROVE_CHAT_JOIN_REQUEST => ApproveChatJoinRequest::execute($bot, $parameters),
+                self::DECLINE_CHAT_JOIN_REQUEST => DeclineChatJoinRequest::execute($bot, $parameters),
             };
         }
     }
