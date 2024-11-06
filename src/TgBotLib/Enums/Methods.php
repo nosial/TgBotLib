@@ -49,6 +49,7 @@
     use TgBotLib\Methods\SetChatAdministratorCustomTitle;
     use TgBotLib\Methods\SetChatPermissions;
     use TgBotLib\Methods\SetChatPhoto;
+    use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
@@ -104,6 +105,7 @@
         case DECLINE_CHAT_JOIN_REQUEST = 'declineChatJoinRequest';
         case SET_CHAT_PHOTO = 'setChatPhoto';
         case DELETE_CHAT_PHOTO = 'deleteChatPhoto';
+        case SET_CHAT_TITLE = 'setChatTitle';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -165,6 +167,7 @@
                 self::DECLINE_CHAT_JOIN_REQUEST => DeclineChatJoinRequest::execute($bot, $parameters),
                 self::SET_CHAT_PHOTO => SetChatPhoto::execute($bot, $parameters),
                 self::DELETE_CHAT_PHOTO => DeleteChatPhoto::execute($bot, $parameters),
+                self::SET_CHAT_TITLE => SetChatTitle::execute($bot, $parameters),
             };
         }
     }
