@@ -14,7 +14,9 @@
          */
         public static function execute(Bot $bot, array $parameters = []): ChatInviteLink
         {
-            return ChatInviteLink::fromArray($bot->sendRequest(Methods::CREATE_CHAT_INVITE_LINK->value, $parameters));
+            return ChatInviteLink::fromArray(
+                self::executeCurl(self::buildPost($bot, Methods::CREATE_CHAT_INVITE_LINK->value, $parameters))
+            );
         }
 
         /**

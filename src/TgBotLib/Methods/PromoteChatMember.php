@@ -14,7 +14,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): true
         {
-            return (bool)$bot->sendRequest(Methods::PROMOTE_CHAT_MEMBER->value, $parameters);
+            return (bool)self::executeCurl(self::buildPost($bot, Methods::PROMOTE_CHAT_MEMBER->value, $parameters));
         }
 
         /**

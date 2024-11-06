@@ -14,7 +14,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): true
         {
-            return (bool)$bot->sendRequest(Methods::UNBAN_CHAT_SENDER_CHAT->value, $parameters);
+            return (bool)self::executeCurl(self::buildPost($bot, Methods::UNBAN_CHAT_SENDER_CHAT->value, $parameters));
         }
 
         /**

@@ -15,7 +15,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): File
         {
-            return File::fromArray($bot->sendRequest(Methods::GET_FILE->value, $parameters));
+            return File::fromArray(self::executeCurl(self::buildPost($bot, Methods::GET_FILE->value, $parameters)));
         }
 
         /**

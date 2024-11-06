@@ -24,7 +24,7 @@
                 $parameters['permissions'] = json_encode($parameters['permissions']);
             }
 
-            return (bool)$bot->sendRequest(Methods::SET_CHAT_PERMISSIONS->value, $parameters);
+            return (bool)self::executeCurl(self::buildPost($bot, Methods::SET_CHAT_PERMISSIONS->value, $parameters));
         }
 
         /**

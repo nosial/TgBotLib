@@ -14,7 +14,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): true
         {
-            return (bool)$bot->sendRequest(Methods::SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE->value, $parameters);
+            return (bool)self::executeCurl(self::buildPost($bot, Methods::SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE->value, $parameters));
         }
 
         /**

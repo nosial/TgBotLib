@@ -5,6 +5,7 @@
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
+    use TgBotLib\Objects\ChatInviteLink;
 
     class ExportChatInviteLink extends Method
     {
@@ -14,7 +15,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): string
         {
-            return $bot->sendRequest(Methods::EXPORT_CHAT_INVITE_LINK->value, $parameters);
+            return (string)self::executeCurl(self::buildPost($bot, Methods::EXPORT_CHAT_INVITE_LINK->value, $parameters));
         }
 
         /**

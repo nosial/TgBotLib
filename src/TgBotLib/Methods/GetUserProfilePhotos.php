@@ -14,7 +14,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): UserProfilePhotos
         {
-            return UserProfilePhotos::fromArray($bot->sendRequest(Methods::GET_USER_PROFILE_PHOTOS->value, $parameters));
+            return UserProfilePhotos::fromArray(self::executeCurl(self::buildPost($bot, Methods::GET_USER_PROFILE_PHOTOS->value, $parameters)));
         }
 
         /**
