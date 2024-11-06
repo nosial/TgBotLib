@@ -5,6 +5,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Methods\BanChatMember;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\CopyMessage;
     use TgBotLib\Methods\CopyMessages;
@@ -68,6 +69,7 @@
         case SET_MESSAGE_REACTION = 'setMessageReaction';
         case GET_USER_PROFILE_PHOTOS = 'getUserProfilePhotos';
         case GET_FILE = 'getFile';
+        case BAN_CHAT_MEMBER = 'banChatMember';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -111,6 +113,7 @@
                 self::SET_MESSAGE_REACTION => SetMessageReaction::execute($bot, $parameters),
                 self::GET_USER_PROFILE_PHOTOS => GetUserProfilePhotos::execute($bot, $parameters),
                 self::GET_FILE => GetFile::execute($bot, $parameters),
+                self::BAN_CHAT_MEMBER => BanChatMember::execute($bot, $parameters),
             };
         }
     }
