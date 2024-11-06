@@ -6,6 +6,7 @@
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Methods\BanChatMember;
+    use TgBotLib\Methods\BanChatSenderChat;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\CopyMessage;
     use TgBotLib\Methods\CopyMessages;
@@ -78,6 +79,7 @@
         case RESTRICT_CHAT_MEMBER = 'restrictChatMember';
         case PROMOTE_CHAT_MEMBER = 'promoteChatMember';
         case SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE = 'setChatAdministratorCustomTitle';
+        case BAN_CHAT_SENDER_CHAT = 'banChatSenderChat';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -126,6 +128,7 @@
                 self::RESTRICT_CHAT_MEMBER => RestrictChatMember::execute($bot, $parameters),
                 self::PROMOTE_CHAT_MEMBER => PromoteChatMember::execute($bot, $parameters),
                 self::SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE => SetChatAdministratorCustomTitle::execute($bot, $parameters),
+                self::BAN_CHAT_SENDER_CHAT => BanChatSenderChat::execute($bot, $parameters),
             };
         }
     }
