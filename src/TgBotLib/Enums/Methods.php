@@ -47,6 +47,7 @@
     use TgBotLib\Methods\SendVoice;
     use TgBotLib\Methods\SetChatAdministratorCustomTitle;
     use TgBotLib\Methods\SetChatPermissions;
+    use TgBotLib\Methods\SetChatPhoto;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
@@ -100,6 +101,7 @@
         case REVOKE_CHAT_INVITE_LINK = 'revokeChatInviteLink';
         case APPROVE_CHAT_JOIN_REQUEST = 'approveChatJoinRequest';
         case DECLINE_CHAT_JOIN_REQUEST = 'declineChatJoinRequest';
+        case SET_CHAT_PHOTO = 'setChatPhoto';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -159,6 +161,7 @@
                 self::REVOKE_CHAT_INVITE_LINK => RevokeChatInviteLink::execute($bot, $parameters),
                 self::APPROVE_CHAT_JOIN_REQUEST => ApproveChatJoinRequest::execute($bot, $parameters),
                 self::DECLINE_CHAT_JOIN_REQUEST => DeclineChatJoinRequest::execute($bot, $parameters),
+                self::SET_CHAT_PHOTO => SetChatPhoto::execute($bot, $parameters),
             };
         }
     }
