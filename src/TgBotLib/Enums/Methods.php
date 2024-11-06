@@ -27,6 +27,7 @@
     use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
     use TgBotLib\Methods\Logout;
+    use TgBotLib\Methods\PinChatMessage;
     use TgBotLib\Methods\PromoteChatMember;
     use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\RevokeChatInviteLink;
@@ -108,6 +109,7 @@
         case DELETE_CHAT_PHOTO = 'deleteChatPhoto';
         case SET_CHAT_TITLE = 'setChatTitle';
         case SET_CHAT_DESCRIPTION = 'setChatDescription';
+        case PIN_CHAT_MESSAGE = 'pinChatMessage';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -171,6 +173,7 @@
                 self::DELETE_CHAT_PHOTO => DeleteChatPhoto::execute($bot, $parameters),
                 self::SET_CHAT_TITLE => SetChatTitle::execute($bot, $parameters),
                 self::SET_CHAT_DESCRIPTION => SetChatDescription::execute($bot, $parameters),
+                self::PIN_CHAT_MESSAGE => PinChatMessage::execute($bot, $parameters),
             };
         }
     }
