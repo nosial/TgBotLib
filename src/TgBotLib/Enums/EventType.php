@@ -2,7 +2,6 @@
 
     namespace TgBotLib\Enums;
 
-    use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Events\BusinessConnectionEvent;
     use TgBotLib\Events\BusinessMessageEvent;
     use TgBotLib\Events\CallbackQueryEvent;
@@ -21,12 +20,13 @@
     use TgBotLib\Events\MessageReactionCountEvent;
     use TgBotLib\Events\MessageReactionEvent;
     use TgBotLib\Events\MyChatMemberUpdatedEvent;
+    use TgBotLib\Events\PaidMediaPurchasedEvent;
     use TgBotLib\Events\PollAnswerEvent;
     use TgBotLib\Events\PollEvent;
-    use TgBotLib\Events\PaidMediaPurchasedEvent;
     use TgBotLib\Events\PreCheckoutQueryEvent;
     use TgBotLib\Events\RemovedChatBoostEvent;
     use TgBotLib\Events\ShippingQueryEvent;
+    use TgBotLib\Events\UpdateEvent;
     use TgBotLib\Objects\Update;
 
     enum EventType : string

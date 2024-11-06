@@ -13,13 +13,13 @@
     use InvalidArgumentException;
     use ReflectionClass;
     use TgBotLib\Abstracts\Method;
-    use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Classes\Logger;
     use TgBotLib\Enums\EventType;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Events\CommandEvent;
+    use TgBotLib\Events\UpdateEvent;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Objects\BotCommand;
     use TgBotLib\Objects\BotCommandScope;

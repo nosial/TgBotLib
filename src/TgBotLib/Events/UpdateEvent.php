@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Abstracts;
+    namespace TgBotLib\Events;
 
     use TgBotLib\Bot;
     use TgBotLib\Enums\EventType;

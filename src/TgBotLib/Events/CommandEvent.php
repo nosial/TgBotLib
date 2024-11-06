@@ -3,7 +3,6 @@
     namespace TgBotLib\Events;
 
     use OptsLib\Parse;
-    use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Message;
 

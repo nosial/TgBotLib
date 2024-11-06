@@ -2,7 +2,6 @@
 
     namespace TgBotLib\Events;
 
-    use TgBotLib\Abstracts\UpdateEvent;
     use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\Payments\ShippingQuery;
 
