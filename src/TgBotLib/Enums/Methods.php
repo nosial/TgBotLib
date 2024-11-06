@@ -41,6 +41,7 @@
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
+    use TgBotLib\Methods\UnbanChatSenderChat;
 
     enum Methods : string
     {
@@ -80,6 +81,7 @@
         case PROMOTE_CHAT_MEMBER = 'promoteChatMember';
         case SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE = 'setChatAdministratorCustomTitle';
         case BAN_CHAT_SENDER_CHAT = 'banChatSenderChat';
+        case UNBAN_CHAT_SENDER_CHAT = 'unbanChatSenderChat';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -129,6 +131,7 @@
                 self::PROMOTE_CHAT_MEMBER => PromoteChatMember::execute($bot, $parameters),
                 self::SET_CHAT_ADMINISTRATOR_CUSTOM_TITLE => SetChatAdministratorCustomTitle::execute($bot, $parameters),
                 self::BAN_CHAT_SENDER_CHAT => BanChatSenderChat::execute($bot, $parameters),
+                self::UNBAN_CHAT_SENDER_CHAT => UnbanChatSenderChat::execute($bot, $parameters)
             };
         }
     }
