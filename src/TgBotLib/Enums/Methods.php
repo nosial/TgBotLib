@@ -26,6 +26,7 @@
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\PromoteChatMember;
     use TgBotLib\Methods\RestrictChatMember;
+    use TgBotLib\Methods\RevokeChatInviteLink;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendChatAction;
@@ -94,6 +95,7 @@
         case EDIT_CHAT_INVITE_LINK = 'editChatInviteLink';
         case CREATE_CHAT_SUBSCRIPTION_INVITE_LINK = 'createChatSubscriptionInviteLink';
         case EDIT_CHAT_SUBSCRIPTION_INVITE_LINK = 'editChatSubscriptionInviteLink';
+        case REVOKE_CHAT_INVITE_LINK = 'revokeChatInviteLink';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -150,6 +152,7 @@
                 self::EDIT_CHAT_INVITE_LINK => EditChatInviteLink::execute($bot, $parameters),
                 self::CREATE_CHAT_SUBSCRIPTION_INVITE_LINK => CreateChatSubscriptionInviteLink::execute($bot, $parameters),
                 self::EDIT_CHAT_SUBSCRIPTION_INVITE_LINK => EditChatSubscriptionInviteLink::execute($bot, $parameters),
+                self::REVOKE_CHAT_INVITE_LINK => RevokeChatInviteLink::execute($bot, $parameters),
             };
         }
     }
