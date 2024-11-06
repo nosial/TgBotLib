@@ -11,6 +11,7 @@
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
+    use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -66,6 +67,7 @@
         case SEND_CHAT_ACTION = 'sendChatAction';
         case SET_MESSAGE_REACTION = 'setMessageReaction';
         case GET_USER_PROFILE_PHOTOS = 'getUserProfilePhotos';
+        case GET_FILE = 'getFile';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -108,6 +110,7 @@
                 self::SEND_CHAT_ACTION => SendChatAction::execute($bot, $parameters),
                 self::SET_MESSAGE_REACTION => SetMessageReaction::execute($bot, $parameters),
                 self::GET_USER_PROFILE_PHOTOS => GetUserProfilePhotos::execute($bot, $parameters),
+                self::GET_FILE => GetFile::execute($bot, $parameters),
             };
         }
     }
