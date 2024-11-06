@@ -26,6 +26,7 @@
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
+    use TgBotLib\Methods\LeaveChat;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\PinChatMessage;
     use TgBotLib\Methods\PromoteChatMember;
@@ -114,6 +115,7 @@
         case PIN_CHAT_MESSAGE = 'pinChatMessage';
         case UNPIN_CHAT_MESSAGE = 'unpinChatMessage';
         case UNPIN_ALL_CHAT_MESSAGES = 'unpinAllChatMessages';
+        case LEAVE_CHAT = 'leaveChat';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -180,6 +182,7 @@
                 self::PIN_CHAT_MESSAGE => PinChatMessage::execute($bot, $parameters),
                 self::UNPIN_CHAT_MESSAGE => UnpinChatMessage::execute($bot, $parameters),
                 self::UNPIN_ALL_CHAT_MESSAGES => UnpinAllChatMessages::execute($bot, $parameters),
+                self::LEAVE_CHAT => LeaveChat::execute($bot, $parameters),
             };
         }
     }
