@@ -13,6 +13,7 @@
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
+    use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\SendAnimation;
@@ -64,6 +65,7 @@
         case SEND_DICE = 'sendDice';
         case SEND_CHAT_ACTION = 'sendChatAction';
         case SET_MESSAGE_REACTION = 'setMessageReaction';
+        case GET_USER_PROFILE_PHOTOS = 'getUserProfilePhotos';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -105,6 +107,7 @@
                 self::SEND_DICE => SendDice::execute($bot, $parameters),
                 self::SEND_CHAT_ACTION => SendChatAction::execute($bot, $parameters),
                 self::SET_MESSAGE_REACTION => SetMessageReaction::execute($bot, $parameters),
+                self::GET_USER_PROFILE_PHOTOS => GetUserProfilePhotos::execute($bot, $parameters),
             };
         }
     }
