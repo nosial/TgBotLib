@@ -21,6 +21,7 @@
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
+    use TgBotLib\Methods\GetChat;
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
@@ -116,6 +117,7 @@
         case UNPIN_CHAT_MESSAGE = 'unpinChatMessage';
         case UNPIN_ALL_CHAT_MESSAGES = 'unpinAllChatMessages';
         case LEAVE_CHAT = 'leaveChat';
+        case GET_CHAT = 'getChat';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -183,6 +185,7 @@
                 self::UNPIN_CHAT_MESSAGE => UnpinChatMessage::execute($bot, $parameters),
                 self::UNPIN_ALL_CHAT_MESSAGES => UnpinAllChatMessages::execute($bot, $parameters),
                 self::LEAVE_CHAT => LeaveChat::execute($bot, $parameters),
+                self::GET_CHAT => GetChat::execute($bot, $parameters)
             };
         }
     }
