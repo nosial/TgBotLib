@@ -14,6 +14,7 @@
     use TgBotLib\Methods\CreateChatInviteLink;
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
     use TgBotLib\Methods\DeclineChatJoinRequest;
+    use TgBotLib\Methods\DeleteChatPhoto;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -102,6 +103,7 @@
         case APPROVE_CHAT_JOIN_REQUEST = 'approveChatJoinRequest';
         case DECLINE_CHAT_JOIN_REQUEST = 'declineChatJoinRequest';
         case SET_CHAT_PHOTO = 'setChatPhoto';
+        case DELETE_CHAT_PHOTO = 'deleteChatPhoto';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -162,6 +164,7 @@
                 self::APPROVE_CHAT_JOIN_REQUEST => ApproveChatJoinRequest::execute($bot, $parameters),
                 self::DECLINE_CHAT_JOIN_REQUEST => DeclineChatJoinRequest::execute($bot, $parameters),
                 self::SET_CHAT_PHOTO => SetChatPhoto::execute($bot, $parameters),
+                self::DELETE_CHAT_PHOTO => DeleteChatPhoto::execute($bot, $parameters),
             };
         }
     }
