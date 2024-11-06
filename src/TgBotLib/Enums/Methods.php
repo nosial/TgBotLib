@@ -12,6 +12,7 @@
     use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\CreateChatInviteLink;
     use TgBotLib\Methods\DeleteWebhook;
+    use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
@@ -88,6 +89,7 @@
         case SET_CHAT_PERMISSIONS = 'setChatPermissions';
         case EXPORT_CHAT_INVITE_LINK = 'exportChatInviteLink';
         case CREATE_CHAT_INVITE_LINK = 'createChatInviteLink';
+        case EDIT_CHAT_INVITE_LINK = 'editChatInviteLink';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -141,6 +143,7 @@
                 self::SET_CHAT_PERMISSIONS => SetChatPermissions::execute($bot, $parameters),
                 self::EXPORT_CHAT_INVITE_LINK => ExportChatInviteLink::execute($bot, $parameters),
                 self::CREATE_CHAT_INVITE_LINK => CreateChatInviteLink::execute($bot, $parameters),
+                self::EDIT_CHAT_INVITE_LINK => EditChatInviteLink::execute($bot, $parameters),
             };
         }
     }
