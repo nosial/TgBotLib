@@ -23,6 +23,7 @@
     use TgBotLib\Methods\ForwardMessages;
     use TgBotLib\Methods\GetChat;
     use TgBotLib\Methods\GetChatAdministrators;
+    use TgBotLib\Methods\GetChatMember;
     use TgBotLib\Methods\GetChatMemberCount;
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetMe;
@@ -122,6 +123,7 @@
         case GET_CHAT = 'getChat';
         case GET_CHAT_ADMINISTRATORS = 'getChatAdministrators';
         case GET_CHAT_MEMBER_COUNT = 'getChatMemberCount';
+        case GET_CHAT_MEMBER = 'getChatMember';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -192,6 +194,7 @@
                 self::GET_CHAT => GetChat::execute($bot, $parameters),
                 self::GET_CHAT_ADMINISTRATORS => GetChatAdministrators::execute($bot, $parameters),
                 self::GET_CHAT_MEMBER_COUNT => GetChatMemberCount::execute($bot, $parameters),
+                self::GET_CHAT_MEMBER => GetChatMember::execute($bot, $parameters),
             };
         }
     }
