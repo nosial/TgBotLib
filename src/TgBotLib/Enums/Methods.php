@@ -70,6 +70,7 @@
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
     use TgBotLib\Methods\UnpinAllChatMessages;
+    use TgBotLib\Methods\UnpinAllForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
 
     enum Methods : string
@@ -140,6 +141,7 @@
         case CLOSE_FORUM_TOPIC = 'closeForumTopic';
         case REOPEN_FORUM_TOPIC = 'reopenForumTopic';
         case DELETE_FORUM_TOPIC = 'deleteForumTopic';
+        case UNPIN_ALLL_FORUM_TOPIC_MESSAGES = 'UnpinAllForumTopicMessages';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -219,6 +221,7 @@
                 self::CLOSE_FORUM_TOPIC => CloseForumTopic::execute($bot, $parameters),
                 self::REOPEN_FORUM_TOPIC => ReopenForumTopic::execute($bot, $parameters),
                 self::DELETE_FORUM_TOPIC => DeleteForumTopic::execute($bot, $parameters),
+                self::UNPIN_ALLL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
             };
         }
     }
