@@ -43,6 +43,7 @@
     use TgBotLib\Methods\PinChatMessage;
     use TgBotLib\Methods\PromoteChatMember;
     use TgBotLib\Methods\ReopenForumTopic;
+    use TgBotLib\Methods\ReopenGeneralForumTopic;
     use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\RevokeChatInviteLink;
     use TgBotLib\Methods\SendAnimation;
@@ -146,6 +147,7 @@
         case UNPIN_ALLL_FORUM_TOPIC_MESSAGES = 'UnpinAllForumTopicMessages';
         case EDIT_GENERAL_FORUM_TOPIC = 'editGeneralForumTopic';
         case CLOSE_GENERAL_FORUM_TOPIC = 'closeGeneralForumTopic';
+        case REOPEN_GENERAL_FORUM_TOPIC = 'reopenGeneralForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -228,6 +230,7 @@
                 self::UNPIN_ALLL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
                 self::EDIT_GENERAL_FORUM_TOPIC => EditGeneralForumTopic::execute($bot, $parameters),
                 self::CLOSE_GENERAL_FORUM_TOPIC => CloseGeneralForumTopic::execute($bot, $parameters),
+                self::REOPEN_GENERAL_FORUM_TOPIC => ReopenGeneralForumTopic::execute($bot, $parameters),
             };
         }
     }
