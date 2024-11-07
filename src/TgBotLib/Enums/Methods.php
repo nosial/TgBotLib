@@ -38,6 +38,7 @@
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
+    use TgBotLib\Methods\HideGeneralForumTopic;
     use TgBotLib\Methods\LeaveChat;
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\PinChatMessage;
@@ -148,6 +149,7 @@
         case EDIT_GENERAL_FORUM_TOPIC = 'editGeneralForumTopic';
         case CLOSE_GENERAL_FORUM_TOPIC = 'closeGeneralForumTopic';
         case REOPEN_GENERAL_FORUM_TOPIC = 'reopenGeneralForumTopic';
+        case HIDE_GENERAL_FORUM_TOPIC = 'hideGeneralForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -231,6 +233,7 @@
                 self::EDIT_GENERAL_FORUM_TOPIC => EditGeneralForumTopic::execute($bot, $parameters),
                 self::CLOSE_GENERAL_FORUM_TOPIC => CloseGeneralForumTopic::execute($bot, $parameters),
                 self::REOPEN_GENERAL_FORUM_TOPIC => ReopenGeneralForumTopic::execute($bot, $parameters),
+                self::HIDE_GENERAL_FORUM_TOPIC => HideGeneralForumTopic::execute($bot, $parameters),
             };
         }
     }
