@@ -10,6 +10,7 @@
     use TgBotLib\Methods\BanChatSenderChat;
     use TgBotLib\Methods\Close;
     use TgBotLib\Methods\CloseForumTopic;
+    use TgBotLib\Methods\CloseGeneralForumTopic;
     use TgBotLib\Methods\CopyMessage;
     use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\CreateChatInviteLink;
@@ -144,6 +145,7 @@
         case DELETE_FORUM_TOPIC = 'deleteForumTopic';
         case UNPIN_ALLL_FORUM_TOPIC_MESSAGES = 'UnpinAllForumTopicMessages';
         case EDIT_GENERAL_FORUM_TOPIC = 'editGeneralForumTopic';
+        case CLOSE_GENERAL_FORUM_TOPIC = 'closeGeneralForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -225,6 +227,7 @@
                 self::DELETE_FORUM_TOPIC => DeleteForumTopic::execute($bot, $parameters),
                 self::UNPIN_ALLL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
                 self::EDIT_GENERAL_FORUM_TOPIC => EditGeneralForumTopic::execute($bot, $parameters),
+                self::CLOSE_GENERAL_FORUM_TOPIC => CloseGeneralForumTopic::execute($bot, $parameters),
             };
         }
     }
