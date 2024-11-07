@@ -9,6 +9,7 @@
     use TgBotLib\Methods\BanChatMember;
     use TgBotLib\Methods\BanChatSenderChat;
     use TgBotLib\Methods\Close;
+    use TgBotLib\Methods\CloseForumTopic;
     use TgBotLib\Methods\CopyMessage;
     use TgBotLib\Methods\CopyMessages;
     use TgBotLib\Methods\CreateChatInviteLink;
@@ -134,6 +135,7 @@
         case GET_FORUM_TOPIC_ICON_STICKERS = 'getForumTopicIconStickers';
         case CREATE_FORUM_TOPIC = 'createForumTopic';
         case EDIT_FORUM_TOPIC = 'editForumTopic';
+        case CLOSE_FORUM_TOPIC = 'closeForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -210,6 +212,7 @@
                 self::GET_FORUM_TOPIC_ICON_STICKERS => GetForumTopicIconStickers::execute($bot, $parameters),
                 self::CREATE_FORUM_TOPIC => CreateForumTopic::execute($bot, $parameters),
                 self::EDIT_FORUM_TOPIC => EditForumTopic::execute($bot, $parameters),
+                self::CLOSE_FORUM_TOPIC => CloseForumTopic::execute($bot, $parameters),
             };
         }
     }
