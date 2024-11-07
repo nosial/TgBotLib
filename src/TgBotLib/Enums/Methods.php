@@ -29,6 +29,7 @@
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
+    use TgBotLib\Methods\GetBusinessConnection;
     use TgBotLib\Methods\GetChat;
     use TgBotLib\Methods\GetChatAdministrators;
     use TgBotLib\Methods\GetChatMember;
@@ -158,6 +159,7 @@
         case UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES = 'unpinAllGeneralForumTopicMessages';
         case ANSWER_CALLBACK_QUERY = 'answerCallbackQuery';
         case GET_USER_CHAT_BOOSTS = 'getUserChatBoosts';
+        case GET_BUSINESS_CONNECTION = 'getBusinessConnection';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -246,6 +248,7 @@
                 self::UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES => UnpinAllGeneralForumTopicMessages::execute($bot, $parameters),
                 self::ANSWER_CALLBACK_QUERY => AnswerCallbackQuery::execute($bot, $parameters),
                 self::GET_USER_CHAT_BOOSTS => GetUserChatBoosts::execute($bot, $parameters),
+                self::GET_BUSINESS_CONNECTION => GetBusinessConnection::execute($bot, $parameters),
             };
         }
     }
