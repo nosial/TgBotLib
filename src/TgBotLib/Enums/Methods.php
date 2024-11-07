@@ -27,6 +27,7 @@
     use TgBotLib\Methods\GetChatMember;
     use TgBotLib\Methods\GetChatMemberCount;
     use TgBotLib\Methods\GetFile;
+    use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -128,6 +129,7 @@
         case GET_CHAT_MEMBER = 'getChatMember';
         case SET_CHAT_STICKER_SET = 'setChatStickerSet';
         case DELETE_CHAT_STICKER_SET = 'deleteChatStickerSet';
+        case GET_FORUM_TOPIC_ICON_STICKERS = 'getForumTopicIconStickers';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -201,6 +203,7 @@
                 self::GET_CHAT_MEMBER => GetChatMember::execute($bot, $parameters),
                 self::SET_CHAT_STICKER_SET  => SetChatStickerSet::execute($bot, $parameters),
                 self::DELETE_CHAT_STICKER_SET => DeleteChatStickerSet::execute($bot, $parameters),
+                self::GET_FORUM_TOPIC_ICON_STICKERS => GetForumTopicIconStickers::execute($bot, $parameters),
             };
         }
     }
