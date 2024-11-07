@@ -39,6 +39,7 @@
     use TgBotLib\Methods\Logout;
     use TgBotLib\Methods\PinChatMessage;
     use TgBotLib\Methods\PromoteChatMember;
+    use TgBotLib\Methods\ReopenForumTopic;
     use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\RevokeChatInviteLink;
     use TgBotLib\Methods\SendAnimation;
@@ -136,6 +137,7 @@
         case CREATE_FORUM_TOPIC = 'createForumTopic';
         case EDIT_FORUM_TOPIC = 'editForumTopic';
         case CLOSE_FORUM_TOPIC = 'closeForumTopic';
+        case REOPEN_FORUM_TOPIC = 'reopenForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -213,6 +215,7 @@
                 self::CREATE_FORUM_TOPIC => CreateForumTopic::execute($bot, $parameters),
                 self::EDIT_FORUM_TOPIC => EditForumTopic::execute($bot, $parameters),
                 self::CLOSE_FORUM_TOPIC => CloseForumTopic::execute($bot, $parameters),
+                self::REOPEN_FORUM_TOPIC => ReopenForumTopic::execute($bot, $parameters),
             };
         }
     }
