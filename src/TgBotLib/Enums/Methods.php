@@ -5,6 +5,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Methods\AnswerCallbackQuery;
     use TgBotLib\Methods\ApproveChatJoinRequest;
     use TgBotLib\Methods\BanChatMember;
     use TgBotLib\Methods\BanChatSenderChat;
@@ -154,6 +155,7 @@
         case HIDE_GENERAL_FORUM_TOPIC = 'hideGeneralForumTopic';
         case UNHIDE_GENERAL_FORUM_TOPIC = 'unhideGeneralForumTopic';
         case UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES = 'unpinAllGeneralForumTopicMessages';
+        case ANSWER_CALLBACK_QUERY = 'answerCallbackQuery';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -240,6 +242,7 @@
                 self::HIDE_GENERAL_FORUM_TOPIC => HideGeneralForumTopic::execute($bot, $parameters),
                 self::UNHIDE_GENERAL_FORUM_TOPIC => UnhideGeneralForumTopic::execute($bot, $parameters),
                 self::UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES => UnpinAllGeneralForumTopicMessages::execute($bot, $parameters),
+                self::ANSWER_CALLBACK_QUERY => AnswerCallbackQuery::execute($bot, $parameters),
             };
         }
     }
