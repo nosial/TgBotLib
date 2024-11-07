@@ -15,6 +15,7 @@
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
     use TgBotLib\Methods\DeclineChatJoinRequest;
     use TgBotLib\Methods\DeleteChatPhoto;
+    use TgBotLib\Methods\DeleteChatStickerSet;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -126,6 +127,7 @@
         case GET_CHAT_MEMBER_COUNT = 'getChatMemberCount';
         case GET_CHAT_MEMBER = 'getChatMember';
         case SET_CHAT_STICKER_SET = 'setChatStickerSet';
+        case DELETE_CHAT_STICKER_SET = 'deleteChatStickerSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -198,6 +200,7 @@
                 self::GET_CHAT_MEMBER_COUNT => GetChatMemberCount::execute($bot, $parameters),
                 self::GET_CHAT_MEMBER => GetChatMember::execute($bot, $parameters),
                 self::SET_CHAT_STICKER_SET  => SetChatStickerSet::execute($bot, $parameters),
+                self::DELETE_CHAT_STICKER_SET => DeleteChatStickerSet::execute($bot, $parameters),
             };
         }
     }
