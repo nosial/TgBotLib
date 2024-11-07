@@ -23,6 +23,7 @@
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
     use TgBotLib\Methods\EditForumTopic;
+    use TgBotLib\Methods\EditGeneralForumTopic;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
@@ -142,6 +143,7 @@
         case REOPEN_FORUM_TOPIC = 'reopenForumTopic';
         case DELETE_FORUM_TOPIC = 'deleteForumTopic';
         case UNPIN_ALLL_FORUM_TOPIC_MESSAGES = 'UnpinAllForumTopicMessages';
+        case EDIT_GENERAL_FORUM_TOPIC = 'editGeneralForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -222,6 +224,7 @@
                 self::REOPEN_FORUM_TOPIC => ReopenForumTopic::execute($bot, $parameters),
                 self::DELETE_FORUM_TOPIC => DeleteForumTopic::execute($bot, $parameters),
                 self::UNPIN_ALLL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
+                self::EDIT_GENERAL_FORUM_TOPIC => EditGeneralForumTopic::execute($bot, $parameters),
             };
         }
     }
