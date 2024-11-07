@@ -73,6 +73,7 @@
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
+    use TgBotLib\Methods\UnhideGeneralForumTopic;
     use TgBotLib\Methods\UnpinAllChatMessages;
     use TgBotLib\Methods\UnpinAllForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
@@ -150,6 +151,7 @@
         case CLOSE_GENERAL_FORUM_TOPIC = 'closeGeneralForumTopic';
         case REOPEN_GENERAL_FORUM_TOPIC = 'reopenGeneralForumTopic';
         case HIDE_GENERAL_FORUM_TOPIC = 'hideGeneralForumTopic';
+        case UNHIDE_GENERAL_FORUM_TOPIC = 'unhideGeneralForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -234,6 +236,7 @@
                 self::CLOSE_GENERAL_FORUM_TOPIC => CloseGeneralForumTopic::execute($bot, $parameters),
                 self::REOPEN_GENERAL_FORUM_TOPIC => ReopenGeneralForumTopic::execute($bot, $parameters),
                 self::HIDE_GENERAL_FORUM_TOPIC => HideGeneralForumTopic::execute($bot, $parameters),
+                self::UNHIDE_GENERAL_FORUM_TOPIC => UnhideGeneralForumTopic::execute($bot, $parameters),
             };
         }
     }
