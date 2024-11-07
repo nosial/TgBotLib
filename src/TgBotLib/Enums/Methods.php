@@ -18,6 +18,7 @@
     use TgBotLib\Methods\DeclineChatJoinRequest;
     use TgBotLib\Methods\DeleteChatPhoto;
     use TgBotLib\Methods\DeleteChatStickerSet;
+    use TgBotLib\Methods\DeleteForumTopic;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -138,6 +139,7 @@
         case EDIT_FORUM_TOPIC = 'editForumTopic';
         case CLOSE_FORUM_TOPIC = 'closeForumTopic';
         case REOPEN_FORUM_TOPIC = 'reopenForumTopic';
+        case DELETE_FORUM_TOPIC = 'deleteForumTopic';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -216,6 +218,7 @@
                 self::EDIT_FORUM_TOPIC => EditForumTopic::execute($bot, $parameters),
                 self::CLOSE_FORUM_TOPIC => CloseForumTopic::execute($bot, $parameters),
                 self::REOPEN_FORUM_TOPIC => ReopenForumTopic::execute($bot, $parameters),
+                self::DELETE_FORUM_TOPIC => DeleteForumTopic::execute($bot, $parameters),
             };
         }
     }
