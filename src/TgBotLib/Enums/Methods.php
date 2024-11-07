@@ -56,6 +56,7 @@
     use TgBotLib\Methods\SetChatDescription;
     use TgBotLib\Methods\SetChatPermissions;
     use TgBotLib\Methods\SetChatPhoto;
+    use TgBotLib\Methods\SetChatStickerSet;
     use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetWebhook;
@@ -124,6 +125,7 @@
         case GET_CHAT_ADMINISTRATORS = 'getChatAdministrators';
         case GET_CHAT_MEMBER_COUNT = 'getChatMemberCount';
         case GET_CHAT_MEMBER = 'getChatMember';
+        case SET_CHAT_STICKER_SET = 'setChatStickerSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -195,6 +197,7 @@
                 self::GET_CHAT_ADMINISTRATORS => GetChatAdministrators::execute($bot, $parameters),
                 self::GET_CHAT_MEMBER_COUNT => GetChatMemberCount::execute($bot, $parameters),
                 self::GET_CHAT_MEMBER => GetChatMember::execute($bot, $parameters),
+                self::SET_CHAT_STICKER_SET  => SetChatStickerSet::execute($bot, $parameters),
             };
         }
     }
