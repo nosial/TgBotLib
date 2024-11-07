@@ -37,6 +37,7 @@
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetUpdates;
+    use TgBotLib\Methods\GetUserChatBoosts;
     use TgBotLib\Methods\GetUserProfilePhotos;
     use TgBotLib\Methods\GetWebhookInfo;
     use TgBotLib\Methods\HideGeneralForumTopic;
@@ -156,6 +157,7 @@
         case UNHIDE_GENERAL_FORUM_TOPIC = 'unhideGeneralForumTopic';
         case UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES = 'unpinAllGeneralForumTopicMessages';
         case ANSWER_CALLBACK_QUERY = 'answerCallbackQuery';
+        case GET_USER_CHAT_BOOSTS = 'getUserChatBoosts';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -243,6 +245,7 @@
                 self::UNHIDE_GENERAL_FORUM_TOPIC => UnhideGeneralForumTopic::execute($bot, $parameters),
                 self::UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES => UnpinAllGeneralForumTopicMessages::execute($bot, $parameters),
                 self::ANSWER_CALLBACK_QUERY => AnswerCallbackQuery::execute($bot, $parameters),
+                self::GET_USER_CHAT_BOOSTS => GetUserChatBoosts::execute($bot, $parameters),
             };
         }
     }
