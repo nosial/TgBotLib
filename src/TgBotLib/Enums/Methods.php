@@ -76,6 +76,7 @@
     use TgBotLib\Methods\UnhideGeneralForumTopic;
     use TgBotLib\Methods\UnpinAllChatMessages;
     use TgBotLib\Methods\UnpinAllForumTopicMessages;
+    use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
 
     enum Methods : string
@@ -152,6 +153,7 @@
         case REOPEN_GENERAL_FORUM_TOPIC = 'reopenGeneralForumTopic';
         case HIDE_GENERAL_FORUM_TOPIC = 'hideGeneralForumTopic';
         case UNHIDE_GENERAL_FORUM_TOPIC = 'unhideGeneralForumTopic';
+        case UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES = 'unpinAllGeneralForumTopicMessages';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -237,6 +239,7 @@
                 self::REOPEN_GENERAL_FORUM_TOPIC => ReopenGeneralForumTopic::execute($bot, $parameters),
                 self::HIDE_GENERAL_FORUM_TOPIC => HideGeneralForumTopic::execute($bot, $parameters),
                 self::UNHIDE_GENERAL_FORUM_TOPIC => UnhideGeneralForumTopic::execute($bot, $parameters),
+                self::UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES => UnpinAllGeneralForumTopicMessages::execute($bot, $parameters),
             };
         }
     }
