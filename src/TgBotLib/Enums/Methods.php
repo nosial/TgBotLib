@@ -150,7 +150,7 @@
         case CLOSE_FORUM_TOPIC = 'closeForumTopic';
         case REOPEN_FORUM_TOPIC = 'reopenForumTopic';
         case DELETE_FORUM_TOPIC = 'deleteForumTopic';
-        case UNPIN_ALLL_FORUM_TOPIC_MESSAGES = 'UnpinAllForumTopicMessages';
+        case UNPIN_ALL_FORUM_TOPIC_MESSAGES = 'unpinAllForumTopicMessages';
         case EDIT_GENERAL_FORUM_TOPIC = 'editGeneralForumTopic';
         case CLOSE_GENERAL_FORUM_TOPIC = 'closeGeneralForumTopic';
         case REOPEN_GENERAL_FORUM_TOPIC = 'reopenGeneralForumTopic';
@@ -239,7 +239,7 @@
                 self::CLOSE_FORUM_TOPIC => CloseForumTopic::execute($bot, $parameters),
                 self::REOPEN_FORUM_TOPIC => ReopenForumTopic::execute($bot, $parameters),
                 self::DELETE_FORUM_TOPIC => DeleteForumTopic::execute($bot, $parameters),
-                self::UNPIN_ALLL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
+                self::UNPIN_ALL_FORUM_TOPIC_MESSAGES => UnpinAllForumTopicMessages::execute($bot, $parameters),
                 self::EDIT_GENERAL_FORUM_TOPIC => EditGeneralForumTopic::execute($bot, $parameters),
                 self::CLOSE_GENERAL_FORUM_TOPIC => CloseGeneralForumTopic::execute($bot, $parameters),
                 self::REOPEN_GENERAL_FORUM_TOPIC => ReopenGeneralForumTopic::execute($bot, $parameters),

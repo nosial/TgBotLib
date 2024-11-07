@@ -14,7 +14,7 @@
          */
         public static function execute(Bot $bot, array $parameters = []): true
         {
-            return (bool)(self::executeCurl(self::buildPost($bot, Methods::UNPIN_ALLL_FORUM_TOPIC_MESSAGES->value, $parameters)));
+            return (bool)(self::executeCurl(self::buildPost($bot, Methods::UNPIN_ALL_FORUM_TOPIC_MESSAGES->value, $parameters)));
         }
 
         /**
