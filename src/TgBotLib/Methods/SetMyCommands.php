@@ -22,7 +22,7 @@
 
             if(isset($parameters['scope']) && $parameters['scope'] instanceof ObjectTypeInterface)
             {
-                $parameters['scope'] = $parameters['scope']->toArray();
+                $parameters['scope'] = json_encode($parameters['scope']->toArray());
             }
 
             return (bool)self::executeCurl(self::buildPost($bot, Methods::SET_MY_COMMANDS->value, $parameters));
