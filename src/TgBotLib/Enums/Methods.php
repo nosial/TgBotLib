@@ -39,6 +39,7 @@
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetMyCommands;
+    use TgBotLib\Methods\GetMyDescription;
     use TgBotLib\Methods\GetMyName;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
@@ -172,6 +173,7 @@
         case SET_MY_NAME = 'setMyName';
         case GET_MY_NAME = 'getMyName';
         case SET_MY_DESCRIPTION = 'setMyDescription';
+        case GET_MY_DESCRIPTION = 'getMyDescription';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -267,6 +269,7 @@
                 self::SET_MY_NAME => SetMyName::execute($bot, $parameters),
                 self::GET_MY_NAME => GetMyName::execute($bot, $parameters),
                 self::SET_MY_DESCRIPTION => SetMyDescription::execute($bot, $parameters),
+                self::GET_MY_DESCRIPTION => GetMyDescription::execute($bot, $parameters),
             };
         }
     }
