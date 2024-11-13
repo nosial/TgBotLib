@@ -73,6 +73,7 @@
     use TgBotLib\Methods\SetChatStickerSet;
     use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetMessageReaction;
+    use TgBotLib\Methods\SetMyCommands;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
@@ -160,6 +161,7 @@
         case ANSWER_CALLBACK_QUERY = 'answerCallbackQuery';
         case GET_USER_CHAT_BOOSTS = 'getUserChatBoosts';
         case GET_BUSINESS_CONNECTION = 'getBusinessConnection';
+        case SET_MY_COMMANDS = 'setMyCommands';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -249,6 +251,7 @@
                 self::ANSWER_CALLBACK_QUERY => AnswerCallbackQuery::execute($bot, $parameters),
                 self::GET_USER_CHAT_BOOSTS => GetUserChatBoosts::execute($bot, $parameters),
                 self::GET_BUSINESS_CONNECTION => GetBusinessConnection::execute($bot, $parameters),
+                self::SET_MY_COMMANDS => SetMyCommands::execute($bot, $parameters),
             };
         }
     }
