@@ -41,6 +41,7 @@
     use TgBotLib\Methods\GetMyCommands;
     use TgBotLib\Methods\GetMyDescription;
     use TgBotLib\Methods\GetMyName;
+    use TgBotLib\Methods\GetMyShortDescription;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -176,6 +177,7 @@
         case SET_MY_DESCRIPTION = 'setMyDescription';
         case GET_MY_DESCRIPTION = 'getMyDescription';
         case SET_MY_SHORT_DESCRIPTION = 'setMyShortDescription';
+        case GET_MY_SHORT_DESCRIPTION = 'getMyShortDescription';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -273,6 +275,7 @@
                 self::SET_MY_DESCRIPTION => SetMyDescription::execute($bot, $parameters),
                 self::GET_MY_DESCRIPTION => GetMyDescription::execute($bot, $parameters),
                 self::SET_MY_SHORT_DESCRIPTION => SetMyShortDescription::execute($bot, $parameters),
+                self::GET_MY_SHORT_DESCRIPTION => GetMyShortDescription::execute($bot, $parameters),
             };
         }
     }
