@@ -38,6 +38,7 @@
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
+    use TgBotLib\Methods\GetMyCommands;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -164,6 +165,7 @@
         case GET_BUSINESS_CONNECTION = 'getBusinessConnection';
         case SET_MY_COMMANDS = 'setMyCommands';
         case DELETE_MY_COMMANDS = 'deleteMyCommands';
+        case GET_MY_COMMANDS = 'getMyCommands';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -255,6 +257,7 @@
                 self::GET_BUSINESS_CONNECTION => GetBusinessConnection::execute($bot, $parameters),
                 self::SET_MY_COMMANDS => SetMyCommands::execute($bot, $parameters),
                 self::DELETE_MY_COMMANDS => DeleteMyCommands::execute($bot, $parameters),
+                self::GET_MY_COMMANDS => GetMyCommands::execute($bot, $parameters),
             };
         }
     }
