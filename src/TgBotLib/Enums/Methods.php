@@ -80,6 +80,7 @@
     use TgBotLib\Methods\SetMyCommands;
     use TgBotLib\Methods\SetMyDescription;
     use TgBotLib\Methods\SetMyName;
+    use TgBotLib\Methods\SetMyShortDescription;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
@@ -174,6 +175,7 @@
         case GET_MY_NAME = 'getMyName';
         case SET_MY_DESCRIPTION = 'setMyDescription';
         case GET_MY_DESCRIPTION = 'getMyDescription';
+        case SET_MY_SHORT_DESCRIPTION = 'setMyShortDescription';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -270,6 +272,7 @@
                 self::GET_MY_NAME => GetMyName::execute($bot, $parameters),
                 self::SET_MY_DESCRIPTION => SetMyDescription::execute($bot, $parameters),
                 self::GET_MY_DESCRIPTION => GetMyDescription::execute($bot, $parameters),
+                self::SET_MY_SHORT_DESCRIPTION => SetMyShortDescription::execute($bot, $parameters),
             };
         }
     }
