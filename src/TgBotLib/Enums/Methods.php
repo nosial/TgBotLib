@@ -73,6 +73,7 @@
     use TgBotLib\Methods\SendVoice;
     use TgBotLib\Methods\SetChatAdministratorCustomTitle;
     use TgBotLib\Methods\SetChatDescription;
+    use TgBotLib\Methods\SetChatMenuButton;
     use TgBotLib\Methods\SetChatPermissions;
     use TgBotLib\Methods\SetChatPhoto;
     use TgBotLib\Methods\SetChatStickerSet;
@@ -178,6 +179,7 @@
         case GET_MY_DESCRIPTION = 'getMyDescription';
         case SET_MY_SHORT_DESCRIPTION = 'setMyShortDescription';
         case GET_MY_SHORT_DESCRIPTION = 'getMyShortDescription';
+        case SET_CHAT_MENU_BUTTON = 'setChatMenuButton';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -276,6 +278,7 @@
                 self::GET_MY_DESCRIPTION => GetMyDescription::execute($bot, $parameters),
                 self::SET_MY_SHORT_DESCRIPTION => SetMyShortDescription::execute($bot, $parameters),
                 self::GET_MY_SHORT_DESCRIPTION => GetMyShortDescription::execute($bot, $parameters),
+                self::SET_CHAT_MENU_BUTTON => SetChatMenuButton::execute($bot, $parameters),
             };
         }
     }
