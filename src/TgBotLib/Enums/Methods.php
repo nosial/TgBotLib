@@ -21,6 +21,7 @@
     use TgBotLib\Methods\DeleteChatPhoto;
     use TgBotLib\Methods\DeleteChatStickerSet;
     use TgBotLib\Methods\DeleteForumTopic;
+    use TgBotLib\Methods\DeleteMyCommands;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -162,6 +163,7 @@
         case GET_USER_CHAT_BOOSTS = 'getUserChatBoosts';
         case GET_BUSINESS_CONNECTION = 'getBusinessConnection';
         case SET_MY_COMMANDS = 'setMyCommands';
+        case DELETE_MY_COMMANDS = 'deleteMyCommands';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -252,6 +254,7 @@
                 self::GET_USER_CHAT_BOOSTS => GetUserChatBoosts::execute($bot, $parameters),
                 self::GET_BUSINESS_CONNECTION => GetBusinessConnection::execute($bot, $parameters),
                 self::SET_MY_COMMANDS => SetMyCommands::execute($bot, $parameters),
+                self::DELETE_MY_COMMANDS => DeleteMyCommands::execute($bot, $parameters),
             };
         }
     }
