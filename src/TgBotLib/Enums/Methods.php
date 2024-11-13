@@ -76,6 +76,7 @@
     use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetMyCommands;
+    use TgBotLib\Methods\SetMyName;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
@@ -166,6 +167,7 @@
         case SET_MY_COMMANDS = 'setMyCommands';
         case DELETE_MY_COMMANDS = 'deleteMyCommands';
         case GET_MY_COMMANDS = 'getMyCommands';
+        case SET_MY_NAME = 'setMyName';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -258,6 +260,7 @@
                 self::SET_MY_COMMANDS => SetMyCommands::execute($bot, $parameters),
                 self::DELETE_MY_COMMANDS => DeleteMyCommands::execute($bot, $parameters),
                 self::GET_MY_COMMANDS => GetMyCommands::execute($bot, $parameters),
+                self::SET_MY_NAME => SetMyName::execute($bot, $parameters),
             };
         }
     }
