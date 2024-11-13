@@ -39,6 +39,7 @@
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetMyCommands;
+    use TgBotLib\Methods\GetMyName;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -168,6 +169,7 @@
         case DELETE_MY_COMMANDS = 'deleteMyCommands';
         case GET_MY_COMMANDS = 'getMyCommands';
         case SET_MY_NAME = 'setMyName';
+        case GET_MY_NAME = 'getMyName';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -261,6 +263,7 @@
                 self::DELETE_MY_COMMANDS => DeleteMyCommands::execute($bot, $parameters),
                 self::GET_MY_COMMANDS => GetMyCommands::execute($bot, $parameters),
                 self::SET_MY_NAME => SetMyName::execute($bot, $parameters),
+                self::GET_MY_NAME => GetMyName::execute($bot, $parameters),
             };
         }
     }
