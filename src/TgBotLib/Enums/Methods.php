@@ -40,6 +40,7 @@
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetMyCommands;
+    use TgBotLib\Methods\GetMyDefaultAdministratorRights;
     use TgBotLib\Methods\GetMyDescription;
     use TgBotLib\Methods\GetMyName;
     use TgBotLib\Methods\GetMyShortDescription;
@@ -184,6 +185,7 @@
         case SET_CHAT_MENU_BUTTON = 'setChatMenuButton';
         case GET_CHAT_MENU_BUTTON = 'getChatMenuButton';
         case SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'setMyDefaultAdministratorRights';
+        case GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'getMyDefaultAdministratorRights';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -285,6 +287,7 @@
                 self::SET_CHAT_MENU_BUTTON => SetChatMenuButton::execute($bot, $parameters),
                 self::GET_CHAT_MENU_BUTTON => GetChatMenuButton::execute($bot, $parameters),
                 self::SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => SetMyDefaultAdministratorRights::execute($bot, $parameters),
+                self::GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => GetMyDefaultAdministratorRights::execute($bot, $parameters),
             };
         }
     }
