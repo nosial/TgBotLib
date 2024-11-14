@@ -28,6 +28,7 @@
     use TgBotLib\Methods\EditForumTopic;
     use TgBotLib\Methods\EditGeneralForumTopic;
     use TgBotLib\Methods\EditMessageCaption;
+    use TgBotLib\Methods\EditMessageLiveLocation;
     use TgBotLib\Methods\EditMessageMedia;
     use TgBotLib\Methods\EditMessageText;
     use TgBotLib\Methods\ExportChatInviteLink;
@@ -192,6 +193,7 @@
         case EDIT_MESSAGE_TEXT = 'editMessageText';
         case EDIT_MESSAGE_CAPTION = 'editMessageCaption';
         case EDIT_MESSAGE_MEDIA = 'editMessageMedia';
+        case EDIT_MESSAGE_LIVE_LOCATION = 'editMessageLiveLocation';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -297,6 +299,7 @@
                 self::EDIT_MESSAGE_TEXT => EditMessageText::execute($bot, $parameters),
                 self::EDIT_MESSAGE_CAPTION => EditMessageCaption::execute($bot, $parameters),
                 self::EDIT_MESSAGE_MEDIA => EditMessageMedia::execute($bot, $parameters),
+                self::EDIT_MESSAGE_LIVE_LOCATION => EditMessageLiveLocation::execute($bot, $parameters),
             };
         }
     }
