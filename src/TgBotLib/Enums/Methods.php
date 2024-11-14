@@ -30,6 +30,7 @@
     use TgBotLib\Methods\EditMessageCaption;
     use TgBotLib\Methods\EditMessageLiveLocation;
     use TgBotLib\Methods\EditMessageMedia;
+    use TgBotLib\Methods\EditMessageReplyMarkup;
     use TgBotLib\Methods\EditMessageText;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
@@ -196,6 +197,7 @@
         case EDIT_MESSAGE_MEDIA = 'editMessageMedia';
         case EDIT_MESSAGE_LIVE_LOCATION = 'editMessageLiveLocation';
         case STOP_MESSAGE_LIVE_LOCATION = 'stopMessageLiveLocation';
+        case EDIT_MESSAGE_REPLY_MARKUP = 'editMessageReplyMarkup';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -303,6 +305,7 @@
                 self::EDIT_MESSAGE_MEDIA => EditMessageMedia::execute($bot, $parameters),
                 self::EDIT_MESSAGE_LIVE_LOCATION => EditMessageLiveLocation::execute($bot, $parameters),
                 self::STOP_MESSAGE_LIVE_LOCATION => StopMessageLiveLocation::execute($bot, $parameters),
+                self::EDIT_MESSAGE_REPLY_MARKUP => EditMessageReplyMarkup::execute($bot, $parameters),
             };
         }
     }
