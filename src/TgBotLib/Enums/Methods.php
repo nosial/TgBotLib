@@ -21,6 +21,7 @@
     use TgBotLib\Methods\DeleteChatPhoto;
     use TgBotLib\Methods\DeleteChatStickerSet;
     use TgBotLib\Methods\DeleteForumTopic;
+    use TgBotLib\Methods\DeleteMessage;
     use TgBotLib\Methods\DeleteMyCommands;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
@@ -200,6 +201,7 @@
         case STOP_MESSAGE_LIVE_LOCATION = 'stopMessageLiveLocation';
         case EDIT_MESSAGE_REPLY_MARKUP = 'editMessageReplyMarkup';
         case STOP_POLL = 'stopPoll';
+        case DELETE_MESSAGE = 'deleteMessage';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -309,6 +311,7 @@
                 self::STOP_MESSAGE_LIVE_LOCATION => StopMessageLiveLocation::execute($bot, $parameters),
                 self::EDIT_MESSAGE_REPLY_MARKUP => EditMessageReplyMarkup::execute($bot, $parameters),
                 self::STOP_POLL => StopPoll::execute($bot, $parameters),
+                self::DELETE_MESSAGE => DeleteMessage::execute($bot, $parameters),
             };
         }
     }
