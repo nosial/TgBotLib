@@ -76,6 +76,7 @@
     use TgBotLib\Methods\SendPaidMedia;
     use TgBotLib\Methods\SendPhoto;
     use TgBotLib\Methods\SendPoll;
+    use TgBotLib\Methods\SendSticker;
     use TgBotLib\Methods\SendVenue;
     use TgBotLib\Methods\SendVideo;
     use TgBotLib\Methods\SendVideoNote;
@@ -204,6 +205,7 @@
         case STOP_POLL = 'stopPoll';
         case DELETE_MESSAGE = 'deleteMessage';
         case DELETE_MESSAGES = 'deleteMessages';
+        case SEND_STICKER = 'sendSticker';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -315,6 +317,7 @@
                 self::STOP_POLL => StopPoll::execute($bot, $parameters),
                 self::DELETE_MESSAGE => DeleteMessage::execute($bot, $parameters),
                 self::DELETE_MESSAGES => DeleteMessages::execute($bot, $parameters),
+                self::SEND_STICKER => SendSticker::execute($bot, $parameters),
             };
         }
     }
