@@ -14,9 +14,8 @@
         /**
          * @inheritDoc
          */
-        public static function execute(Bot $bot, array $parameters = []): mixed
+        public static function execute(Bot $bot, array $parameters = []): Message
         {
-
             if (isset($parameters['reply_markup']))
             {
                 if ($parameters['reply_markup'] instanceof ObjectTypeInterface)
