@@ -93,6 +93,7 @@
     use TgBotLib\Methods\SetMyShortDescription;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\StopMessageLiveLocation;
+    use TgBotLib\Methods\StopPoll;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
     use TgBotLib\Methods\UnhideGeneralForumTopic;
@@ -198,6 +199,7 @@
         case EDIT_MESSAGE_LIVE_LOCATION = 'editMessageLiveLocation';
         case STOP_MESSAGE_LIVE_LOCATION = 'stopMessageLiveLocation';
         case EDIT_MESSAGE_REPLY_MARKUP = 'editMessageReplyMarkup';
+        case STOP_POLL = 'stopPoll';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -306,6 +308,7 @@
                 self::EDIT_MESSAGE_LIVE_LOCATION => EditMessageLiveLocation::execute($bot, $parameters),
                 self::STOP_MESSAGE_LIVE_LOCATION => StopMessageLiveLocation::execute($bot, $parameters),
                 self::EDIT_MESSAGE_REPLY_MARKUP => EditMessageReplyMarkup::execute($bot, $parameters),
+                self::STOP_POLL => StopPoll::execute($bot, $parameters),
             };
         }
     }
