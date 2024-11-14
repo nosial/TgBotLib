@@ -35,6 +35,7 @@
     use TgBotLib\Methods\GetChatAdministrators;
     use TgBotLib\Methods\GetChatMember;
     use TgBotLib\Methods\GetChatMemberCount;
+    use TgBotLib\Methods\GetChatMenuButton;
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
@@ -180,6 +181,7 @@
         case SET_MY_SHORT_DESCRIPTION = 'setMyShortDescription';
         case GET_MY_SHORT_DESCRIPTION = 'getMyShortDescription';
         case SET_CHAT_MENU_BUTTON = 'setChatMenuButton';
+        case GET_CHAT_MENU_BUTTON = 'getChatMenuButton';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -279,6 +281,7 @@
                 self::SET_MY_SHORT_DESCRIPTION => SetMyShortDescription::execute($bot, $parameters),
                 self::GET_MY_SHORT_DESCRIPTION => GetMyShortDescription::execute($bot, $parameters),
                 self::SET_CHAT_MENU_BUTTON => SetChatMenuButton::execute($bot, $parameters),
+                self::GET_CHAT_MENU_BUTTON => GetChatMenuButton::execute($bot, $parameters),
             };
         }
     }
