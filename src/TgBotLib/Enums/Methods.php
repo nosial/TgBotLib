@@ -28,6 +28,7 @@
     use TgBotLib\Methods\EditForumTopic;
     use TgBotLib\Methods\EditGeneralForumTopic;
     use TgBotLib\Methods\EditMessageCaption;
+    use TgBotLib\Methods\EditMessageMedia;
     use TgBotLib\Methods\EditMessageText;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
@@ -190,6 +191,7 @@
         case GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'getMyDefaultAdministratorRights';
         case EDIT_MESSAGE_TEXT = 'editMessageText';
         case EDIT_MESSAGE_CAPTION = 'editMessageCaption';
+        case EDIT_MESSAGE_MEDIA = 'editMessageMedia';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -294,6 +296,7 @@
                 self::GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => GetMyDefaultAdministratorRights::execute($bot, $parameters),
                 self::EDIT_MESSAGE_TEXT => EditMessageText::execute($bot, $parameters),
                 self::EDIT_MESSAGE_CAPTION => EditMessageCaption::execute($bot, $parameters),
+                self::EDIT_MESSAGE_MEDIA => EditMessageMedia::execute($bot, $parameters),
             };
         }
     }
