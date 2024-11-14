@@ -81,6 +81,7 @@
     use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetMyCommands;
+    use TgBotLib\Methods\SetMyDefaultAdministratorRights;
     use TgBotLib\Methods\SetMyDescription;
     use TgBotLib\Methods\SetMyName;
     use TgBotLib\Methods\SetMyShortDescription;
@@ -182,6 +183,7 @@
         case GET_MY_SHORT_DESCRIPTION = 'getMyShortDescription';
         case SET_CHAT_MENU_BUTTON = 'setChatMenuButton';
         case GET_CHAT_MENU_BUTTON = 'getChatMenuButton';
+        case SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'setMyDefaultAdministratorRights';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -282,6 +284,7 @@
                 self::GET_MY_SHORT_DESCRIPTION => GetMyShortDescription::execute($bot, $parameters),
                 self::SET_CHAT_MENU_BUTTON => SetChatMenuButton::execute($bot, $parameters),
                 self::GET_CHAT_MENU_BUTTON => GetChatMenuButton::execute($bot, $parameters),
+                self::SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => SetMyDefaultAdministratorRights::execute($bot, $parameters),
             };
         }
     }
