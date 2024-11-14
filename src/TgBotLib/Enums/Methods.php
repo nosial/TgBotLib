@@ -27,6 +27,7 @@
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
     use TgBotLib\Methods\EditForumTopic;
     use TgBotLib\Methods\EditGeneralForumTopic;
+    use TgBotLib\Methods\EditMessageText;
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
@@ -186,6 +187,7 @@
         case GET_CHAT_MENU_BUTTON = 'getChatMenuButton';
         case SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'setMyDefaultAdministratorRights';
         case GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS = 'getMyDefaultAdministratorRights';
+        case EDIT_MESSAGE_TEXT = 'editMessageText';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -288,6 +290,7 @@
                 self::GET_CHAT_MENU_BUTTON => GetChatMenuButton::execute($bot, $parameters),
                 self::SET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => SetMyDefaultAdministratorRights::execute($bot, $parameters),
                 self::GET_MY_DEFAULT_ADMINISTRATOR_RIGHTS => GetMyDefaultAdministratorRights::execute($bot, $parameters),
+                self::EDIT_MESSAGE_TEXT => EditMessageText::execute($bot, $parameters),
             };
         }
     }
