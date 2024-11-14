@@ -6,6 +6,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Enums\Methods;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Objects\Message;
 
     class StopMessageLiveLocation extends Method
     {
@@ -13,7 +14,7 @@
         /**
          * @inheritDoc
          */
-        public static function execute(Bot $bot, array $parameters = []): mixed
+        public static function execute(Bot $bot, array $parameters = []): Message
         {
             if (isset($parameters['reply_markup']))
             {
@@ -27,7 +28,7 @@
                 }
             }
 
-            return self::executeCurl(self::buildPost($bot, Methods::STOP_MESSAGE_LIVE_LOCATION->value, $parameters));
+            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::STOP_MESSAGE_LIVE_LOCATION->value, $parameters)));
         }
 
         /**
