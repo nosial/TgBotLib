@@ -91,6 +91,7 @@
     use TgBotLib\Methods\SetMyName;
     use TgBotLib\Methods\SetMyShortDescription;
     use TgBotLib\Methods\SetWebhook;
+    use TgBotLib\Methods\StopMessageLiveLocation;
     use TgBotLib\Methods\UnbanChatMember;
     use TgBotLib\Methods\UnbanChatSenderChat;
     use TgBotLib\Methods\UnhideGeneralForumTopic;
@@ -194,6 +195,7 @@
         case EDIT_MESSAGE_CAPTION = 'editMessageCaption';
         case EDIT_MESSAGE_MEDIA = 'editMessageMedia';
         case EDIT_MESSAGE_LIVE_LOCATION = 'editMessageLiveLocation';
+        case STOP_MESSAGE_LIVE_LOCATION = 'stopMessageLiveLocation';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -300,6 +302,7 @@
                 self::EDIT_MESSAGE_CAPTION => EditMessageCaption::execute($bot, $parameters),
                 self::EDIT_MESSAGE_MEDIA => EditMessageMedia::execute($bot, $parameters),
                 self::EDIT_MESSAGE_LIVE_LOCATION => EditMessageLiveLocation::execute($bot, $parameters),
+                self::STOP_MESSAGE_LIVE_LOCATION => StopMessageLiveLocation::execute($bot, $parameters),
             };
         }
     }
