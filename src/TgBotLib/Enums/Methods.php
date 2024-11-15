@@ -98,6 +98,7 @@
     use TgBotLib\Methods\SetMyDescription;
     use TgBotLib\Methods\SetMyName;
     use TgBotLib\Methods\SetMyShortDescription;
+    use TgBotLib\Methods\SetStickerPositionInSet;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\StopMessageLiveLocation;
     use TgBotLib\Methods\StopPoll;
@@ -216,6 +217,7 @@
         case UPLOAD_STICKER_FILE = 'uploadStickerFile';
         case CREATE_NEW_STICKER_SET = 'createNewStickerSet';
         case ADD_STICKER_TO_SET = 'addStickerToSet';
+        case SET_STICKER_POSITION_IN_SET = 'setStickerPositionInSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -333,6 +335,7 @@
                 self::UPLOAD_STICKER_FILE => UploadStickerFile::execute($bot, $parameters),
                 self::CREATE_NEW_STICKER_SET => CreateNewStickerSet::execute($bot, $parameters),
                 self::ADD_STICKER_TO_SET => AddStickerToSet::execute($bot, $parameters),
+                self::SET_STICKER_POSITION_IN_SET => SetStickerPositionInSet::execute($bot, $parameters),
             };
         }
     }
