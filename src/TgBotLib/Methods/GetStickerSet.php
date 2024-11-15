@@ -1,6 +1,6 @@
 <?php
 
-    namespace TgBotLib\Objects;
+    namespace TgBotLib\Methods;
 
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;

@@ -43,6 +43,7 @@
     use TgBotLib\Methods\GetChatMember;
     use TgBotLib\Methods\GetChatMemberCount;
     use TgBotLib\Methods\GetChatMenuButton;
+    use TgBotLib\Methods\GetCustomEmojiStickers;
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetForumTopicIconStickers;
     use TgBotLib\Methods\GetMe;
@@ -51,6 +52,7 @@
     use TgBotLib\Methods\GetMyDescription;
     use TgBotLib\Methods\GetMyName;
     use TgBotLib\Methods\GetMyShortDescription;
+    use TgBotLib\Methods\GetStickerSet;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
     use TgBotLib\Methods\GetUserProfilePhotos;
@@ -104,8 +106,6 @@
     use TgBotLib\Methods\UnpinAllForumTopicMessages;
     use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
-    use TgBotLib\Objects\GetCustomEmojiStickers;
-    use TgBotLib\Objects\GetStickerSet;
 
     enum Methods : string
     {
