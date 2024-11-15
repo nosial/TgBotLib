@@ -8,6 +8,7 @@
     use TgBotLib\Methods\AddStickerToSet;
     use TgBotLib\Methods\AnswerCallbackQuery;
     use TgBotLib\Methods\AnswerInlineQuery;
+    use TgBotLib\Methods\AnswerWebAppQuery;
     use TgBotLib\Methods\ApproveChatJoinRequest;
     use TgBotLib\Methods\BanChatMember;
     use TgBotLib\Methods\BanChatSenderChat;
@@ -235,6 +236,7 @@
         case SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL = 'setCustomEmojiStickerSetThumbnail';
         case DELETE_STICKER_SET = 'deleteStickerSet';
         case ANSWER_INLINE_QUERY = 'answerInlineQuery';
+        case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -361,7 +363,8 @@
                 self::SET_STICKER_SET_THUMBNAIL => SetStickerSetThumbnail::execute($bot, $parameters),
                 self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
                 self::DELETE_STICKER_SET => DeleteStickerFromSet::execute($bot, $parameters),
-                self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters)
+                self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
+                self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
             };
         }
     }
