@@ -94,6 +94,7 @@
     use TgBotLib\Methods\SetChatPhoto;
     use TgBotLib\Methods\SetChatStickerSet;
     use TgBotLib\Methods\SetChatTitle;
+    use TgBotLib\Methods\SetCustomEmojiStickerSetThumbnail;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetMyCommands;
     use TgBotLib\Methods\SetMyDefaultAdministratorRights;
@@ -230,6 +231,7 @@
         case SET_STICKER_MASK_POSITION = 'setStickerMaskPosition';
         case SET_STICKER_SET_TITLE = 'setStickerSetTitle';
         case SET_STICKER_SET_THUMBNAIL = 'setStickerSetThumbnail';
+        case SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL = 'setCustomEmojiStickerSetThumbnail';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -354,6 +356,7 @@
                 self::SET_STICKER_MASK_POSITION => SetStickerMaskPosition::execute($bot, $parameters),
                 self::SET_STICKER_SET_TITLE => SetStickerSetTitle::execute($bot, $parameters),
                 self::SET_STICKER_SET_THUMBNAIL => SetStickerSetThumbnail::execute($bot, $parameters),
+                self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
             };
         }
     }
