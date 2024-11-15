@@ -106,6 +106,7 @@
     use TgBotLib\Methods\UnpinAllForumTopicMessages;
     use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
+    use TgBotLib\Methods\UploadStickerFile;
 
     enum Methods : string
     {
@@ -210,6 +211,7 @@
         case SEND_STICKER = 'sendSticker';
         case GET_STICKER_SET = 'getStickerSet';
         case GET_CUSTOM_EMOJI_STICKERS = 'getCustomEmojiStickers';
+        case UPLOAD_STICKER_FILE = 'uploadStickerFile';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -324,6 +326,7 @@
                 self::SEND_STICKER => SendSticker::execute($bot, $parameters),
                 self::GET_STICKER_SET => GetStickerSet::execute($bot, $parameters),
                 self::GET_CUSTOM_EMOJI_STICKERS => GetCustomEmojiStickers::execute($bot, $parameters),
+                self::UPLOAD_STICKER_FILE => UploadStickerFile::execute($bot, $parameters),
             };
         }
     }
