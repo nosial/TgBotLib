@@ -103,6 +103,7 @@
     use TgBotLib\Methods\SetStickerEmojiList;
     use TgBotLib\Methods\SetStickerMaskPosition;
     use TgBotLib\Methods\SetStickerPositionInSet;
+    use TgBotLib\Methods\SetStickerSetTitle;
     use TgBotLib\Methods\SetWebhook;
     use TgBotLib\Methods\StopMessageLiveLocation;
     use TgBotLib\Methods\StopPoll;
@@ -226,6 +227,7 @@
         case REPLACE_STICKER_IN_SET = 'replaceStickerInSet';
         case SET_STICKER_EMOJI_LIST = 'setStickerEmojiList';
         case SET_STICKER_MASK_POSITION = 'setStickerMaskPosition';
+        case SET_STICKER_SET_TITLE = 'setStickerSetTitle';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -348,6 +350,7 @@
                 self::REPLACE_STICKER_IN_SET => ReplaceStickerInSet::execute($bot, $parameters),
                 self::SET_STICKER_EMOJI_LIST => SetStickerEmojiList::execute($bot, $parameters),
                 self::SET_STICKER_MASK_POSITION => SetStickerMaskPosition::execute($bot, $parameters),
+                self::SET_STICKER_SET_TITLE => SetStickerSetTitle::execute($bot, $parameters),
             };
         }
     }
