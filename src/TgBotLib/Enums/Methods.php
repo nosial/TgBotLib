@@ -104,6 +104,7 @@
     use TgBotLib\Methods\UnpinAllForumTopicMessages;
     use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
+    use TgBotLib\Objects\GetStickerSet;
 
     enum Methods : string
     {
@@ -206,6 +207,7 @@
         case DELETE_MESSAGE = 'deleteMessage';
         case DELETE_MESSAGES = 'deleteMessages';
         case SEND_STICKER = 'sendSticker';
+        case GET_STICKER_SET = 'getStickerSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -318,6 +320,7 @@
                 self::DELETE_MESSAGE => DeleteMessage::execute($bot, $parameters),
                 self::DELETE_MESSAGES => DeleteMessages::execute($bot, $parameters),
                 self::SEND_STICKER => SendSticker::execute($bot, $parameters),
+                self::GET_STICKER_SET => GetStickerSet::execute($bot, $parameters),
             };
         }
     }
