@@ -67,6 +67,7 @@
     use TgBotLib\Methods\PromoteChatMember;
     use TgBotLib\Methods\ReopenForumTopic;
     use TgBotLib\Methods\ReopenGeneralForumTopic;
+    use TgBotLib\Methods\ReplaceStickerInSet;
     use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\RevokeChatInviteLink;
     use TgBotLib\Methods\SendAnimation;
@@ -220,6 +221,7 @@
         case ADD_STICKER_TO_SET = 'addStickerToSet';
         case SET_STICKER_POSITION_IN_SET = 'setStickerPositionInSet';
         case DELETE_STICKER_FROM_SET = 'deleteStickerFromSet';
+        case REPLACE_STICKER_IN_SET = 'replaceStickerInSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -339,6 +341,7 @@
                 self::ADD_STICKER_TO_SET => AddStickerToSet::execute($bot, $parameters),
                 self::SET_STICKER_POSITION_IN_SET => SetStickerPositionInSet::execute($bot, $parameters),
                 self::DELETE_STICKER_FROM_SET => DeleteStickerFromSet::execute($bot, $parameters),
+                self::REPLACE_STICKER_IN_SET => ReplaceStickerInSet::execute($bot, $parameters),
             };
         }
     }
