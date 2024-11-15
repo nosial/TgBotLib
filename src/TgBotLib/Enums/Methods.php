@@ -17,6 +17,7 @@
     use TgBotLib\Methods\CreateChatInviteLink;
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
     use TgBotLib\Methods\CreateForumTopic;
+    use TgBotLib\Methods\CreateNewStickerSet;
     use TgBotLib\Methods\DeclineChatJoinRequest;
     use TgBotLib\Methods\DeleteChatPhoto;
     use TgBotLib\Methods\DeleteChatStickerSet;
@@ -212,6 +213,7 @@
         case GET_STICKER_SET = 'getStickerSet';
         case GET_CUSTOM_EMOJI_STICKERS = 'getCustomEmojiStickers';
         case UPLOAD_STICKER_FILE = 'uploadStickerFile';
+        case CREATE_NEW_STICKER_SET = 'createNewStickerSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -327,6 +329,7 @@
                 self::GET_STICKER_SET => GetStickerSet::execute($bot, $parameters),
                 self::GET_CUSTOM_EMOJI_STICKERS => GetCustomEmojiStickers::execute($bot, $parameters),
                 self::UPLOAD_STICKER_FILE => UploadStickerFile::execute($bot, $parameters),
+                self::CREATE_NEW_STICKER_SET => CreateNewStickerSet::execute($bot, $parameters),
             };
         }
     }
