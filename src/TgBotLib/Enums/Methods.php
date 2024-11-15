@@ -232,6 +232,7 @@
         case SET_STICKER_SET_TITLE = 'setStickerSetTitle';
         case SET_STICKER_SET_THUMBNAIL = 'setStickerSetThumbnail';
         case SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL = 'setCustomEmojiStickerSetThumbnail';
+        case DELETE_STICKER_SET = 'deleteStickerSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -357,6 +358,7 @@
                 self::SET_STICKER_SET_TITLE => SetStickerSetTitle::execute($bot, $parameters),
                 self::SET_STICKER_SET_THUMBNAIL => SetStickerSetThumbnail::execute($bot, $parameters),
                 self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
+                self::DELETE_STICKER_SET => DeleteStickerFromSet::execute($bot, $parameters),
             };
         }
     }
