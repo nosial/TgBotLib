@@ -26,6 +26,7 @@
     use TgBotLib\Methods\DeleteMessage;
     use TgBotLib\Methods\DeleteMessages;
     use TgBotLib\Methods\DeleteMyCommands;
+    use TgBotLib\Methods\DeleteStickerFromSet;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -218,6 +219,7 @@
         case CREATE_NEW_STICKER_SET = 'createNewStickerSet';
         case ADD_STICKER_TO_SET = 'addStickerToSet';
         case SET_STICKER_POSITION_IN_SET = 'setStickerPositionInSet';
+        case DELETE_STICKER_FROM_SET = 'deleteStickerFromSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -336,6 +338,7 @@
                 self::CREATE_NEW_STICKER_SET => CreateNewStickerSet::execute($bot, $parameters),
                 self::ADD_STICKER_TO_SET => AddStickerToSet::execute($bot, $parameters),
                 self::SET_STICKER_POSITION_IN_SET => SetStickerPositionInSet::execute($bot, $parameters),
+                self::DELETE_STICKER_FROM_SET => DeleteStickerFromSet::execute($bot, $parameters),
             };
         }
     }
