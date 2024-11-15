@@ -5,6 +5,7 @@
     use TgBotLib\Bot;
     use TgBotLib\Exceptions\TelegramException;
     use TgBotLib\Interfaces\ObjectTypeInterface;
+    use TgBotLib\Methods\AddStickerToSet;
     use TgBotLib\Methods\AnswerCallbackQuery;
     use TgBotLib\Methods\ApproveChatJoinRequest;
     use TgBotLib\Methods\BanChatMember;
@@ -214,6 +215,7 @@
         case GET_CUSTOM_EMOJI_STICKERS = 'getCustomEmojiStickers';
         case UPLOAD_STICKER_FILE = 'uploadStickerFile';
         case CREATE_NEW_STICKER_SET = 'createNewStickerSet';
+        case ADD_STICKER_TO_SET = 'addStickerToSet';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -330,6 +332,7 @@
                 self::GET_CUSTOM_EMOJI_STICKERS => GetCustomEmojiStickers::execute($bot, $parameters),
                 self::UPLOAD_STICKER_FILE => UploadStickerFile::execute($bot, $parameters),
                 self::CREATE_NEW_STICKER_SET => CreateNewStickerSet::execute($bot, $parameters),
+                self::ADD_STICKER_TO_SET => AddStickerToSet::execute($bot, $parameters),
             };
         }
     }
