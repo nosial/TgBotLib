@@ -20,6 +20,7 @@
     use TgBotLib\Methods\CreateChatInviteLink;
     use TgBotLib\Methods\CreateChatSubscriptionInviteLink;
     use TgBotLib\Methods\CreateForumTopic;
+    use TgBotLib\Methods\CreateInvoiceLink;
     use TgBotLib\Methods\CreateNewStickerSet;
     use TgBotLib\Methods\DeclineChatJoinRequest;
     use TgBotLib\Methods\DeleteChatPhoto;
@@ -121,7 +122,6 @@
     use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
     use TgBotLib\Methods\UploadStickerFile;
-    use TgBotLib\Objects\CreateInvoiceLink;
 
     enum Methods : string
     {
