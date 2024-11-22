@@ -79,6 +79,7 @@
     use TgBotLib\Methods\SendContact;
     use TgBotLib\Methods\SendDice;
     use TgBotLib\Methods\SendDocument;
+    use TgBotLib\Methods\SendInvoice;
     use TgBotLib\Methods\SendLocation;
     use TgBotLib\Methods\SendMediaGroup;
     use TgBotLib\Methods\SendMessage;
@@ -239,6 +240,7 @@
         case ANSWER_INLINE_QUERY = 'answerInlineQuery';
         case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
         case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
+        case SEND_INVOICE = 'sendInvoice';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -368,6 +370,7 @@
                 self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
+                self::SEND_INVOICE => SendInvoice::execute($bot, $parameters),
             };
         }
     }

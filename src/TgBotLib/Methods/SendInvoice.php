@@ -4,6 +4,7 @@
 
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
+    use TgBotLib\Enums\Methods;
     use TgBotLib\Interfaces\ObjectTypeInterface;
     use TgBotLib\Objects\Message;
 
@@ -22,10 +23,47 @@
                 {
                     if($price instanceof ObjectTypeInterface)
                     {
+                        $prices[] = $price->toArray();
+                    }
 
+                    if(is_array($price))
+                    {
+                        $prices[] = $price;
                     }
                 }
+
+                $parameters['prices'] = json_encode($parameters);
             }
+
+            if(isset($parameters['suggested_tip_amounts']) && is_array($parameters['suggested_tip_amounts']))
+            {
+                $parameters['suggested_tip_amounts'] = json_encode($parameters['suggested_tip_amounts']);
+            }
+
+            if(isset($parameters['provider_data']) && is_array($parameters['provider_data']))
+            {
+                $parameters['provider_data'] = json_encode($parameters['provider_data'])
+            }
+
+            if(isset($parameters['reply_parameters']) && $parameters['reply_parameters'] instanceof ObjectTypeInterface)
+            {
+                $parameters['reply_parameters'] = $parameters['reply_parameters']->toArray();
+            }
+
+            if(isset($parameters['reply_markup']))
+            {
+                if($parameters['reply_markup'] instanceof ObjectTypeInterface)
+                {
+                    $parameters['reply_markup'] = json_encode($parameters['reply_markup']->toArray());
+                }
+
+                if(is_array($parameters['reply_markup']))
+                {
+                    $parameters['reply_markup'] = json_encode($parameters['reply_markup']);
+                }
+            }
+
+            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::SEND_INVOICE->value, $parameters)));
         }
 
         /**
