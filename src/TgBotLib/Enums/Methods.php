@@ -72,6 +72,7 @@
     use TgBotLib\Methods\ReplaceStickerInSet;
     use TgBotLib\Methods\RestrictChatMember;
     use TgBotLib\Methods\RevokeChatInviteLink;
+    use TgBotLib\Methods\SavePreparedInlineMessage;
     use TgBotLib\Methods\SendAnimation;
     use TgBotLib\Methods\SendAudio;
     use TgBotLib\Methods\SendChatAction;
@@ -237,6 +238,7 @@
         case DELETE_STICKER_SET = 'deleteStickerSet';
         case ANSWER_INLINE_QUERY = 'answerInlineQuery';
         case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
+        case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -365,6 +367,7 @@
                 self::DELETE_STICKER_SET => DeleteStickerFromSet::execute($bot, $parameters),
                 self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
+                self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
             };
         }
     }
