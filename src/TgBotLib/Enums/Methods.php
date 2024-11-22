@@ -121,6 +121,7 @@
     use TgBotLib\Methods\UnpinAllGeneralForumTopicMessages;
     use TgBotLib\Methods\UnpinChatMessage;
     use TgBotLib\Methods\UploadStickerFile;
+    use TgBotLib\Objects\CreateInvoiceLink;
 
     enum Methods : string
     {
@@ -241,6 +242,7 @@
         case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
         case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
         case SEND_INVOICE = 'sendInvoice';
+        case CREATE_INVOICE_LINK = 'createInvoiceLink';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -371,6 +373,7 @@
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
                 self::SEND_INVOICE => SendInvoice::execute($bot, $parameters),
+                self::CREATE_INVOICE_LINK => CreateInvoiceLink::execute($bot, $parameters),
             };
         }
     }
