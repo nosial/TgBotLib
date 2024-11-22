@@ -42,7 +42,7 @@
 
             if(isset($parameters['provider_data']) && is_array($parameters['provider_data']))
             {
-                $parameters['provider_data'] = json_encode($parameters['provider_data'])
+                $parameters['provider_data'] = json_encode($parameters['provider_data']);
             }
 
             if(isset($parameters['reply_parameters']) && $parameters['reply_parameters'] instanceof ObjectTypeInterface)
