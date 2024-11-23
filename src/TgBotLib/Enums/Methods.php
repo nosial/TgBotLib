@@ -8,6 +8,7 @@
     use TgBotLib\Methods\AddStickerToSet;
     use TgBotLib\Methods\AnswerCallbackQuery;
     use TgBotLib\Methods\AnswerInlineQuery;
+    use TgBotLib\Methods\AnswerShippingQuery;
     use TgBotLib\Methods\AnswerWebAppQuery;
     use TgBotLib\Methods\ApproveChatJoinRequest;
     use TgBotLib\Methods\BanChatMember;
@@ -243,6 +244,7 @@
         case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
         case SEND_INVOICE = 'sendInvoice';
         case CREATE_INVOICE_LINK = 'createInvoiceLink';
+        case ANSWER_SHIPPING_QUERY = 'answerShippingQuery';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -374,6 +376,7 @@
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
                 self::SEND_INVOICE => SendInvoice::execute($bot, $parameters),
                 self::CREATE_INVOICE_LINK => CreateInvoiceLink::execute($bot, $parameters),
+                self::ANSWER_SHIPPING_QUERY => AnswerShippingQuery::execute($bot, $parameters),
             };
         }
     }
