@@ -60,6 +60,7 @@
     use TgBotLib\Methods\GetMyDescription;
     use TgBotLib\Methods\GetMyName;
     use TgBotLib\Methods\GetMyShortDescription;
+    use TgBotLib\Methods\GetStarTransactions;
     use TgBotLib\Methods\GetStickerSet;
     use TgBotLib\Methods\GetUpdates;
     use TgBotLib\Methods\GetUserChatBoosts;
@@ -247,6 +248,7 @@
         case CREATE_INVOICE_LINK = 'createInvoiceLink';
         case ANSWER_SHIPPING_QUERY = 'answerShippingQuery';
         case ANSWER_PRE_CHECKOUT_QUERY = 'answerPreCheckoutQuery';
+        case GET_STAR_TRANSACTIONS = 'getStarTransactions';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -380,6 +382,7 @@
                 self::CREATE_INVOICE_LINK => CreateInvoiceLink::execute($bot, $parameters),
                 self::ANSWER_SHIPPING_QUERY => AnswerShippingQuery::execute($bot, $parameters),
                 self::ANSWER_PRE_CHECKOUT_QUERY => AnswerPreCheckoutQuery::execute($bot, $parameters),
+                self::GET_STAR_TRANSACTIONS => GetStarTransactions::execute($bot, $parameters),
             };
         }
     }
