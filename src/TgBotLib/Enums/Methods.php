@@ -46,6 +46,7 @@
     use TgBotLib\Methods\ExportChatInviteLink;
     use TgBotLib\Methods\ForwardMessage;
     use TgBotLib\Methods\ForwardMessages;
+    use TgBotLib\Methods\GetAvailableGifts;
     use TgBotLib\Methods\GetBusinessConnection;
     use TgBotLib\Methods\GetChat;
     use TgBotLib\Methods\GetChatAdministrators;
@@ -246,6 +247,7 @@
         case SET_STICKER_SET_THUMBNAIL = 'setStickerSetThumbnail';
         case SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL = 'setCustomEmojiStickerSetThumbnail';
         case DELETE_STICKER_SET = 'deleteStickerSet';
+        case GET_AVAILABLE_GIFTS = 'getAvailableGifts';
         case ANSWER_INLINE_QUERY = 'answerInlineQuery';
         case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
         case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
@@ -384,6 +386,7 @@
                 self::SET_STICKER_SET_THUMBNAIL => SetStickerSetThumbnail::execute($bot, $parameters),
                 self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
                 self::DELETE_STICKER_SET => DeleteStickerSet::execute($bot, $parameters),
+                self::GET_AVAILABLE_GIFTS => GetAvailableGifts::execute($bot, $parameters),
                 self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),

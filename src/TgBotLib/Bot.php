@@ -36,6 +36,7 @@
     use TgBotLib\Objects\File;
     use TgBotLib\Objects\ForceReply;
     use TgBotLib\Objects\ForumTopic;
+    use TgBotLib\Objects\Gifts;
     use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\InputMedia;
     use TgBotLib\Objects\InputPollOption;
@@ -169,6 +170,7 @@
      * @method true setStickerSetThumbnail(string $name, int $user_id, string $format, ?string $thumbnail=null) Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must be the format of the stickers in the set. Returns True on success.
      * @method true setCustomEmojiStickerSetThumbnail(string $name, ?string $custom_emoji_id=null) Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.
      * @method true deleteStickerSet(string $name) Use this method to delete a sticker set that was created by the bot. Returns True on success.
+     * @method Gifts getAvailableGifts() Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
