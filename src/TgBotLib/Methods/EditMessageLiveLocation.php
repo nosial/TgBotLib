@@ -14,7 +14,7 @@
         /**
          * @inheritDoc
          */
-        public static function execute(Bot $bot, array $parameters = []): Message
+        public static function execute(Bot $bot, array $parameters = []): Message|true
         {
             if (isset($parameters['reply_markup']))
             {
@@ -28,7 +28,14 @@
                 }
             }
 
-            return Message::fromArray(self::executeCurl(self::buildPost($bot, Methods::EDIT_MESSAGE_LIVE_LOCATION->value, $parameters)));
+            $result = self::executeCurl(self::buildPost($bot, Methods::EDIT_MESSAGE_LIVE_LOCATION->value, $parameters));
+
+            if(is_bool($result))
+            {
+                return (bool)$result;
+            }
+
+            return Message::fromArray($result);
         }
 
         /**
