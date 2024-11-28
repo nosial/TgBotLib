@@ -55,6 +55,7 @@
     use TgBotLib\Methods\GetCustomEmojiStickers;
     use TgBotLib\Methods\GetFile;
     use TgBotLib\Methods\GetForumTopicIconStickers;
+    use TgBotLib\Methods\GetGameHighScores;
     use TgBotLib\Methods\GetMe;
     use TgBotLib\Methods\GetMyCommands;
     use TgBotLib\Methods\GetMyDefaultAdministratorRights;
@@ -256,6 +257,7 @@
         case SET_PASSPORT_DATA_ERRORS = 'setPassportDataErrors';
         case SEND_GAME = 'sendGame';
         case SET_GAME_SCORE = 'setGameScore';
+        case GET_GAME_HIGH_SCORES = 'getGameHighScores';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -393,6 +395,7 @@
                 self::SET_PASSPORT_DATA_ERRORS => SetPassportDataErrors::execute($bot, $parameters),
                 self::SEND_GAME => SendGame::execute($bot, $parameters),
                 self::SET_GAME_SCORE => SetGameScore::execute($bot, $parameters),
+                self::GET_GAME_HIGH_SCORES => GetGameHighScores::execute($bot, $parameters)
             };
         }
     }
