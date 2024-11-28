@@ -135,7 +135,8 @@
      * @method BotDescription getMyDescription(?string $language_code=null) Use this method to get the current bot description for the given user language. Returns BotDescription on success.
      * @method bool setMyShortDescription(string $short_description , string $language_code = "") Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.
      * @method BotShortDescription getMyShortDescription(string $language_code) Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
-     * @method bool setChatMenuButton(int $chat_id=null, MenuButton $menu_button=null) Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
+     * @method bool setChatMenuButton(?int $chat_id=null, ?MenuButton $menu_button=null) Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
+     * @method MenuButton getChatMenuButton(?int $chat_id=null) Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
