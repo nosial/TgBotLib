@@ -140,6 +140,7 @@
      * @method MenuButton getChatMenuButton(?int $chat_id=null) Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
      * @method true setMyDefaultAdministratorRights(?ChatAdministratorRights $rights=null, ?bool $for_channels=false) Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success.
      * @method ChatAdministratorRights getMyDefaultAdministratorRights(?bool $for_channels=false) Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.
+     * @method Message editMessageText(string $text, ?string $business_connection_id=null, null|string|int $chat_id=null, ?int $message_id=null, ?string $inline_message_id=null, ?ParseMode $parse_mode=null, MessageEntity[]|null $entities=null, ?LinkPreviewOptions $link_preview_options=null, ?InlineKeyboardMarkup $reply_markup=null) Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
