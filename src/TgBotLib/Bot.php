@@ -18,6 +18,7 @@
     use TgBotLib\Enums\Methods;
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
+    use TgBotLib\Enums\Types\StickerFormat;
     use TgBotLib\Events\CommandEvent;
     use TgBotLib\Events\UpdateEvent;
     use TgBotLib\Exceptions\TelegramException;
@@ -48,7 +49,9 @@
     use TgBotLib\Objects\ReplyKeyboardMarkup;
     use TgBotLib\Objects\ReplyKeyboardRemove;
     use TgBotLib\Objects\ReplyParameters;
+    use TgBotLib\Objects\Stickers\MaskPosition;
     use TgBotLib\Objects\Stickers\Sticker;
+    use TgBotLib\Objects\Stickers\StickerSet;
     use TgBotLib\Objects\Update;
     use TgBotLib\Objects\User;
     use TgBotLib\Objects\UserChatBoosts;
@@ -150,6 +153,22 @@
      * @method Poll stopPoll(int|string $chat_id, int $message_id, ?string $business_connection_id=null, ?InlineKeyboardMarkup $reply_markup=null) Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned.
      * @method true deleteMessage(int|string $chat_id, int $message_id) Use this method to delete a message, including service messages. Returns True on success.
      * @method true deleteMessages(int|string $chat_id, int[] $message_ids) Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns True on success.
+     * @method Message sendSticker(int|string $chat_id, string $sticker, ?string $business_connection_id=null, ?int $message_thread_id=null, ?string $emoji=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?bool $allow_paid_broadcast=null, ?string $message_effect_id=null, ?ReplyParameters $reply_parameters=null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup=null) Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
+     * @method StickerSet getStickerSet(string $name) Use this method to get a sticker set. On success, a StickerSet object is returned.
+     * @method Sticker[] getCustomEmojiStickers(string[] $custom_emoji_ids) Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     * @method File uploadStickerFile(int $user_id, string $sticker, StickerFormat $sticker_format) Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success.
+     * @method true createNewStickerSet(int $user_id, string $name, string $title, array $stickers, ?string $sticker_type=null, ?bool $needs_repainting=null) Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success.
+     * @method true addStickerToSet(int $user_id, string $name, string $sticker) Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns True on success.
+     * @method true setStickerPositionInSet(string $sticker, int $position) Use this method to move a sticker in a set created by the bot to a specific position. Returns True on success.
+     * @method true deleteStickerFromSet(string $sticker) Use this method to delete a sticker from a set created by the bot. Returns True on success.
+     * @method true replaceStickerInSet(int $user_id, string $name, string $old_sticker, string $sticker) Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling deleteStickerFromSet, then addStickerToSet, then setStickerPositionInSet. Returns True on success.
+     * @method true setStickerEmojiList(string $sticker, string[] $emoji_list) Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.
+     * @method true setStickerKeywords(string $sticker, string[] $keywords) Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.
+     * @method true setStickerMaskPosition(string $sticker, ?MaskPosition $mask_position=null) Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success.
+     * @method true setStickerSetTitle(string $name, string $title) Use this method to set the title of a created sticker set. Returns True on success.
+     * @method true setStickerSetThumbnail(string $name, int $user_id, string $format, ?string $thumbnail=null) Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must be the format of the stickers in the set. Returns True on success.
+     * @method true setCustomEmojiStickerSetThumbnail(string $name, ?string $custom_emoji_id=null) Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.
+     * @method true deleteStickerSet(string $name) Use this method to delete a sticker set that was created by the bot. Returns True on success.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
