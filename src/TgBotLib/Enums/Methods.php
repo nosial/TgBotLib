@@ -105,6 +105,7 @@
     use TgBotLib\Methods\SetChatStickerSet;
     use TgBotLib\Methods\SetChatTitle;
     use TgBotLib\Methods\SetCustomEmojiStickerSetThumbnail;
+    use TgBotLib\Methods\SetGameScore;
     use TgBotLib\Methods\SetMessageReaction;
     use TgBotLib\Methods\SetMyCommands;
     use TgBotLib\Methods\SetMyDefaultAdministratorRights;
@@ -254,6 +255,7 @@
         case GET_STAR_TRANSACTIONS = 'getStarTransactions';
         case SET_PASSPORT_DATA_ERRORS = 'setPassportDataErrors';
         case SEND_GAME = 'sendGame';
+        case SET_GAME_SCORE = 'setGameScore';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -390,6 +392,7 @@
                 self::GET_STAR_TRANSACTIONS => GetStarTransactions::execute($bot, $parameters),
                 self::SET_PASSPORT_DATA_ERRORS => SetPassportDataErrors::execute($bot, $parameters),
                 self::SEND_GAME => SendGame::execute($bot, $parameters),
+                self::SET_GAME_SCORE => SetGameScore::execute($bot, $parameters),
             };
         }
     }
