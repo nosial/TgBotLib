@@ -32,6 +32,7 @@
     use TgBotLib\Methods\DeleteMessages;
     use TgBotLib\Methods\DeleteMyCommands;
     use TgBotLib\Methods\DeleteStickerFromSet;
+    use TgBotLib\Methods\DeleteStickerSet;
     use TgBotLib\Methods\DeleteWebhook;
     use TgBotLib\Methods\EditChatInviteLink;
     use TgBotLib\Methods\EditChatSubscriptionInviteLink;
@@ -83,6 +84,7 @@
     use TgBotLib\Methods\SendContact;
     use TgBotLib\Methods\SendDice;
     use TgBotLib\Methods\SendDocument;
+    use TgBotLib\Methods\SendGame;
     use TgBotLib\Methods\SendInvoice;
     use TgBotLib\Methods\SendLocation;
     use TgBotLib\Methods\SendMediaGroup;
@@ -251,6 +253,7 @@
         case ANSWER_PRE_CHECKOUT_QUERY = 'answerPreCheckoutQuery';
         case GET_STAR_TRANSACTIONS = 'getStarTransactions';
         case SET_PASSPORT_DATA_ERRORS = 'setPassportDataErrors';
+        case SEND_GAME = 'sendGame';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -376,7 +379,7 @@
                 self::SET_STICKER_SET_TITLE => SetStickerSetTitle::execute($bot, $parameters),
                 self::SET_STICKER_SET_THUMBNAIL => SetStickerSetThumbnail::execute($bot, $parameters),
                 self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
-                self::DELETE_STICKER_SET => DeleteStickerFromSet::execute($bot, $parameters),
+                self::DELETE_STICKER_SET => DeleteStickerSet::execute($bot, $parameters),
                 self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
@@ -386,6 +389,7 @@
                 self::ANSWER_PRE_CHECKOUT_QUERY => AnswerPreCheckoutQuery::execute($bot, $parameters),
                 self::GET_STAR_TRANSACTIONS => GetStarTransactions::execute($bot, $parameters),
                 self::SET_PASSPORT_DATA_ERRORS => SetPassportDataErrors::execute($bot, $parameters),
+                self::SEND_GAME => SendGame::execute($bot, $parameters),
             };
         }
     }
