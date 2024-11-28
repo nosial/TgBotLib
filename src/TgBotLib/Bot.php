@@ -27,6 +27,7 @@
     use TgBotLib\Objects\BotName;
     use TgBotLib\Objects\BotShortDescription;
     use TgBotLib\Objects\BusinessConnection;
+    use TgBotLib\Objects\ChatAdministratorRights;
     use TgBotLib\Objects\ChatFullInfo;
     use TgBotLib\Objects\ChatInviteLink;
     use TgBotLib\Objects\ChatMember;
@@ -137,6 +138,8 @@
      * @method BotShortDescription getMyShortDescription(string $language_code) Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
      * @method bool setChatMenuButton(?int $chat_id=null, ?MenuButton $menu_button=null) Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
      * @method MenuButton getChatMenuButton(?int $chat_id=null) Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
+     * @method true setMyDefaultAdministratorRights(?ChatAdministratorRights $rights=null, ?bool $for_channels=false) Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success.
+     * @method ChatAdministratorRights getMyDefaultAdministratorRights(?bool $for_channels=false) Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
