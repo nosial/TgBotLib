@@ -4,6 +4,7 @@
 
     use TgBotLib\Abstracts\Method;
     use TgBotLib\Bot;
+    use TgBotLib\Enums\Methods;
 
     class UnbanChatMember extends Method
     {
@@ -11,9 +12,9 @@
         /**
          * @inheritDoc
          */
-        public static function execute(Bot $bot, array $parameters = []): mixed
+        public static function execute(Bot $bot, array $parameters = []): true
         {
-            // TODO: Implement execute() method.
+            return (bool)self::executeCurl(self::buildPost($bot, Methods::UNBAN_CHAT_MEMBER->value, $parameters));
         }
 
         /**
@@ -21,7 +22,10 @@
          */
         public static function getRequiredParameters(): ?array
         {
-            // TODO: Implement getRequiredParameters() method.
+            return [
+                'chat_id',
+                'user_id',
+            ];
         }
 
         /**
@@ -29,6 +33,8 @@
          */
         public static function getOptionalParameters(): ?array
         {
-            // TODO: Implement getOptionalParameters() method.
+            return [
+                'only_if_banned'
+            ];
         }
     }
