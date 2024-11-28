@@ -87,6 +87,7 @@
     use TgBotLib\Methods\SendDice;
     use TgBotLib\Methods\SendDocument;
     use TgBotLib\Methods\SendGame;
+    use TgBotLib\Methods\SendGift;
     use TgBotLib\Methods\SendInvoice;
     use TgBotLib\Methods\SendLocation;
     use TgBotLib\Methods\SendMediaGroup;
@@ -248,6 +249,7 @@
         case SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL = 'setCustomEmojiStickerSetThumbnail';
         case DELETE_STICKER_SET = 'deleteStickerSet';
         case GET_AVAILABLE_GIFTS = 'getAvailableGifts';
+        case SEND_GIFT = 'sendGift';
         case ANSWER_INLINE_QUERY = 'answerInlineQuery';
         case ANSWER_WEB_APP_QUERY = 'answerWebAppQuery';
         case SAVE_PREPARED_INLINE_MESSAGE = 'savePreparedInlineMessage';
@@ -387,6 +389,7 @@
                 self::SET_CUSTOM_EMOJI_STICKER_SET_THUMBNAIL => SetCustomEmojiStickerSetThumbnail::execute($bot, $parameters),
                 self::DELETE_STICKER_SET => DeleteStickerSet::execute($bot, $parameters),
                 self::GET_AVAILABLE_GIFTS => GetAvailableGifts::execute($bot, $parameters),
+                self::SEND_GIFT => SendGift::execute($bot, $parameters),
                 self::ANSWER_INLINE_QUERY => AnswerInlineQuery::execute($bot, $parameters),
                 self::ANSWER_WEB_APP_QUERY => AnswerWebAppQuery::execute($bot, $parameters),
                 self::SAVE_PREPARED_INLINE_MESSAGE => SavePreparedInlineMessage::execute($bot, $parameters),
