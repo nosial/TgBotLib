@@ -109,6 +109,7 @@
     use TgBotLib\Methods\SetMyDescription;
     use TgBotLib\Methods\SetMyName;
     use TgBotLib\Methods\SetMyShortDescription;
+    use TgBotLib\Methods\SetPassportDataErrors;
     use TgBotLib\Methods\SetStickerEmojiList;
     use TgBotLib\Methods\SetStickerMaskPosition;
     use TgBotLib\Methods\SetStickerPositionInSet;
@@ -249,6 +250,7 @@
         case ANSWER_SHIPPING_QUERY = 'answerShippingQuery';
         case ANSWER_PRE_CHECKOUT_QUERY = 'answerPreCheckoutQuery';
         case GET_STAR_TRANSACTIONS = 'getStarTransactions';
+        case SET_PASSPORT_DATA_ERRORS = 'setPassportDataErrors';
 
         /**
          * Executes a command on the provided bot with the given parameters.
@@ -383,6 +385,7 @@
                 self::ANSWER_SHIPPING_QUERY => AnswerShippingQuery::execute($bot, $parameters),
                 self::ANSWER_PRE_CHECKOUT_QUERY => AnswerPreCheckoutQuery::execute($bot, $parameters),
                 self::GET_STAR_TRANSACTIONS => GetStarTransactions::execute($bot, $parameters),
+                self::SET_PASSPORT_DATA_ERRORS => SetPassportDataErrors::execute($bot, $parameters),
             };
         }
     }
