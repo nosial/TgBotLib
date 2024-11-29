@@ -38,6 +38,7 @@
     use TgBotLib\Objects\ForumTopic;
     use TgBotLib\Objects\Gifts;
     use TgBotLib\Objects\Inline\InlineQueryResult;
+    use TgBotLib\Objects\Inline\SentWebAppMessage;
     use TgBotLib\Objects\InlineKeyboardMarkup;
     use TgBotLib\Objects\InlineQueryResultsButton;
     use TgBotLib\Objects\InputMedia;
@@ -47,11 +48,15 @@
     use TgBotLib\Objects\Message;
     use TgBotLib\Objects\MessageEntity;
     use TgBotLib\Objects\MessageId;
+    use TgBotLib\Objects\Payments\LabeledPrice;
+    use TgBotLib\Objects\Payments\ShippingOption;
     use TgBotLib\Objects\Poll;
+    use TgBotLib\Objects\PreparedInlineMessage;
     use TgBotLib\Objects\ReactionType;
     use TgBotLib\Objects\ReplyKeyboardMarkup;
     use TgBotLib\Objects\ReplyKeyboardRemove;
     use TgBotLib\Objects\ReplyParameters;
+    use TgBotLib\Objects\StarTransactions;
     use TgBotLib\Objects\Stickers\MaskPosition;
     use TgBotLib\Objects\Stickers\Sticker;
     use TgBotLib\Objects\Stickers\StickerSet;
@@ -175,6 +180,15 @@
      * @method Gifts getAvailableGifts() Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object.
      * @method true sendGift(int $user_id, string $gift_id, ?string $text=null, ?ParseMode $text_parse_mode=null, MessageEntity[]|null $text_entities=null) Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
      * @method true answerInlineQuery(string $inline_query_id, InlineQueryResult[] $results, ?int $cache_time=null, ?bool $is_personal=null, ?string $next_offset=null, ?InlineQueryResultsButton $button=null) Use this method to send answers to an inline query. On success, True is returned.
+     * @method SentWebAppMessage answerWebAppQuery(string $web_app_query_id, InlineQueryResult $result) Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.
+     * @method PreparedInlineMessage savePreparedInlineMessage(int $user_id, InlineQueryResult $result, ?bool $allow_user_chats=null, ?bool $allow_bot_chats=null, ?bool $allow_group_chats=null, ?bool $allow_channel_chats=null) Stores a message that can be sent by a user of a Mini App. Returns a PreparedInlineMessage object.
+     * @method Message sendInvoice(int|string $chat_id, string $title, string $description, string $payload, string $currency, LabeledPrice[] $prices, ?int $message_thread_id=null, ?string $provider_token=null, ?int $max_tip_amount=null, int[]|null $suggested_tip_amounts=null, ?string $start_parameter=null, ?string $provider_data=null, ?string $photo_url=null, ?int $photo_size=null, ?int $photo_width=null, ?int $photo_height=null, ?bool $need_name=null, ?bool $need_phone_number=null, ?bool $need_email=null, ?bool $need_shipping_address=null, ?bool $send_phone_number_to_provider=null, ?bool $send_email_to_provider=null, ?bool $is_flexible=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?bool $allow_paid_broadcast=null, ?string $message_effect_id=null, ?ReplyParameters $message_effect_id=null, ?InlineKeyboardMarkup $reply_markup=null) Your bot can accept payments from Telegram users. Please see the introduction to payments for more details on the process and how to set up payments for your bot.
+     * @method string createInvoiceLink(string $title, string $description, string $payload, string $currency, LabeledPrice[] $prices, ?string $provider_token=null, ?int $subscription_period=null, ?int $max_tip_amount=null, int[]|null $suggested_tip_amounts=null, ?string $provider_data=null, ?string $photo_url=null, ?int $photo_size=null, ?int $photo_width=null, ?int $photo_height=null, ?bool $need_name=null, ?bool $need_phone_number=null, ?bool $need_email=null, ?bool $need_shipping_address=null, ?bool $send_phone_number_to_provider=null, ?bool $send_email_to_provider=null, ?bool $is_flexible=null) Use this method to create a link for an invoice. Returns the created invoice link as String on success.
+     * @method true answerShippingQuery(string $shipping_query_id, bool $ok, ShippingOption[]|null $shipping_options=null, ?string $error_message=null) If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
+     * @method true answerPreCheckoutQuery(string $pre_checkout_query_id, bool $ok, ?string $error_message=null) Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. Use this method to respond to such pre-checkout queries. On success, True is returned. Note: The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+     * @method StarTransactions getStarTransactions(?int $offset=null, ?int $limit=null) Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object.
+     * @method true refundStarPayment(int $user_id, string $telegram_payment_charge_id) Refunds a successful payment in Telegram Stars. Returns True on success.
+     * @method true editUserStarSubscription(int $user_id, string $telegram_payment_charge_id, bool $is_canceled) Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns True on success.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
