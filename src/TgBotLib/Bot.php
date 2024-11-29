@@ -36,6 +36,7 @@
     use TgBotLib\Objects\File;
     use TgBotLib\Objects\ForceReply;
     use TgBotLib\Objects\ForumTopic;
+    use TgBotLib\Objects\GameHighScore;
     use TgBotLib\Objects\Gifts;
     use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\Inline\SentWebAppMessage;
@@ -48,6 +49,7 @@
     use TgBotLib\Objects\Message;
     use TgBotLib\Objects\MessageEntity;
     use TgBotLib\Objects\MessageId;
+    use TgBotLib\Objects\PassportElementError;
     use TgBotLib\Objects\Payments\LabeledPrice;
     use TgBotLib\Objects\Payments\ShippingOption;
     use TgBotLib\Objects\Poll;
@@ -189,6 +191,10 @@
      * @method StarTransactions getStarTransactions(?int $offset=null, ?int $limit=null) Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object.
      * @method true refundStarPayment(int $user_id, string $telegram_payment_charge_id) Refunds a successful payment in Telegram Stars. Returns True on success.
      * @method true editUserStarSubscription(int $user_id, string $telegram_payment_charge_id, bool $is_canceled) Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns True on success.
+     * @method true setPassportDataErrors(int $user_id, PassportElementError[] $errors) Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
+     * @method Message sendGame(int $chat_id, string $game_short_name, ?string $business_connection_id=null, ?int $message_thread_id=null, ?bool $disable_notification=null, ?bool $protect_content=null, ?bool $allow_paid_broadcast=null, ?string $message_effect_id=null, ?ReplyParameters $reply_parameters=null, ?InlineKeyboardMarkup $reply_markup=null) Use this method to send a game. On success, the sent Message is returned.
+     * @method Message setGameScore(int $user_id, int $score, ?bool $force=null, ?bool $disable_edit_message=null, ?int $chat_id=null, ?int $message_id=null, ?string $inline_message_id=null) Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the Message is returned, otherwise True is returned. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+     * @method GameHighScore[] getGameHighScores(int $user_id, ?int $chat_id=null, ?int $message_id=null, ?string $inline_message_id=null) Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of GameHighScore objects.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
