@@ -66,10 +66,13 @@
     use TgBotLib\Objects\User;
     use TgBotLib\Objects\UserChatBoosts;
     use TgBotLib\Objects\UserProfilePhotos;
+    use TgBotLib\Objects\WebhookInfo;
 
     /**
      * @method Update[] getUpdates(?int $offset=null, ?int $limit=null, ?int $timeout=null, ?string $allowed_updates=null) Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
      * @method bool setWebhook(string $url, ?string $certificate=null, ?string $ip_address=null, ?int $max_connections=null, ?string $allowed_updates=null, ?bool $drop_pending_updates=null, ?string $secret_token=null) Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.
+     * @method true deleteWebhook(?bool $drop_pending_updates=null) Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.
+     * @method WebhookInfo getWebhookInfo() Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
      * @method User getMe() A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
      * @method bool logOut() Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters.
      * @method bool close() Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.
