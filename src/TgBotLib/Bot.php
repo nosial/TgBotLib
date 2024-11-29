@@ -37,7 +37,9 @@
     use TgBotLib\Objects\ForceReply;
     use TgBotLib\Objects\ForumTopic;
     use TgBotLib\Objects\Gifts;
+    use TgBotLib\Objects\Inline\InlineQueryResult;
     use TgBotLib\Objects\InlineKeyboardMarkup;
+    use TgBotLib\Objects\InlineQueryResultsButton;
     use TgBotLib\Objects\InputMedia;
     use TgBotLib\Objects\InputPollOption;
     use TgBotLib\Objects\LinkPreviewOptions;
@@ -172,6 +174,7 @@
      * @method true deleteStickerSet(string $name) Use this method to delete a sticker set that was created by the bot. Returns True on success.
      * @method Gifts getAvailableGifts() Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object.
      * @method true sendGift(int $user_id, string $gift_id, ?string $text=null, ?ParseMode $text_parse_mode=null, MessageEntity[]|null $text_entities=null) Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     * @method true answerInlineQuery(string $inline_query_id, InlineQueryResult[] $results, ?int $cache_time=null, ?bool $is_personal=null, ?string $next_offset=null, ?InlineQueryResultsButton $button=null) Use this method to send answers to an inline query. On success, True is returned.
      * @throws TelegramException if the method execution fails.
      */
     class Bot
