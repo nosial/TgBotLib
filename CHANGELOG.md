@@ -10,6 +10,7 @@ This update introduces bug fixes and improvements
 
 ### Fixed
  * Reposition debug log for event handler execution.
+ * Improve command check with method existence validation
 
 
 ## [8.0.0] - 2024-11-29

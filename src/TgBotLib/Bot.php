@@ -365,10 +365,11 @@
             /** @var UpdateEvent $eventHandler */
             foreach($this->eventHandlers as $eventHandler)
             {
-                if(strtolower($eventHandler::getCommand()) === strtolower($command))
+                if(method_exists($eventHandler, 'getCommand') && strtolower($eventHandler::getCommand()) === strtolower($command))
                 {
                     $results[] = $eventHandler;
                 }
+
             }
 
             return $results;
