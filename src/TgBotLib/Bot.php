@@ -485,9 +485,9 @@
 
             // Execute all event handlers that match the update type
             /** @var UpdateEvent $eventHandler */
-            Logger::getLogger()->debug(sprintf('Executing event handler for type %s for update %s', $eventHandler::getEventType()->value, $update->getUpdateId()));
             foreach($eventHandlers as $eventHandler)
             {
+                Logger::getLogger()->debug(sprintf('Executing event handler for type %s for update %s', $eventHandler::getEventType()->value, $update->getUpdateId()));
                 try
                 {
                     (new $eventHandler($update))->handle($this);
