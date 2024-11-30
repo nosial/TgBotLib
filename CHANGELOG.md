@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This update introduces bug fixes and improvements
 
+### Fixed
+ * Reposition debug log for event handler execution.
+
 
 ## [8.0.0] - 2024-11-29
 
