@@ -48,12 +48,12 @@
                         $entities[] = $entity;
                     }
                 }
-                $parameters['caption_entities'] = $entities;
+                $parameters['caption_entities'] = json_encode($entities);
             }
 
-            if(isset($parameters['reply_parameters']) && $parameters['reply_parameters'] instanceof ReplyParameters)
+            if(isset($parameters['reply_parameters']) && $parameters['reply_parameters'] instanceof ObjectTypeInterface)
             {
-                $parameters['reply_parameters'] = $parameters['reply_parameters']->toArray();
+                $parameters['reply_parameters'] = json_encode($parameters['reply_parameters']->toArray());
             }
 
             if (isset($parameters['reply_markup']))
