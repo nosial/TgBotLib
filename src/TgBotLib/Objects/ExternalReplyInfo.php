@@ -317,7 +317,7 @@ class ExternalReplyInfo implements ObjectTypeInterface
      * @inheritDoc
      * @noinspection DuplicatedCode
      */
-    public static function fromArray(array $data): ObjectTypeInterface
+    public static function fromArray(?array $data): ?ExternalReplyInfo
     {
         $object = new self();
 
