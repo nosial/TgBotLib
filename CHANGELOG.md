@@ -4,13 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.0.1] - Ongoing
+## [8.0.1] - 2024-12-04
 
 This update introduces bug fixes and improvements
+
+### Changed
+ * Refactor PollingBot to use PsyncLib for updates
+ * Refactor optional parameters in method signatures
+ * Improve command check with method existence validation
 
 ### Fixed
  * Reposition debug log for event handler execution.
  * Improve command check with method existence validation
+ * Allow nullable type for MessageEntity type
+ * Encode arrays as JSON in SendAudio parameters
+ * Refactor fromArray method for null data handling
 
 
 ## [8.0.0] - 2024-11-29
