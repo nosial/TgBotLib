@@ -7,7 +7,7 @@
 
     class MessageEntity implements ObjectTypeInterface
     {
-        private MessageEntityType $type;
+        private ?MessageEntityType $type;
         private int $offset;
         private int $length;
         private ?string $url;
@@ -23,9 +23,9 @@
          * (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames),
          * “custom_emoji” (for inline custom emoji stickers)
          *
-         * @return MessageEntityType
+         * @return ?MessageEntityType
          */
-        public function getType(): MessageEntityType
+        public function getType(): ?MessageEntityType
         {
             return $this->type;
         }
@@ -33,10 +33,10 @@
         /**
          * Sets the type of the entity
          *
-         * @param MessageEntityType $type
+         * @param ?MessageEntityType $type
          * @return MessageEntity
          */
-        public function setType(MessageEntityType $type): MessageEntity
+        public function setType(?MessageEntityType $type): MessageEntity
         {
             $this->type = $type;
             return $this;
@@ -223,7 +223,7 @@
             }
 
             $object = new self();
-            $object->type = MessageEntityType::tryFrom($data['type']);
+            $object->type = is_null($data['type']) ? null : MessageEntityType::tryFrom($data['type']);
             $object->offset = $data['offset'] ?? null;
             $object->length = $data['length'] ?? null;
             $object->url = $data['url'] ?? null;
