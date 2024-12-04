@@ -36,6 +36,12 @@
                 "version": "latest",
                 "source_type": "remote",
                 "source": "nosial/libs.opts=latest@n64"
+            },
+            {
+                "name": "net.nosial.psynclib",
+                "version": "latest",
+                "source_type": "remote",
+                "source": "nosial/libs.psync=latest@n64"
             }
         ],
         "configurations": [

@@ -505,6 +505,20 @@
         }
 
         /**
+         * Processes an array of updates.
+         *
+         * @param array $updates An array containing update objects to be handled. Each update will be individually processed by calling the handleUpdate method.
+         * @return void This method does not return a value.
+         */
+        public function handleUpdates(array $updates): void
+        {
+            foreach($updates as $update)
+            {
+                $this->handleUpdate($update);
+            }
+        }
+
+        /**
          * Sends a request by executing the specified method with the given parameters.
          *
          * @param string $method The name of the method to execute.
