@@ -1062,6 +1062,16 @@
         }
 
         /**
+         * Checks if any media content is present in the message.
+         *
+         * @return bool True if media content is present, false otherwise.
+         */
+        public function containsMedia(): bool
+        {
+            return $this->getPhoto() !== null || $this->getAnimation() !== null || $this->getAudio() !== null || $this->getDocument() !== null || $this->getSticker() !== null || $this->getVideo() !== null || $this->getVideoNote() !== null || $this->getVoice() !== null;
+        }
+
+        /**
          * @inheritDoc
          */
         public function toArray(): array
