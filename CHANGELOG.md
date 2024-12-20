@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This update introduces some quality of life improvements.
 
+### Added
  * Added `containsMedia` method to `Message` object to check if the message contains media.
+ * Add support for handling callback query events
 
 
 ## [8.0.1] - 2024-12-04
