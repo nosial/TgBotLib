@@ -2,6 +2,7 @@
 
     namespace TgBotLib\Events;
 
+    use LogicException;
     use TgBotLib\Enums\EventType;
     use TgBotLib\Objects\CallbackQuery;
 
@@ -14,6 +15,13 @@
         {
             return EventType::CALLBACK_QUERY;
         }
+
+        /**
+         * Retrieves data associated with the callback.
+         *
+         * @return string
+         */
+        public abstract static function getCallbackData(): string;
 
         /**
          * New incoming callback query

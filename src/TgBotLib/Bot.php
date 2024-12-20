@@ -19,6 +19,7 @@
     use TgBotLib\Enums\Types\ChatActionType;
     use TgBotLib\Enums\Types\ParseMode;
     use TgBotLib\Enums\Types\StickerFormat;
+    use TgBotLib\Events\CallbackQueryEvent;
     use TgBotLib\Events\CommandEvent;
     use TgBotLib\Events\UpdateEvent;
     use TgBotLib\Exceptions\TelegramException;
@@ -376,6 +377,26 @@
         }
 
         /**
+         * @method array getEventHandlersByCallbackQuery(string $callbackData) Retrieves an array of event handlers whose callback data matches the given parameter.
+         * @param string $callbackData The callback data to match against the registered event handlers.
+         * @return array An array of matching event handler instances.
+         */
+        public function getEventHandlersByCallbackQuery(string $callbackData): array
+        {
+            $results = [];
+            /** @var UpdateEvent $eventHandler */
+            foreach($this->eventHandlers as $eventHandler)
+            {
+                if(method_exists($eventHandler, 'getCallbackData') && $eventHandler::getCallbackData() === $callbackData)
+                {
+                    $results[] = $eventHandler;
+                }
+            }
+
+            return $results;
+        }
+
+        /**
          * Removes all event handlers.
          *
          * @return void
@@ -429,7 +450,6 @@
             $command = $update?->getAnyMessage()?->getCommand();
             if($command !== null)
             {
-                $commandExecuted = false;
                 Logger::getLogger()->debug(sprintf('Executing command %s for update %s', $command, $update->getUpdateId()));
 
                 /** @var CommandEvent $eventHandler */
@@ -438,7 +458,6 @@
                     try
                     {
                         (new $eventHandler($update))->handle($this);
-                        $commandExecuted = true;
                     }
                     catch(TelegramException $e)
                     {
@@ -449,10 +468,28 @@
                         Logger::getLogger()->error(sprintf('Exception occurred: %s', $e->getMessage()), $e);
                     }
                 }
+            }
 
-                if($commandExecuted)
+            $callbackData = $update?->getCallbackQuery()?->getData();
+            if($callbackData !== null)
+            {
+                Logger::getLogger()->debug(sprintf('Executing callback query %s for update %s', $callbackData, $update->getUpdateId()));
+
+                /** @var CallbackQueryEvent $eventHandler */
+                foreach($this->getEventHandlersByCallbackQuery($callbackData) as $eventHandler)
                 {
-                    return;
+                    try
+                    {
+                        (new $eventHandler($update))->handle($this);
+                    }
+                    catch(TelegramException $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Telegram exception occurred: %s', $e->getMessage()), $e);
+                    }
+                    catch(Exception $e)
+                    {
+                        Logger::getLogger()->error(sprintf('Exception occurred: %s', $e->getMessage()), $e);
+                    }
                 }
             }
 

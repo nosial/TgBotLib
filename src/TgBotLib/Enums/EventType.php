@@ -115,11 +115,6 @@
                 return EventType::SHIPPING_QUERY;
             }
 
-            if($update->getCallbackQuery() !== null)
-            {
-                return EventType::CALLBACK_QUERY;
-            }
-
             if($update->getChosenInlineResult() !== null)
             {
                 return EventType::CHOSEN_INLINE_RESULT;
